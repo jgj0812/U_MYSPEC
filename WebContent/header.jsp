@@ -92,10 +92,10 @@
         <%if(id != null) { %>
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-              <a href="#" class="nav-link h5">대외활동</a>
+              <a href="list_act.jsp" class="nav-link h5">대외활동</a>
             </li>
             <li class="nav-item px-2">
-              <a href="#" class="nav-link h5">공모전</a>
+              <a href="list_gongmo.jsp" class="nav-link h5">공모전</a>
             </li>
             <li class="nav-item px-2">
               <a href="community.jsp" class="nav-link h5">커뮤니티</a>
@@ -107,10 +107,10 @@
         <%}else { %>
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-              <a href="#" class="nav-link h5">대외활동</a>
+              <a href="list_act.jsp" class="nav-link h5">대외활동</a>
             </li>
             <li class="nav-item px-2">
-              <a href="#" class="nav-link h5">공모전</a>
+              <a href="list_gongmo.jsp" class="nav-link h5">공모전</a>
             </li>
             <li class="nav-item px-2">
               <a href="community.jsp" class="nav-link h5">커뮤니티</a>

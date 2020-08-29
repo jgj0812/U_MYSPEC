@@ -28,10 +28,8 @@
 		<textarea class="form-control" rows="15"></textarea>
 		<hr>
 		<div class="form-inline justify-content-end">
-		<button type="button" class="btn text-white" style="background-color:#ff0066; margin-right:5px; font-family:Noto Sans KR;
-		font-weight:bolder; font-size:12px;"onclick="location.href='community.jsp'">취소</button>
-		<input type="submit" class="btn text-dark"  style="background-color:#eeeeee; font-family:Noto Sans KR;
-		font-weight:bolder; font-size:12px;" value="확인">
+		<button type="button" class="btn btn-danger text-white" onclick="location.href='community.jsp'">취소</button>&nbsp;
+		<input type="submit" class="btn btn-com" value="확인">
 		</div>
 </form>
 </section>

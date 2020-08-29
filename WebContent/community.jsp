@@ -119,7 +119,7 @@
 	
 	<!-- 글쓰기 -->
 	<div class="form-inline justify-content-end">
-		<button type="button" class="btn bg-light d-none d-md-block"  
+		<button type="button" class="btn btn-com d-none d-md-block"  
 		onclick="location.href='write.jsp'">글쓰기</button>
 	</div>
 	

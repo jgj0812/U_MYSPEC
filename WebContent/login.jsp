@@ -47,7 +47,7 @@
                         onclick="javascript:window.location.href='join.jsp'"
                       />
                       <br />
-                      <a href="finder.jsp">id/비밀번호 찾기</a>
+                      <a href="finder.jsp" style="color:#000">id/비밀번호 찾기</a>
                     </form>
                   </div>
                   <div class="tab-pane fade" id="org">
@@ -74,7 +74,7 @@
                         onclick="javascript:window.location.href='join.jsp'"
                       />
                       <br />
-                      <a href="finder.jsp">id/비밀번호 찾기</a>
+                      <a href="finder.jsp" style="color:#000">id/비밀번호 찾기</a>
                     </form>
                   </div>
                 </div>
