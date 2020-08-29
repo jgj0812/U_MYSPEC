@@ -515,124 +515,143 @@
 	    </div>
 	    <br>
 	
-	    <div class="container_search">
-	      <div class="row">
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	          	 <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            D-12 조회12 댓글43 스크랩255
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
+	    <div class="container">
+	      <div class="row row-cols-1 row-cols-md-4">
+	      	<div class="col mb-4">
+	          <a href="#" class="card">
+	            <img
+	              class="card-img-top"
+	              src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"
+	              alt="Card image cap"
+	            />
+	            <div class="card-body text-left">
+	              <h5 class="card-title">대외활동 제목</h5>
+	              <p class="card-text">
+	                주최기관<br>
+	                <small>디데이 조회 댓글 스크랩</small>
+	              </p>
+	            </div>
+	          </a>
+          	</div>
+          	<div class="col mb-4">
+	          <a href="#" class="card">
+	            <img
+	              class="card-img-top"
+	              src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+	              alt="Card image cap"
+	            />
+	            <div class="card-body">
+	              <h4 class="card-title">대외활동 제목</h4>
+	              <p class="card-text">
+	                주최기관<br>
+	                디데이 조회 댓글 스크랩
+	              </p>
+	            </div>
+	          </a>
+          	</div>
+          	<div class="col mb-4">
+	          <a href="#" class="card">
+	            <img
+	              class="card-img-top"
+	              src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+	              alt="Card image cap"
+	            />
+	            <div class="card-body">
+	              <h4 class="card-title">대외활동 제목</h4>
+	              <p class="card-text">
+	                주최기관<br>
+	                디데이 조회 댓글 스크랩
+	              </p>
+	            </div>
+	          </a>
+          	</div>
+          	
+          	<div class="col mb-4">
+	          <a href="#" class="card">
+	            <img
+	              class="card-img-top"
+	              src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+	              alt="Card image cap"
+	            />
+	            <div class="card-body">
+	              <h4 class="card-title">대외활동 제목</h4>
+	              <p class="card-text">
+	                주최기관<br>
+	                디데이 조회 댓글 스크랩
+	              </p>
+	            </div>
+	          </a>
+          	</div>
 	      </div>
-	      <div class="row">
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
+	      <div class="row row-cols-1 row-cols-md-4">
+	      	<div class="col mb-4">
+	          <a href="#" class="card">
+	            <img
+	              class="card-img-top"
+	              src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"
+	              alt="Card image cap"
+	            />
+	            <div class="card-body text-left">
+	              <h5 class="card-title">대외활동 제목</h5>
+	              <p class="card-text">
+	                주최기관<br>
+	                <small>디데이 조회 댓글 스크랩</small>
+	              </p>
+	            </div>
+	          </a>
+          	</div>
+          	<div class="col mb-4">
+	          <a href="#" class="card">
+	            <img
+	              class="card-img-top"
+	              src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+	              alt="Card image cap"
+	            />
+	            <div class="card-body">
+	              <h4 class="card-title">대외활동 제목</h4>
+	              <p class="card-text">
+	                주최기관<br>
+	                디데이 조회 댓글 스크랩
+	              </p>
+	            </div>
+	          </a>
+          	</div>
+          	<div class="col mb-4">
+	          <a href="#" class="card">
+	            <img
+	              class="card-img-top"
+	              src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+	              alt="Card image cap"
+	            />
+	            <div class="card-body">
+	              <h4 class="card-title">대외활동 제목</h4>
+	              <p class="card-text">
+	                주최기관<br>
+	                디데이 조회 댓글 스크랩
+	              </p>
+	            </div>
+	          </a>
+          	</div>
+          	
+          	<div class="col mb-4">
+	          <a href="#" class="card">
+	            <img
+	              class="card-img-top"
+	              src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+	              alt="Card image cap"
+	            />
+	            <div class="card-body">
+	              <h4 class="card-title">대외활동 제목</h4>
+	              <p class="card-text">
+	                주최기관<br>
+	                디데이 조회 댓글 스크랩
+	              </p>
+	            </div>
+	          </a>
+          	</div>
 	      </div>
-	      <div class="row">
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	           <a href="#"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
-	          <br>
-	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
-	            주최기관<br>
-	            디데이 조회수 댓글수 스크랩수
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	    <br>
-	    <br>
+	     </div>
+	     
 	
 	    <!--  페이징 -->
 	   <div class="form-inline justify-content-center">		
