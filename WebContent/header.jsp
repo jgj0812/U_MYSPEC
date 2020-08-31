@@ -68,15 +68,15 @@
         <div class="col-md-3">  
           <div class="d-flex justify-content-center row">
           	<p class="text-center"><%=id %>님 안녕하세요.</p>
-            <a href="logoutPro.jsp" class="text-nowrap btn btn-outline-cam btn-block">로그아웃</a>           
+            <a href="member/logoutPro.jsp" class="text-nowrap btn btn-outline-cam btn-block">로그아웃</a>           
           </div>
         </div>
         <%}else { %>
         <div class="col-md-3">  
           <div class="d-flex justify-content-center row">
-            <a href="login.jsp" class="text-nowrap btn btn-outline-cam col">로그인</a>
+            <a id="login" onclick="login()" class="text-nowrap btn btn-outline-cam col">로그인</a>
             &nbsp;
-            <a href="join.jsp" class="text-nowrap btn btn-cam-white col">회원가입</a>
+            <a id="join" onclick="join()" class="text-nowrap btn btn-cam-white col">회원가입</a>
           </div>
         </div>
         <%} %>
@@ -92,28 +92,28 @@
         <%if(id != null) { %>
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-              <a id="activity" class="nav-link h5">대외활동</a>
+              <a id="activity" onclick="activity()" class="nav-link h5">대외활동</a>
             </li>
             <li class="nav-item px-2">
-              <a id="contest" class="nav-link h5">공모전</a>
+              <a id="contest" onclick="contest()" class="nav-link h5">공모전</a>
             </li>
             <li class="nav-item px-2">
-              <a id="community" class="nav-link h5">커뮤니티</a>
+              <a id="community" onclick="community()" class="nav-link h5">커뮤니티</a>
             </li>
             <li class="nav-item px-2">
-              <a id="mypage" class="nav-link h5">마이페이지</a>
+              <a id="mypage" onclick="mypage()" class="nav-link h5">마이페이지</a>
             </li>
           </ul>
         <%}else { %>
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-              <a id="activity" class="nav-link h5">대외활동</a>
+              <a id="activity" onclick="activity()" class="nav-link h5">대외활동</a>
             </li>
             <li class="nav-item px-2">
-              <a id="contest" class="nav-link h5">공모전</a>
+              <a id="contest" onclick="contest()" class="nav-link h5">공모전</a>
             </li>
             <li class="nav-item px-2">
-              <a id="community" class="nav-link h5">커뮤니티</a>
+              <a id="community" onclick="community()" class="nav-link h5">커뮤니티</a>
             </li>
           </ul>
         <%} %>

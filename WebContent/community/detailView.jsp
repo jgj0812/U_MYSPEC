@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
 <section class="container my-3">
 <div class="card bg-light mt-3">
 	<div class="card-header bg-light">
@@ -36,7 +35,7 @@
 
 <div class="form-inline justify-content-end">
 		<button type="button" class="btn text-dark" style="background-color:#eeeeee; margin-right:5px; font-size:12px;
-		font-family:Noto Sans KR; font-weight:bolder;"onclick="location.href='community.jsp'">목록</button>
+		font-family:Noto Sans KR; font-weight:bolder;"onclick="community()">목록</button>
 		
 		<input type="button" class="btn text-dark"  style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;
 	    font-weight:bolder;" value="다음글">
@@ -59,4 +58,3 @@
   </div>
  </div>
 </section>
-<%@ include file="/footer.jsp" %>

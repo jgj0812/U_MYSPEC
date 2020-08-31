@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
 <section class="container my-3">
 <div class="card bg-light mt-3">
 	<div class="card-header bg-light">
@@ -28,9 +27,8 @@
 		<textarea class="form-control" rows="15"></textarea>
 		<hr>
 		<div class="form-inline justify-content-end">
-		<button type="button" class="btn btn-danger text-white" onclick="location.href='community.jsp'">취소</button>&nbsp;
+		<button type="button" class="btn btn-danger text-white" onclick="community()">취소</button>&nbsp;
 		<input type="submit" class="btn btn-com" value="확인">
 		</div>
 </form>
 </section>
-<%@ include file="/footer.jsp" %>

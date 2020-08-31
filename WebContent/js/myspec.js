@@ -12,7 +12,7 @@ var birthExp = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])
 var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
 
 // 개인회원 Join
-$("#personSend").click(function(){
+function person_Send() {
 	if($("#person_id").val() == "") {
 		alert("id를 입력해주세요.");
 		$("#person_id").focus();
@@ -69,10 +69,10 @@ $("#personSend").click(function(){
 		return false;
 	}
 	$("#personFrm").submit();
-});
+}
 
 // 개인회원 id중복체크
-$("#person_idCheck").click(function(){
+function person_Check() {
 	if($("#person_id").val() == "") {
 		alert("아이디를 입력해주세요.")
 		$("person_id").focus();
@@ -85,7 +85,7 @@ $("#person_idCheck").click(function(){
 	}
 	$.ajax({
 		type:"post",
-		url:"idCheck.jsp",
+		url:"member/idCheck.jsp",
 		data:{"memType" : $("#personFrm [name=\"memType\"]").val(),
 			  "personid" : $("#person_id").val()},
 		success:function(data){
@@ -99,10 +99,10 @@ $("#person_idCheck").click(function(){
 			alert("error: " + e);
 		}
 	});
-});
+}
 
 // 단체회원 Join
-$("#orgSend").click(function(){
+function org_Send() {
 	if($("#org_id").val() == "") {
 		alert("아이디를 입력해주세요.");
 		$("#org_id").focus();
@@ -158,10 +158,10 @@ $("#orgSend").click(function(){
 		return false;
 	}
 	$("#orgFrm").submit();
-});
+}
 
 // 단체회원 id중복체크
-$("#org_idCheck").click(function(){
+function org_Check() {
 	if($("#org_id").val() == "") {
 		alert("아이디를 입력해주세요.");
 		$("#org_id").focus();
@@ -174,7 +174,7 @@ $("#org_idCheck").click(function(){
 	}
 	$.ajax({
 		type: "post",
-		url: "idCheck.jsp",
+		url: "member/idCheck.jsp",
 		data: {"memType" : $("#orgFrm [name=\"memType\"]").val(),
 			   "orgid" : $("#org_id").val()},
 		success: function(data) {
@@ -188,10 +188,10 @@ $("#org_idCheck").click(function(){
 			alert("error: " + e);
 		}
 	});
-});
+}
 
 // 개인회원 로그인
-$("#personLogin").click(function(){
+function person_Login() {
 	if($("#person_login_id").val() == "") {
 		alert("아이디를 입력해주세요");
 		$("#person_login_id").focus();
@@ -203,10 +203,10 @@ $("#personLogin").click(function(){
 		return false;
 	}
 	$("#personLoginFrm").submit();
-});
+}
 
 // 단체회원 로그인
-$("#orgLogin").click(function(){
+function org_Login() {
 	if($("#org_login_id").val() == "") {
 		alert("아이디를 입력해주세요");
 		$("#org_login_id").focus();
@@ -218,10 +218,10 @@ $("#orgLogin").click(function(){
 		return false;
 	}
 	$("#orgLoginFrm").submit();
-});
+}
 
 // id찾기 화면표시
-$("#findIdMemtype").change(function(){
+function find_Id_mem() {
 	var selected = $("#findIdMemtype option:selected");
 	var output = "";
 	if(selected.val() == 0) {
@@ -257,10 +257,10 @@ $("#findIdMemtype").change(function(){
 		output += "</div>"
 	}
 	$("#idTypeGroup").html(output);
-});
+}
 
 // id찾기 버튼동작
-$("#idFindBtn").click(function(){
+function id_Find() {
 	var selected = $("#findIdMemtype option:selected");
 	if(selected.val() == -1) {
 		alert("회원유형을 선택해주세요.");
@@ -305,30 +305,60 @@ $("#idFindBtn").click(function(){
 			return false;
 		}
 	}
-	$("#findIdFrm").submit();
-});
+	var formData = $("#findIdFrm").serialize();
+	$.ajax({
+		url: "member/finderPro.jsp",
+		type: "post",
+		data: formData,
+		success: function(data) {
+			if(data.trim() == "false") {
+				alert("이메일 발송에 실패하였습니다.");
+			}else if(data.trim() == "true") {
+				alert("아이디가 적힌 이메일을 발송하였습니다.");
+				login();
+			}
+		},
+		error: function(e) {
+			alert("error: " + e);
+		}
+	});
+}
 
 // 비밀번호 찾기 버튼동작
-$("#pwdFindBtn").click(function(){
-	var selected = $("#findPwdMemtype option:selected");
+function pwd_Find() {
+	var selected = $("#findPwdMem option:selected");
 	if(selected.val() == -1) {
 		alert("회원 유형을 선택해주세요");
 		return false;
 	}
-	else {
-		if($("#findId").val() == "") {
-			alert("아이디를 입력해주세요");
-			$("#findId").focus();
-			return false;
-		}
-		if($("#findEmail").val() == "") {
-			alert("이메일을 입력해주세요");
-			$("#findEmail").focus();
-			return false;
-		}
+	if($("#findId").val() == "") {
+		alert("아이디를 입력해주세요");
+		$("#findId").focus();
+		return false;
 	}
-	$("#findPwdFrm").submit();
-});
+	if($("#findEmail").val() == "") {
+		alert("이메일을 입력해주세요");
+		$("#findEmail").focus();
+		return false;
+	}
+	var formData = $("#findPwdFrm").serialize();
+	$.ajax({
+		url: "member/finderPro.jsp",
+		type: "post",
+		data: formData,
+		success: function(data) {
+			if(data.trim() == "false") {
+				alert("이메일 발송에 실패하였습니다.");
+			}else if(data.trim() == "true") {
+				alert("비밀번호가 적힌 이메일을 발송하였습니다.");
+				login();
+			}
+		},
+		error: function(e) {
+			alert("error: " + e);
+		}
+	});
+}
 
 // 마이페이지 sidebar 동작
 $("#menu-toggle").click(function(e) {
@@ -383,26 +413,62 @@ $(document).ready(function () {
 	});
 });
 
-// 대외활동, 공모전 리스트 체크박스 동작
-$("input:checkbox").click(function (e) {
-  var id = $(e).attr("id")
-  var str = '<button>' + id + '</button>'
-  $("#choicetag").append(str);
-});
 function reset() {
   $("#choicetag *").remove();
 }
 
 // 비동기 페이지 로딩 (navbar)
-$("#activity").click(function(){
-	$("main").load("/activity/list_act.jsp");
-});
-$("#contest").click(function(){
-	$("main").load("/contest/list_gongmo.jsp");
-});
-$("#community").click(function(){
-	$("main").load("/community/community.jsp");
-});
-$("#mypage").click(function(){
-	$("main").load("/myPage/myPage.jsp");
+function activity() {
+	$("main").load("activity/list_act.jsp");
+}
+function contest() {
+	$("main").load("contest/list_gongmo.jsp");
+}
+function community() {
+	$("main").load("community/community.jsp");
+}
+function mypage() {
+	$("main").load("myPage/myPage.jsp");
+}
+function login() {
+	$('main').load('member/login.jsp');
+}
+function join() {
+	$("main").load("member/join.jsp");
+}
+function finder() {
+	$("main").load("member/finder.jsp");
+}
+function act_detail() {
+	$("main").load("activity/list_act_detailView.jsp");
+}
+function com_detail() {
+	$("main").load("community/detailView.jsp");
+}
+function com_write() {
+	$("main").load("community/write.jsp");
+}
+function my_com() {
+	$("#myMain").load("myPage/myPage_community.jsp");
+}
+function my_info() {
+	$("#myMain").load("myPage/myPage_info.jsp");
+}
+function my_delete() {
+	$("#myMain").load("myPage/myPage_delete.jsp");
+}
+function my_orgReady() {
+	$("#myMain").load("myPage/myPage_orgReady.jsp");
+}
+function my_orgRecru() {
+	$("#myMain").load("myPage/myPage_orgRecru.jsp");
+}
+function act_update() {
+	$("#myMain").load("activity/list_act_update.jsp");
+}
+// 대외활동, 공모전 리스트 체크박스 동작
+$("input:checkbox").click(function (e) {
+  var id = $(e).attr("id");
+  var str = "<button>" + id + "</button>";
+  $("#choicetag").append(str);
 });

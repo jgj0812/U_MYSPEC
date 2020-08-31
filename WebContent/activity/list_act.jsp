@@ -517,10 +517,10 @@
 	    <div class="container_search">
 	      <div class="row">
 	        <div class="col-6 col-sm-6 col-lg-3" id="col">
-	          	 <a href="list_act_detailView.jsp"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
+	          	 <a onclick="act_detail()"><img src="http://ktsmemo.cdn3.cafe24.com/p/0427.jpg"></a>
 	          <br>
 	          <div class="list_explain">
-	           <a href="#"><div class="list_explain_title">대외활동 제목<br></div></a>
+	           <a onclick=""><div class="list_explain_title">대외활동 제목<br></div></a>
 	            주최기관<br>
 	            D-12 조회12 댓글43 스크랩255
 	          </div>

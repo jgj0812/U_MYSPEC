@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
 	<section class="py-3" id="join">
       <h1 class="text-center">회원가입</h1>
       <div class="container">
@@ -39,6 +38,7 @@
                         id="person_idCheck"
                         value="중복확인"
                         class="btn btn-cam col-md-4"
+                        onclick="person_Check()"
                       />
                       <div class="form-group">
                         <label for="password">비밀번호</label>
@@ -69,6 +69,7 @@
                         id="personSend"
                         value="가입"
                         class="btn btn-cam col-md-4"
+                        onclick="person_Send()"
                       />
                       &nbsp;
                       <input
@@ -90,6 +91,7 @@
                         id="org_idCheck"
                         value="중복확인"
                         class="btn btn-cam col-md-4"
+                        onclick="org_Check()"
                       />
                       <div class="form-group">
                         <label for="password">비밀번호</label>
@@ -137,6 +139,7 @@
                         id="orgSend"
                         value="가입"
                         class="btn btn-cam col-md-4"
+                        onclick="org_Send()"
                       />
                       &nbsp;
                       <input
@@ -153,4 +156,3 @@
         </div>
       </div>
     </section>
-<%@ include file="/footer.jsp" %>

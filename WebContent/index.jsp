@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
-<main class="py-3">
-	<div class="container">
+<main class="">
+	<div class="container py-3">
 		<h3>공지사항</h3>
 		<div class="table-responsive-sm">
 		  <table class="table table-sm table-hover">

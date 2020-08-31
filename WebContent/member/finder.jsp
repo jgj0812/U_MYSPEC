@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
 	<section class="py-3" id="Finder">
       <h1 class="text-center">id/비밀번호 찾기</h1>
       <div class="container">
@@ -24,11 +23,11 @@
               <div class="card-body">
                 <div class="tab-content mt-3">
                   <div class="tab-pane fade show active" id="idfind">
-                    <form action="finderPro.jsp" method="post" id="findIdFrm">
+                    <form method="post" id="findIdFrm">
                       <input type="hidden" name="findType" value="0"/>
                       <div class="form-group">
                       	<label for="member">회원 유형을 선택해주세요</label>
-                      	<select class="form-control" name="memType" id="findIdMemtype">
+                      	<select class="form-control" name="memType" id="findIdMemtype" onchange="find_Id_mem()">
                       		<option value="-1">선택</option>
                       		<option value="0">개인회원</option>
                       		<option value="1">단체회원</option>
@@ -41,15 +40,16 @@
                         id="idFindBtn"
                         value="id 찾기"
                         class="btn btn-cam btn-block mt-3"
+                        onclick="id_Find()"
                       />
                     </form>
                   </div>
                   <div class="tab-pane fade" id="pwdfind">
-                    <form action="finderPro.jsp" method="post" id="findPwdFrm">
+                    <form method="post" id="findPwdFrm">
                       <input type="hidden" name="findType" value="1"/>
                       <div class="form-group">
                       	<label for="member">회원 유형을 선택해주세요</label>
-                      	<select class="form-control" name="memType" id="findPwdMemtype">
+                      	<select class="form-control" name="memType" id="findPwdMem">
                       		<option value="-1">선택</option>
                       		<option value="0">개인회원</option>
                       		<option value="1">단체회원</option>
@@ -64,10 +64,11 @@
                         <input type="email" name="email" id="findEmail" class="form-control" />
                       </div>
                       <input
-                        type="submit"
+                        type="button"
                         id="pwdFindBtn"
                         value="비밀번호 찾기"
                         class="btn btn-cam btn-block mt-3"
+                        onclick="pwd_Find()"
                       />
                     </form>
                   </div>
@@ -78,4 +79,3 @@
         </div>
       </div>
     </section>
-<%@ include file="/footer.jsp" %>

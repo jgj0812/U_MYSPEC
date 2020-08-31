@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp"%>
 	<section class="container">
 	<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
@@ -63,4 +62,3 @@
 	</div>
 
 	</section>
-<%@ include file="/footer.jsp"%>

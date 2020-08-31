@@ -16,7 +16,7 @@
 %>
 			<script type="text/javascript">
 				alert("회원가입을 축하합니다.");
-				document.location.href="login.jsp";
+				login();
 			</script>
 <%
 		}else {
@@ -37,7 +37,6 @@
 %>
 			<script type="text/javascript">
 				alert("회원가입을 축하합니다.");
-				document.location.href="login.jsp";
 			</script>
 <%
 		}else {

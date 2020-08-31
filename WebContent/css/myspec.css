@@ -54,6 +54,7 @@
 a, a:hover {
 	color: #000;
 	text-decoration: none;
+	cursor: pointer;
 }
 /*테이블 말줄임을 위해 테이블 레이아웃 고정*/
 .table {

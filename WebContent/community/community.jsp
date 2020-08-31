@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
-
 <section class="container my-3">
 	<div class="container py-3 d-flex justify-content-between bg-light">
 		<h3>커뮤니티 게시판</h3>
-		<a href="write.jsp" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
+		<a onclick="com_write()" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
 	</div>
 
 	<!-- 테이블 -->
@@ -26,7 +24,7 @@
 		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
 		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
 		 			<td class="col-md-5">
-		 				<a class="h5">MYSPEC 사이트를 오픈하였습니다. 어렵다 ㅋㅋㅋ</a>
+		 				<a onclick="com_detail()" class="h5">MYSPEC 사이트를 오픈하였습니다. 어렵다 ㅋㅋㅋ</a>
 		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
 		 			</td>
 		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
@@ -120,7 +118,7 @@
 	<!-- 글쓰기 -->
 	<div class="form-inline justify-content-end">
 		<button type="button" class="btn btn-com d-none d-md-block"  
-		onclick="location.href='write.jsp'">글쓰기</button>
+		onclick="com_write()">글쓰기</button>
 	</div>
 	
 	<!-- 페이징 -->
@@ -161,4 +159,3 @@
 		</div>
 	</form>
 </section>
-<%@ include file="/footer.jsp"%>

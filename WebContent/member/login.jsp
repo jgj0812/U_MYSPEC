@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
 	<section class="flex-shrink-0 py-5" id="login">
       <h1 class="text-center">로그인</h1>
       <div class="container">
@@ -24,7 +23,7 @@
               <div class="card-body">
                 <div class="tab-content mt-3">
                   <div class="tab-pane fade show active" id="member">
-                    <form action="loginPro.jsp" id="personLoginFrm" method="post">
+                    <form action="member/loginPro.jsp" id="personLoginFrm" method="post">
                       <input type="hidden" name="memType" value="0" />
                       <div class="form-group">
                         <label for="id">id</label>
@@ -39,19 +38,21 @@
                         id="personLogin"
                         value="로그인"
                         class="btn btn-cam btn-block"
+                        onclick="person_Login()"
+                        
                       />
                       <input
                         type="button"
                         value="회원가입"
                         class="btn btn-cam-white btn-block"
-                        onclick="javascript:window.location.href='join.jsp'"
+                        onclick="join()"
                       />
                       <br />
-                      <a href="finder.jsp" style="color:#000">id/비밀번호 찾기</a>
+                      <a onclick="finder()">id/비밀번호 찾기</a>
                     </form>
                   </div>
                   <div class="tab-pane fade" id="org">
-                    <form action="loginPro.jsp" method="post" id="orgLoginFrm">
+                    <form action="member/loginPro.jsp" method="post" id="orgLoginFrm">
                       <input type="hidden" name="memType" value="1" />
                       <div class="form-group">
                         <label for="id">id</label>
@@ -66,15 +67,16 @@
                         id="orgLogin"
                         value="로그인"
                         class="btn btn-cam btn-block"
+                        onclick="org_Login()"
                       />
                       <input
                         type="button"
                         value="회원가입"
                         class="btn btn-cam-white btn-block"
-                        onclick="javascript:window.location.href='join.jsp'"
+                        onclick="join()"
                       />
                       <br />
-                      <a href="finder.jsp" style="color:#000">id/비밀번호 찾기</a>
+                      <a onclick="finder()">id/비밀번호 찾기</a>
                     </form>
                   </div>
                 </div>
@@ -84,4 +86,3 @@
         </div>
       </div>
     </section>
-<%@ include file="/footer.jsp" %>

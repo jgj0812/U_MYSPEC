@@ -13,7 +13,7 @@
                 커뮤니티
               </h3>
 			<div class="list-group list-group-flush">
-				<a href="myPage_community.jsp" class="list-group-item list-group-item-action bg-light">내가 쓴 글</a>
+				<a onclick="my_com()" class="list-group-item list-group-item-action bg-light">내가 쓴 글</a>
 				<a href="#" class="list-group-item list-group-item-action bg-light">댓글 쓴 글</a>
 			</div>
 			
@@ -33,8 +33,8 @@
                 회원정보
             </h3>
             <div class="list-group list-group-flush">
-				<a href="myPage_info.jsp" class="list-group-item list-group-item-action bg-light">회원정보 변경</a>
-				<a href="myPage_delete.jsp" class="list-group-item list-group-item-action bg-light">회원탈퇴</a>
+				<a onclick="my_info()" class="list-group-item list-group-item-action bg-light">회원정보 변경</a>
+				<a onclick="my_delete()" class="list-group-item list-group-item-action bg-light">회원탈퇴</a>
 			</div>
 			<%}else { %>
 			<!-- 단체회원 sidebar -->
@@ -44,8 +44,8 @@
                 모집중인 활동
               </h3>
 			<div class="list-group list-group-flush">
-				<a href="myPage_orgRecru.jsp" class="list-group-item list-group-item-action bg-light">대외활동</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">공모전</a>
+				<a onclick="my_orgReady()" class="list-group-item list-group-item-action bg-light">대외활동</a>
+				<a onclick="my_orgRecru()" class="list-group-item list-group-item-action bg-light">공모전</a>
 			</div>
 			
 			<h3
