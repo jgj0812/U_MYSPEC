@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*조기종 css*/
 /*구글 폰트 적용*/
 * {
   font-family: "Noto Sans KR", sans-serif;
@@ -24,16 +25,6 @@
 	color: #fff;
 	border-color: #1dcdff;
 }
-.btn-com {
-	background-color: #EEEEEE;
-	color: #000;
-	border-color: #EEEEEE;
-}
-.btn-com:hover {
-	background-color: #d5d5d5;
-	color: #000;
-	border-color: #d5d5d5;
-}
 .btn-cam:hover {
 	background-color: #1dbbd9;
 	border-color: #1db4cc;
@@ -47,7 +38,18 @@
 	background-color: #1dcdff;
 	border-color: #1dcdff;
 }
-/*a링크 텍스트 검은색으로 */
+/*커뮤니티 버튼*/
+.btn-com {
+	background-color: #EEEEEE;
+	color: #000;
+	border-color: #EEEEEE;
+}
+.btn-com:hover {
+	background-color: #d5d5d5;
+	color: #000;
+	border-color: #d5d5d5;
+}
+/* a링크 텍스트 검은색으로 */
 a, a:hover {
 	color: #000;
 	text-decoration: none;
@@ -144,8 +146,8 @@ a, a:hover {
 
 /* 포스터나오는 검색결과 컨테이너 이미지 크기 */
 .container_search img {
-  width: 250px;
-  height: 280px;
+  width: 100%;
+  height: auto;
 }
 
 /* 결과 숫자랑 드롭다운 포함하는 div */
@@ -227,8 +229,8 @@ a, a:hover {
 /* 윈도우 크기가 작아지면서 사진 크기때문에 겹치거나 보기 별로라서 이미지 크기를 줄임  */
 @media (max-width:800px) {
   .container_search img {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: auto;
   }
 }
 
@@ -240,8 +242,8 @@ a, a:hover {
 }
 
 .container_search img {
-  width: 150px;
-  height: 200px;
+  width: 100%;
+  height: auto;
 }
 
 /* 화면 크기가 360이하면 탭이 안보인다 */
