@@ -11,7 +11,7 @@
 		if(re == 1) {
 			session.setAttribute("id", personId);
 			session.setAttribute("member", 0);
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("../index.jsp");
 		}else if(re == 0) {
 %>
 			<script>
@@ -34,7 +34,7 @@
 		if(re == 1) {
 			session.setAttribute("id", orgId);
 			session.setAttribute("member", 1);
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("../index.jsp");
 		}else if(re == 0) {
 %>
 			<script>

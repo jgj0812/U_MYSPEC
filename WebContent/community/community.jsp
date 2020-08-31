@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
+<%@ include file="../header.jsp" %>
 
 <section class="container my-3">
 	<div class="container py-3 d-flex justify-content-between bg-light">
@@ -148,7 +148,7 @@
 
 	<!-- 검색 -->
 	<form class="form-inline justify-content-center">
-		<select class="form-control mr-1">
+		<select class="form-controls" id="search_control">
 			<option value="0">제목</option>
 			<option value="1">내용</option>
 			<option value="2">닉네임</option>
@@ -161,4 +161,4 @@
 		</div>
 	</form>
 </section>
-<%@ include file="/footer.jsp"%>
+<%@ include file="../footer.jsp"%>

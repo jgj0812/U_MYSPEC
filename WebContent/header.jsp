@@ -39,13 +39,13 @@
       href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
     />
     <!-- MYSPEC CSS -->
-    <link rel="stylesheet" href="./css/myspec.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myspec.css" />
   </head>
   <body class="d-flex flex-column h-100">
     <header>
       <nav class="navbar navbar-expand-sm bg-cam navbar-dark flex-md-nowrap">
       	<div class="container">
-        <a class="navbar-brand col mr-10 px-3 py-3" href="index.jsp">MYSPEC!</a>
+        <a class="navbar-brand col mr-10 px-3 py-3" href="${pageContext.request.contextPath}/index.jsp">MYSPEC!</a>
         <button
           class="navbar-toggler collapsed"
           type="button"
@@ -54,7 +54,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <form class="form-inline w-100 py-2" action="#" method="POST">
+        <form class="form-inline w-100 py-2" action="${pageContext.request.contextPath}/search.jsp" method="POST">
           <div class="input-group">
             <input type="text" id="search" name="search" class="form-control" size="50" />
             <div class="input-group-append">
@@ -68,15 +68,15 @@
         <div class="col-md-3">  
           <div class="d-flex justify-content-center row">
           	<p class="text-center"><%=id %>님 안녕하세요.</p>
-            <a href="logoutPro.jsp" class="text-nowrap btn btn-outline-cam btn-block">로그아웃</a>           
+            <a href="${pageContext.request.contextPath}/member/logoutPro.jsp" class="text-nowrap btn btn-outline-cam btn-block">로그아웃</a>           
           </div>
         </div>
         <%}else { %>
         <div class="col-md-3">  
           <div class="d-flex justify-content-center row">
-            <a href="login.jsp" class="text-nowrap btn btn-outline-cam col">로그인</a>
+            <a href="${pageContext.request.contextPath}/member/login.jsp" class="text-nowrap btn btn-outline-cam col">로그인</a>
             &nbsp;
-            <a href="join.jsp" class="text-nowrap btn btn-cam-white col">회원가입</a>
+            <a href="${pageContext.request.contextPath}/member/join.jsp" class="text-nowrap btn btn-cam-white col">회원가입</a>
           </div>
         </div>
         <%} %>
@@ -92,28 +92,28 @@
         <%if(id != null) { %>
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-              <a href="list_act.jsp" class="nav-link h5">대외활동</a>
+              <a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link h5">대외활동</a>
             </li>
             <li class="nav-item px-2">
-              <a href="list_gongmo.jsp" class="nav-link h5">공모전</a>
+              <a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link h5">공모전</a>
             </li>
             <li class="nav-item px-2">
-              <a href="community.jsp" class="nav-link h5">커뮤니티</a>
+              <a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link h5">커뮤니티</a>
             </li>
             <li class="nav-item px-2">
-              <a href="myPage.jsp" class="nav-link h5">마이페이지</a>
+              <a href="${pageContext.request.contextPath}/myPage/myPage.jsp" class="nav-link h5">마이페이지</a>
             </li>
           </ul>
         <%}else { %>
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-              <a href="list_act.jsp" class="nav-link h5">대외활동</a>
+              <a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link h5">대외활동</a>
             </li>
             <li class="nav-item px-2">
-              <a href="list_gongmo.jsp" class="nav-link h5">공모전</a>
+              <a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link h5">공모전</a>
             </li>
             <li class="nav-item px-2">
-              <a href="community.jsp" class="nav-link h5">커뮤니티</a>
+              <a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link h5">커뮤니티</a>
             </li>
           </ul>
         <%} %>

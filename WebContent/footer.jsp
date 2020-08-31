@@ -34,6 +34,6 @@
       src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
     ></script>
 	<!-- myspec.js -->
-	<script src="./js/myspec.js"></script>
+	<script src="${pageContext.request.contextPath}/js/myspec.js"></script>
   </body>
 </html>

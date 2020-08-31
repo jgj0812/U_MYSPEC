@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
+<%@ include file="../header.jsp" %>
 <div class="container mt-3">
    <!-- 태그: 활동분야, 관심분야, 활동혜택, 활동기간, 모임지역 -->
     <nav>
@@ -546,4 +546,4 @@
 	</div>
     <br>
 </div>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>

@@ -1,6 +1,6 @@
 // header 검색 버튼
 $('#searchBtn').click(function(){
-	if($('#search').value == null) {
+	if($('#search').value == "") {
 		alert("검색어를 입력해주세요.");
 		$('#search').focus;
 		return false;

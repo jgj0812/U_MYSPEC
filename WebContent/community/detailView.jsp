@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %>
+<%@ include file="../header.jsp" %>
 <section class="container my-3">
 <div class="card bg-light mt-3">
 	<div class="card-header bg-light">
@@ -17,6 +17,7 @@
 	<hr>
 			<div class="row" style="font-size: 0.75rem; color: #999;" >
 				<div style="margin-left:40px;"><p>효진</p></div>
+				<hr class="name_line">
 				<div style="margin-left:15px;"><p>2020.08.25</p></div>
 				<div style="margin-left:10px;"><p>조회수</p></div>
 				<div style="margin-left:3px;"><p>......</p></div>
@@ -30,7 +31,7 @@
 
 
 <div class="form-inline justify-content-end">
-	<a href="#"><img src="img/icon.png" width="25px" height="25px" style="background-color:#eeeeee;"></a>
+	<a href="#"><img src="${pageContext.request.contextPath}/img/icon.png" width="25px" height="25px" style="background-color:#eeeeee;"></a>
 </div>
 <hr>
 
@@ -59,4 +60,4 @@
   </div>
  </div>
 </section>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
