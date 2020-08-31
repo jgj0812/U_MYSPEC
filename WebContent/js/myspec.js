@@ -510,3 +510,11 @@ $("input:checkbox").click(function (e) {
   var str = "<button>" + id + "</button>";
   $("#choicetag").append(str);
 });
+
+// summernote
+$(document).ready(function () {
+	$("#content").summernote({
+		lang: "ko-KR",
+    	height: "20em",
+	});
+});
