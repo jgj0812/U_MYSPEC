@@ -392,3 +392,17 @@ $("input:checkbox").click(function (e) {
 function reset() {
   $("#choicetag *").remove();
 }
+
+// 비동기 페이지 로딩 (navbar)
+$("#activity").click(function(){
+	$("main").load("/activity/list_act.jsp");
+});
+$("#contest").click(function(){
+	$("main").load("/contest/list_gongmo.jsp");
+});
+$("#community").click(function(){
+	$("main").load("/community/community.jsp");
+});
+$("#mypage").click(function(){
+	$("main").load("/myPage/myPage.jsp");
+});

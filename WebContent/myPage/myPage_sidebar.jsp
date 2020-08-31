@@ -44,7 +44,7 @@
                 모집중인 활동
               </h3>
 			<div class="list-group list-group-flush">
-				<a href="#" class="list-group-item list-group-item-action bg-light">대외활동</a>
+				<a href="myPage_orgRecru.jsp" class="list-group-item list-group-item-action bg-light">대외활동</a>
 				<a href="#" class="list-group-item list-group-item-action bg-light">공모전</a>
 			</div>
 			
@@ -54,7 +54,7 @@
                 승인 대기 중
             </h3>
             <div class="list-group list-group-flush">
-				<a href="#" class="list-group-item list-group-item-action bg-light">대외활동</a>
+				<a href="myPage_orgReady.jsp" class="list-group-item list-group-item-action bg-light">대외활동</a>
 				<a href="#" class="list-group-item list-group-item-action bg-light">공모전</a>
 			</div>
 			

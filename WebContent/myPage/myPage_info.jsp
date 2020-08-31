@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
-<main class="">
+<section class="">
 	<div class="d-flex" id="wrapper">
 		
-		<%@ include file="/myPage_sidebar.jsp" %>
+		<%@ include file="/myPage/myPage_sidebar.jsp" %>
 		
 		<!-- page Content -->
 		<div id="page-content-wrapper">
@@ -150,5 +150,5 @@
 		<!-- /#page Content -->
 	</div>
 	<!-- /#wrapper -->
-</main>
+</section>
 <%@ include file="/footer.jsp" %>

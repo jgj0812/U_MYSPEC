@@ -4,7 +4,7 @@
 <div class="container mt-3">
    <!-- 태그: 활동분야, 관심분야, 활동혜택, 활동기간, 모임지역 -->
     <nav>
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <div class="nav nav-tabs tab-a" id="nav-tab" role="tablist">
         <a class="nav-item nav-link active" id="nav-field-tab" data-toggle="tab" href="#nav-field" role="tab"
           aria-controls="nav-field" aria-selected="true">공모분야</a>
 

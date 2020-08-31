@@ -92,28 +92,28 @@
         <%if(id != null) { %>
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-              <a href="list_act.jsp" class="nav-link h5">대외활동</a>
+              <a id="activity" class="nav-link h5">대외활동</a>
             </li>
             <li class="nav-item px-2">
-              <a href="list_gongmo.jsp" class="nav-link h5">공모전</a>
+              <a id="contest" class="nav-link h5">공모전</a>
             </li>
             <li class="nav-item px-2">
-              <a href="community.jsp" class="nav-link h5">커뮤니티</a>
+              <a id="community" class="nav-link h5">커뮤니티</a>
             </li>
             <li class="nav-item px-2">
-              <a href="myPage.jsp" class="nav-link h5">마이페이지</a>
+              <a id="mypage" class="nav-link h5">마이페이지</a>
             </li>
           </ul>
         <%}else { %>
           <ul class="navbar-nav">
             <li class="nav-item px-2">
-              <a href="list_act.jsp" class="nav-link h5">대외활동</a>
+              <a id="activity" class="nav-link h5">대외활동</a>
             </li>
             <li class="nav-item px-2">
-              <a href="list_gongmo.jsp" class="nav-link h5">공모전</a>
+              <a id="contest" class="nav-link h5">공모전</a>
             </li>
             <li class="nav-item px-2">
-              <a href="community.jsp" class="nav-link h5">커뮤니티</a>
+              <a id="community" class="nav-link h5">커뮤니티</a>
             </li>
           </ul>
         <%} %>

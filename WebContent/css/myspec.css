@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /*조기종 css*/
 /*구글 폰트 적용*/
 * {
@@ -168,7 +169,7 @@ a, a:hover {
 }
 
 /* 태그 글자 */
-.tab-content a {
+.tab-a a {
   color: lightgray;
   text-decoration: none;
 }
@@ -285,6 +286,7 @@ a, a:hover {
   border: 0px;
 }
 
+/*송민관 css*/
 .note-modal .modal-dialog .modal-content .modal-header {
   background: #007bff;
   color: #ffffff;
