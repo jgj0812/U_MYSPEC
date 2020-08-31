@@ -287,6 +287,45 @@ a, a:hover {
   border: 0px;
 }
 
+.c_title{
+	margin-right: auto; 
+	margin-top: 15px; 
+}
+
+@media (max-width:360px) {
+	.c_title{
+		margin-right: auto; 
+		margin-top: 15px; 
+		width: 240px;
+	}
+
+}
+
+#search_control{
+	margin-right: 4px;
+}
+   
+@media (max-width:360px) {
+	.table-sm td, .table-sm th {
+	    padding-top: 1rem;
+	    padding-bottom: 0px;
+	}
+	
+	 #search_control{
+  		margin-right: 0px;
+  	} 
+}
+
+.name_line{
+	height: 12px; 
+	width:1px; 
+	background-color: #f2f2f2; 
+	margin-top: 3px;
+	margin-bottom: 0px; 
+	margin-left: 10px; 
+	margin-right: 10px;
+}
+
 /*송민관 css*/
 .note-modal .modal-dialog .modal-content .modal-header {
   background: #007bff;

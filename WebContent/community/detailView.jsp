@@ -9,18 +9,19 @@
 	</div>
 </div>
 
-	<hr style="height: 2px; background-color: black;">
+	<hr style="height: 3px; background-color: black;">
 			<div style="margin-left:20px;">
 			<h3>서포터즈</h3>
 			</div>		
 	<hr>
 			<div class="row" style="font-size: 0.75rem; color: #999;" >
 				<div style="margin-left:40px;"><p>효진</p></div>
+				<hr class= "name_line" >
 				<div style="margin-left:15px;"><p>2020.08.25</p></div>
 				<div style="margin-left:10px;"><p>조회수</p></div>
 				<div style="margin-left:3px;"><p>......</p></div>
 			</div>
-			<hr>
+			<hr style="margin-top: 3px">
 <div class="jumbotron jumbotron-fluid" style="background-color:white;">
   <div class="container">
     <p class="lead">.............</p>
