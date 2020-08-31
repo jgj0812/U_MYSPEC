@@ -58,7 +58,7 @@
           <div class="input-group">
             <input type="text" id="search" name="search" class="form-control" size="50" />
             <div class="input-group-append">
-              <button type="submit" id="searchBtn" class="btn btn-light px-2">
+              <button type="button" id="searchBtn" onclick="my_search()" class="btn btn-light px-2">
                 <i class="fas fa-search"></i>
               </button>
             </div>

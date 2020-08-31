@@ -1,6 +1,6 @@
 // header 검색 버튼
 $('#searchBtn').click(function(){
-	if($('#search').value == null) {
+	if($('#search').value == "") {
 		alert("검색어를 입력해주세요.");
 		$('#search').focus;
 		return false;
@@ -466,6 +466,10 @@ function my_orgRecru() {
 function act_update() {
 	$("#myMain").load("activity/list_act_update.jsp");
 }
+function my_search() {
+	$("main").load("search.jsp");
+}
+
 // 대외활동, 공모전 리스트 체크박스 동작
 $("input:checkbox").click(function (e) {
   var id = $(e).attr("id");
