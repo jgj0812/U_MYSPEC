@@ -68,7 +68,24 @@ function person_Send() {
 		$("#person_phone").focus();
 		return false;
 	}
-	$("#personFrm").submit();
+	var formData = $("#personFrm").serialize();
+	$.ajax({
+		url: "member/joinPro.jsp",
+		type: "post",
+		data: formData,
+		success: function(data) {
+			if(data.trim() == 1) {
+				alert("회원가입을 축하합니다.");
+				login();
+			}else {
+				alert("회원가입에 실패하였습니다.");
+				history.go(-1);
+			}
+		},
+		error: function(e) {
+			alert("error: " + e);
+		}
+	});
 }
 
 // 개인회원 id중복체크
@@ -157,7 +174,24 @@ function org_Send() {
 		$("#org_phone").focus();
 		return false;
 	}
-	$("#orgFrm").submit();
+	var formData = $("#orgFrm").serialize();
+	$.ajax({
+		url: "member/joinPro.jsp",
+		type: "post",
+		data: formData,
+		success: function(data) {
+			if(data.trim() == 1) {
+				alert("회원가입을 축하합니다.");
+				login();
+			}else {
+				alert("회원가입에 실패하였습니다.");
+				history.go(-1);
+			}
+		},
+		error: function(e) {
+			alert("error: " + e);
+		}
+	});
 }
 
 // 단체회원 id중복체크

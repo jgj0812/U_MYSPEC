@@ -12,40 +12,13 @@
 <jsp:setProperty property="*" name="pb" />
 <%
 		int re = mgr.insertPersonMember(pb);
-		if(re == 1) {
-%>
-			<script type="text/javascript">
-				alert("회원가입을 축하합니다.");
-				login();
-			</script>
-<%
-		}else {
-%>
-			<script>
-				alert("회원가입에 실패하였습니다.")
-				history.go(-1);
-			</script>
-<%
-		}
+		out.println(re);
 	}else if(memType == 1) {
 %>
 <jsp:useBean id="ob" class="mySpec.OrgBean"/>
 <jsp:setProperty property="*" name="ob"/>
 <%
 		int re = mgr.insertOrgMember(ob);
-		if(re == 1) {
-%>
-			<script type="text/javascript">
-				alert("회원가입을 축하합니다.");
-			</script>
-<%
-		}else {
-%>
-			<script>
-				alert("회원가입에 실패하였습니다.")
-				history.go(-1);
-			</script>
-<%
-		}
+		out.println(re);
 	}
 %>
