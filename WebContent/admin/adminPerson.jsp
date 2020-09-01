@@ -47,7 +47,7 @@
 		                				<td><%=pb.getEmail() %></td>
 		                				<td><%=pb.getPhone() %></td>
 		               				</tr>
-		                	<%		
+		                	<%
 		                		}
 		                	%>
 		                </tbody>
