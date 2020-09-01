@@ -37,6 +37,6 @@
     <script src="./summernote/summernote-bs4.min.js"></script>
     <script src="./summernote/lang/summernote-ko-KR.js"></script>
 	<!-- myspec.js -->
-	<script src="./js/myspec.js"></script>
+	<script defer src="${pageContext.request.contextPath}/js/myspec.js"></script>
   </body>
 </html>
