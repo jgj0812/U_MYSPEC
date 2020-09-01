@@ -14,25 +14,27 @@
 		
 		<!-- page Content -->
 		<div id="page-content-wrapper">
+			<!-- toggle 버튼 -->
 			<nav class="navbar-my navbar-expand-lg navbar-light">
 				<button id="menu-toggle" class="btn btn-link d-md-none rounded-circle">
             		<i class="fa fa-bars"></i>
           		</button>
 			</nav>
+			<!-- /toggle 버튼 -->
 			
-			
-				<div class="col-lg-12 bg-light p-4">개인회원</div>
-		          <div class="col-lg-12 border border-light">
-		            <div class="table-responsive">
-		              <table class="table table-sm table-hover">
-		                <thead>
-		                  <tr>
-		                    <th>ID</th>
-		                    <th>닉네임</th>
-		                    <th>생년월일</th>
-		                    <th>이메일</th>
-		                    <th>전화번호</th>
-		                  </tr>
+			<!-- Person List -->
+			<div class="col-lg-12 bg-light p-4">개인회원</div>
+		    <div class="col-lg-12 border border-light">
+		    	<div class="table-responsive">
+		        	<table class="table table-sm table-hover">
+		            	<thead>
+		                	<tr>
+		                    	<th>ID</th>
+		                    	<th>닉네임</th>
+		                    	<th>생년월일</th>
+		                    	<th>이메일</th>
+		                    	<th>전화번호</th>
+		                  	</tr>
 		                </thead>
 		                <tbody>
 		                	<%
@@ -49,11 +51,10 @@
 		                		}
 		                	%>
 		                </tbody>
-		              </table>
-		            </div> 
-		      </div>
-			
-			
+					</table>
+				</div>
+			</div>
+			<!-- /Person List -->
 		</div>
 		<!-- /page Content -->
 	</div>

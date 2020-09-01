@@ -4,7 +4,7 @@
 <main>
 	<div class="d-flex" id="wrapper">
 		
-		<%@ include file="/myPage/myPage_sidebar.jsp" %>
+		<%-- <%@ include file="/myPage/myPage_sidebar.jsp" %> --%>
 		
 		<!-- page Content -->
 		<div id="page-content-wrapper">
@@ -113,9 +113,15 @@
 			              </div>
 			              <div class="row">
 			                <div class="col-md-2">
+			                  <p>관심분야</p>
+			                </div>
+			                <div class="col-md-4">
+			                  <input type="text" class="form-control" />
+			                </div>
+			                <div class="col-md-2">
 			                  <p>홈페이지</p>
 			                </div>
-			                <div class="col-md-10">
+			                <div class="col-md-4">
 			                  <input type="text" class="form-control" />
 			                </div>
 			              </div>
