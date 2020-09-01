@@ -4,9 +4,10 @@
 
 <section class="container my-3">
 	<div class="container py-3 d-flex justify-content-between bg-light">
-		<h3>커뮤니티 게시판</h3>
-		<a href="write.jsp" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
+		<h4 style="margin-top: 8px;">커뮤니티 게시판</h4>
+		<a onclick="com_write()" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
 	</div>
+
 
 	<!-- 테이블 -->
 	<div class="table-responsive">
@@ -148,7 +149,7 @@
 
 	<!-- 검색 -->
 	<form class="form-inline justify-content-center">
-		<select class="form-controls" id="search_control">
+		<select class="form-control" id="search_control">
 			<option value="0">제목</option>
 			<option value="1">내용</option>
 			<option value="2">닉네임</option>
@@ -161,4 +162,5 @@
 		</div>
 	</form>
 </section>
+
 <%@ include file="../footer.jsp"%>

@@ -31,7 +31,7 @@
 
 
 <div class="form-inline justify-content-end">
-	<a href="#"><img src="${pageContext.request.contextPath}/img/icon.png" width="25px" height="25px" style="background-color:#eeeeee;"></a>
+	<a href="#"><img src="${pageContext.request.contextPath}/img/icon.png" width="30px" height="30px" style="background-color:#eeeeee; padding: 5px"></a>
 </div>
 <hr>
 
@@ -43,12 +43,14 @@
 	    font-weight:bolder;" value="다음글">
 </div>
 
+
 <div style="background-color:#eeeeee;">
 	<div class="row" style="font-size:0.75rem; margin-top:23px;" >
 		<p style="margin-left:40px; margin-top:15px;">댓글</p>
 		<p style="margin-top:15px; margin-left:5px;">0</p>
 	</div>
-	<hr>
+	<hr style="margin-top: 2px">
+	
 	
  <div class="form-row">
     <div class="col-8">
