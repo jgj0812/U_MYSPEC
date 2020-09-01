@@ -1,6 +1,7 @@
 package mySpec;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class MemberMgr {
 private DBConnection pool;
@@ -278,4 +279,83 @@ private DBConnection pool;
 		}
 		return id;
 	}
+	
+	// 개인회원 리스트(admin)
+	public ArrayList<PersonBean> listPerson() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<PersonBean> arrPerson = new ArrayList<PersonBean>();
+		String sql = "select * from person_user";
+		
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				PersonBean person = new PersonBean();
+				person.setId(rs.getString("person_id"));
+				person.setNick(rs.getString("person_nick"));
+				person.setBirth(rs.getString("person_birth"));
+				person.setEmail(rs.getString("person_email"));
+				person.setPhone(rs.getString("person_phone"));
+				
+				arrPerson.add(person);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return arrPerson;
+	}
+	
+	// 단체회원 리스트(admin)
+	public ArrayList<OrgBean> listOrg() {
+		Connection con  = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<OrgBean> arrOrg = new ArrayList<OrgBean>();
+		String sql = "select * from org_user";
+		
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				OrgBean org = new OrgBean();
+				org.setId(rs.getString("org_id"));
+				org.setName(rs.getString("org_name"));
+				org.setType(rs.getInt("org_type"));
+				org.setManager(rs.getString("org_manager"));
+				org.setEmail(rs.getString("org_email"));
+				org.setPhone(rs.getString("org_phone"));
+				
+				arrOrg.add(org);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		
+		return arrOrg;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
