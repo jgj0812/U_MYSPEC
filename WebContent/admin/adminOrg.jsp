@@ -1,11 +1,13 @@
+<%@page import="mySpec.OrgBean"%>
 <%@page import="mySpec.PersonBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/admin/adminHeader.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.MemberMgr" />
+
 <% 
-	ArrayList<PersonBean> arrPerson = mgr.listPerson();
+	ArrayList<OrgBean> arrOrg = mgr.listOrg();
 %>
 <main>
 	<div class="d-flex" id="wrapper">
@@ -21,29 +23,31 @@
 			</nav>
 			
 			
-				<div class="col-lg-12 bg-light p-4">개인회원</div>
+			<div class="col-lg-12 bg-light p-4">단체회원</div>
 		          <div class="col-lg-12 border border-light">
 		            <div class="table-responsive">
 		              <table class="table table-sm table-hover">
 		                <thead>
 		                  <tr>
 		                    <th>ID</th>
-		                    <th>닉네임</th>
-		                    <th>생년월일</th>
-		                    <th>이메일</th>
-		                    <th>전화번호</th>
+		                    <th>기관명칭</th>
+		                    <th>기관타입</th>
+		                    <th>담당자</th>
+		                    <th>담당자 메일</th>
+		                    <th>담당자 전화번호</th>
 		                  </tr>
 		                </thead>
 		                <tbody>
 		                	<%
-		                		for(PersonBean pb : arrPerson) {
+		                		for(OrgBean ob : arrOrg) {
 		                	%>
 		                			<tr>
-		                				<td><%=pb.getId() %></td>
-		                				<td><%=pb.getNick() %></td>
-		                				<td><%=pb.getBirth() %></td>
-		                				<td><%=pb.getEmail() %></td>
-		                				<td><%=pb.getPhone() %></td>
+		                				<td><%=ob.getId() %></td>
+		                				<td><%=ob.getName() %></td>
+		                				<td><%=ob.getType() %></td>
+		                				<td><%=ob.getManager() %></td>
+		                				<td><%=ob.getEmail() %></td>
+		                				<td><%=ob.getPhone() %></td>
 		               				</tr>
 		                	<%		
 		                		}
@@ -52,7 +56,6 @@
 		              </table>
 		            </div> 
 		      </div>
-			
 			
 		</div>
 		<!-- /page Content -->

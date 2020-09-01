@@ -8,8 +8,8 @@
                 회원관리
               </h3>
 			<div class="list-group list-group-flush">
-				<a href="#" class="list-group-item list-group-item-action bg-light">일반회원</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">단체회원</a>
+				<a href="adminPerson.jsp" class="list-group-item list-group-item-action bg-light">개인회원</a>
+				<a href="adminOrg.jsp" class="list-group-item list-group-item-action bg-light">단체회원</a>
 			</div>
 			
 			<h3
