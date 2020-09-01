@@ -392,3 +392,11 @@ $("input:checkbox").click(function (e) {
 function reset() {
   $("#choicetag *").remove();
 }
+
+// summernote
+$(document).ready(function () {
+	$("#content").summernote({
+		lang: "ko-KR",
+      	height: "20em",
+    });
+});

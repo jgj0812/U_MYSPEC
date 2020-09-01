@@ -40,6 +40,8 @@
     />
     <!-- MYSPEC CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myspec.css" />
+    <!-- summernote css -->
+    <link href="${pageContext.request.contextPath}/summernote/summernote-bs4.min.css" rel="stylesheet" />
   </head>
   <body class="d-flex flex-column h-100">
     <header>
