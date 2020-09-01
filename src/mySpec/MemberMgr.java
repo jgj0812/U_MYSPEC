@@ -174,7 +174,7 @@ private DBConnection pool;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select admin_pwd from admin_user where admin_id=?";
+		String sql = "select admin_pwd from admin where admin_id=?";
 		int re = -1;
 		String db_admin_pwd;
 		
