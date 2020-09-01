@@ -34,8 +34,8 @@
       src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
     ></script>
     <!-- summernote js -->
-    <script src="summernote/summernote-bs4.min.js"></script>
-    <script src="summernote/lang/summernote-ko-KR.js"></script>
+    <script src="./summernote/summernote-bs4.min.js"></script>
+    <script src="./summernote/lang/summernote-ko-KR.js"></script>
 	<!-- myspec.js -->
 	<script src="./js/myspec.js"></script>
   </body>

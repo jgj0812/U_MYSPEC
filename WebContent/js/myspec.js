@@ -445,6 +445,12 @@ $(document).ready(function () {
 	$(".right2").click(function () {
 	  $(".your-class2").slick("slickNext");
 	});
+	
+	$("#act_content").summernote({
+		lang: "ko-KR",
+    	height: "20em",
+	});
+	
 });
 
 function reset() {
@@ -513,8 +519,5 @@ $("input:checkbox").click(function (e) {
 
 // summernote
 $(document).ready(function () {
-	$("#content").summernote({
-		lang: "ko-KR",
-    	height: "20em",
-	});
+
 });

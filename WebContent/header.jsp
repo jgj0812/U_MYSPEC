@@ -41,7 +41,7 @@
     <!-- MYSPEC CSS -->
     <link rel="stylesheet" href="./css/myspec.css" />
     <!-- summernote css -->
-    <link href="summernote/summernote-bs4.min.css" rel="stylesheet" />
+    <link href="./summernote/summernote-bs4.min.css" rel="stylesheet" />
   </head>
   <body class="d-flex flex-column h-100">
     <header>

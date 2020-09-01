@@ -117,7 +117,7 @@
       <div class="section">
         <form>
           <h5>상세내용</h5>
-          <textarea id="content"></textarea>
+          <textarea id="act_content"></textarea>
           <button class="btn btn-cam btn-block">수정하기</button>
         </form>
       </div>
