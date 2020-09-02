@@ -15,9 +15,7 @@
 	int nowBlock = 1;		// 현재 블럭
 	
 	// nowPage 요청
-	if(request.getParameter("nowPage") != null) {
-		nowPage = Integer.parseInt(request.getParameter("nowPage"));
-	}
+	
 	
 	ArrayList<PersonBean> arrPerson = mgr.listPerson();
 %>
