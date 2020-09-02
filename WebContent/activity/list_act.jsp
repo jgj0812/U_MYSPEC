@@ -485,7 +485,7 @@
 	      </div>
 	    </form>
 	
-		    <!-- 선택한 서브태그 보이는 부분-->
+		<!-- 선택한 서브태그 보이는 부분-->
 	    <div class="choice">
 	      <div id="choicetag">
 	

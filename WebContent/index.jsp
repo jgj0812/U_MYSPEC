@@ -59,16 +59,18 @@
 		</div>
 		<!-- 인기 대외활동 slick -->
 	    <div class="container bg-light my-3">
-	    	<h3 class="c_title">인기 대외활동</h3>
-	    	<!-- slick 화살표 1 -->
-	        <div class="row justify-content-end p-3">
-	        	<button type="button" class="left mr-2" id="arrow_button">
-	            	<i class="fas fa-angle-left"></i>
-	          	</button>
-	          	<button type="button" class="right" id="arrow_button">
-	            	<i class="fas fa-angle-right"></i>
-	          	</button>
-	        </div>
+	    	<div style="display: flex; padding-top: 25px">
+			<h3 class="c_title" >인기 공모전</h3>
+
+			<div class="row justify-content-end p-3">
+				<button type="button" class="left mr-2" id="arrow_button">
+					<i class="fas fa-angle-left"></i>
+				</button>
+				<button type="button" class="right" id="arrow_button">
+					<i class="fas fa-angle-right"></i>
+				</button>
+			</div>
+		</div>
 	        <!-- /slick 화살표 1 -->
 	        <!-- slick 동작 영역 1 -->
 	        <div class="your-class">
@@ -130,15 +132,17 @@
 	    <!-- /인기 대외활동 slick -->
 	    <!-- 맞춤 추천 대외활동 slick -->
 	    <div class="container bg-light my-3">
-	        <h3 class="c_title">맞춤 추천 대외활동</h3>
-	        <!-- slick 화살표 2 -->
-	        <div class="row justify-content-end p-3">
-	        	<button type="button" class="left2 mr-2" id="arrow_button">
-	            	<i class="fas fa-angle-left"></i>
-	          	</button>
-	          	<button type="button" class="right2" id="arrow_button">
-	            	<i class="fas fa-angle-right"></i>
-	          	</button>
+	        <div style="display: flex; padding-top: 25px">
+				<h3 class="c_title" >인기 공모전</h3>
+		        <!-- slick 화살표 2 -->
+		        <div class="row justify-content-end p-3">
+		        	<button type="button" class="left2 mr-2" id="arrow_button">
+		            	<i class="fas fa-angle-left"></i>
+		          	</button>
+		          	<button type="button" class="right2" id="arrow_button">
+		            	<i class="fas fa-angle-right"></i>
+		          	</button>
+	        	</div>
 	        </div>
 	        <!-- /slick 화살표 2 -->
 	        <!-- slick 동작 영역 2 -->

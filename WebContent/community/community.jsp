@@ -17,7 +17,7 @@
 
 	
 <% 
-	request.setCharacterEncoding("UTF-8");
+/* 	request.setCharacterEncoding("UTF-8");
 	int sorting_num;
 	String str ="";
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>();
@@ -27,7 +27,9 @@
 		str = request.getParameter("comm_search"); 
 		comm_arr = mgr.Community_list_search(sorting_num,str);
 	}
-	
+	 */
+	 ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>();
+		
 	//검색안할때 
 	comm_arr = mgr.Community_list();
 	
@@ -62,7 +64,7 @@
 		 			<td class="col-md-1 d-none d-lg-table-cell"> <%=commB.getComm_num() %></td>
 		 			<td class="col-md-1 d-none d-lg-table-cell"><%=Type%></td>
 		 			<td class="col-md-5">
-		 				<a class="h5"><a href="detailView.jsp?comm_num=<%=commB.getComm_num() %>" class="text-dark"><%=commB.getComm_title() %></a>
+		 				<a href="detailView.jsp?comm_num=<%=commB.getComm_num() %>" class="h5 text-dark"><%=commB.getComm_title() %></a>
 		 				<p class="d-block d-sm-none"><small><%=commB.getComm_person() %> <%=date_1%> <%=commB.getComm_hits() %></small></p>
 		 			</td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=commB.getComm_person() %></td>

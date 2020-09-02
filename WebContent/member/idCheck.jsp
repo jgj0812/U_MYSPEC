@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <jsp:useBean id="mgr" class="mySpec.MemberMgr" />
 <%
-	request.setCharacterEncoding("euc-kr");
+	request.setCharacterEncoding("UTF-8");
 	int memType = Integer.parseInt(request.getParameter("memType"));
 	if(memType == 0) {
 		String personId = request.getParameter("personid");

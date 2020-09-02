@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class CommunityMgr {
 private DBConnection pool;
 	
-	// DB?�결
+	// DB?占쎄껐
 	public CommunityMgr() {
 		pool = DBConnection.getInstance();
 	}
 	
-	//글리스트
+	//湲�由ъ�ㅽ��
 	public ArrayList<CommunityBean> Community_list() {
 		Connection con = null;
 		Statement st = null;
@@ -46,12 +46,12 @@ private DBConnection pool;
 		return comm_arr;
 	}
 	
-	//글쓰기
-	public int Community_insert (CommunityBean Comm) {
+	//湲��곌린
+	public int Community_insert (CommunityBean Comm, String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int re = -1;
-		String sql = "insert into community values(community_seq.nextval, ?, ?, ?, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), 0, ?)";
+		String sql = "insert into community values(community_seq.nextval, ?, ?, id, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), 0, ?)";
 		
 		try {
 			con = pool.getConnection();
@@ -59,8 +59,7 @@ private DBConnection pool;
 			
 			pstmt.setInt(1, Comm.getComm_type());
 			pstmt.setString(2, Comm.getComm_title());
-			pstmt.setString(3, Comm.getComm_person());
-			pstmt.setString(4, Comm.getComm_content());
+			pstmt.setString(3, Comm.getComm_content());
 			
 			pstmt.executeUpdate();
 			
@@ -73,7 +72,7 @@ private DBConnection pool;
 		return re;
 	}
 	
-	//글삭제
+	//湲�����
 	public void Community_delete (int comm_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -95,7 +94,7 @@ private DBConnection pool;
 	
 	}
 	
-	//글수정
+	//湲�����
 	public int Community_update (CommunityBean Comm) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -121,12 +120,12 @@ private DBConnection pool;
 	
 	}
 	
-	//글보기
+	//湲�蹂닿린
 	public CommunityBean Community_detailView(int comm_num) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;// ������ִ� sql�������� �ʿ��ϴ�
+		ResultSet rs = null;// 占쏙옙占쏙옙占쏙옙獵占� sql占쏙옙占쏙옙占쏙옙占쏙옙 占십울옙占싹댐옙
 		CommunityBean commB = null;
 		upHit(comm_num);
 		String sql = "select * from community where comm_num= '" + comm_num + "'";
@@ -161,7 +160,7 @@ private DBConnection pool;
 
 
 
-	//조회수
+	//議고����
 	private void upHit(int comm_num) {
 			
 		Connection con =null;
@@ -191,7 +190,7 @@ private DBConnection pool;
 		}
 	} 
 
-	//제목, 내용, 닉네임 검색
+	//��紐�, �댁��, ���ㅼ�� 寃���
 	
 	public ArrayList<CommunityBean> Community_list_search(int sorting_num , String str) {
 		Connection con = null;
@@ -199,15 +198,15 @@ private DBConnection pool;
 		ResultSet rs = null;
 		String sql="";
 		
-		//0=제목
+		//0=��紐�
 		if(sorting_num==0) {
 			sql = "select * from community WHERE comm_title LIKE '%" + str + "%'";
 		}
-		//1=내용
+		//1=�댁��
 		else if(sorting_num==1) {
 			sql = "select * from community WHERE comm_content LIKE '%" + str + "%'";
 		}
-		//2=닉네임
+		//2=���ㅼ��
 		else if(sorting_num==2) {
 		} 	sql = "select * from community WHERE comm_person LIKE '%" + str + "%'";
 		
