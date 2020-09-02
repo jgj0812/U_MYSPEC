@@ -451,8 +451,3 @@ $(document).ready(function () {
       	height: "20em",
     });
 });
-
-// 대외활동 등록
-function act_submit() {
-	$("#act_form").submit();
-}

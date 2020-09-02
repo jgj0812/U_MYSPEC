@@ -223,7 +223,7 @@
 				<br />
 
 				<h5>홈페이지</h5>
-				<input type="text" placeholder="홈페이지" class="form-control" />
+				<input type="text" placeholder="홈페이지" class="form-control" name="act_home"/>
 			</div>
 			<br /> <br />
 
@@ -295,20 +295,8 @@
 				</div>
 			</div>
 			<br /> <br />
-			<button class="btn btn-cam btn-block" onclick="act_submit()">
-				게시 요청</button>
+			<input type="button" class="btn btn-cam btn-block" onclick="act_submit()" value="게시 요청">
 		</form>
 	</div>
-
-	<script>
-      $(document).ready(function () {
-        $("#content").summernote({
-          lang: "ko-KR",
-          height: "20em",
-        });
-      });
-      function act_submit() {
-        $("#act_form").submit();
-      }
-    </script>
+	<script src="../js/activity.js"></script>
 <%@ include file="../footer.jsp" %>
