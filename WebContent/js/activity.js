@@ -1,5 +1,9 @@
 // list_act_write.jsp
 function act_submit() {
+	var currDate = new Date();
+	var startDate = Date.parse($("#act_form input[name='act_start']").val());
+	var endDate = Date.parse($("#act_form input[name='act_end']").val());
+
 	if($("#act_form input[name='act_title']").val().length == 0) {
 		alert("제목을 입력해주세요");
 		return;
@@ -20,8 +24,16 @@ function act_submit() {
 		alert("마감기간을 입력해주세요.");
 		return;
 	}
+	if(startDate < currDate || startDate > endDate) {
+		alert("날짜를 정확하게 입력해주세요.");
+		return;
+	}
 	if($("#act_form input[name='act_pop']").val().length == 0) {
-		alert("모집인원을 선택해주세요.");
+		alert("모집인원을 입력해주세요.");
+		return;
+	}
+	if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
+		alert("모집인원을 정확하게 입력해주세요.");
 		return;
 	}
 	if($("#act_form input[name='act_reg']:checked").length == 0) {

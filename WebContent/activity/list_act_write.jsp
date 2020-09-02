@@ -28,14 +28,14 @@
 				<h5>활동기간</h5>
 				<div class="row">
 					<div class="col-md-6 input-group">
-						<input type="text" placeholder="YYYY.MM.DD" class="form-control"
+						<input type="text" placeholder="YYYY-MM-DD" class="form-control"
 							name="act_start" />
 						<div class="input-group-append">
 							<div class="input-group-text">부터</div>
 						</div>
 					</div>
 					<div class="col-md-6 input-group">
-						<input type="text" placeholder="YYYY.MM.DD" class="form-control"
+						<input type="text" placeholder="YYYY-MM-DD" class="form-control"
 							name="act_end" />
 						<div class="input-group-append">
 							<div class="input-group-text">까지</div>
