@@ -52,6 +52,8 @@
 		 	<tbody>
 		 	
 <%
+
+
 		for(CommunityBean commB :comm_arr){
 			String Type =commB.getComm_type()==0?"공지사항":"일반게시판";
 			String datestr = commB.getComm_date();
@@ -64,7 +66,7 @@
 		 			<td class="col-md-1 d-none d-lg-table-cell"> <%=commB.getComm_num() %></td>
 		 			<td class="col-md-1 d-none d-lg-table-cell"><%=Type%></td>
 		 			<td class="col-md-5">
-		 				<a href="detailView.jsp?comm_num=<%=commB.getComm_num() %>" class="h5 text-dark"><%=commB.getComm_title() %></a>
+		 				<a href="detailView.jsp?comm_num=<%=commB.getComm_num()%>" class="h5 text-dark"><%=commB.getComm_title() %></a>
 		 				<p class="d-block d-sm-none"><small><%=commB.getComm_person() %> <%=date_1%> <%=commB.getComm_hits() %></small></p>
 		 			</td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=commB.getComm_person() %></td>
@@ -82,8 +84,9 @@
 	<!-- 글쓰기 -->
 	<div class="form-inline justify-content-end">
 		<button type="button" class="btn btn-com d-none d-md-block"  
-		onclick="location.href='write.jsp'">글쓰기</button>
+		onclick="comm_write()">글쓰기</button>
 	</div>
+	
 	
 	<!-- 페이징 -->
 	<div class="form-inline justify-content-center">		
