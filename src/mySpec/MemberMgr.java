@@ -310,6 +310,24 @@ private DBConnection pool;
 		return arrPerson;
 	}
 	
+	// 개인회원 탈퇴, 삭제
+	public void deletePerson(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from person_user where person_id=?";
+
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+	}
+	
 	// 단체회원 리스트(admin)
 	public ArrayList<OrgBean> listOrg() {
 		Connection con  = null;
@@ -341,24 +359,6 @@ private DBConnection pool;
 		}
 		
 		return arrOrg;
-	}
-	
-	// 개인회원 탈퇴, 삭제
-	public void deletePerson(String id) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String sql = "delete from person_user where person_id=?";
-
-		try {
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.closeConnection(con, pstmt);
-		}
 	}
 	
 }

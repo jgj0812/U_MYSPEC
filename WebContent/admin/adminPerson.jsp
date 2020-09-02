@@ -6,17 +6,6 @@
 <jsp:useBean id="mgr" class="mySpec.MemberMgr" />
 <%
 	request.setCharacterEncoding("utf-8");
-	int totalRecord = 0;	// 총 게시물 수
-	int numPerPage = 10;	// 페이지당 레코드 개수
-	int pagePerBlock = 15;	// 블럭당 페이지 개수
-	int totalPage = 0;		// 총 페이지 개수
-	int totalBlock = 0;		// 총 블럭 개수
-	int nowPage = 1;		// 현재 페이지
-	int nowBlock = 1;		// 현재 블럭
-	
-	// nowPage 요청
-	
-	
 	ArrayList<PersonBean> arrPerson = mgr.listPerson();
 %>
 <main>
@@ -76,16 +65,23 @@
 					<ul class="pagination">
 				    	<li class="page-item">
 				      		<a class="page-link" href="#" aria-label="Previous">
-				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">처음</span>
+				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 				        		<span class="sr-only">Previous</span>
 				      		</a>
 				    	</li>
-				    	<li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-				    	<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-				    	<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
+				    	<li class="page-item active">
+				    		<a class="page-link text-dark" href="#">
+				    			1
+				    		</a>
+				    	</li>
+				    	<li class="page-item">
+				    		<a class="page-link text-dark" href="#">
+				    			2
+				    		</a>
+				    	</li>
 				    	<li class="page-item">
 				      		<a class="page-link" href="#" aria-label="Next">
-				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">끝</span>
+				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 				        		<span class="sr-only">Next</span>
 				      		</a>
 				    	</li>
