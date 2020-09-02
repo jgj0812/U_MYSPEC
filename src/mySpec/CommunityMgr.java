@@ -50,8 +50,9 @@ private DBConnection pool;
 	public int Community_insert (CommunityBean Comm, String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int re = -1;
-		String sql = "insert into community values(community_seq.nextval, ?, ?, id, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), 0, ?)";
+		int re = -1; 
+		                                           //글번호                        글타입 제목  아이디      날짜                                         조회수 내용
+		String sql = "insert into community values(community_seq.nextval, ?, ?, ?, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), 0, ?)";
 		
 		try {
 			con = pool.getConnection();
@@ -59,7 +60,8 @@ private DBConnection pool;
 			
 			pstmt.setInt(1, Comm.getComm_type());
 			pstmt.setString(2, Comm.getComm_title());
-			pstmt.setString(3, Comm.getComm_content());
+			pstmt.setString(3, id);
+			pstmt.setString(4, Comm.getComm_content());
 			
 			pstmt.executeUpdate();
 			
