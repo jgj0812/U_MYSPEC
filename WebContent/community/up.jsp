@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import="mySpec.*"%>
+<%@ page import="mySpec.*"%>
 <%@ include file="../header.jsp" %>
 
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
@@ -14,11 +14,7 @@
 	
 	int num = commB.getComm_num(); //글번호
 	String person = commB.getComm_person();
-	
-	String str = commB.getComm_date();
-	String [] date = str.split(" ");
-	String date_1 = date[0];
-	
+	String date = commB.getComm_date();
 	int hits = commB.getComm_hits();
 	String content = commB.getComm_content();
 	String title = commB.getComm_title();
@@ -45,14 +41,14 @@
 				<div class="row" style="font-size: 0.75rem; color: #999;" >
 					<div style="margin-left:40px;"><p><%= person %></p></div>	<!-- 글쓴이 -->
 					<hr class="name_line">
-					<div style="margin-left:15px;"><p><%= date_1 %></p></div><!-- 날짜 -->
+					<div style="margin-left:15px;"><p><%= date %></p></div><!-- 날짜 -->
 					<div style="margin-left:10px;"><p>조회수</p></div>
 					<div style="margin-left:3px;"><p><%= hits %></p></div><!-- 조회수 -->
 				</div>
 				<hr>
 	<div class="jumbotron jumbotron-fluid" style="background-color:white;">
 	  <div class="container">
-	    <pre><p class="lead"><%= content %></p></pre><!-- 내용 -->
+	    <p class="lead"><%= content %></p><!-- 내용 -->
 	  </div>
 	</div>
 	
@@ -73,7 +69,7 @@
 					class="btn text-dark"  
 					style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
 					value="수정"
-					onclick="location.href='update.jsp?comm_num=<%=commB.getComm_num()%>'">
+					onclick="location.href='updateForm.jsp?comm_num=<%=commB.getComm_num()%>'">
 					
 			<!-- 삭제  -->
 			<input type="button" 

@@ -33,11 +33,22 @@ public class DBConnection {
 		}
 	}
 	
-	// close(Connection, PreparedStatement, ResultSete)
+	// close(Connection, PreparedStatement, ResultSet)
 	public void closeConnection(Connection con, PreparedStatement ps, ResultSet rs) {
 		try {
 			if(rs != null) rs.close();
 			if(ps != null) ps.close();
+			if(con != null) con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// close(Connection, Statement, ResultSet)
+	public void closeConnection(Connection con, Statement st, ResultSet rs) {
+		try {
+			if(rs != null) rs.close();
+			if(st != null) st.close();
 			if(con != null) con.close();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -68,11 +68,22 @@ $("#personSend").click(function(){
 		$("#person_phone").focus();
 		return false;
 	}
+	if($("#person_id").attr("check_result") == "fail") {
+		alert("아이디 중복체크를 해주시기 바랍니다.");
+		$("#person_id").focus();
+		return false;
+	}
 	$("#personFrm").submit();
 });
 
 // 개인회원 id중복체크
 $("#person_idCheck").click(function(){
+	$("#person_id").change(function(){
+		$("#person_idCheckOk").hide();
+		$("#person_idCheck").show();
+		$("#person_id").attr("check_result", "fail");
+	});
+	
 	if($("#person_id").val() == "") {
 		alert("아이디를 입력해주세요.")
 		$("person_id").focus();
@@ -90,9 +101,14 @@ $("#person_idCheck").click(function(){
 			  "personid" : $("#person_id").val()},
 		success:function(data){
 			if(data.trim() == "yes") {
-				alert("사용가능한 아이디입니다.");			
+				alert("사용가능한 아이디입니다.");
+				$("#person_id").attr("check_result", "success");
+				$("#person_idCheckOk").show();
+				$("#person_idCheck").hide();
+				return;		
 			}else if(data.trim() == "no") {
-				alert("사용불가능한 아이디입니다.");
+				alert("중복된 아이디입니다.");
+				$("person_id").focus();
 			}
 		},
 		error:function(e) {
@@ -157,11 +173,22 @@ $("#orgSend").click(function(){
 		$("#org_phone").focus();
 		return false;
 	}
+	if($("#org_id").attr("check_result") == "fail") {
+		alert("아이디 중복체크를 해주세요");
+		$("#org_id").focus();
+		return false;
+	}
 	$("#orgFrm").submit();
 });
 
 // 단체회원 id중복체크
 $("#org_idCheck").click(function(){
+	$("#org_id").change(function(){
+		$("#org_idCheckOk").hide();
+		$("#org_idCheck").show();
+		$("#org_id").attr("check_result", "fail");
+	});
+	
 	if($("#org_id").val() == "") {
 		alert("아이디를 입력해주세요.");
 		$("#org_id").focus();
@@ -180,8 +207,14 @@ $("#org_idCheck").click(function(){
 		success: function(data) {
 			if(data.trim() == "yes") {
 				alert("사용가능한 아이디입니다.");
+				$("#org_idCheckOk").show();
+				$("#org_idCheck").hide();
+				$("#org_id").attr("check_result", "success");
+				return;
 			}else if(data.trim() == "no") {
-				alert("사용불가능한 아이디입니다.");
+				alert("중복된 아이디입니다.");
+				$("#org_id").focus();
+				return;
 			}
 		},
 		error: function(e) {
@@ -330,6 +363,24 @@ $("#pwdFindBtn").click(function(){
 	$("#findPwdFrm").submit();
 });
 
+// admin 개인회원 삭제
+function person_del(id) {
+	$.getJSON("adminDeletePro.jsp?memType=0&id=" + id, function(data){
+		var htmlStr = "";
+		$.each(data, function(key, val){
+			htmlStr += "<tr>";
+			htmlStr += "<td>" + val.id + "</td>";
+			htmlStr += "<td>" + val.nick + "</td>";
+			htmlStr += "<td>" + val.birth + "</td>";
+			htmlStr += "<td>" + val.email + "</td>";
+			htmlStr += "<td>" + val.phone + "</td>";
+			htmlStr += "<td><button onclick=\"person_del('<%=pb.getId() %>')\" class=\"btn btn-danger m-2\">삭제</button></td>";
+			htmlStr += "</tr>";
+		});
+		$("table tbody").html(htmlStr);
+	});
+}
+
 // 마이페이지 sidebar 동작
 $("#menu-toggle").click(function(e) {
   e.preventDefault();
@@ -400,3 +451,8 @@ $(document).ready(function () {
       	height: "20em",
     });
 });
+
+// 대외활동 등록
+function act_submit() {
+	$("#act_form").submit();
+}

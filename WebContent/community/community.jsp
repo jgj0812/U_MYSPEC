@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="mySpec.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
@@ -8,6 +10,29 @@
 		<a onclick="com_write()" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
 	</div>
 
+<jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
+<jsp:useBean id="bean" class="mySpec.CommunityBean" />
+
+<jsp:setProperty property="*" name="bean"/>
+
+	
+<% 
+	request.setCharacterEncoding("UTF-8");
+	int sorting_num;
+	String str ="";
+	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>();
+	
+	if(str!= null){
+		sorting_num = Integer.parseInt(request.getParameter("sorting_num"));
+		str = request.getParameter("comm_search"); 
+		comm_arr = mgr.Community_list_search(sorting_num,str);
+	}
+	
+	//검색안할때 
+	comm_arr = mgr.Community_list();
+	
+
+%>
 
 	<!-- 테이블 -->
 	<div class="table-responsive">
@@ -23,97 +48,31 @@
 		 		</tr>
 		 	</thead>
 		 	<tbody>
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
+		 	
+<%
+		for(CommunityBean commB :comm_arr){
+			String Type =commB.getComm_type()==0?"공지사항":"일반게시판";
+			String datestr = commB.getComm_date();
+			
+			String [] date = datestr.split(" ");
+			String date_1 = date[0];
+%>	
+
+		 		<tr class="d-flex">	 		
+		 			<td class="col-md-1 d-none d-lg-table-cell"> <%=commB.getComm_num() %></td>
+		 			<td class="col-md-1 d-none d-lg-table-cell"><%=Type%></td>
 		 			<td class="col-md-5">
-		 				<a class="h5">MYSPEC 사이트를 오픈하였습니다. 어렵다 ㅋㅋㅋ</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
+		 				<a class="h5"><a href="detailView.jsp?comm_num=<%=commB.getComm_num() %>" class="text-dark"><%=commB.getComm_title() %></a>
+		 				<p class="d-block d-sm-none"><small><%=commB.getComm_person() %> <%=date_1%> <%=commB.getComm_hits() %></small></p>
 		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">507</td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=commB.getComm_person() %></td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date_1 %></td>
+		 			<td class="col-md-1 d-none d-lg-table-cell"><%=commB.getComm_hits() %></td>
+		 			
 		 		</tr>
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell"><a href="detailView.jsp" class="text-dark">공지</a></td>
-		 			<td class="col-md-1 d-none d-lg-table-cell"><a href="detailView.jsp" class="text-dark">게시판명</a></td>
-		 			<td class="col-md-5">
-		 				<a href="detailView.jsp" class="h5">제목</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">글쓴이</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">등록일</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">조회수</td>	
-		 		</tr>
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-		 			<td class="col-md-5">
-		 				<a class="h5">링커리어</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">507</td>
-		 		</tr>
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell">번호</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">게시판명</td>
-		 			<td class="col-md-5">
-		 				<a class="h5">제목</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">글쓴이</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">등록일</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">조회수</td>
-		 		</tr>
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-		 			<td class="col-md-5">
-		 				<a class="h5">링커리어</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">507</td>
-		 		</tr>
-		 		
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-		 			<td class="col-md-5">
-		 				<a class="h5">링커리어</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">507</td>
-		 		</tr>
-		 		
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-		 			<td class="col-md-5">
-		 				<a class="h5">링커리어</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">507</td>
-		 		</tr>
-		 		
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-		 			<td class="col-md-5">
-		 				<a class="h5">링커리어</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">507</td>
-		 		</tr>
+<%
+		}
+%>		
 	 		</tbody>
 		</table>	
 	</div>
@@ -148,19 +107,23 @@
 	</div>
 
 	<!-- 검색 -->
-	<form class="form-inline justify-content-center">
-		<select class="form-control" id="search_control">
+	<form action="community_search.jsp" method="post" class="form-inline justify-content-center">
+	
+		<select name="sorting_num" class="form-control" id="search_control">
 			<option value="0">제목</option>
 			<option value="1">내용</option>
 			<option value="2">닉네임</option>
 		</select>
+		
 		<div class="input-group">
-			<input type="text" name="com-search" class="form-control" placeholder="내용을 입력하세요">
+			<input type="text" name="comm_search" class="form-control" placeholder="내용을 입력하세요">
 			<div class="input-group-append">
 				<button type="submit" class="btn btn-cam">검색</button>	
 			</div>
 		</div>
+		
 	</form>
+	
 </section>
 
 <%@ include file="../footer.jsp"%>

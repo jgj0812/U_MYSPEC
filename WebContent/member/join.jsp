@@ -37,13 +37,18 @@
                       						<input type="hidden" name="memType" value="0"/>
                       						<div class="form-group">
                         						<label for="id">id (4글자 이상)</label>
-                        						<input type="text" name="id" id="person_id" class="form-control" />
+                        						<input type="text" name="id" id="person_id" class="form-control" check_result="fail" required />
                       						</div>
-                      						<input
-                        						type="button"
-                        						id="person_idCheck"
-                        						value="중복확인"
-                        						class="btn btn-cam col-md-4"/>
+                      						<div class="form-group">
+	                      						<input
+	                        						type="button"
+	                        						id="person_idCheck"
+	                        						value="중복확인"
+	                        						class="btn btn-cam col-md-4"/>
+	                        					<button id="person_idCheckOk" class="btn btn-cam col-md-4" style="display:none">
+	                        						<i class="fas fa-check"></i>
+	                        					</button>
+                        					</div>
                       						<div class="form-group">
                         						<label for="password">비밀번호</label>
                         						<input type="password" name="pwd" id="person_pwd" class="form-control" />
@@ -85,15 +90,20 @@
                   					<div class="tab-pane fade" id="orgJoin">
                     					<form action="joinPro.jsp" method="post" id="orgFrm">
                       						<input type="hidden" name="memType" value="1"/>
-                      							<div class="form-group">
-                        							<label for="id">id (4글자 이상)</label>
-                        							<input type="text" name="id" id="org_id" class="form-control" />
-                      							</div>
-                      						<input
-                        						type="button"
-                        						id="org_idCheck"
-                        						value="중복확인"
-                        						class="btn btn-cam col-md-4"/>
+                    						<div class="form-group">
+                      							<label for="id">id (4글자 이상)</label>
+                      							<input type="text" name="id" id="org_id" class="form-control" check_result="fail" required/>
+                    						</div>
+                    						<div>
+                      							<input
+                        							type="button"
+                        							id="org_idCheck"
+                        							value="중복확인"
+                        							class="btn btn-cam col-md-4"/>
+                        						<button id="org_idCheckOk" class="btn btn-cam col-md-4" style="display:none">
+	                        						<i class="fas fa-check"></i>
+	                        					</button>
+                        					</div>
                       						<div class="form-group">
                         						<label for="password">비밀번호</label>
                         						<input type="password" name="pwd" id="org_pwd" class="form-control" />
