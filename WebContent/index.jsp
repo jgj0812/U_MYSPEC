@@ -10,7 +10,7 @@
 				<table class="table table-sm table-hover">
 			    	<thead>
 			 			<tr class="d-flex">
-			 				<th class="col-md-1 d-none d-lg-table-cell">번호</th>
+			 				<th class="col-md-1 d-none d-lg-table-cell">번호 dydyd</th>
 			 				<th class="col-md-1 d-none d-lg-table-cell">게시판명</th>
 			 				<th class="col-md-5 d-none d-lg-table-cell">제목</th>
 			 				<th class="col-md-2 d-none d-lg-table-cell">글쓴이</th>
