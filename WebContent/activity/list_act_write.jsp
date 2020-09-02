@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
 	<div class="container py-3">
-		<form action="list_act_writePro.jsp" method="post" id="act_form">
+		<form action="list_act_writePro.jsp" method="post" id="act_form" enctype="multipart/form-data">
 			<div>
 				<h3>활동개요</h3>
 				<hr />
@@ -299,4 +299,16 @@
 				게시 요청</button>
 		</form>
 	</div>
+
+	<script>
+      $(document).ready(function () {
+        $("#content").summernote({
+          lang: "ko-KR",
+          height: "20em",
+        });
+      });
+      function act_submit() {
+        $("#act_form").submit();
+      }
+    </script>
 <%@ include file="../footer.jsp" %>
