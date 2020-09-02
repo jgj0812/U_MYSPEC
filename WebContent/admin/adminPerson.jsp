@@ -61,7 +61,7 @@
 		                				<td><%=birth1 %></td>
 		                				<td><%=pb.getEmail() %></td>
 		                				<td><%=pb.getPhone() %></td>
-		                				<td onclick="person_del('<%=pb.getId() %>')"><button class="btn btn-danger m-2">삭제</button></td>
+		                				<td><a href="adminDeletePro.jsp?memType=0&id=<%=pb.getId() %>" class="btn btn-danger m-2">삭제</a></td>
 		               				</tr>
 		                	<%
 		                		}
