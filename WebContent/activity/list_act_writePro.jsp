@@ -1,3 +1,6 @@
+<%@page import="java.util.Enumeration"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="mySpec.ActivityBean"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.sql.Date"%>
@@ -7,24 +10,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	request.setCharacterEncoding("utf-8");
-	int act_type = Integer.parseInt(request.getParameter("act_type"));
-	String act_thumb = request.getParameter("act_thumb");
-	String act_post = request.getParameter("act_post");
-	String act_title = request.getParameter("act_title");
+	out.println(request.getRealPath("upload"));
+	MultipartRequest multi = new MultipartRequest(request, request.getRealPath("upload"), 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
+	int act_type = Integer.parseInt(multi.getParameter("act_type"));
+	String act_thumb = multi.getFilesystemName("act_thumb");
+	String act_post = multi.getFilesystemName("act_post");
+	String act_title = multi.getParameter("act_title");
 	String act_org = (String) session.getAttribute("id");
-	String act_target = request.getParameter("act_target");
-	Date act_start = Date.valueOf(request.getParameter("act_start"));
-	Date act_end = Date.valueOf(request.getParameter("act_end"));
-	int act_pop = Integer.parseInt(request.getParameter("act_pop"));
-	int act_reg = Integer.parseInt(request.getParameter("act_reg"));
-	int[] act_interest = Arrays.stream(request.getParameterValues("act_interest")).mapToInt(Integer::parseInt).toArray();
-	int act_field = Integer.parseInt(request.getParameter("act_field"));
-	int[] act_reward = Arrays.stream(request.getParameterValues("act_reward")).mapToInt(Integer::parseInt).toArray();
-	String act_home = request.getParameter("act_home");
-	String act_content = request.getParameter("act_content");
-	ActivityBean activity = new ActivityBean();
+	String act_target = multi.getParameter("act_target");
+	Date act_start = Date.valueOf(multi.getParameter("act_start"));
+	Date act_end = Date.valueOf(multi.getParameter("act_end"));
+	int act_pop = Integer.parseInt(multi.getParameter("act_pop"));
+	int act_reg = Integer.parseInt(multi.getParameter("act_reg"));
+	int[] act_interest = Arrays.stream(multi.getParameterValues("act_interest")).mapToInt(Integer::parseInt).toArray();
+	int act_field = Integer.parseInt(multi.getParameter("act_field"));
+	int[] act_reward = Arrays.stream(multi.getParameterValues("act_reward")).mapToInt(Integer::parseInt).toArray();
+	String act_home = multi.getParameter("act_home");
+	String act_content = multi.getParameter("act_content");
 	
+	ActivityBean activity = new ActivityBean();
 	activity.setAct_type(act_type);
 	activity.setAct_thumb(act_thumb);
 	activity.setAct_post(act_post);
