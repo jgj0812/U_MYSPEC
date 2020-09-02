@@ -14,6 +14,11 @@
 	int nowPage = 1;		// 현재 페이지
 	int nowBlock = 1;		// 현재 블럭
 	
+	// nowPage 요청
+	if(request.getParameter("nowPage") != null) {
+		nowPage = Integer.parseInt(request.getParameter("nowPage"));
+	}
+	
 	ArrayList<PersonBean> arrPerson = mgr.listPerson();
 %>
 <main>
@@ -67,6 +72,29 @@
 				</div>
 			</div>
 			<!-- /Person List -->
+			<!-- 페이징 -->
+			<div class="form-inline justify-content-center">		
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+				    	<li class="page-item">
+				      		<a class="page-link" href="#" aria-label="Previous">
+				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">처음</span>
+				        		<span class="sr-only">Previous</span>
+				      		</a>
+				    	</li>
+				    	<li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
+				    	<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
+				    	<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
+				    	<li class="page-item">
+				      		<a class="page-link" href="#" aria-label="Next">
+				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">끝</span>
+				        		<span class="sr-only">Next</span>
+				      		</a>
+				    	</li>
+				  	</ul>
+				</nav>
+			</div>
+			<!-- /페이징 -->
 		</div>
 		<!-- /page Content -->
 	</div>
