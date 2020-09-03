@@ -281,16 +281,21 @@ private DBConnection pool;
 	}
 	
 	// 개인회원 리스트(admin)
-	public ArrayList<PersonBean> listPerson() {
+	public ArrayList<PersonBean> listPerson(int startRow, int endRow) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<PersonBean> arrPerson = new ArrayList<PersonBean>();
-		String sql = "select * from person_user";
+		String sql = "select * from "
+								+ "(select rownum rn, aa.* from "
+								+ "(select * from person_user) aa)"
+								+ " where rn between ? and ?";
 		
 		try {
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				PersonBean person = new PersonBean();
@@ -308,6 +313,29 @@ private DBConnection pool;
 			pool.closeConnection(con, pstmt, rs);
 		}
 		return arrPerson;
+	}
+	
+	// 개인회원 수
+	public int personCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) from person_user";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
 	}
 	
 	// 개인회원 탈퇴, 삭제

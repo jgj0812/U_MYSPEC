@@ -6,7 +6,17 @@
 <jsp:useBean id="mgr" class="mySpec.MemberMgr" />
 <%
 	request.setCharacterEncoding("utf-8");
-	ArrayList<PersonBean> arrPerson = mgr.listPerson();
+	int pageSize = 5;	// 한 화면에 보여지는 수
+	String pageNum = request.getParameter("pageNum");
+	if(pageNum == null) {
+		pageNum = "1";
+	}
+	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
+	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
+	int endRow = currentPage * pageSize;				// 페이지 끝
+	ArrayList<PersonBean> arrPerson = mgr.listPerson(startRow, endRow);
+	int count = mgr.personCount();	// 전체 개인회원 수
+	int number = count - (currentPage - 1) * pageSize;
 %>
 <main>
 	<div class="d-flex" id="wrapper">
@@ -42,14 +52,16 @@
 		                <tbody>
 		                	<%
 		                		for(PersonBean pb : arrPerson) {
+		                			String birth[] = pb.getBirth().split(" ");
+		                			String birth1 = birth[0];
 		                	%>
 		                			<tr class="text-center">
 		                				<td><%=pb.getId() %></td>
 		                				<td><%=pb.getNick() %></td>
-		                				<td><%=pb.getBirth() %></td>
+		                				<td><%=birth1 %></td>
 		                				<td><%=pb.getEmail() %></td>
 		                				<td><%=pb.getPhone() %></td>
-		                				<td onclick="person_del('<%=pb.getId() %>')"><button class="btn btn-danger m-2">삭제</button></td>
+		                				<td><a href="adminDeletePro.jsp?memType=0&id=<%=pb.getId() %>" class="btn btn-danger m-2">삭제</a></td>
 		               				</tr>
 		                	<%
 		                		}
@@ -60,31 +72,64 @@
 			</div>
 			<!-- /Person List -->
 			<!-- 페이징 -->
-			<div class="form-inline justify-content-center">		
+			<div class="form-inline justify-content-center mt-2">	
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
+					<%
+						if(count > 0) {
+							int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);	// 총 페이지 수 구하기
+							int pageBlock = 2;	// 이전 다음 나오게 하는것
+							int startPage = (int)((currentPage - 1) / pageBlock) * pageBlock + 1;
+							int endPage = startPage + pageBlock - 1;	// 계산상 마지막 페이지
+							if(endPage > pageCount) {
+								endPage = pageCount;
+							}
+							// 이전
+							if(startPage > pageBlock) {
+					%>	
 				    	<li class="page-item">
-				      		<a class="page-link" href="#" aria-label="Previous">
+				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage - pageBlock%>" aria-label="Previous">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 				        		<span class="sr-only">Previous</span>
 				      		</a>
 				    	</li>
+				   	<%
+							}
+						
+						// 페이지 출력
+							for(int i = startPage; i <= endPage; i++) {
+								if(i == currentPage) {
+				   	%>
 				    	<li class="page-item active">
 				    		<a class="page-link text-dark" href="#">
-				    			1
+				    			<%= i %>
 				    		</a>
 				    	</li>
+				    <%
+								} else {
+				    %>
 				    	<li class="page-item">
-				    		<a class="page-link text-dark" href="#">
-				    			2
+				    		<a class="page-link text-dark" href="adminPerson.jsp?pageNum=<%= i %>">
+				    			<%= i %>
 				    		</a>
 				    	</li>
+				    <%
+								}
+							}	// -for
+						
+							// 다음
+							if(endPage < pageCount) {
+				    %>
 				    	<li class="page-item">
-				      		<a class="page-link" href="#" aria-label="Next">
+				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage + pageBlock%>" aria-label="Next">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 				        		<span class="sr-only">Next</span>
 				      		</a>
 				    	</li>
+				    <%
+							}	// -다음
+						}	// if(count > 0)
+				    %>
 				  	</ul>
 				</nav>
 			</div>
