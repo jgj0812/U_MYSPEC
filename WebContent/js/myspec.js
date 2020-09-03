@@ -450,14 +450,12 @@ $(document).ready(function () {
 		lang: "ko-KR",
       	height: "20em",
     });
+	$("#comm_content").summernote({
+			lang: "ko-KR",
+	      	height: "20em",
+	   });
 });
 
-$(document).ready(function () {
-	$("#comm_content").summernote({
-		lang: "ko-KR",
-      	height: "20em",
-    });
-});
 
 // 대외활동 등록
 function act_submit() {

@@ -14,12 +14,16 @@
 <jsp:setProperty property="*" name="Rbean"/>
 
 <%
-	//긃번호
+	//글번호 저장
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
 	//글번호로 게시물 보여주기
 	CommunityBean commB = mgr.Community_detailView(comm_num);
+	
 	//글번호로 댓글 리스트 보여주기
 	ArrayList<CommunityReplyBean> commRe_arr  = Rmgr.Community_reply_list(comm_num);
+	
+	//댓글 갯수
+	int count = Rmgr.Community_reply_count(comm_num);
 	
 	int num = commB.getComm_num(); //글번호
 	String person = commB.getComm_person();
@@ -32,7 +36,13 @@
 	String content = commB.getComm_content();
 	String title = commB.getComm_title();
 	
-
+	int rep_num=0, rep_ref=1, rep__step=1, rep__level=0;	
+	if(request.getParameter("rep_num")!=null){//답변글
+		rep_num = Integer.parseInt(request.getParameter("rep_num"));
+		rep_ref = Integer.parseInt(request.getParameter("rep_ref"));
+		rep__step = Integer.parseInt(request.getParameter("rep__step"));
+		rep__level = Integer.parseInt(request.getParameter("re_lrep__levelevel"));
+	}
 %>
 
 <section class="container my-3">
@@ -101,23 +111,73 @@
 		<!-- 댓글수 -->
 		<div class="row" style="font-size:0.75rem; margin-top:23px;" >
 			<p style="font-weight:bold; margin-left:40px; margin-top:15px;">댓글</p>
-			<p style="font-weight:bold; margin-top:15px; margin-left:5px;">0</p>
+			<p style="font-weight:bold; margin-top:15px; margin-left:5px;"><%=count %></p>
 		</div>
 		
 		<hr style="margin-top: 2px">
 		<!-- 댓글 보여주는 곳 -->	
 <%
 		for(CommunityReplyBean commRB :commRe_arr){
+			
+			int wid =0;
+			if(commRB.getRep_level()>0){
+				wid = 25*(commRB.getRep_level());
+			}
 	
 %>	
 	
 		<div>
 			<div class="row" style="font-size:0.75rem;" >
+				<img src="${pageContext.request.contextPath}/img/level.png" width=<%=wid%>>
+				<i class="fas fa-reply" style="width=<%=wid%>"></i>
 				<p style="margin-left:40px;"><%=commRB.getRep_person()%></p>
 				<p style="margin-left:20px;"><%=commRB.getRep_date()%></p>
 			</div>
 			<div style="margin-left:25px; font-size:1rem;"><%=commRB.getRep_content()%></div>
-			<div style="font-size:0.75rem; float: right;  margin-right: 20px;">수정 삭제 답글쓰기</div>
+			
+			<div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">	
+			
+				<form action="reply_deletePro.jsp"> 
+					<!-- 삭제  -->
+					<!-- 원래글로 돌아가기위한 글번호  -->
+					<input type="hidden" name="comm_num" value="<%= comm_num%>">
+					<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+					<input type="submit" style="border: 0px" value="삭제">  
+				</form>
+				
+	<%-- 		<form action="reply_deletePro.jsp"> 
+					<!-- 수정  -->
+					<input type="hidden" name="comm_num" value="<%= comm_num%>">
+					<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+					<input type="submit" style="border: 0px" value="수정" data-toggle="modal" data-target="#myModal" >  
+				</form> --%>
+				
+				<form> 
+					<input type="hidden" name="comm_num" value="<%= comm_num%>">
+					<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+					<input type="button" style="border: 0px" value="수정" data-toggle="modal" data-target="#myModal" > 
+				</form>  
+				 
+				답글쓰기
+			</div>
+		
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			         <h4 class="modal-title" id="myModalLabel">댓글 수정</h4>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			      </div>
+			      <div class="modal-body">
+			      	<pre><div style="margin-left:25px; font-size:1rem;"><%=commRB.getRep_content()%></div></pre>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>	
+ 			 </div>
+			
 			
 		</div>
 		<br>

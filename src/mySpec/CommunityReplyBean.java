@@ -4,12 +4,13 @@ public class CommunityReplyBean {
 	private int rep_num; 
 	private int rep_comm; 
 	private String rep_person;
-	private String rep_content;
-
 	private String rep_date;
-	private int rep_pos; 
+	
+	private String rep_content;
 	private int rep_ref; 
-	private int rep_depth;
+	private int rep_step;
+	private int rep_level; 
+
 	
 	public int getRep_num() {
 		return rep_num;
@@ -35,18 +36,11 @@ public class CommunityReplyBean {
 	public void setRep_content(String rep_content) {
 		this.rep_content = rep_content;
 	}
-	
 	public String getRep_date() {
 		return rep_date;
 	}
 	public void setRep_date(String rep_date) {
 		this.rep_date = rep_date;
-	}
-	public int getRep_pos() {
-		return rep_pos;
-	}
-	public void setRep_pos(int rep_pos) {
-		this.rep_pos = rep_pos;
 	}
 	public int getRep_ref() {
 		return rep_ref;
@@ -54,13 +48,20 @@ public class CommunityReplyBean {
 	public void setRep_ref(int rep_ref) {
 		this.rep_ref = rep_ref;
 	}
-	public int getRep_depth() {
-		return rep_depth;
+	public int getRep_level() {
+		return rep_level;
 	}
-	public void setRep_depth(int rep_depth) {
-		this.rep_depth = rep_depth;
-	} 
-
+	public void setRep_level(int rep_level) {
+		this.rep_level = rep_level;
+	}
+	public int getRep_step() {
+		return rep_step;
+	}
+	public void setRep_step(int rep_step) {
+		this.rep_step = rep_step;
+	}
 	
-
+	
+	
 }
+	
