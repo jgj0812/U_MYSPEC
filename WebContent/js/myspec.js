@@ -451,3 +451,13 @@ $(document).ready(function () {
       	height: "20em",
     });
 });
+
+// 대외활동 등록
+function act_submit() {
+	$("#act_form").submit();
+}
+
+//커뮤니티 글쓰기
+function comm_write() {
+	window.location = "write.jsp";
+}

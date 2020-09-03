@@ -23,7 +23,21 @@
 	      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
 	      crossorigin="anonymous"
 	    />
-	    <link rel="stylesheet" href="../css/myspec.css" />
+	    <!-- slick css -->
+	    <link
+	      rel="stylesheet"
+	      type="text/css"
+	      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+	    />
+	    <link
+	      rel="stylesheet"
+	      type="text/css"
+	      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+	    />
+	    <!-- summernote css -->
+	    <link href="${pageContext.request.contextPath}/summernote/summernote-bs4.min.css" rel="stylesheet" />
+	    <!-- mySpec css -->
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myspec.css" />
 	</head>
   	<body class="d-flex flex-column h-100">
   		<!-- admin header -->

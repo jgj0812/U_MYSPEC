@@ -3,23 +3,23 @@ package mySpec;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CommunityMgr {
+public class CommunityReplyMgr {
 private DBConnection pool;
 	
 	// DB?占쎄껐
-	public CommunityMgr() {
+	public CommunityReplyMgr() {
 		pool = DBConnection.getInstance();
 	}
 	
 	//湲�由ъ�ㅽ��
-	public ArrayList<CommunityBean> Community_list() {
+	public ArrayList<CommunityReplyBean> Community_reply_list(int rep_comm) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		
-		String sql = "select * from community";
+		String sql = "select * from comm_reply where rep_comm = "+ rep_comm;
 		
-		ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>();
+		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		
 		try {
 			con = pool.getConnection();
@@ -27,42 +27,49 @@ private DBConnection pool;
 			rs = st.executeQuery(sql);
 			
 			while (rs.next()) {
-				CommunityBean  commB = new CommunityBean();
-				commB.setComm_num(rs.getInt("comm_num"));
-				commB.setComm_type(rs.getInt("comm_type"));
-				commB.setComm_title(rs.getString("comm_title"));
-				commB.setComm_person(rs.getString("comm_person"));
-				commB.setComm_date(rs.getString("comm_date"));
-				commB.setComm_hits(rs.getInt("comm_hits"));
-				commB.setComm_content(rs.getString("comm_content"));
+				CommunityReplyBean  commB = new CommunityReplyBean();
 				
-				comm_arr.add(commB);
+				commB.setRep_num(rs.getInt("rep_num"));
+				commB.setRep_comm(rs.getInt("rep_comm"));
+				commB.setRep_person(rs.getString("rep_person"));
+				commB.setRep_content(rs.getString("rep_content"));
+				
+				commB.setRep_date(rs.getString("rep_date"));
+				commB.setRep_pos(rs.getInt("rep_pos"));
+				commB.setRep_ref(rs.getInt("rep_ref"));
+				commB.setRep_depth(rs.getInt("rep_depth"));
+				
+				commreply_arr.add(commB);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.closeConnection(con, st, rs);
 		}
-		return comm_arr;
+		return commreply_arr;
 	}
 	
 	//湲��곌린
-	public int Community_insert (CommunityBean Comm, String id) {
+	public int Community_reply_insert (CommunityReplyBean Comm, String id, int comm_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int re = -1; 
-		                                           //글번호                        글타입 제목  아이디      날짜                                         조회수 내용
-		String sql = "insert into community values(community_seq.nextval, ?, ?, ?, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), 0, ?)";
+		                                       //번호 글번호 아이디  날짜      내용 pos ref depth
+		String sql = "insert into comm_reply values(?, ?, ?, sysdate, ?, ?, ?, ?)";
 		
 		try {
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, Comm.getComm_type());
-			pstmt.setString(2, Comm.getComm_title());
-			pstmt.setString(3, id);
-			pstmt.setString(4, Comm.getComm_content());
+			pstmt.setInt(1, Comm.getRep_num()); //번호
+			pstmt.setInt(2, comm_num); //글번호
+			pstmt.setString(3, id); //아이디
 			
+			pstmt.setString(4, Comm.getRep_content()); //내용
+			pstmt.setInt(5, Comm.getRep_pos()); //pos
+			pstmt.setInt(6, Comm.getRep_ref()); //ref
+			pstmt.setInt(7, Comm.getRep_depth()); //depth
+
 			pstmt.executeUpdate();
 			
 			re = 1;

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/* 현재  */
 /*조기종 css*/
 /*구글 폰트 적용*/
 * {
@@ -132,10 +133,16 @@ a, a:hover {
  
 }
 
-/*권보영 css*/
+
 /* 최신순 드롭다운 */
-.dropdown {
-  margin-left: 16px
+.name_line {
+    height: 12px;
+    width: 1px;
+    background-color: #f2f2f2;
+    margin-top: 3px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 /* 태그 네브바 */
@@ -168,7 +175,7 @@ a, a:hover {
 }
 
 /* 태그 글자 */
-.tab-content a {
+.tab-a a {
   color: lightgray;
   text-decoration: none;
 }
@@ -190,13 +197,6 @@ a, a:hover {
   border: 1px solid lightgray;
   background-color: lightgray;
   margin: 7px 3px 3px 3px;
-}
-
-/* 정렬 드롭다운 */
-#dropdownMenuButton {
-  border: 1px solid white;
-  background-color: white;
-  color: black;
 }
 
 
@@ -226,6 +226,16 @@ a, a:hover {
   display: none;
 }
 
+.c_title{
+	margin-right: auto; 
+	margin-top: 15px; 
+		
+}
+
+#search_control{
+	margin-right: 4px;
+}
+
 /* 윈도우 크기가 작아지면서 사진 크기때문에 겹치거나 보기 별로라서 이미지 크기를 줄임  */
 @media (max-width:800px) {
   .container_search img {
@@ -236,97 +246,81 @@ a, a:hover {
 
 @media (max-width:360px) {
 
-/* 화면 크기가 360이하면 서브태그가 안보인다 */
-#nav-tabContent {
-  display: none;
-}
+	/* 화면 크기가 360이하면 서브태그가 안보인다 */
+	#nav-tabContent {
+	  display: none;
+	}
 
-.container_search img {
-  width: 100%;
-  height: auto;
-}
+	
+	.container_search img {
+	  width: 100%;
+	  height: auto;
+	}
+	
+	
+	/* 화면 크기가 360이하면 탭이 안보인다 */
+	#nav-tab {
+	  display: none;
+	}
+	
+	
+	.modalbutton {
+	  /* display none 해제 */
+	  display: block;
+	  /* padding-left: 16px; */
+	  text-align: center;
+	}
+	
+	/* 360에서 활동분야, 관심분야 태그들  */
+	.modalbutton .btn {
+	  margin:0;
+	  padding-left: 4px;
+	  padding-right: 4px;
+	  padding-top: 3px;
+	  padding-bottom: 3px;
+	  font-size: 13px;
+	  color: black;
+	  margin: 7px 2px 2px 3px;
+	}
+	
+	/* 360에서 활동분야, 관심분야 태그 누르면 나오는 서브태그  */
+	.modal-body .btn {
+	  color: white;
+	  background-color: #1dcdff;
+	  border-radius: 20px;
+	  border: 0px;
+	  font-size: 13px;
+	}
+	
+	/* 모달에서 검색버튼 */
+	.modal-footer .modal_search {
+	  color: white;
+	  background-color: #1dcdff;
+	  border: 0px;	}
+	
 
-/* 화면 크기가 360이하면 탭이 안보인다 */
-#nav-tab {
-  display: none;
-}
-
-.modalbutton {
-  /* display none 해제 */
-  display: block;
-  /* padding-left: 16px; */
-  text-align: center;
-}
-
-/* 360에서 활동분야, 관심분야 태그들  */
-.modalbutton .btn {
-  margin:0;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  font-size: 13px;
-  color: black;
-  margin: 7px 2px 2px 3px;
-}
-/* 360에서 활동분야, 관심분야 태그 누르면 나오는 서브태그  */
-.modal-body .btn {
-  color: white;
-  background-color: #1dcdff;
-  border-radius: 20px;
-  border: 0px;
-  font-size: 13px;
-}
-
-/* 모달에서 검색버튼 */
-.modal-footer .modal_search {
-  color: white;
-  background-color: #1dcdff;
-  border: 0px;
-}
-
-.c_title{
-	margin-right: auto; 
-	margin-top: 15px; 
-}
-
-@media (max-width:360px) {
 	.c_title{
 		margin-right: auto; 
-		margin-top: 15px; 
 		width: 240px;
 	}
 
-}
-
-.name_line{
-	  height: 12px; 
-	  width:1px; 
-	  background-color: #f2f2f2; 
-	  margin-top: 3px;
-	  margin-bottom: 0px; 
-	  margin-left: 10px; 
-	  margin-right: 10px;
-}
-#search_control{
-	margin-right: 4px;
-}
-   
-@media (max-width:360px) {
 	.table-sm td, .table-sm th {
 	    padding-top: 1rem;
 	    padding-bottom: 0px;
 	}
 	
 	 #search_control{
-		margin-right: 0px;
-	}
+  		margin-right: 0px;
+  	} 
 }
+
+
 /*송민관 css*/
 .note-modal .modal-dialog .modal-content .modal-header {
   background: #007bff;
   color: #ffffff;
 }
+
 .note-modal .modal-dialog .modal-content .modal-header .close {
   color: #ffffff;
 }
