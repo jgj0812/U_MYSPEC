@@ -33,7 +33,7 @@
 			
 			<hr>
 			
-			<textarea class="form-control" name="comm_content" rows="15"></textarea>
+			<textarea id="comm_content" name="comm_content" rows="15"></textarea>
 			
 			<hr>
 			

@@ -1,16 +1,25 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import="mySpec.*"%>
 <%@ include file="../header.jsp" %>
 
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
+<jsp:useBean id="Rmgr" class="mySpec.CommunityReplyMgr" />
+
 <jsp:useBean id="bean" class="mySpec.CommunityBean" />
+<jsp:useBean id="Rbean" class="mySpec.CommunityReplyBean" />
 
 <jsp:setProperty property="*" name="bean"/>
+<jsp:setProperty property="*" name="Rbean"/>
 
 <%
-	int comm_num= Integer.parseInt(request.getParameter("comm_num"));
+	//긃번호
+	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
+	//글번호로 게시물 보여주기
 	CommunityBean commB = mgr.Community_detailView(comm_num);
+	//글번호로 댓글 리스트 보여주기
+	ArrayList<CommunityReplyBean> commRe_arr  = Rmgr.Community_reply_list(comm_num);
 	
 	int num = commB.getComm_num(); //글번호
 	String person = commB.getComm_person();
@@ -88,21 +97,52 @@
 	
 	
 	<div style="background-color:#eeeeee;">
+		
+		<!-- 댓글수 -->
 		<div class="row" style="font-size:0.75rem; margin-top:23px;" >
-			<p style="margin-left:40px; margin-top:15px;">댓글</p>
-			<p style="margin-top:15px; margin-left:5px;">0</p>
+			<p style="font-weight:bold; margin-left:40px; margin-top:15px;">댓글</p>
+			<p style="font-weight:bold; margin-top:15px; margin-left:5px;">0</p>
 		</div>
+		
 		<hr style="margin-top: 2px">
-		
-		
-	 <div class="form-row">
-	    <div class="col-8">
-	      <input style="margin-left:20px; height:60px; font-weight:bolder;" type="text" class="form-control" placeholder="댓글을 입력해주세요.">
-	    </div>
-	    <div class="col-2">
-	      <input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" type="submit" class="form-control" value="등록">
-	    </div>
-	  </div>
+		<!-- 댓글 보여주는 곳 -->	
+<%
+		for(CommunityReplyBean commRB :commRe_arr){
+	
+%>	
+	
+		<div>
+			<div class="row" style="font-size:0.75rem;" >
+				<p style="margin-left:40px;"><%=commRB.getRep_person()%></p>
+				<p style="margin-left:20px;"><%=commRB.getRep_date()%></p>
+			</div>
+			<div style="margin-left:25px; font-size:1rem;"><%=commRB.getRep_content()%></div>
+			<div style="font-size:0.75rem; float: right;  margin-right: 20px;">수정 삭제 답글쓰기</div>
+			
+		</div>
+		<br>
+		<hr>
+<%
+		}
+%>				
+	<!-- 댓글 입력폼  -->
+	<form action="replyPro.jsp" name="comm_reply_form" method="post">
+	  	<!-- 글번호를 넘긴다 -->
+	  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
+	  	
+		<div class="form-row">
+			 <div class="col-8">
+			   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
+			   type="text" class="form-control" placeholder="댓글을 입력해주세요." >
+			</div>
+			
+			<div class="col-2">
+				<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
+				type="submit" class="form-control" value="등록">
+			</div>
+		</div>
+	</form>
+	
  </div>
 </section>
 <%@ include file="../footer.jsp" %>
