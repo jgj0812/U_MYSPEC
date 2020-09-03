@@ -267,7 +267,7 @@
 
 			<div>
 				<h3>상세내용</h3>
-				<textarea id="content" name="act_content"></textarea>
+				<textarea id="act_content" name="act_content"></textarea>
 			</div>
 			<br /> <br />
 
