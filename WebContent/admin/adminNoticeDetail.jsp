@@ -39,7 +39,7 @@
           		</button>
 			</nav>
 				
-			<!-- detailView -->
+			<!-- detailView admin -->
 			<div class="card bg-light mt-3">
 				<div class="card-header bg-light">
 					<div class="row">
