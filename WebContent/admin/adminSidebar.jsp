@@ -14,8 +14,8 @@
             	공모전, 대외활동
             </h3>
             <div class="list-group list-group-flush">
-				<a href="#" class="list-group-item list-group-item-action bg-light">대외활동 관리</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">공모전 관리</a>
+				<a href="admin_activity1.jsp" class="list-group-item list-group-item-action bg-light">대외활동 관리</a>
+				<a href="admin_activity2.jsp" class="list-group-item list-group-item-action bg-light">공모전 관리</a>
 			</div>
 			
 			<h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">

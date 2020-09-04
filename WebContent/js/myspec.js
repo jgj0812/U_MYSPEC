@@ -446,22 +446,36 @@ function reset() {
 
 // summernote
 $(document).ready(function () {
-	$("#content").summernote({
+	$("#act_content").summernote({
 		lang: "ko-KR",
-      	height: "20em",
+		callbacks : {
+			onImageUpload : function(files) {
+				sendFile(files[0], this);
+			},
+		}
     });
+	$("#act_form input[name='act_start']").datepicker({
+		dateFormat: "yy-mm-dd"
+	});
+	$("#act_form input[name='act_end']").datepicker({
+		dateFormat: "yy-mm-dd"
+	});
 });
 
-$(document).ready(function () {
-	$("#comm_content").summernote({
-		lang: "ko-KR",
-      	height: "20em",
-    });
-});
-
-// 대외활동 등록
-function act_submit() {
-	$("#act_form").submit();
+function sendFile(file, editor) {
+	data = new FormData();
+	data.append("uploadFile", file);
+	$.ajax({
+		data : data,
+		type : "POST",
+		url : "act_content_imageUpload.jsp",
+		cache : false,
+		contentType : false,
+		processData : false,
+		success : function(data) {
+			$(editor).summernote("insertImage", data.url);
+		}
+	});
 }
 
 //커뮤니티 글쓰기
