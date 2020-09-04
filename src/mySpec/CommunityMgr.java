@@ -153,7 +153,7 @@ private DBConnection pool;
 				commB.setComm_date(rs.getString("comm_date"));
 				commB.setComm_hits(rs.getInt("comm_hits"));
 				commB.setComm_content(rs.getString("comm_content"));
-
+				commB.setComm_admin(rs.getString("comm_admin"));
 			}
 
 		} catch (Exception e) {

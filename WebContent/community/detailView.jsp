@@ -125,24 +125,24 @@
 <%
 		}
 %>				
-	<!-- 댓글 입력폼  -->
-	<form action="replyPro.jsp" name="comm_reply_form" method="post">
-	  	<!-- 글번호를 넘긴다 -->
-	  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
-	  	
-		<div class="form-row">
-			 <div class="col-8">
-			   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
-			   type="text" class="form-control" placeholder="댓글을 입력해주세요." >
+		<!-- 댓글 입력폼  -->
+		<form action="replyPro.jsp" name="comm_reply_form" method="post">
+		  	<!-- 글번호를 넘긴다 -->
+		  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
+		  	
+			<div class="form-row">
+				 <div class="col-8">
+				   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
+				   type="text" class="form-control" placeholder="댓글을 입력해주세요." >
+				</div>
+				
+				<div class="col-2">
+					<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
+					type="submit" class="form-control" value="등록">
+				</div>
 			</div>
-			
-			<div class="col-2">
-				<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
-				type="submit" class="form-control" value="등록">
-			</div>
-		</div>
-	</form>
+		</form>
 	
- </div>
+ 	</div>
 </section>
 <%@ include file="../footer.jsp" %>
