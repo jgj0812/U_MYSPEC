@@ -448,7 +448,11 @@ function reset() {
 $(document).ready(function () {
 	$("#act_content").summernote({
 		lang: "ko-KR",
-      	height: "20em",
+		callbacks : {
+			onImageUpload : function(files) {
+				sendFile(files[0], this);
+			},
+		}
     });
 	$("#act_form input[name='act_start']").datepicker({
 		dateFormat: "yy-mm-dd"
@@ -457,6 +461,22 @@ $(document).ready(function () {
 		dateFormat: "yy-mm-dd"
 	});
 });
+
+function sendFile(file, editor) {
+	data = new FormData();
+	data.append("uploadFile", file);
+	$.ajax({
+		data : data,
+		type : "POST",
+		url : "act_content_imageUpload.jsp",
+		cache : false,
+		contentType : false,
+		processData : false,
+		success : function(data) {
+			$(editor).summernote("insertImage", data.url);
+		}
+	});
+}
 
 //커뮤니티 글쓰기
 function comm_write() {

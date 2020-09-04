@@ -78,4 +78,5 @@ function act_submit() {
 		alert("포스터를 선택해주세요.");
 		return;
 	}
+	$("#act_form").submit();
 }
