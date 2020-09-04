@@ -36,6 +36,8 @@
     <!-- summernote js -->
     <script src="${pageContext.request.contextPath}/summernote/summernote-bs4.min.js"></script>
     <script src="${pageContext.request.contextPath}/summernote/lang/summernote-ko-KR.js"></script>
+    <!-- jquery-ui -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 	<!-- myspec.js -->
 	<script src="${pageContext.request.contextPath}/js/myspec.js"></script>
   </body>

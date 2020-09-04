@@ -446,23 +446,17 @@ function reset() {
 
 // summernote
 $(document).ready(function () {
-	$("#content").summernote({
+	$("#act_content").summernote({
 		lang: "ko-KR",
       	height: "20em",
     });
+	$("#act_form input[name='act_start']").datepicker({
+		dateFormat: "yy-mm-dd"
+	});
+	$("#act_form input[name='act_end']").datepicker({
+		dateFormat: "yy-mm-dd"
+	});
 });
-
-$(document).ready(function () {
-	$("#comm_content").summernote({
-		lang: "ko-KR",
-      	height: "20em",
-    });
-});
-
-// 대외활동 등록
-function act_submit() {
-	$("#act_form").submit();
-}
 
 //커뮤니티 글쓰기
 function comm_write() {

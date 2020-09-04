@@ -1,6 +1,16 @@
 // list_act_write.jsp
+function get_thumb_filename() {
+	var filename = $("#act_form input[name='act_thumb']")[0].files[0].name;
+	$("#thumb_filename").html(filename);
+}
+
+function get_post_filename() {
+	var filename = $("#act_form input[name='act_post']")[0].files[0].name;
+	$("#post_filename").html(filename);
+}
+
 function act_submit() {
-	var currDate = new Date();
+	var currDate = new Date(new Date().getYear() + 1900, new Date().getMonth(), new Date().getDate());
 	var startDate = Date.parse($("#act_form input[name='act_start']").val());
 	var endDate = Date.parse($("#act_form input[name='act_end']").val());
 
