@@ -468,3 +468,13 @@ function act_submit() {
 function comm_write() {
 	window.location = "write.jsp";
 }
+
+// 개인 리스트 검색
+$("#personSearchBtn").click(function(){
+	if($("#personSearch").val() == "") {
+		alert("검색어를 입력하세요");
+		$("#personSearch").focus();
+		return false;
+	}
+	$("#personSearchFrm").submit();
+});
