@@ -141,7 +141,7 @@
 			</div>
 			<!-- /페이징 -->
 			<!-- 검색 -->
-			<form action="#" method="post" id="personSearchFrm" class="form-inline justify-content-center">
+			<form method="post" id="personSearchFrm" class="form-inline justify-content-center">
 				<input type="hidden" name="pageNum" value="1">
 				<select name="keyField" class="form-control" id="search_control">
 					<option value="person_id">ID</option>

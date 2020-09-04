@@ -22,7 +22,7 @@
             	커뮤니티
             </h3>
             <div class="list-group list-group-flush">
-				<a href="myPage_info.jsp" class="list-group-item list-group-item-action bg-light">공지글 관리</a>
+				<a href="adminNotice.jsp" class="list-group-item list-group-item-action bg-light">공지글 관리</a>
 				<a href="myPage_delete.jsp" class="list-group-item list-group-item-action bg-light">일반글 관리</a>
 			</div>
 			<div class="container mt-2">
