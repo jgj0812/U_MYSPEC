@@ -10,7 +10,7 @@
 	String id = (String)session.getAttribute("adminId");
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
 	
-	int re = mgr.Community_reply_insert(bean, id, comm_num);
+	int re = mgr.insertAdminReply(bean, id, comm_num);
 	
 	if(re == 1) {
 	%>

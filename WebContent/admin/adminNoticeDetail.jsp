@@ -1,17 +1,17 @@
 <%@page import="mySpec.CommunityReplyBean"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="mySpec.CommunityBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/admin/adminHeader.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
 <jsp:useBean id="Rmgr" class="mySpec.CommunityReplyMgr" />
 <%
-	//긃번호
+	// 글번호
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
-	//글번호로 게시물 보여주기
+	// 글번호로 게시물 보여주기
 	CommunityBean commB = mgr.Community_detailView(comm_num);
-	//글번호로 댓글 리스트 보여주기
+	// 글번호로 댓글 리스트 보여주기
 	ArrayList<CommunityReplyBean> commRe_arr  = Rmgr.Community_reply_list(comm_num);
 	
 	int num = commB.getComm_num(); //글번호
@@ -85,14 +85,14 @@
 							class="btn text-dark"  
 							style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
 							value="수정"
-							onclick="location.href='update.jsp?comm_num=<%=commB.getComm_num()%>'">
+							onclick="location.href='adminNoticeUpdate.jsp?comm_num=<%=commB.getComm_num()%>'">
 							
 					<!-- 삭제  -->
 					<input type="button" 
 							class="btn text-dark"  
 							style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
 							value="삭제"
-							onclick="location.href='deletePro.jsp?comm_num=<%=commB.getComm_num() %>'">
+							onclick="location.href='adminComDeletePro.jsp?comm_num=<%=commB.getComm_num() %>&type=0'">
 							
 					<input type="button" class="btn text-dark"  style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;
 				    font-weight:bolder;" value="다음글">
@@ -115,7 +115,11 @@
 			
 				<div>
 					<div class="row" style="font-size:0.75rem;" >
-						<p style="margin-left:40px;"><%=commRB.getRep_person()%></p>
+						<%if(commRB.getRep_admin() != null) {%>
+						<p style="margin-left:40px;">관리자</p>
+						<%}else { %>
+						<p style="margin-left:40px;"><%=commRB.getRep_person() %></p>
+						<%} %>
 						<p style="margin-left:20px;"><%=commRB.getRep_date()%></p>
 					</div>
 					<div style="margin-left:25px; font-size:1rem;"><%=commRB.getRep_content()%></div>
@@ -128,7 +132,7 @@
 				}
 		%>				
 				<!-- 댓글 입력폼  -->
-				<form action="replyPro.jsp" name="comm_reply_form" method="post">
+				<form action="adminReplyPro.jsp" name="comm_reply_form" method="post">
 				  	<!-- 글번호를 넘긴다 -->
 				  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
 				  	
@@ -144,7 +148,7 @@
 						</div>
 					</div>
 				</form>
-			
+				<!-- /댓글 입력 폼 -->
 		 	</div>
 		</div>
 		<!-- /page Content -->

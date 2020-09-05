@@ -28,17 +28,15 @@ private DBConnection pool;
 			
 			while (rs.next()) {
 				CommunityReplyBean  commB = new CommunityReplyBean();
-				
 				commB.setRep_num(rs.getInt("rep_num"));
 				commB.setRep_comm(rs.getInt("rep_comm"));
 				commB.setRep_person(rs.getString("rep_person"));
 				commB.setRep_content(rs.getString("rep_content"));
-				
 				commB.setRep_date(rs.getString("rep_date"));
 				commB.setRep_pos(rs.getInt("rep_pos"));
 				commB.setRep_ref(rs.getInt("rep_ref"));
 				commB.setRep_depth(rs.getInt("rep_depth"));
-				
+				commB.setRep_admin(rs.getString("rep_admin"));
 				commreply_arr.add(commB);
 			}
 		} catch (Exception e) {
@@ -49,13 +47,15 @@ private DBConnection pool;
 		return commreply_arr;
 	}
 	
-	//湲��곌린
+	// 개인회원 댓글 등록
 	public int Community_reply_insert (CommunityReplyBean Comm, String id, int comm_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int re = -1; 
-		                                       //번호 글번호 아이디  날짜      내용 pos ref depth
-		String sql = "insert into comm_reply values(?, ?, ?, sysdate, ?, ?, ?, ?)";
+		                                       
+		String sql = "insert into comm_reply (rep_num, rep_comm, rep_person, rep_date, rep_content, rep_pos, rep_ref, rep_depth)" 
+													// 번호 글번호 아이디  날짜      내용 pos ref depth
+		                                       + " values(?, ?, ?, sysdate, ?, ?, ?, ?)";
 		
 		try {
 			con = pool.getConnection();
@@ -64,7 +64,6 @@ private DBConnection pool;
 			pstmt.setInt(1, Comm.getRep_num()); //번호
 			pstmt.setInt(2, comm_num); //글번호
 			pstmt.setString(3, id); //아이디
-			
 			pstmt.setString(4, Comm.getRep_content()); //내용
 			pstmt.setInt(5, Comm.getRep_pos()); //pos
 			pstmt.setInt(6, Comm.getRep_ref()); //ref
@@ -200,7 +199,6 @@ private DBConnection pool;
 	} 
 
 	//��紐�, �댁��, ���ㅼ�� 寃���
-	
 	public ArrayList<CommunityBean> Community_list_search(int sorting_num , String str) {
 		Connection con = null;
 		Statement st = null;
@@ -244,5 +242,34 @@ private DBConnection pool;
 			pool.closeConnection(con, st, rs);
 		}
 		return comm_arr_search;
+	}
+	
+	// 관리자 댓글 등록
+	public int insertAdminReply(CommunityReplyBean bean, String id, int comm_num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int re = -1;
+
+		try {
+			con = pool.getConnection();
+			sql = "insert into comm_reply (rep_num, rep_comm, rep_admin, rep_date, rep_content, rep_pos, rep_ref, rep_depth) " 
+							+ "values(?, ?, ?, sysdate, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bean.getRep_num()); //번호
+			pstmt.setInt(2, comm_num); //글번호
+			pstmt.setString(3, id); //아이디
+			pstmt.setString(4, bean.getRep_content()); //내용
+			pstmt.setInt(5, bean.getRep_pos()); //pos
+			pstmt.setInt(6, bean.getRep_ref()); //ref
+			pstmt.setInt(7, bean.getRep_depth()); //depth
+			pstmt.executeUpdate();
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+		return re;
 	}
 }
