@@ -482,3 +482,23 @@ function sendFile(file, editor) {
 function comm_write() {
 	window.location = "write.jsp";
 }
+
+// 개인 리스트 검색(admin)
+$("#personSearchBtn").click(function(){
+	if($("#personSearch").val() == "") {
+		alert("검색어를 입력하세요");
+		$("#personSearch").focus();
+		return false;
+	}
+	$("#personSearchFrm").submit();
+});
+
+// 커뮤니티 공지글 검색(admin)
+$("#noticeSearchBtn").click(function(){
+	if($("#noticeSearch").val() == "") {
+		alert("검색얼르 입력하세요");
+		$("#noticeSearch").focus();
+		return false;
+	}
+	$("#noticeSearchFrm").submit();
+});

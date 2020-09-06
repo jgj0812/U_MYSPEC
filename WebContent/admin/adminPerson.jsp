@@ -11,11 +11,17 @@
 	if(pageNum == null) {
 		pageNum = "1";
 	}
+	String keyField = "", keyWord = "";					// 검색에 필요한 변수
+	// 검색일때
+	if(request.getParameter("keyWord") != null) {
+		keyField = request.getParameter("keyField");
+		keyWord = request.getParameter("keyWord");
+	}
 	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
 	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
 	int endRow = currentPage * pageSize;				// 페이지 끝
-	ArrayList<PersonBean> arrPerson = mgr.listPerson(startRow, endRow);
-	int count = mgr.personCount();	// 전체 개인회원 수
+	ArrayList<PersonBean> arrPerson = mgr.listPerson(startRow, endRow, keyField, keyWord);
+	int count = mgr.personCount(keyField, keyWord);		// 전체 개인회원 수
 	int number = count - (currentPage - 1) * pageSize;
 %>
 <main>
@@ -134,6 +140,22 @@
 				</nav>
 			</div>
 			<!-- /페이징 -->
+			<!-- 검색 -->
+			<form method="post" id="personSearchFrm" class="form-inline justify-content-center">
+				<input type="hidden" name="pageNum" value="1">
+				<select name="keyField" class="form-control" id="search_control">
+					<option value="person_id">ID</option>
+					<option value="person_nick">닉네임</option>
+				</select>
+				
+				<div class="input-group">
+					<input type="text" id="personSearch" name="keyWord" class="form-control">
+					<div class="input-group-append">
+						<button type="button" id="personSearchBtn" class="btn btn-cam">검색</button>	
+					</div>
+				</div>
+			</form>
+			<!-- /검색 -->
 		</div>
 		<!-- /page Content -->
 	</div>

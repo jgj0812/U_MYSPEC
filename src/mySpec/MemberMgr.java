@@ -281,21 +281,35 @@ private DBConnection pool;
 	}
 	
 	// 개인회원 리스트(admin)
-	public ArrayList<PersonBean> listPerson(int startRow, int endRow) {
+	public ArrayList<PersonBean> listPerson(int startRow, int endRow, String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<PersonBean> arrPerson = new ArrayList<PersonBean>();
-		String sql = "select * from "
-								+ "(select rownum rn, aa.* from "
-								+ "(select * from person_user) aa)"
-								+ " where rn between ? and ?";
+		String sql = null; 
 		
 		try {
 			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			if(keyWord.trim().equals("") || keyWord == null) {
+				// 검색이 아닌경우
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select * from person_user) aa)"
+						+ " where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}else {
+				// 검색인 경우
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select * from person_user where " + keyField + " like ?) aa)"
+						+ " where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				PersonBean person = new PersonBean();
@@ -316,16 +330,25 @@ private DBConnection pool;
 	}
 	
 	// 개인회원 수
-	public int personCount() {
+	public int personCount(String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from person_user";
+		String sql = null; 
 		int count = 0;
 
 		try {
 			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
+			if(keyWord.trim().equals("") || keyWord == null) {
+				// 검색이 아닌경우
+				sql = "select count(*) from person_user";
+				pstmt = con.prepareStatement(sql);
+			}else {
+				// 검색인 경우
+				sql = "select count(*) from person_user where " + keyField + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+			}
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				count = rs.getInt(1);
