@@ -1,6 +1,6 @@
 // header 검색 버튼
 $('#searchBtn').click(function(){
-	if($('#search').value == "") {
+	if($('#search').val() == "") {
 		alert("검색어를 입력해주세요.");
 		$('#search').focus;
 		return false;
@@ -487,7 +487,6 @@ $("#orgSearchBtn").click(function(){
 		return false;
 	}
 	$("#orgSearchFrm").submit();
-	$("#orglistBtn").show();
 });
 
 // 커뮤니티 공지글 검색(admin)

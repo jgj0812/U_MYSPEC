@@ -55,6 +55,7 @@
 
 
 		for(CommunityBean commB :comm_arr){
+			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
 			String Type =commB.getComm_type()==0?"공지사항":"일반게시판";
 			String datestr = commB.getComm_date();
 			String [] date = datestr.split(" ");
@@ -72,17 +73,9 @@
 		 			<td class="col-md-1 d-none d-lg-table-cell"><%=Type%></td>
 		 			<td class="col-md-5">
 		 				<a href="detailView.jsp?comm_num=<%=commB.getComm_num()%>" class="h5 text-dark"><%=commB.getComm_title() %></a>
-		 			<%
-		 				if(commB.getComm_admin() != null) {
-		 			%>
-		 				<p class="d-block d-sm-none"><small>관리자 <%=date_1%> <%=commB.getComm_hits() %></small></p>
+		 				<p class="d-block d-sm-none"><small><%=person %> <%=date_1%> 조회 <%=commB.getComm_hits() %></small></p>
 		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">관리자</td>
-		 			<%}else { %>
-		 				<p class="d-block d-sm-none"><small><%=commB.getComm_nick() %> <%=date_1%> <%=commB.getComm_hits() %></small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell"><%=commB.getComm_nick() %></td>
-		 			<%} %>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=person %></td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date_1 %></td>
 		 			<td class="col-md-1 d-none d-lg-table-cell"><%=commB.getComm_hits() %></td>
 		 			

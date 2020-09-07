@@ -45,7 +45,7 @@
 		       	<div class="table-responsive">
 		           	<table class="table table-sm table-hover">
 		               	<thead>
-		                	<tr>
+		                	<tr class="text-center">
 		                    	<th>ID</th>
 		                    	<th>기관명칭</th>
 		                    	<th>기관타입</th>

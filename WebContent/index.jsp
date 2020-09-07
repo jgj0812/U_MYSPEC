@@ -3,11 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
-<%
-	String keyField = "", keyWord = "";
-	int startRow = 1;
-	int endRow = 3;
-%>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
 <%
 	ArrayList<CommunityBean> noticeArr = mgr.noticeList(startRow, endRow, keyField, keyWord);
@@ -29,7 +24,8 @@
 		 	</thead>
 		    <tbody>
 		    	<%for(int i = 0; i < 3; i++) {
-		    		String admin = noticeArr.get(i).getComm_admin().equals("admin") ? "관리자" : null;
+		    		String admin = "";
+		    		if(noticeArr.get(i).getComm_admin().equals("admin")) admin = "관리자";
 		    		String date[] = noticeArr.get(i).getComm_date().split(" ");
 		    		String date1 = date[0];
 		    	%>
@@ -40,7 +36,7 @@
 		 				<a href="community/detailView.jsp?comm_num=<%=noticeArr.get(i).getComm_num() %>" class="h5">
 		 					<%=noticeArr.get(i).getComm_title() %>
 		 				</a>
-		 				<p class="d-block d-sm-none"><small><%=admin %> <%=date1 %> <%=noticeArr.get(i).getComm_hits() %></small></p>
+		 				<p class="d-block d-sm-none"><small><%=admin %> <%=date1 %> 조회 <%=noticeArr.get(i).getComm_hits() %></small></p>
 		 			</td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=admin %></td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date1 %></td>
