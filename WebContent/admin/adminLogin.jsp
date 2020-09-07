@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/admin/adminHeader.jsp" %>
+	<!-- admin Login -->
 	<section class="py-5">
 		<h1 class="text-center">로그인</h1>
 		<div class="container">
@@ -23,4 +24,5 @@
 			</div>
 		</div>
 	</section>
+	<!-- /admin Login -->
 <%@ include file="/admin/adminFooter.jsp" %>

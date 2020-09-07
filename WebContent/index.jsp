@@ -3,7 +3,7 @@
 <%@ include file="/header.jsp" %>
 <section class="py-3">
 	<div class="container">
-		<h3>공지사항</h3>
+		<h3 style="text-align: center; margin-bottom: 20px">MySpec 공지사항</h3>
 		<div class="table-responsive-sm">
 		  <table class="table table-sm table-hover">
 		    <thead>
@@ -55,15 +55,18 @@
 		</div>
 	</div>
     <div class="container bg-light my-3">
-        <h3>인기 대외활동</h3>
-        <div class="row justify-content-end p-3">
-          <button type="button" class="left mr-2" id="arrow_button">
-            <i class="fas fa-angle-left"></i>
-          </button>
-          <button type="button" class="right" id="arrow_button">
-            <i class="fas fa-angle-right"></i>
-          </button>
-        </div>
+		<div style="display: flex; padding-top: 25px">
+			<h3 class="c_title" >인기 공모전</h3>
+
+			<div class="row justify-content-end p-3">
+				<button type="button" class="left mr-2" id="arrow_button">
+					<i class="fas fa-angle-left"></i>
+				</button>
+				<button type="button" class="right" id="arrow_button">
+					<i class="fas fa-angle-right"></i>
+				</button>
+			</div>
+		</div>
         <div class="your-class">
           <a href="#" class="card mb-2 mr-2">
             <img
@@ -124,15 +127,19 @@
         </div>
     </div>
     <div class="container bg-light my-3">
-        <h3>인기 공모전</h3>
-        <div class="row justify-content-end p-3">
-          <button type="button" class="left2 mr-2" id="arrow_button">
-            <i class="fas fa-angle-left"></i>
-          </button>
-          <button type="button" class="right2" id="arrow_button">
-            <i class="fas fa-angle-right"></i>
-          </button>
-        </div>
+
+		<div style="display: flex; padding-top: 25px">
+			<h3 class="c_title" >맞춤 추천 대외활동</h3>
+
+			<div class="row justify-content-end p-3">
+				<button type="button" class="left2 mr-2" id="arrow_button">
+					<i class="fas fa-angle-left"></i>
+				</button>
+				<button type="button" class="right2" id="arrow_button">
+					<i class="fas fa-angle-right"></i>
+				</button>
+			</div>
+		</div>
         <div class="your-class2">
           <a href="#" class="card mb-2 mr-2">
             <img
@@ -193,4 +200,5 @@
         </div>
     </div>
 </section>
+<br>
 <%@ include file="/footer.jsp" %>
