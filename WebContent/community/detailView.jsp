@@ -16,6 +16,7 @@
 <%
 	//글번호 저장
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
+
 	//글번호로 게시물 보여주기
 	CommunityBean commB = mgr.Community_detailView(comm_num);
 	
@@ -27,22 +28,26 @@
 	
 	int num = commB.getComm_num(); //글번호
 	String person = commB.getComm_person();
-	
-	String str = commB.getComm_date();
-	String [] date = str.split(" ");
-	String date_1 = date[0];
-	
 	int hits = commB.getComm_hits();
 	String content = commB.getComm_content();
 	String title = commB.getComm_title();
 	
+	//DATE 날짜만 보여주기
+	String str = commB.getComm_date();
+	String [] date = str.split(" ");
+	String date_1 = date[0];
+	
+	//대댓글 미완성
 	int rep_num=0, rep_ref=1, rep__step=1, rep__level=0;	
-	if(request.getParameter("rep_num")!=null){//답변글
+	
+	if(request.getParameter("rep_num")!=null){
 		rep_num = Integer.parseInt(request.getParameter("rep_num"));
 		rep_ref = Integer.parseInt(request.getParameter("rep_ref"));
 		rep__step = Integer.parseInt(request.getParameter("rep__step"));
 		rep__level = Integer.parseInt(request.getParameter("re_lrep__levelevel"));
 	}
+	
+	
 %>
 
 <section class="container my-3">
@@ -128,8 +133,8 @@
 	
 		<div>
 			<div class="row" style="font-size:0.75rem;" >
-				<img src="${pageContext.request.contextPath}/img/level.png" width=<%=wid%>>
-				<i class="fas fa-reply" style="width=<%=wid%>"></i>
+				<%-- <img src="${pageContext.request.contextPath}/img/level.png" width=<%=wid%>>
+				<i class="fas fa-reply" style="width=<%=wid%>"></i> --%>
 				<p style="margin-left:40px;"><%=commRB.getRep_person()%></p>
 				<p style="margin-left:20px;"><%=commRB.getRep_date()%></p>
 			</div>
@@ -137,28 +142,23 @@
 			
 			<div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">	
 			
+				<!-- 삭제  -->
 				<form action="reply_deletePro.jsp"> 
-					<!-- 삭제  -->
 					<!-- 원래글로 돌아가기위한 글번호  -->
 					<input type="hidden" name="comm_num" value="<%= comm_num%>">
 					<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
 					<input type="submit" style="border: 0px" value="삭제">  
 				</form>
 				
-	<%-- 		<form action="reply_deletePro.jsp"> 
-					<!-- 수정  -->
-					<input type="hidden" name="comm_num" value="<%= comm_num%>">
-					<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-					<input type="submit" style="border: 0px" value="수정" data-toggle="modal" data-target="#myModal" >  
-				</form> --%>
-				
+				<!-- 수정  -->			
 				<form> 
 					<input type="hidden" name="comm_num" value="<%= comm_num%>">
 					<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
 					<input type="button" style="border: 0px" value="수정" data-toggle="modal" data-target="#myModal" > 
 				</form>  
 				 
-				답글쓰기
+				<!-- 답글달기  -->
+				<input type="button" style="border: 0px" value="답글달기" onclick="rereply()"> 
 			</div>
 		
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -177,14 +177,36 @@
 			    </div>
 			  </div>	
  			 </div>
-			
-			
+					
 		</div>
 		<br>
 		<hr>
+		
+		<!-- 답글 입력폼  -->
+		<div id="rereply" style="display: none">
+			<form action="replyPro.jsp" name="comm_reply_form" method="post">
+			<input type="hidden" name="comm_num" value="<%= comm_num%>">
+			
+				<div class="form-row">
+					 <i class="fas fa-reply" style="margin-left: 20px"></i>
+					 
+					 <div class="col-8">
+					   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
+					   type="text" class="form-control" placeholder="댓글을 입력해주세요." >
+					</div>
+					
+					<div class="col-2">
+						<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
+						type="submit" class="form-control" value="등록">
+					</div>
+				</div>
+			</form>
+			<hr style="margin-top: 0px">
+		</div>
 <%
 		}
-%>				
+%>		
+
 	<!-- 댓글 입력폼  -->
 	<form action="replyPro.jsp" name="comm_reply_form" method="post">
 	  	<!-- 글번호를 넘긴다 -->
@@ -206,3 +228,14 @@
  </div>
 </section>
 <%@ include file="../footer.jsp" %>
+
+<script>
+function rereply(){
+	var con = document.getElementById("rereply");
+	if(con.style.display =='none'){
+		con.style.display = 'block';
+	}else if(con.style.display =='block'){
+		con.style.display = 'none';
+	}
+}
+</script>

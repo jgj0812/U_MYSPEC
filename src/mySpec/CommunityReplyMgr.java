@@ -68,7 +68,7 @@ private DBConnection pool;
 		
 		try {
 			con = pool.getConnection();
-			//새글: ref= rep_num의 최대값+1, re_step=0, re_level=0
+			//새댓글: ref= rep_num의 최대값+1, re_step=0, re_level=0
 			sql="select max(rep_num) from comm_reply";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery(); //최대값 구하기
