@@ -4,6 +4,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
+<%
+	
+%>
 	<div class="container">
       <h2>검색</h2>
      
