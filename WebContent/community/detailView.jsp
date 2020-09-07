@@ -22,8 +22,7 @@
 	ArrayList<CommunityReplyBean> commRe_arr  = Rmgr.Community_reply_list(comm_num);
 	
 	int num = commB.getComm_num(); //글번호
-	String person = commB.getComm_person();
-	
+	String person = commB.getComm_admin() == null ? commB.getComm_nick() : "관리자";
 	String str = commB.getComm_date();
 	String [] date = str.split(" ");
 	String date_1 = date[0];
@@ -77,7 +76,8 @@
 					style="background-color:#eeeeee; margin-right:5px; font-size:12px;font-family:Noto Sans KR; font-weight:bolder;"
 					onclick="location.href='community.jsp'">목록</button>
 			
-			<!-- 수정  -->		
+			<!-- 수정  -->
+			<%if(id != null && id.trim().equals(commB.getComm_person())) { %>	
 			<input type="button" 
 					class="btn text-dark"  
 					style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
@@ -90,7 +90,7 @@
 					style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
 					value="삭제"
 					onclick="location.href='deletePro.jsp?comm_num=<%=commB.getComm_num() %>'">
-					
+			<%} %>
 			<input type="button" class="btn text-dark"  style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;
 		    font-weight:bolder;" value="다음글">
 	</div>
@@ -108,17 +108,16 @@
 		<!-- 댓글 보여주는 곳 -->	
 <%
 		for(CommunityReplyBean commRB :commRe_arr){
-	
+			String repPerson = commRB.getRep_admin() != null ? "관리자" : commRB.getRep_nick();
 %>	
 	
 		<div>
 			<div class="row" style="font-size:0.75rem;" >
-				<p style="margin-left:40px;"><%=commRB.getRep_person()%></p>
+				<p style="margin-left:40px;"><%=repPerson%></p>
 				<p style="margin-left:20px;"><%=commRB.getRep_date()%></p>
 			</div>
 			<div style="margin-left:25px; font-size:1rem;"><%=commRB.getRep_content()%></div>
 			<div style="font-size:0.75rem; float: right;  margin-right: 20px;">수정 삭제 답글쓰기</div>
-			
 		</div>
 		<br>
 		<hr>

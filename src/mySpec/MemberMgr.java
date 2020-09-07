@@ -380,16 +380,37 @@ private DBConnection pool;
 	}
 	
 	// 단체회원 리스트(admin)
-	public ArrayList<OrgBean> listOrg() {
+	public ArrayList<OrgBean> listOrg(int startRow, int endRow, String keyField, String keyWord) {
 		Connection con  = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<OrgBean> arrOrg = new ArrayList<OrgBean>();
-		String sql = "select * from org_user";
+		String sql; 
+		
 		
 		try {
 			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
+			if(keyWord.trim().equals("") || keyWord == null) {
+				// 검색이 아닌경우
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select * from org_user) aa) "
+						+ "where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}else {
+				// 검색인 경우
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select * from org_user where " + keyField + " like ?) aa) "
+						+ "where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
+			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				OrgBean org = new OrgBean();
@@ -412,6 +433,54 @@ private DBConnection pool;
 		return arrOrg;
 	}
 	
+	// 단체회원 수
+	public int orgCount(String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select count(*) from org_user";
+				pstmt = con.prepareStatement(sql);
+			}else {
+				sql = "select count(*) from org_user where " + keyField + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+			}
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	// 단체회원 탈퇴, 삭제
+	public void deleteOrg(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from org_user where org_id=?";
+
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+	}
 }
 
 

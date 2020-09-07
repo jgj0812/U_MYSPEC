@@ -479,6 +479,17 @@ $("#personSearchBtn").click(function(){
 	$("#personSearchFrm").submit();
 });
 
+// 단체 리스트 검색(admin)
+$("#orgSearchBtn").click(function(){
+	if($("#orgSearch").val() == "") {
+		alert("검색어를 입력하세요");
+		$("#orgSearch").focus();
+		return false;
+	}
+	$("#orgSearchFrm").submit();
+	$("#orglistBtn").show();
+});
+
 // 커뮤니티 공지글 검색(admin)
 $("#noticeSearchBtn").click(function(){
 	if($("#noticeSearch").val() == "") {

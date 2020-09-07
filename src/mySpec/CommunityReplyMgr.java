@@ -6,18 +6,21 @@ import java.util.ArrayList;
 public class CommunityReplyMgr {
 private DBConnection pool;
 	
-	// DB?占쎄껐
+	// DB 연결
 	public CommunityReplyMgr() {
 		pool = DBConnection.getInstance();
 	}
 	
-	//湲�由ъ�ㅽ��
+	//댓글 리스트
 	public ArrayList<CommunityReplyBean> Community_reply_list(int rep_comm) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		
-		String sql = "select * from comm_reply where rep_comm = "+ rep_comm;
+		String sql = "select r.*, p.person_nick from "
+						+ "comm_reply r left outer join person_user p "
+						+ "on r.rep_person = p.person_id "
+						+ "where rep_comm = "+ rep_comm;
 		
 		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		
@@ -37,6 +40,7 @@ private DBConnection pool;
 				commB.setRep_ref(rs.getInt("rep_ref"));
 				commB.setRep_depth(rs.getInt("rep_depth"));
 				commB.setRep_admin(rs.getString("rep_admin"));
+				commB.setRep_nick(rs.getString("person_nick"));
 				commreply_arr.add(commB);
 			}
 		} catch (Exception e) {

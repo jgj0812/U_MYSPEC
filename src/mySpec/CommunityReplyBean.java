@@ -10,6 +10,7 @@ public class CommunityReplyBean {
 	private int rep_ref; 			// 댓글 그룹
 	private int rep_depth;			// 댓글 들여쓰기
 	private String rep_admin;		// 관리자 작성자
+	private String rep_nick;		// 개인회원 닉네임을 담을 변수
 	
 	public int getRep_num() {
 		return rep_num;
@@ -64,5 +65,11 @@ public class CommunityReplyBean {
 	}
 	public void setRep_admin(String rep_admin) {
 		this.rep_admin = rep_admin;
+	}
+	public String getRep_nick() {
+		return rep_nick;
+	}
+	public void setRep_nick(String rep_nick) {
+		this.rep_nick = rep_nick;
 	}
 }
