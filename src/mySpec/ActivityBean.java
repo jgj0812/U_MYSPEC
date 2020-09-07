@@ -13,6 +13,7 @@ public class ActivityBean {
 	private String act_target;		// 참여대상
 	private Date act_start;			// 기간 시작
 	private Date act_end;				// 기간 마감
+	private int act_dday;				// d-day
 	private int act_pop;					// 모집인원
 	private int act_reg;					// 모임지역
 	private int[] act_reward;		// 활동혜택
@@ -82,6 +83,12 @@ public class ActivityBean {
 	}
 	public void setAct_end(Date act_end) {
 		this.act_end = act_end;
+	}
+	public void setAct_dday(int act_dday) {
+		this.act_dday = act_dday;
+	}
+	public int getAct_dday() {
+		return act_dday;
 	}
 	public int getAct_pop() {
 		return act_pop;

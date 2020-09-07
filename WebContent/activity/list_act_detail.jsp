@@ -1,3 +1,4 @@
+<%@page import="java.sql.Date"%>
 <%@page import="mySpec.OrgBean"%>
 <%@page import="mySpec.ActivityBean"%>
 <%@page import="mySpec.ActivityMgr"%>
@@ -11,17 +12,17 @@
 	ActivityMgr manager = new ActivityMgr();
 	ActivityBean activity = manager.getActivity(act_num);
 	OrgBean org = manager.getOrg(act_num);
+	
+	manager.upHit(act_num);
 %>
 <section>
 	<div class="container">
 		<div class="section">
-			<div>
-				<p class="badge badge-secondary">D-DAY</p>
-			</div>
+			<p class="badge badge-secondary">D-<%=activity.getAct_dday() %></p>
 			<div class="d-flex">
-				<h3>제목</h3>
+				<h3><%=activity.getAct_title() %></h3>
 				<h3 class="ml-auto">
-					<i class="fas fa-eye"></i> <i class="fas fa-share-alt-square" onclick="$('#shareModal').modal();"></i>
+					<i class="fas fa-eye" data-toggle="tooltip" data-placement="bottom" title="<%="조회수 : " + activity.getAct_hits() %>"></i>&nbsp;<i class="fas fa-share-alt-square" onclick="$('#shareModal').modal();"></i>
 				</h3>
 			</div>
 		</div>
@@ -43,7 +44,7 @@
 							<p>기관형태</p>
 						</div>
 						<div class="col-md-4">
-							<p><%=org.getType() %></p>
+							<p><%=manager.getTag(org.getType()) %></p>
 						</div>
 						<div class="col-md-2">
 							<p>참여대상</p>
@@ -54,7 +55,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-2">
-							<p>활동기간</p>
+							<p>접수기간</p>
 						</div>
 						<div class="col-md-4">
 							<p><%=activity.getAct_start() %> - <%=activity.getAct_end() %></p>
@@ -71,7 +72,7 @@
 							<p>모임지역</p>
 						</div>
 						<div class="col-md-4">
-							<p><%=activity.getAct_reg() %></p>
+							<p><%=manager.getTag(activity.getAct_reg()) %></p>
 						</div>
 						<div class="col-md-2">
 							<p>참여대상</p>
@@ -87,7 +88,7 @@
 						<div class="col-md-4">
 							<p><%
 							for(int act_reward : activity.getAct_reward()) {
-								out.print(act_reward + ",");
+								out.print(manager.getTag(act_reward) + " ");
 							}
 							%></p>
 						</div>
@@ -95,7 +96,7 @@
 							<p>활동분야</p>
 						</div>
 						<div class="col-md-4">
-							<p><%=activity.getAct_field() %></p>
+							<p><%=manager.getTag(activity.getAct_field()) %></p>
 						</div>
 					</div>
 					<div class="row">
@@ -105,7 +106,7 @@
 						<div class="col-md-4">
 							<p><%
 							for(int act_interest : activity.getAct_interest()) {
-								out.print(act_interest + ",");
+								out.print(manager.getTag(act_interest) + " ");
 							}
 							%></p>
 						</div>
@@ -118,7 +119,7 @@
 					</div>
 					<div class="row h-100 align-content-end">
 						<div class="col-md-12">
-						  <button class="btn btn-cam btn-block">스크랩</button>
+						  <button class="btn btn-cam btn-block" onclick="act_scrap('abc', <%=act_num %>)">스크랩</button>
 						</div>
 					</div>
 				</div>
@@ -158,7 +159,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<input class="btn btn-cam btn-block" type="button" value="문의하기">
+					<input class="btn btn-cam btn-block" type="button" value="문의하기" onclick="location.href='mailto://<%=org.getEmail() %>'">
 				</div>
 			</div>
 		</div>
@@ -203,4 +204,5 @@
 		</div>
 	</div>
 </section>
+<script src="../js/activity.js"></script>
 <%@ include file="../footer.jsp" %>

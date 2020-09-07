@@ -1,19 +1,39 @@
 package mySpec;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ActivityMgr {
 	private DBConnection pool;
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
+	private HashMap<Integer, String> tagMap;
 
 	public ActivityMgr() {
 		super();
 		pool = DBConnection.getInstance();
+		
+		try {
+			tagMap = (HashMap<Integer, String>) new ObjectInputStream(new FileInputStream("tag.map")).readObject();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public ArrayList<ActivityBean> activityList(int act_type) {
@@ -111,7 +131,7 @@ public class ActivityMgr {
 		String sql;
 		ActivityBean activity = new ActivityBean();
 		try {
-			sql = "select act_type, act_thumb, act_post, act_title, act_hits, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content, act_award from activity where act_num = ? ";
+			sql = "select act_type, act_thumb, act_post, act_title, act_hits, act_target, act_start, act_end, trunc(act_end - sysdate) as act_dday, act_pop, act_reg, act_field, act_home, act_content, act_award from activity where act_num = ? ";
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, act_num);
@@ -125,6 +145,7 @@ public class ActivityMgr {
 			activity.setAct_target(rs.getString("act_target"));
 			activity.setAct_start(rs.getDate("act_start"));
 			activity.setAct_end(rs.getDate("act_end"));
+			activity.setAct_dday(rs.getInt("act_dday"));
 			activity.setAct_field(rs.getInt("act_field"));
 			activity.setAct_home(rs.getString("act_home"));
 			activity.setAct_content(rs.getString("act_content"));
@@ -185,6 +206,51 @@ public class ActivityMgr {
 		}
 		pool.closeConnection(con, ps, rs);
 		return org;
+	}
+	
+	public String getTag(int num) {
+		return tagMap.get(num);
+	}
+	
+	public void upHit(int act_num) {
+		String sql = "update activity set act_hits=(select act_hits from activity where act_num=?) + 1 where act_num=?";
+		try {
+			con = pool.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, act_num);
+			ps.setInt(2, act_num);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pool.closeConnection(con, ps);
+	}
+	
+	public int act_scrap(String person_id, int act_num) {
+		String sql = "select count(*) from scrap where scrap_person=? and scrap_num=?";
+		try {
+			con = pool.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, person_id);
+			ps.setInt(2, act_num);
+			rs = ps.executeQuery();
+			rs.next();
+			int count = rs.getInt(1);
+			if(count == 1) {
+				return 0;
+			}
+			sql = "insert into scrap(scrap_person, scrap_num) values(?, ?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, person_id);
+			ps.setInt(2, act_num);
+			ps.executeUpdate();
+			return 1;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	
 }

@@ -80,3 +80,26 @@ function act_submit() {
 	}
 	$("#act_form").submit();
 }
+
+function act_scrap(person_id, act_num) {
+	$.ajax({
+		url: "list_act_scrapPro.jsp",
+		data: {
+			person_id: person_id,
+			act_num: act_num
+		},
+		success: function(data) {
+			switch(data) {
+				case '-1':
+					alert("스크랩에 오류가 발생했습니다.");
+					break;
+				case '0':
+					alert("이미 스크랩한 활동입니다.");
+					break;
+				case '1':
+					alert("스크랩 했습니다.");
+					break;
+			}
+		}
+	});
+}
