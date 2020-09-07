@@ -5,9 +5,7 @@
 <%@ include file="../header.jsp" %>
 
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
-<jsp:useBean id="bean" class="mySpec.CommunityBean" />
 
-<jsp:setProperty property="*" name="bean"/>
 
 <% 
 	request.setCharacterEncoding("utf-8");	

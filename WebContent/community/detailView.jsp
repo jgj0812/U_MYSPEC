@@ -37,16 +37,6 @@
 	String [] date = str.split(" ");
 	String date_1 = date[0];
 	
-	//대댓글 미완성
-	int rep_num=0, rep_ref=1, rep__step=1, rep__level=0;	
-	
-	if(request.getParameter("rep_num")!=null){
-		rep_num = Integer.parseInt(request.getParameter("rep_num"));
-		rep_ref = Integer.parseInt(request.getParameter("rep_ref"));
-		rep__step = Integer.parseInt(request.getParameter("rep__step"));
-		rep__level = Integer.parseInt(request.getParameter("re_lrep__levelevel"));
-	}
-	
 	
 %>
 
@@ -187,6 +177,11 @@
 			<form action="replyPro.jsp" name="comm_reply_form" method="post">
 			<input type="hidden" name="comm_num" value="<%= comm_num%>">
 			
+			<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+			<input type="hidden" name="rep_ref" value="<%=commRB.getRep_ref() %>">
+			<input type="hidden" name="rep_step" value="<%=commRB.getRep_step() %>">
+			<input type="hidden" name="rep_level" value="<%=commRB.getRep_level() %>">
+			
 				<div class="form-row">
 					 <i class="fas fa-reply" style="margin-left: 20px"></i>
 					 
@@ -211,7 +206,7 @@
 	<form action="replyPro.jsp" name="comm_reply_form" method="post">
 	  	<!-- 글번호를 넘긴다 -->
 	  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
-	  	
+			  	
 		<div class="form-row">
 			 <div class="col-8">
 			   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
