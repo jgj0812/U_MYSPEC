@@ -465,8 +465,13 @@ function act_submit() {
 }
 
 //커뮤니티 글쓰기
-function comm_write() {
-	window.location = "write.jsp";
+function comm_write(id) {
+	if(id == null) {
+		alert("로그인을 해야 글쓰기가 가능합니다.");
+		window.location = "../member/login.jsp";
+	}else {
+		window.location = "write.jsp";	
+	}
 }
 
 // 개인 리스트 검색(admin)
@@ -498,3 +503,13 @@ $("#noticeSearchBtn").click(function(){
 	}
 	$("#noticeSearchFrm").submit();
 });
+
+// 댓글 입력
+function reply_ok() {
+	if($("input[name=rep_content]").val() == "") {
+		alert("댓글을 입력해주세요");
+		$("input[name=rep_content]").focus();
+		return false;
+	}
+	$("form[name=comm_reply_form]").submit();
+}

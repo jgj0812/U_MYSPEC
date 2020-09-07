@@ -17,11 +17,40 @@
 	int endRow = currentPage * pageSize;				// 페이지 끝
 	int memType = Integer.parseInt(request.getParameter("memType"));
 	String id = request.getParameter("id");
+	int re = 0;
 	if(memType == 0) {
-		mgr.deletePerson(id);	// 삭제
-		response.sendRedirect("adminPerson.jsp");
+		re = mgr.deletePerson(id);	// 개인회원 삭제
+		if(re == 1) {
+%>
+			<script>
+				alert("개인회원 삭제 성공");
+				document.location.href="adminPerson.jsp";
+			</script>
+<%
+		}else {
+%>
+			<script>
+				alert("개인회원 삭제 실패");
+				history.go(-1);
+			</script>
+<%
+		}
 	}else {
-		mgr.deleteOrg(id);
-		response.sendRedirect("adminOrg.jsp");
+		re = mgr.deleteOrg(id);
+		if(re == 1) {
+%>
+			<script>
+				alert("단체회원 삭제 성공");
+				document.location.href="adminOrg.jsp";
+			</script>
+<%
+		}else {
+%>
+			<script>
+				alert("단체회원 삭제 실패");
+				history.go(-1);
+			</script>
+<%
+		}
 	}
 %>

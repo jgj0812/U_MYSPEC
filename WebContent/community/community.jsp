@@ -90,7 +90,7 @@
 	<!-- 글쓰기 -->
 	<div class="form-inline justify-content-end">
 		<button type="button" class="btn btn-com d-none d-md-block"  
-		onclick="comm_write()">글쓰기</button>
+		onclick="comm_write('<%=id%>')">글쓰기</button>
 	</div>
 	
 	

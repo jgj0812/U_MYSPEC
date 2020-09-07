@@ -362,21 +362,24 @@ private DBConnection pool;
 	}
 	
 	// 개인회원 탈퇴, 삭제
-	public void deletePerson(String id) {
+	public int deletePerson(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "delete from person_user where person_id=?";
+		int re = -1;
 
 		try {
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.executeUpdate();
+			re = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.closeConnection(con, pstmt);
 		}
+		return re;
 	}
 	
 	// 단체회원 리스트(admin)
@@ -465,21 +468,24 @@ private DBConnection pool;
 	}
 	
 	// 단체회원 탈퇴, 삭제
-	public void deleteOrg(String id) {
+	public int deleteOrg(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "delete from org_user where org_id=?";
+		int re = -1;
 
 		try {
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.executeUpdate();
+			re = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.closeConnection(con, pstmt);
 		}
+		return re;
 	}
 }
 

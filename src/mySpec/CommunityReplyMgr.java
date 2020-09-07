@@ -257,15 +257,14 @@ private DBConnection pool;
 		try {
 			con = pool.getConnection();
 			sql = "insert into comm_reply (rep_num, rep_comm, rep_admin, rep_date, rep_content, rep_pos, rep_ref, rep_depth) " 
-							+ "values(?, ?, ?, sysdate, ?, ?, ?, ?)";
+							+ "values(comm_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, bean.getRep_num()); //번호
-			pstmt.setInt(2, comm_num); //글번호
-			pstmt.setString(3, id); //아이디
-			pstmt.setString(4, bean.getRep_content()); //내용
-			pstmt.setInt(5, bean.getRep_pos()); //pos
-			pstmt.setInt(6, bean.getRep_ref()); //ref
-			pstmt.setInt(7, bean.getRep_depth()); //depth
+			pstmt.setInt(1, comm_num); //글번호
+			pstmt.setString(2, id); //아이디
+			pstmt.setString(3, bean.getRep_content()); //내용
+			pstmt.setInt(4, bean.getRep_pos()); //pos
+			pstmt.setInt(5, bean.getRep_ref()); //ref
+			pstmt.setInt(6, bean.getRep_depth()); //depth
 			pstmt.executeUpdate();
 			re = 1;
 		} catch (Exception e) {

@@ -123,6 +123,7 @@
 		<hr>
 <%
 		}
+		if(id != null) {
 %>				
 		<!-- 댓글 입력폼  -->
 		<form action="replyPro.jsp" name="comm_reply_form" method="post">
@@ -137,11 +138,15 @@
 				
 				<div class="col-2">
 					<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
-					type="submit" class="form-control" value="등록">
+					type="button" onclick="reply_ok()" class="form-control" value="등록">
 				</div>
 			</div>
 		</form>
-	
+<%		}else { %>
+		<div class="container">
+			<p>댓글을 입력하려면 로그인을 해야합니다.</p>
+		</div>
+<%		} %>
  	</div>
 </section>
 <%@ include file="../footer.jsp" %>

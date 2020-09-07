@@ -144,7 +144,7 @@
 						
 						<div class="col-2">
 							<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
-							type="submit" class="form-control" value="등록">
+							type="button" onclick="reply_ok()" class="form-control" value="등록">
 						</div>
 					</div>
 				</form>
