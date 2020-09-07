@@ -448,6 +448,18 @@ function reset() {
 $(document).ready(function () {
 	$("#act_content").summernote({
 		lang: "ko-KR",
+      	height: "20em",
+    });
+	$("#comm_content").summernote({
+			lang: "ko-KR",
+	      	height: "20em",
+	   });
+});
+
+// 대외활동 등록
+function act_submit() {
+	$("#act_form").submit();
+=======
 		callbacks : {
 			onImageUpload : function(files) {
 				sendFile(files[0], this);
