@@ -59,19 +59,18 @@ private DBConnection pool;
 		                                       
 		String sql = "insert into comm_reply (rep_num, rep_comm, rep_person, rep_date, rep_content, rep_pos, rep_ref, rep_depth)" 
 													// 번호 글번호 아이디  날짜      내용 pos ref depth
-		                                       + " values(?, ?, ?, sysdate, ?, ?, ?, ?)";
+		                                       + " values(comm_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
 		
 		try {
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, Comm.getRep_num()); //번호
-			pstmt.setInt(2, comm_num); //글번호
-			pstmt.setString(3, id); //아이디
-			pstmt.setString(4, Comm.getRep_content()); //내용
-			pstmt.setInt(5, Comm.getRep_pos()); //pos
-			pstmt.setInt(6, Comm.getRep_ref()); //ref
-			pstmt.setInt(7, Comm.getRep_depth()); //depth
+			pstmt.setInt(1, comm_num); //글번호
+			pstmt.setString(2, id); //아이디
+			pstmt.setString(3, Comm.getRep_content()); //내용
+			pstmt.setInt(4, Comm.getRep_pos()); //pos
+			pstmt.setInt(5, Comm.getRep_ref()); //ref
+			pstmt.setInt(6, Comm.getRep_depth()); //depth
 
 			pstmt.executeUpdate();
 			
