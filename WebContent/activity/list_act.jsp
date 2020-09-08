@@ -4,7 +4,7 @@
 <div class="container mt-3">
 	    <!-- 태그: 활동분야, 관심분야, 활동혜택, 활동기간, 모임지역 -->
 	    <nav>
-	      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+	      <div class="nav" id="nav-tab" role="tablist">
 	        <a class="nav-item nav-link active" id="nav-field-tab" data-toggle="tab" href="#nav-field" role="tab"
 	          aria-controls="nav-field" aria-selected="true">활동분야</a>
 	        <a class="nav-item nav-link" id="nav-interest-tab" data-toggle="tab" href="#nav-interest" role="tab"
@@ -26,8 +26,201 @@
 	        <button class="btn" data-toggle="modal" data-target="#region"> 모임지역 </button>
 	      </div>
 	    </nav>
+		
+	    <!-- 태그: 활동분야, 관심분야, 활동혜택, 활동기간, 모임지역 의 서브태그-->
+	    <form id="tagForm" onchange="search()">
+	      <div class="tab-content" id="nav-tabContent">
 	
-	    <!-- -360미만이면 보이는 modal -->
+	        <div class="tab-pane fade show active btn-group-toggle" id="nav-field" role="tabpanel"
+	          aria-labelledby="nav-field-tab">
+	
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_field" value="1"> 서포터즈
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_field" value="2">해외탐방
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_field" value="3">봉사단
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_field" value="4">마케터
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_field" value="5">기자단
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_field" value="6">강연
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_field" value="7">멘토링
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_field" value="8">기타
+	          </label>
+	        </div>
+	        <div class="tab-pane fade btn-group-toggle" id="nav-interest" role="tabpanel"
+	          aria-labelledby="nav-interest-tab">
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="9">여행/호텔/항공
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="10">언론/미디어
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="11">문화/역사
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="12">행사/페스티벌
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="13">교육
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="14">디자인/사진/예술/영상
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="15">경제/금융
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="16">경영/컨설팅/마케팅
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="17">정치/사회/법률
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="18">체육/헬스
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="19">의료/보건
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="20">뷰티/미용/화장품
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="21">과학/공학/IT
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="22">요리/식품
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="23">창업/자기계발
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="24">환경/에너지
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="25">콘텐츠
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="26">사회공헌/교류
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="27">유통/물류
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="interest_num" value="28">기타
+	          </label>
+	        </div>
+	        <div class="tab-pane fade btn-group-toggle" id="nav-reward" role="tabpanel" aria-labelledby="nav-reward-tab">
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="29">활동비
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="30">사은품지급
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="31">실무교육
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="32">봉사활동시간
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="33">전문가/임직원멘토링
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="34">행사참여
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="35">수료증및인증서
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="36">입사시혜택
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="37">인턴쉽기회
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="reward_num" value="38">교통비
+	          </label>
+	        </div>
+	        <div class="tab-pane fade btn-group-toggle" id="nav-period" role="tabpanel" aria-labelledby="nav-period-tab">
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_dday" value="39">3개월이하
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_dday" value="40">3개월~6개월
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_dday" value="41">6개월~1년
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_dday" value="42">1년이상
+	          </label>
+	        </div>
+	        <div class="tab-pane fade btn-group-toggle" id="nav-region" role="tabpanel" aria-labelledby="nav-region-tab">
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="43">지역제한없음
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="44">서울
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="45">부산
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="46">대구
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="47">인천
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="48">광주
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="49">대전
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="50">울산
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="51">경기
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="52">강원
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="53">충청
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="54">전라
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="55">경상
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="56">제주
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="57">세종
+	          </label>
+	          <label class="btn btn-tag">
+	            <input type="checkbox" name="act_reg" value="58">해외
+	          </label>
+	        </div>
+	      </div>
+	      
+	      <!-- -360미만이면 보이는 modal -->
 	    <div class="modal fade" id="field" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	      <div class="modal-dialog" role="document">
 	        <div class="modal-content">
@@ -38,28 +231,28 @@
 	
 	          <div class="modal-body">
 	            <label class="btn">
-	              <input type="checkbox"> 서포터즈
+	              <input type="checkbox" name="act_field" value="1"> 서포터즈
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 해외탐방
+	              <input type="checkbox" name="act_field" value="2"> 해외탐방
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 봉사단
+	              <input type="checkbox" name="act_field" value="3"> 봉사단
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 마케터
+	              <input type="checkbox" name="act_field" value="4"> 마케터
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 기자단
+	              <input type="checkbox" name="act_field" value="5"> 기자단
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 강연
+	              <input type="checkbox" name="act_field" value="6"> 강연
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 멘토링
+	              <input type="checkbox" name="act_field" value="7"> 멘토링
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 기타
+	              <input type="checkbox" name="act_field" value="8"> 기타
 	            </label>
 	          </div>
 	          <div class="modal-footer">
@@ -79,64 +272,64 @@
 	          </div>
 	          <div class="modal-body">
 	            <label class="btn">
-	              <input type="checkbox"> 여행/호텔/항공
+	              <input type="checkbox" name="interest_num" value="9"> 여행/호텔/항공
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 언론/미디어
+	              <input type="checkbox" name="interest_num" value="10"> 언론/미디어
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 문화/역사
+	              <input type="checkbox" name="interest_num" value="11"> 문화/역사
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 행사/페스티벌
+	              <input type="checkbox" name="interest_num" value="12"> 행사/페스티벌
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 교육
+	              <input type="checkbox" name="interest_num" value="13"> 교육
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 디자인/사진/예술/영상
+	              <input type="checkbox" name="interest_num" value="14"> 디자인/사진/예술/영상
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 경제/금융
+	              <input type="checkbox" name="interest_num" value="15"> 경제/금융
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 경영/컨설팅/마케팅
+	              <input type="checkbox" name="interest_num" value="16"> 경영/컨설팅/마케팅
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 정치/사회/법률
+	              <input type="checkbox" name="interest_num" value="17"> 정치/사회/법률
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 체육/헬스
+	              <input type="checkbox" name="interest_num" value="18"> 체육/헬스
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 의료/보건
+	              <input type="checkbox" name="interest_num" value="19"> 의료/보건
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 뷰티/미용/화장품
+	              <input type="checkbox" name="interest_num" value="20"> 뷰티/미용/화장품
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 과학/공학/IT
+	              <input type="checkbox" name="interest_num" value="21"> 과학/공학/IT
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 요리/식품
+	              <input type="checkbox" name="interest_num" value="22"> 요리/식품
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 창업/자기계발
+	              <input type="checkbox" name="interest_num" value="23"> 창업/자기계발
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 환경/에너지
+	              <input type="checkbox" name="interest_num" value="24"> 환경/에너지
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 콘텐츠
+	              <input type="checkbox" name="interest_num" value="25"> 콘텐츠
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 사회공헌/교류
+	              <input type="checkbox" name="interest_num" value="26"> 사회공헌/교류
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 유통/물류
+	              <input type="checkbox" name="interest_num" value="27"> 유통/물류
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 기타
+	              <input type="checkbox" name="interest_num" value="28"> 기타
 	            </label>
 	          </div>
 	          <div class="modal-footer">
@@ -156,34 +349,34 @@
 	          </div>
 	          <div class="modal-body">
 	            <label class="btn">
-	              <input type="checkbox"> 활동비
+	              <input type="checkbox" name="reward_num" value="29"> 활동비
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 사은품지급
+	              <input type="checkbox" name="reward_num" value="30"> 사은품지급
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 실무교육
+	              <input type="checkbox" name="reward_num" value="31"> 실무교육
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 봉사활동시간
+	              <input type="checkbox" name="reward_num" value="32"> 봉사활동시간
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 전문가/임직원멘토링
+	              <input type="checkbox" name="reward_num" value="33"> 전문가/임직원멘토링
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 행사참여
+	              <input type="checkbox" name="reward_num" value="34"> 행사참여
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 수료증및인증서
+	              <input type="checkbox" name="reward_num" value="35"> 수료증및인증서
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 입사시혜택
+	              <input type="checkbox" name="reward_num" value="36"> 입사시혜택
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 인턴쉽기회
+	              <input type="checkbox" name="reward_num" value="37"> 인턴쉽기회
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 교통비
+	              <input type="checkbox" name="reward_num" value="38"> 교통비
 	            </label>
 	          </div>
 	          <div class="modal-footer">
@@ -203,16 +396,16 @@
 	          </div>
 	          <div class="modal-body">
 	            <label class="btn">
-	              <input type="checkbox"> 3개월이하
+	              <input type="checkbox" name="act_dday" value="39"> 3개월이하
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 3개월~6개월
+	              <input type="checkbox" name="act_dday" value="40"> 3개월~6개월
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 6개월~1년
+	              <input type="checkbox" name="act_dday" value="41"> 6개월~1년
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 1년이상
+	              <input type="checkbox" name="act_dday" value="42"> 1년이상
 	            </label>
 	          </div>
 	          <div class="modal-footer">
@@ -233,52 +426,52 @@
 	          </div>
 	          <div class="modal-body">
 	            <label class="btn">
-	              <input type="checkbox"> 지역제한없음
+	              <input type="checkbox" name="act_reg" value="43"> 지역제한없음
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 서울
+	              <input type="checkbox" name="act_reg" value="44"> 서울
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 부산
+	              <input type="checkbox" name="act_reg" value="45"> 부산
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 대구
+	              <input type="checkbox" name="act_reg" value="46"> 대구
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 인천
+	              <input type="checkbox" name="act_reg" value="47"> 인천
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 광주
+	              <input type="checkbox" name="act_reg" value="48"> 광주
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 대전
+	              <input type="checkbox" name="act_reg" value="49"> 대전
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 울산
+	              <input type="checkbox" name="act_reg" value="50"> 울산
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 경기
+	              <input type="checkbox" name="act_reg" value="51"> 경기
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 강원
+	              <input type="checkbox" name="act_reg" value="52"> 강원
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 충청
+	              <input type="checkbox" name="act_reg" value="53"> 충청
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 전라
+	              <input type="checkbox" name="act_reg" value="54"> 전라
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 경상
+	              <input type="checkbox" name="act_reg" value="55"> 경상
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 제주
+	              <input type="checkbox" name="act_reg" value="56"> 제주
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 세종
+	              <input type="checkbox" name="act_reg" value="57"> 세종
 	            </label>
 	            <label class="btn">
-	              <input type="checkbox"> 해외
+	              <input type="checkbox" name="act_reg" value="58"> 해외
 	            </label>
 	          </div>
 	          <div class="modal-footer">
@@ -288,207 +481,11 @@
 	        </div>
 	      </div>
 	    </div>
-	
-	
-	    <!-- 태그: 활동분야, 관심분야, 활동혜택, 활동기간, 모임지역 의 서브태그-->
-	    <form action="list2.html">
-	      <div class="tab-content" id="nav-tabContent">
-	
-	        <div class="tab-pane fade show active btn-group-toggle" id="nav-field" role="tabpanel"
-	          aria-labelledby="nav-field-tab">
-	
-	          <label class="btn btn-tag">
-	            <input type="checkbox"> 서포터즈
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">해외탐방
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">봉사단
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">마케터
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">기자단
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">강연
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">멘토링
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">기타
-	          </label>
-	        </div>
-	        <div class="tab-pane fade btn-group-toggle" id="nav-interest" role="tabpanel"
-	          aria-labelledby="nav-interest-tab">
-	          <label class="btn btn-tag">
-	            <input type="checkbox">여행/호텔/항공
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">언론/미디어
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">문화/역사
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">행사/페스티벌
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">교육
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">디자인/사진/예술/영상
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">경제/금융
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">경영/컨설팅/마케팅
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">정치/사회/법률
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">체육/헬스
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">의료/보건
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">뷰티/미용/화장품
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">과학/공학/IT
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">요리/식품
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">창업/자기계발
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">환경/에너지
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">콘텐츠
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">사회공헌/교류
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">유통/물류
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">기타
-	          </label>
-	        </div>
-	        <div class="tab-pane fade btn-group-toggle" id="nav-reward" role="tabpanel" aria-labelledby="nav-reward-tab">
-	          <label class="btn btn-tag">
-	            <input type="checkbox">활동비
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">사은품지급
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">실무교육
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">봉사활동시간
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">전문가/임직원멘토링
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">행사참여
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">수료증및인증서
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">입사시혜택
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">인턴쉽기회
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">교통비
-	          </label>
-	        </div>
-	        <div class="tab-pane fade btn-group-toggle" id="nav-period" role="tabpanel" aria-labelledby="nav-period-tab">
-	          <label class="btn btn-tag">
-	            <input type="checkbox">3개월이하
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">3개월~6개월
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">6개월~1년
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">1년이상
-	          </label>
-	        </div>
-	        <div class="tab-pane fade btn-group-toggle" id="nav-region" role="tabpanel" aria-labelledby="nav-region-tab">
-	          <label class="btn btn-tag">
-	            <input type="checkbox">지역제한없음
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">서울
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">부산
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">대구
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">인천
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">광주
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">대전
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">울산
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">경기
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">강원
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">충청
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">전라
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">경상
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">제주
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">세종
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox">해외
-	          </label>
-	        </div>
-	
-	      </div>
 	    </form>
 	
 		<!-- 선택한 서브태그 보이는 부분-->
 	    <div class="choice">
 	      <div id="choicetag">
-	
 	      </div>
 	      <button type="button" id="reset" onclick="reset()"> <i class="fas fa-redo"></i> 초기화</button>
 	      
@@ -504,10 +501,11 @@
 
 	    <br><br>
 	
+		<!-- 리스트 -->
 	    <div class="container_search" id="activityList">
-    </div>
-    <br>
-    <br>
+    	</div>
+    	<br>
+    	<br>
 	    <!--  페이징 -->
 	   <div class="form-inline justify-content-center">		
 		<nav aria-label="Page navigation example">

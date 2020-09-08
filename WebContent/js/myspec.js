@@ -435,11 +435,19 @@ $(document).ready(function () {
 });
 
 // 대외활동, 공모전 리스트 체크박스 동작
-$("input:checkbox").click(function (e) {
-  var id = $(e).attr("id")
-  var str = '<button>' + id + '</button>'
-  $("#choicetag").append(str);
-});
+function search() {
+	var data = $("#tagForm").serialize();
+	$.ajax({
+		url: "list_act_tagPro.jsp",
+		data: data,
+		dataType: "html",
+		cache: false,
+		success: function(data) {
+			$("#choicetag").html(data);
+		}
+	});
+}
+
 function reset() {
   $("#choicetag *").remove();
 }

@@ -62,7 +62,7 @@ public class ActivityMgr {
 		pool.closeConnection(con, ps);
 		return activityList;
 	}
-
+	
 	public void insertActivity(ActivityBean activity) {
 		String sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content) values(act_seq.nextval, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
