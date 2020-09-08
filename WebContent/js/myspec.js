@@ -11,6 +11,26 @@ var phoneExp = /^\d{3}-\d{3,4}-\d{4}$/; // 핸드폰번호 정규식
 var birthExp = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식
 var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
 
+//datepicker 공통
+$.datepicker.setDefaults({
+	dateFormat: "yy-mm-dd",
+	nextText: "다음 달",
+	prevText: "이전 달",
+	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	dayNamesMin: ['일','월','화','수','목','금','토'],
+	dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+	showMonthAfterYear: true,
+	yearSuffix: '년'
+});
+
+// 개인회원 생년월일 datepicker
+$("#person_birth").datepicker({
+	dateFormat: "yy-mm-dd",
+	changeMonth: true,
+	changeYear: true,
+});
+
 // 개인회원 Join
 $("#personSend").click(function(){
 	if($("#person_id").val() == "") {
@@ -455,16 +475,12 @@ $(document).ready(function () {
 		}
     });
 	
-	$("#act_form input[name='act_start']").datepicker({
-		dateFormat: "yy-mm-dd"
-	});
-	$("#act_form input[name='act_end']").datepicker({
-		dateFormat: "yy-mm-dd"
-	});
+	$("#act_form input[name='act_start']").datepicker();
+	$("#act_form input[name='act_end']").datepicker();
 	$("#comm_content").summernote({
 			lang: "ko-KR",
 	      	height: "20em",
-	   });
+	});
 });
 
 function sendFile(file, editor) {

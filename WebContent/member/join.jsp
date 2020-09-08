@@ -62,8 +62,8 @@
                         						<input type="text" name="nick" id="person_nick" class="form-control" />
                       						</div>
                       						<div class="form-group">
-                        						<label for="birthDay">생년월일 (ex: 19581030)</label>
-                        						<input type="text" name="birth" id="person_birth" class="form-control" />
+                        						<label for="birthDay">생년월일 (ex: 1958-10-30)</label>
+                        						<input type="text" name="birth" id="person_birth" class="form-control" autocomplete="off" />
                       						</div>
                       						<div class="form-group">
                         						<label for="email">이메일</label>
