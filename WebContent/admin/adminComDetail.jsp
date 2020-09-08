@@ -77,21 +77,14 @@
 					<button type="button" 
 							class="btn text-dark" 
 							style="background-color:#eeeeee; margin-right:5px; font-size:12px;font-family:Noto Sans KR; font-weight:bolder;"
-							onclick="location.href='adminNotice.jsp'">목록</button>
-					
-					<!-- 수정  -->		
-					<input type="button" 
-							class="btn text-dark"  
-							style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
-							value="수정"
-							onclick="location.href='adminNoticeUpdate.jsp?comm_num=<%=commB.getComm_num()%>'">
+							onclick="location.href='adminCom.jsp'">목록</button>
 							
 					<!-- 삭제  -->
 					<input type="button" 
 							class="btn text-dark"  
 							style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
 							value="삭제"
-							onclick="location.href='adminComDeletePro.jsp?comm_num=<%=commB.getComm_num() %>&type=0'">
+							onclick="location.href='adminComDeletePro.jsp?comm_num=<%=commB.getComm_num() %>&type=1'">
 							
 					<input type="button" class="btn text-dark"  style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;
 				    font-weight:bolder;" value="다음글">
