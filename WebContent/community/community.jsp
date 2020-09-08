@@ -98,7 +98,7 @@
 	<!-- 페이징 -->
 	<div class="form-inline justify-content-center">		
 		<nav aria-label="Page navigation example">
-		]
+		
 			<ul class="pagination">
 				<%
 				//COUNT 26개 가정
