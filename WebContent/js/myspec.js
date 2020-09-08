@@ -507,7 +507,7 @@ $("#noticeSearchBtn").click(function(){
 // 댓글 입력
 function reply_ok() {
 	if($("input[name=rep_content]").val() == "") {
-		alert("댓글을 입력해주세요");
+		alert("댓글 내용을 입력해주세요");
 		$("input[name=rep_content]").focus();
 		return false;
 	}
