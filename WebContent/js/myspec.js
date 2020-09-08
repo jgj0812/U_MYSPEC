@@ -455,13 +455,29 @@ $(document).ready(function () {
 });
 
 // 대외활동, 공모전 리스트 체크박스 동작
-$("input:checkbox").click(function (e) {
-  var id = $(e).attr("id")
-  var str = '<button>' + id + '</button>'
-  $("#choicetag").append(str);
-});
-function reset() {
-  $("#choicetag *").remove();
+function tagSearch() {
+	var data = $("#tagForm").serialize();
+	$.ajax({
+		url: "list_act_tagPro.jsp",
+		data: data,
+		dataType: "html",
+		cache: false,
+		success: function(data) {
+			$("#choicetag").html(data);
+		}
+	});
+}
+
+function tagReset() {
+	$("#tagForm").each(function(){
+		this.reset();
+	});
+	$("#tagForm").change();
+}
+
+function tagRemove(tag_num) {
+	$("#tagForm input:checkbox[value=" + tag_num + "]").prop("checked", false);
+	$("#tagForm").change();
 }
 
 // summernote
@@ -508,6 +524,38 @@ function comm_write(id) {
 		window.location = "write.jsp";	
 	}
 }
+
+// 활동 리스트
+$(document).ready(function() {
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: {
+			act_type: 1
+		},
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			var htmlStr = "";
+			$.each(data, function(key, val) {
+				if(key % 4 == 0) {
+					htmlStr += "<div class='row'>";
+				}
+				htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
+				htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
+				htmlStr += "<br>";
+				htmlStr += "<div class='list_explain'>";
+				htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
+				htmlStr += val.org_name + "<br>";
+				htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
+				htmlStr += "</div></div>";
+				if(key % 4 == 3) {
+					htmlStr += "</div>";
+				}
+			});
+			$("#activityList").html(htmlStr);
+		}
+	});
+});
 
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){
