@@ -272,24 +272,19 @@ private DBConnection pool;
 			ps.setInt(1,comm_num);
 			rs = ps.executeQuery();
 			  
+			//else 추가
 			if(rs.next()) {
 				next_comm = rs.getInt("comm_num");
+			}else {
+				next_comm = 0;
 			}
-
-			ps.executeUpdate();
 			
 				
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}finally {
-			try {
-				if(ps!=null) ps.close();
-				if(con!=null) con.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-			}
+			pool.closeConnection(con, ps);
 		}
 		return next_comm;
 	} 

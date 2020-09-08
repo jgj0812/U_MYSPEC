@@ -101,13 +101,13 @@
 					value="삭제"
 					onclick="location.href='deletePro.jsp?comm_num=<%=commB.getComm_num() %>'">
 			<%} %>
-			<input type="button" 
-				   class="btn text-dark"  
-				   style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;font-weight:bolder;" 
-		   		   value="다음글"
-		   		   onclick="location.href='detailView.jsp?comm_num=<%=next_comm %>'">
-	</div>
-	
+		   		   
+		    <button type="button"  
+		    		class="btn text-dark"  
+				    style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;font-weight:bolder;"  
+				    onclick="next(<%=next_comm%>)">다음글</button>
+		   		 </div>
+
 	
 	<div style="background-color:#eeeeee;">
 		
@@ -170,18 +170,18 @@
 				<form> 
 					<input type="hidden" name="comm_num" value="<%= comm_num%>">
 					<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-					<input type="button" style="border: 0px" value="수정"  onclick="update<%=i%>()"> 
+					<input type="button" style="border: 0px" value="수정"  onclick="update(<%=i%>)"> 
 				</form>  
 				 
 				<!-- 답글달기  -->
-				<input type="button" style="border: 0px" value="답글달기" onclick="rereply<%=i%>()"> 
+				<input type="button" style="border: 0px" value="답글달기" onclick="rereply(<%=i%>)"> 
 			</div>
 			<br>
 		<hr> 
 		</div>
 		
 		<!-- 구분선 -->
-	
+
 		<!-- 댓글 수정 div -->
 		
 		<div id="update<%=i %>" style="display: none">
@@ -193,7 +193,7 @@
 				</div>
 				
 				<div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex"> <!-- 삭제 수정 답글 -->			
-					<input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem"  value="취소" onclick="updatecancel<%=i%>()"> 
+					<input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem"  value="취소" onclick="updatecancel(<%=i%>)"> 
 					<input type="submit" class="btn btn-danger" style="font-size: 0.75rem" value="수정">  
 					
 				</div>
@@ -201,41 +201,6 @@
 				<hr> 
 			</form>  	
 		</div>
-
-<script>
-
-function rereply<%=i%>(){
-	var con = document.getElementById("rereply<%=i%>");
-	if(con.style.display =='none'){
-		con.style.display = 'block';
-	}else if(con.style.display =='block'){
-		con.style.display = 'none';
-	}
-}
-
-function update<%=i%>(){
-	var update = document.getElementById("update<%=i%>");
-	var basic = document.getElementById("basic<%=i%>");
-	
-	if(update.style.display =='none'){
-		update.style.display = 'block';
-		basic.style.display = 'none';
-	}else if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
-	}
-}
-
-function updatecancel<%=i%>(){
-	var update = document.getElementById("update<%=i%>");
-	var basic = document.getElementById("basic<%=i%>");
-	if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
-	}
-}
-
-</script>
 
 		<!-- 답글 입력폼  -->
 		
@@ -299,6 +264,54 @@ function updatecancel<%=i%>(){
 <%		} %>
  	</div>
 </section>
+
+<script type="text/javascript">
+
+function rereply(i){
+	var con = document.getElementById("rereply" + i);
+	if(con.style.display =='none'){
+		con.style.display = 'block';
+	}else if(con.style.display =='block'){
+		con.style.display = 'none';
+	}
+}
+
+function update(i){
+	var update = document.getElementById("update" + i);
+	var basic = document.getElementById("basic" + i);
+	
+	if(update.style.display =='none'){
+		update.style.display = 'block';
+		basic.style.display = 'none';
+	}else if(update.style.display =='block'){
+		update.style.display = 'none';
+		basic.style.display = 'block';
+	}
+}
+
+function updatecancel(i){
+	var update = document.getElementById("update" + i);
+	var basic = document.getElementById("basic" + i);
+	if(update.style.display =='block'){
+		update.style.display = 'none';
+		basic.style.display = 'block';
+	}
+}
+
+
+function next(next_comm){
+ 	if(next_comm == 0){
+		alert("다음 글이 없습니다.");
+	}else{
+		window.location = "detailView.jsp?comm_num=<%=next_comm %>";
+	}
+}
+
+</script>
+
+
+
+
 <%@ include file="../footer.jsp" %>
 
 
