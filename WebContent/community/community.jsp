@@ -12,15 +12,16 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>();
 	
 	//페이징, 검색
-	int pageSize = 5;	// 한 화면에 보여지는 수
+	pageSize = 5;	// 한 화면에 보여지는 수
 	
-	String pageNum = request.getParameter("pageNum");
+	pageNum = request.getParameter("pageNum");
 	
 	if(pageNum == null) {
 		pageNum = "1";
 	}
 	
-	String keyField = "", keyWord = "";	
+	keyField = "";
+	keyWord = "";	
 	
 	// 검색에 필요한 변수
 	if(request.getParameter("keyWord") != null) {
@@ -28,9 +29,9 @@
 		keyWord = request.getParameter("keyWord");
 	}
 	
-	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
-	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
-	int endRow = currentPage * pageSize;	// 페이지 끝
+	currentPage = Integer.parseInt(pageNum);		// 현재 페이지
+	startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
+	endRow = currentPage * pageSize;	// 페이지 끝
 	
 	comm_arr = mgr.Community_list(startRow, endRow, keyField, keyWord);
 	int count = mgr.community_Count(keyField, keyWord);	
