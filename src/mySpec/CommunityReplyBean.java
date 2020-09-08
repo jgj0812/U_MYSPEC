@@ -9,9 +9,9 @@ public class CommunityReplyBean {
 	private String rep_date;		// 댓글 작성일
 	private String rep_admin;		// 관리자 작성자
 	private String rep_nick;		// 개인회원 닉네임을 담을 변수
-	private int rep_ref; // 댓글그룹
-	private int rep_step;// 댓글순서
-	private int rep_level; // 들여쓰기
+	private int rep_ref; 			// 댓글그룹
+	private int rep_step;			// 댓글순서
+	private int rep_level; 			// 들여쓰기
 
 	public int getRep_num() {
 		return rep_num;
