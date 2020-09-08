@@ -227,7 +227,6 @@ private DBConnection pool;
 	}
 
 
-
 	//議고����
 	private void upHit(int comm_num) {
 			
@@ -257,53 +256,44 @@ private DBConnection pool;
 			}
 		}
 	} 
-
-	//��紐�, �댁��, ���ㅼ�� 寃���
 	
-	public ArrayList<CommunityBean> Community_list_search(int sorting_num , String str) {
-		Connection con = null;
-		Statement st = null;
+	//다음글
+	public int next_community(int comm_num) {
+		Connection con =null;
+		PreparedStatement ps =null;
+		String sql = null;
 		ResultSet rs = null;
-		String sql="";
-		
-		//0=��紐�
-		if(sorting_num==0) {
-			sql = "select * from community WHERE comm_title LIKE '%" + str + "%'";
-		}
-		//1=�댁��
-		else if(sorting_num==1) {
-			sql = "select * from community WHERE comm_content LIKE '%" + str + "%'";
-		}
-		//2=���ㅼ��
-		else if(sorting_num==2) {
-		} 	sql = "select * from community WHERE comm_person LIKE '%" + str + "%'";
-		
-		ArrayList<CommunityBean> comm_arr_search = new ArrayList<CommunityBean>();
-		
+		int next_comm = 0;
+			
 		try {
 			con = pool.getConnection();
-			st = con.prepareStatement(sql);
-			rs = st.executeQuery(sql);
-			
-			while (rs.next()) {
-				CommunityBean  commB = new CommunityBean();
-				commB.setComm_num(rs.getInt("comm_num"));
-				commB.setComm_type(rs.getInt("comm_type"));
-				commB.setComm_title(rs.getString("comm_title"));
-				commB.setComm_person(rs.getString("comm_person"));
-				commB.setComm_date(rs.getString("comm_date"));
-				commB.setComm_hits(rs.getInt("comm_hits"));
-				commB.setComm_content(rs.getString("comm_content"));
-				
-				comm_arr_search.add(commB);
+			sql="select comm_num from community where comm_num=(select min(comm_num) from community where comm_num> ?)";
+			ps = con.prepareStatement(sql);		
+			ps.setInt(1,comm_num);
+			rs = ps.executeQuery();
+			  
+			if(rs.next()) {
+				next_comm = rs.getInt("comm_num");
 			}
+
+			ps.executeUpdate();
+			
+				
 		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
-		} finally {
-			pool.closeConnection(con, st, rs);
+		}finally {
+			try {
+				if(ps!=null) ps.close();
+				if(con!=null) con.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
 		}
-		return comm_arr_search;
-	}
+		return next_comm;
+	} 
+
 	
 	// 공지글 작성
 	public int insertNotice(CommunityBean bean, String id) {
