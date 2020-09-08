@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  ÆÄÀÏÀÌ »ý¼ºµÊ - È­¿äÀÏ-9¿ù-01-2020   
+--  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - È­ï¿½ï¿½ï¿½ï¿½-9ï¿½ï¿½-01-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table ACT_INTEREST
@@ -324,3 +324,21 @@
 	  REFERENCES "SCOTT"."PERSON_USER" ("PERSON_ID") ENABLE;
   ALTER TABLE "SCOTT"."SCRAP" ADD CONSTRAINT "SCRAP_FK2" FOREIGN KEY ("SCRAP_NUM")
 	  REFERENCES "SCOTT"."ACTIVITY" ("ACT_NUM") ENABLE;
+
+--------------------------------------------------------
+--  DDL for Sequence ACT_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SCOTT"."ACT_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+
+--------------------------------------------------------
+--  DDL for Sequence COMMUNITY_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SCOTT"."COMMUNITY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+
+--------------------------------------------------------
+--  DDL for Sequence COMM_REPLY_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SCOTT"."COMM_REPLY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;

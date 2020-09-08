@@ -12,15 +12,16 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>();
 	
 	//페이징, 검색
-	int pageSize = 5;	// 한 화면에 보여지는 수
+	pageSize = 10;	// 한 화면에 보여지는 수
 	
-	String pageNum = request.getParameter("pageNum");
+	pageNum = request.getParameter("pageNum");
 	
 	if(pageNum == null) {
 		pageNum = "1";
 	}
 	
-	String keyField = "", keyWord = "";	
+	keyField = "";
+	keyWord = "";	
 	
 	// 검색에 필요한 변수
 	if(request.getParameter("keyWord") != null) {
@@ -28,9 +29,9 @@
 		keyWord = request.getParameter("keyWord");
 	}
 	
-	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
-	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
-	int endRow = currentPage * pageSize;	// 페이지 끝
+	currentPage = Integer.parseInt(pageNum);		// 현재 페이지
+	startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
+	endRow = currentPage * pageSize;	// 페이지 끝
 	
 	comm_arr = mgr.Community_list(startRow, endRow, keyField, keyWord);
 	int count = mgr.community_Count(keyField, keyWord);	
@@ -60,23 +61,28 @@
 		 	<tbody>
 		 	
 <%
-
 		for(CommunityBean commB :comm_arr){
+			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
 			String Type =commB.getComm_type()==0?"공지사항":"일반게시판";
 			String datestr = commB.getComm_date();
-			
 			String [] date = datestr.split(" ");
 			String date_1 = date[0];
 %>	
 
-		 		<tr class="d-flex">	 		
+		 		<tr class="d-flex">
+		 			<%
+		 				if(commB.getComm_type() == 0) {
+		 			%>	 		
+		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
+		 			<%}else { %>
 		 			<td class="col-md-1 d-none d-lg-table-cell"> <%=commB.getComm_num() %></td>
+		 			<%} %>
 		 			<td class="col-md-1 d-none d-lg-table-cell"><%=Type%></td>
 		 			<td class="col-md-5">
 		 				<a href="detailView.jsp?comm_num=<%=commB.getComm_num()%>" class="h5 text-dark"><%=commB.getComm_title() %></a>
-		 				<p class="d-block d-sm-none"><small><%=commB.getComm_person() %> <%=date_1%> <%=commB.getComm_hits() %></small></p>
+		 				<p class="d-block d-sm-none"><small><%=person %> <%=date_1%> 조회 <%=commB.getComm_hits() %></small></p>
 		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell"><%=commB.getComm_person() %></td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=person %></td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date_1 %></td>
 		 			<td class="col-md-1 d-none d-lg-table-cell"><%=commB.getComm_hits() %></td>
 		 			
@@ -91,7 +97,7 @@
 	<!-- 글쓰기 -->
 	<div class="form-inline justify-content-end">
 		<button type="button" class="btn btn-com d-none d-md-block"  
-		onclick="comm_write()">글쓰기</button>
+		onclick="comm_write('<%=id%>')">글쓰기</button>
 	</div>
 	
 	

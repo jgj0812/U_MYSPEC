@@ -1,17 +1,18 @@
 package mySpec;
 
 public class CommunityReplyBean {
-	private int rep_num; //´ñ±Û¹øÈ£
-	private int rep_comm; //´ñ±ÛÀÌ ¼ÓÇÑ ±Û¹øÈ£
-	private String rep_person; //´ñ±Û ´Ü»ç¶÷
-	private String rep_date; //´ñ±Û ´Ş¸° ³¯Â¥
-	
-	private String rep_content; //´ñ±Û ³»¿ë
-	private int rep_ref; //´ñ±Û ±×·ì(´ñ±Û¹øÈ£)
-	private int rep_step; //±×·ì³»ÀÇ ¼ø¼­
-	private int rep_level; //µé¿©¾²±â Á¤µµ(´ä±ÛÀÎÁö ±¸ºĞ)
 
-	
+	private int rep_num;			// ëŒ“ê¸€ ë²ˆí˜¸
+	private int rep_comm; 			// ëŒ“ê¸€ì´ ì†í•œ ê¸€ë²ˆí˜¸
+	private String rep_person;		// ê°œì¸íšŒì› ëŒ“ê¸€ ì‘ì„±ì
+	private String rep_content;		// ëŒ“ê¸€ ë‚´ìš©
+	private String rep_date;		// ëŒ“ê¸€ ì‘ì„±ì¼
+	private String rep_admin;		// ê´€ë¦¬ì ëŒ“ê¸€ ì‘ì„±ì
+	private String rep_nick;		// ê°œì¸íšŒì› ë‹‰ë„¤ì„ì„ ë‹´ì„ ë³€ìˆ˜
+	private int rep_ref; 			// ëŒ“ê¸€ê·¸ë£¹(ëŒ“ê¸€ë²ˆí˜¸)
+	private int rep_step;			// ê·¸ë£¹ë‚´ ìˆœì„œ
+	private int rep_level; 			// ë“¤ì—¬ì“°ê¸°ì •ë„(ë‹µê¸€ì¸ì§€ êµ¬ë¶„)
+
 	public int getRep_num() {
 		return rep_num;
 	}
@@ -60,8 +61,17 @@ public class CommunityReplyBean {
 	public void setRep_step(int rep_step) {
 		this.rep_step = rep_step;
 	}
-	
-	
-	
+	public String getRep_admin() {
+		return rep_admin;
+	}
+	public void setRep_admin(String rep_admin) {
+		this.rep_admin = rep_admin;
+	}
+	public String getRep_nick() {
+		return rep_nick;
+	}
+	public void setRep_nick(String rep_nick) {
+		this.rep_nick = rep_nick;
+	}
 }
 	

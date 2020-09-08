@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
 	<div class="container py-3">
-		<form action="list_act_writePro.jsp" method="post" id="act_form">
+		<form action="list_act_writePro.jsp" method="post" id="act_form" enctype="multipart/form-data">
 			<div>
 				<h3>활동개요</h3>
 				<hr />
@@ -28,14 +28,14 @@
 				<h5>활동기간</h5>
 				<div class="row">
 					<div class="col-md-6 input-group">
-						<input type="text" placeholder="YYYY.MM.DD" class="form-control"
+						<input type="text" placeholder="YYYY-MM-DD" class="form-control"
 							name="act_start" />
 						<div class="input-group-append">
 							<div class="input-group-text">부터</div>
 						</div>
 					</div>
 					<div class="col-md-6 input-group">
-						<input type="text" placeholder="YYYY.MM.DD" class="form-control"
+						<input type="text" placeholder="YYYY-MM-DD" class="form-control"
 							name="act_end" />
 						<div class="input-group-append">
 							<div class="input-group-text">까지</div>
@@ -223,7 +223,7 @@
 				<br />
 
 				<h5>홈페이지</h5>
-				<input type="text" placeholder="홈페이지" class="form-control" />
+				<input type="text" placeholder="홈페이지" class="form-control" name="act_home"/>
 			</div>
 			<br /> <br />
 
@@ -267,7 +267,7 @@
 
 			<div>
 				<h3>상세내용</h3>
-				<textarea id="content" name="act_content"></textarea>
+				<textarea id="act_content" name="act_content"></textarea>
 			</div>
 			<br /> <br />
 
@@ -278,9 +278,8 @@
 						<div class="input-group-text">썸네일</div>
 					</div>
 					<div class="custom-file">
-						<input type="file" class="custom-file-input form-control"
-							name="act_thumb" /> <label
-							class="custom-file-label">썸네일</label>
+						<input type="file" class="custom-file-input form-control" name="act_thumb" onchange="get_thumb_filename()" />
+						<label class="custom-file-label" id="thumb_filename">썸네일</label>
 					</div>
 				</div>
 				<div class="input-group">
@@ -288,15 +287,14 @@
 						<div class="input-group-text">포스터</div>
 					</div>
 					<div class="custom-file">
-						<input type="file" class="custom-file-input form-control"
-							name="act_post" /> <label
-							class="custom-file-label">포스터</label>
+						<input type="file" class="custom-file-input form-control"	name="act_post" onchange="get_post_filename()" />
+						<label class="custom-file-label" id="post_filename">포스터</label>
 					</div>
 				</div>
 			</div>
 			<br /> <br />
-			<button class="btn btn-cam btn-block" onclick="act_submit()">
-				게시 요청</button>
+			<input type="button" class="btn btn-cam btn-block" onclick="act_submit()" value="게시 요청">
 		</form>
 	</div>
+	<script src="../js/activity.js"></script>
 <%@ include file="../footer.jsp" %>
