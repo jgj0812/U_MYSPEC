@@ -129,6 +129,7 @@
 			}
 	
 %>	
+<!-- ㅇㅅㅇㅅ -->
 <div class ="reply_div">
 		<!-- 댓글 div  -->
 			<div class="row" style="font-size:0.75rem;" >
