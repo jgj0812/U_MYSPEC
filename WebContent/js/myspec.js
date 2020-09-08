@@ -1,6 +1,6 @@
 // header 검색 버튼
 $('#searchBtn').click(function(){
-	if($('#search').value == "") {
+	if($('#search').val() == "") {
 		alert("검색어를 입력해주세요.");
 		$('#search').focus;
 		return false;
@@ -8,8 +8,28 @@ $('#searchBtn').click(function(){
 });
 
 var phoneExp = /^\d{3}-\d{3,4}-\d{4}$/; // 핸드폰번호 정규식
-var birthExp = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식
+var birthExp = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식
 var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
+
+//datepicker 공통
+$.datepicker.setDefaults({
+	dateFormat: "yy-mm-dd",
+	nextText: "다음 달",
+	prevText: "이전 달",
+	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	dayNamesMin: ['일','월','화','수','목','금','토'],
+	dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+	showMonthAfterYear: true,
+	yearSuffix: '년'
+});
+
+// 개인회원 생년월일 datepicker
+$("#person_birth").datepicker({
+	dateFormat: "yy-mm-dd",
+	changeMonth: true,
+	changeYear: true,
+});
 
 // 개인회원 Join
 $("#personSend").click(function(){
@@ -464,17 +484,18 @@ function tagRemove(tag_num) {
 $(document).ready(function () {
 	$("#act_content").summernote({
 		lang: "ko-KR",
-		callbacks : {
+      	callbacks : {
 			onImageUpload : function(files) {
 				sendFile(files[0], this);
-			},
+			}
 		}
     });
-	$("#act_form input[name='act_start']").datepicker({
-		dateFormat: "yy-mm-dd"
-	});
-	$("#act_form input[name='act_end']").datepicker({
-		dateFormat: "yy-mm-dd"
+	
+	$("#act_form input[name='act_start']").datepicker();
+	$("#act_form input[name='act_end']").datepicker();
+	$("#comm_content").summernote({
+			lang: "ko-KR",
+	      	height: "20em",
 	});
 });
 
@@ -495,8 +516,13 @@ function sendFile(file, editor) {
 }
 
 //커뮤니티 글쓰기
-function comm_write() {
-	window.location = "write.jsp";
+function comm_write(id) {
+	if(id == null) {
+		alert("로그인을 해야 글쓰기가 가능합니다.");
+		window.location = "../member/login.jsp";
+	}else {
+		window.location = "write.jsp";	
+	}
 }
 
 // 활동 리스트
@@ -530,3 +556,43 @@ $(document).ready(function() {
 		}
 	});
 });
+
+// 개인 리스트 검색(admin)
+$("#personSearchBtn").click(function(){
+	if($("#personSearch").val() == "") {
+		alert("검색어를 입력하세요");
+		$("#personSearch").focus();
+		return false;
+	}
+	$("#personSearchFrm").submit();
+});
+
+// 단체 리스트 검색(admin)
+$("#orgSearchBtn").click(function(){
+	if($("#orgSearch").val() == "") {
+		alert("검색어를 입력하세요");
+		$("#orgSearch").focus();
+		return false;
+	}
+	$("#orgSearchFrm").submit();
+});
+
+// 커뮤니티 공지글 검색(admin)
+$("#noticeSearchBtn").click(function(){
+	if($("#noticeSearch").val() == "") {
+		alert("검색얼르 입력하세요");
+		$("#noticeSearch").focus();
+		return false;
+	}
+	$("#noticeSearchFrm").submit();
+});
+
+// 댓글 입력
+function reply_ok() {
+	if($("input[name=rep_content]").val() == "") {
+		alert("댓글 내용을 입력해주세요");
+		$("input[name=rep_content]").focus();
+		return false;
+	}
+	$("form[name=comm_reply_form]").submit();
+}

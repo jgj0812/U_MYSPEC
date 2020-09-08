@@ -1,6 +1,12 @@
+<%@page import="mySpec.CommunityBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
+<jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
+<%
+	
+%>
 	<div class="container">
       <h2>검색</h2>
      
@@ -157,7 +163,7 @@
       <!-- /활동 -->
 
       <!-- 커뮤니티 -->
-      <div class="container mt-5">
+       <div class="container mt-5">
         <div class="col-lg-12 bg-light p-4">커뮤니티<button class="d-flex ml-auto btn btn-secondary btn-sm">더보기</button></div>
           <div class="col-lg-12 border border-light">
           <div class="table-responsive">
@@ -297,9 +303,7 @@
               </tbody>
             </table>
           </div>
+       	 </div>
         </div>
-        </div>
-      </div>
       <!-- /커뮤니티 -->
-    </div>
 <%@ include file="/footer.jsp" %>

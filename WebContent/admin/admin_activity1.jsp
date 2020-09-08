@@ -21,7 +21,7 @@
 	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
 	int endRow = currentPage * pageSize;				// 페이지 끝
 	ArrayList<PersonBean> arrPerson = mgr.listPerson(startRow, endRow, keyField, keyWord);
-	int count = mgr.personCount(keyField, keyWord);		// 전체 개인회원 수
+	int count = mgr.personCount(keyField, keyWord);	// 전체 개인회원 수
 	int number = count - (currentPage - 1) * pageSize;
 %>
 <main>
@@ -40,43 +40,39 @@
 			<!-- /toggle 버튼 -->
 			
 			<!-- Person List -->
-			<div class="col-lg-12 bg-light p-4">개인회원</div>
+			<div class="col-lg-12 bg-light p-4">대외활동</div>
 			<input type="hidden" name="listmemType" value="0">
 		    <div class="col-lg-12 border border-light">
 		    	<div class="table-responsive">
 		        	<table class="table table-sm table-hover">
 		            	<thead>
-		                	<tr class="text-center">
-		                    	<th>ID</th>
-		                    	<th>닉네임</th>
-		                    	<th>생년월일</th>
-		                    	<th>이메일</th>
-		                    	<th>전화번호</th>
-		                    	<th>삭제</th>
+		                	<tr class="text-center d-flex">
+		                    	<th class="col-md-1">이미지</th>
+		                    	<th class="col-5">제목</th>
+		                    	<th class="col-md-2">기관명</th>
+		                    	<th class="col-md-2">등록일</th>
+		                    	<th class="col-md-1">담당자</th>
+		                    	<th class="col-md-1">삭제</th>
 		                  	</tr>
 		                </thead>
+		                <!-- 예시 -->
 		                <tbody>
-		                	<%
-		                		for(PersonBean pb : arrPerson) {
-		                			String birth[] = pb.getBirth().split(" ");
-		                			String birth1 = birth[0];
-		                	%>
-		                			<tr class="text-center">
-		                				<td><%=pb.getId() %></td>
-		                				<td><%=pb.getNick() %></td>
-		                				<td><%=birth1 %></td>
-		                				<td><%=pb.getEmail() %></td>
-		                				<td><%=pb.getPhone() %></td>
-		                				<td><a href="adminDeletePro.jsp?memType=0&id=<%=pb.getId() %>" class="btn btn-danger m-2">삭제</a></td>
-		               				</tr>
-		                	<%
-		                		}
-		                	%>
+			             	<tr class="text-center d-flex">
+			                  <td class="col-md-1 col-4 d-flex align-items-center">
+			                    
+			                  </td>
+			                  <td class="col-md-5 text-truncate" >
+			                  	<span class="badge badge-primary rounded-pill">승인대기중</span>
+			                    관리자 페이지에 나온 대외활동의 제목입니다. 대부분 이름이 깁니다.
+			                  </td>
+			                  <td class="col-md-2">대한대외활동</td>
+			                  <td class="col-md-2">2020.07.15</td>
+			                  <td class="col-md-1">홍길동</td>
+			                  <td class="col-md-1">삭제</td>
+              			    </tr>
+		                
 		                </tbody>
 					</table>
-				</div>
-				<div class="d-flex justify-content-end">
-					<a href="adminPerson.jsp" class="btn btn-cam">전체회원보기</a> 
 				</div>
 			</div>
 			<!-- /Person List -->
@@ -143,22 +139,6 @@
 				</nav>
 			</div>
 			<!-- /페이징 -->
-			<!-- 검색 -->
-			<form method="post" id="personSearchFrm" class="form-inline justify-content-center">
-				<input type="hidden" name="pageNum" value="1">
-				<select name="keyField" class="form-control" id="search_control">
-					<option value="person_id">ID</option>
-					<option value="person_nick">닉네임</option>
-				</select>
-				
-				<div class="input-group">
-					<input type="text" id="personSearch" name="keyWord" class="form-control">
-					<div class="input-group-append">
-						<button type="button" id="personSearchBtn" class="btn btn-cam">검색</button>	
-					</div>
-				</div>
-			</form>
-			<!-- /검색 -->
 		</div>
 		<!-- /page Content -->
 	</div>
