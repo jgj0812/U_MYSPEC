@@ -186,7 +186,10 @@ private DBConnection pool;
 		ResultSet rs = null;// 占쏙옙占쏙옙占쏙옙獵占� sql占쏙옙占쏙옙占쏙옙占쏙옙 占십울옙占싹댐옙
 		CommunityBean commB = null;
 		upHit(comm_num);
-		String sql = "select * from community where comm_num= '" + comm_num + "'";
+		String sql = "select c.*, p.person_nick from "
+					+ "community c left outer join person_user p "
+					+ "on c.comm_person = p.person_id "
+					+ "where comm_num= '" + comm_num + "'";
 
 		try {
 			
@@ -203,7 +206,8 @@ private DBConnection pool;
 				commB.setComm_date(rs.getString("comm_date"));
 				commB.setComm_hits(rs.getInt("comm_hits"));
 				commB.setComm_content(rs.getString("comm_content"));
-
+				commB.setComm_admin(rs.getString("comm_admin"));
+				commB.setComm_nick(rs.getString("person_nick"));
 			}
 
 		} catch (Exception e) {

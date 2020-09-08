@@ -75,6 +75,9 @@
 		                </tbody>
 					</table>
 				</div>
+				<div class="d-flex justify-content-end">
+					<a href="adminPerson.jsp" class="btn btn-cam">전체회원보기</a> 
+				</div>
 			</div>
 			<!-- /Person List -->
 			<!-- 페이징 -->

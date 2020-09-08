@@ -42,8 +42,7 @@
 					<thead>
 		 				<tr class="d-flex">
 		 					<th class="col-md-1 d-none d-lg-table-cell">번호</th>
-		 					<th class="col-md-1 d-none d-lg-table-cell">게시판명</th>
-		 					<th class="col-md-5 d-none d-lg-table-cell">제목</th>
+		 					<th class="col-md-6 d-none d-lg-table-cell">제목</th>
 		 					<th class="col-md-2 d-none d-lg-table-cell">글쓴이</th>
 		 					<th class="col-md-2 d-none d-lg-table-cell">등록일</th>
 		 					<th class="col-md-1 d-none d-lg-table-cell">조회수</th>
@@ -57,9 +56,8 @@
 %>	
 		 				<tr class="d-flex">	 		
 		 					<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_num() %></td>
-		 					<td class="col-md-1 d-none d-lg-table-cell"></td>
-		 					<td class="col-md-5">
-		 						<a href="#" class="h5 text-dark"><%=bean.getComm_title() %></a>
+		 					<td class="col-md-6">
+		 						<a href="adminNoticeDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark"><%=bean.getComm_title() %></a>
 		 						<p class="d-block d-sm-none"><small>관리자 <%=date1%> <%=bean.getComm_hits() %></small></p>
 		 					</td>
 		 					<td class="col-md-2 d-none d-lg-table-cell">관리자</td>

@@ -27,7 +27,8 @@
 	int count = Rmgr.Community_reply_count(comm_num);
 	
 	int num = commB.getComm_num(); //글번호
-	String person = commB.getComm_person();
+
+	String person = commB.getComm_admin() == null ? commB.getComm_nick() : "관리자";
 	int hits = commB.getComm_hits();
 	String content = commB.getComm_content();
 	String title = commB.getComm_title();
@@ -82,7 +83,8 @@
 					style="background-color:#eeeeee; margin-right:5px; font-size:12px;font-family:Noto Sans KR; font-weight:bolder;"
 					onclick="location.href='community.jsp'">목록</button>
 			
-			<!-- 수정  -->		
+			<!-- 수정  -->
+			<%if(id != null && id.trim().equals(commB.getComm_person())) { %>	
 			<input type="button" 
 					class="btn text-dark"  
 					style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
@@ -95,7 +97,7 @@
 					style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
 					value="삭제"
 					onclick="location.href='deletePro.jsp?comm_num=<%=commB.getComm_num() %>'">
-					
+			<%} %>
 			<input type="button" class="btn text-dark"  style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;
 		    font-weight:bolder;" value="다음글">
 	</div>
@@ -113,19 +115,19 @@
 		<!-- 댓글 보여주는 곳 -->	
 <%
 		for(CommunityReplyBean commRB :commRe_arr){
+			String repPerson = commRB.getRep_admin() != null ? "관리자" : commRB.getRep_nick();
 			
 			int wid =0;
 			if(commRB.getRep_level()>0){
 				wid = 25*(commRB.getRep_level());
 			}
-	
 %>	
 	
 		<div>
 			<div class="row" style="font-size:0.75rem;" >
 				<%-- <img src="${pageContext.request.contextPath}/img/level.png" width=<%=wid%>>
 				<i class="fas fa-reply" style="width=<%=wid%>"></i> --%>
-				<p style="margin-left:40px;"><%=commRB.getRep_person()%></p>
+				<p style="margin-left:40px;"><%=repPerson%></p>
 				<p style="margin-left:20px;"><%=commRB.getRep_date()%></p>
 			</div>
 			<div style="margin-left:25px; font-size:1rem;"><%=commRB.getRep_content()%></div>
@@ -167,7 +169,6 @@
 			    </div>
 			  </div>	
  			 </div>
-					
 		</div>
 		<br>
 		<hr>
@@ -200,8 +201,9 @@
 		</div>
 <%
 		}
-%>		
 
+		if(id != null) {
+%>				
 	<!-- 댓글 입력폼  -->
 	<form action="replyPro.jsp" name="comm_reply_form" method="post">
 	  	<!-- 글번호를 넘긴다 -->
@@ -217,10 +219,13 @@
 				<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
 				type="submit" class="form-control" value="등록">
 			</div>
+		</form>
+<%		}else { %>
+		<div class="container">
+			<p>댓글을 입력하려면 로그인을 해야합니다.</p>
 		</div>
-	</form>
-	
- </div>
+<%		} %>
+ 	</div>
 </section>
 <%@ include file="../footer.jsp" %>
 

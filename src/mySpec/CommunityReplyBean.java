@@ -1,17 +1,18 @@
 package mySpec;
 
 public class CommunityReplyBean {
-	private int rep_num; 
-	private int rep_comm; 
-	private String rep_person;
-	private String rep_date;
-	
-	private String rep_content;
-	private int rep_ref; 
-	private int rep_step;
-	private int rep_level; 
 
-	
+	private int rep_num;			// 댓글 번호
+	private int rep_comm; 			// 댓글이 적힐 글번호
+	private String rep_person;		// 개인회원 작성자
+	private String rep_content;		// 댓글 내용
+	private String rep_date;		// 댓글 작성일
+	private String rep_admin;		// 관리자 작성자
+	private String rep_nick;		// 개인회원 닉네임을 담을 변수
+	private int rep_ref; // 댓글그룹
+	private int rep_step;// 댓글순서
+	private int rep_level; // 들여쓰기
+
 	public int getRep_num() {
 		return rep_num;
 	}
@@ -60,8 +61,17 @@ public class CommunityReplyBean {
 	public void setRep_step(int rep_step) {
 		this.rep_step = rep_step;
 	}
-	
-	
-	
+	public String getRep_admin() {
+		return rep_admin;
+	}
+	public void setRep_admin(String rep_admin) {
+		this.rep_admin = rep_admin;
+	}
+	public String getRep_nick() {
+		return rep_nick;
+	}
+	public void setRep_nick(String rep_nick) {
+		this.rep_nick = rep_nick;
+	}
 }
 	

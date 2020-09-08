@@ -6,18 +6,23 @@ import java.util.ArrayList;
 public class CommunityReplyMgr {
 private DBConnection pool;
 	
-	// DB?占쎄껐
+	// DB 연결
 	public CommunityReplyMgr() {
 		pool = DBConnection.getInstance();
 	}
 	
-	//댓글 보여주기
+
+	//댓글 리스트
 	public ArrayList<CommunityReplyBean> Community_reply_list(int rep_comm) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		
-		String sql = "select * from comm_reply where rep_comm = "+ rep_comm + "order by rep_ref desc, rep__step asc";
+		String sql = "select r.*, p.person_nick from "
+						+ "comm_reply r left outer join person_user p "
+						+ "on r.rep_person = p.person_id "
+						+ "where rep_comm = "+ rep_comm
+            + " order by rep_ref desc, rep_step asc";
 		
 		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		
@@ -28,14 +33,14 @@ private DBConnection pool;
 			
 			while (rs.next()) {
 				CommunityReplyBean  commB = new CommunityReplyBean();
-				
 				commB.setRep_num(rs.getInt("rep_num"));
 				commB.setRep_comm(rs.getInt("rep_comm"));
 				commB.setRep_person(rs.getString("rep_person"));
 				commB.setRep_content(rs.getString("rep_content"));
-				
 				commB.setRep_date(rs.getString("rep_date"));
 				commB.setRep_ref(rs.getInt("rep_ref"));
+				commB.setRep_admin(rs.getString("rep_admin"));
+				commB.setRep_nick(rs.getString("person_nick"));
 				commB.setRep_step(rs.getInt("rep_step"));
 				commB.setRep_level(rs.getInt("rep_level"));
 				
@@ -51,8 +56,9 @@ private DBConnection pool;
 	}
 	
 
-	//댓글 입력
-	public int Community_reply_insert (CommunityReplyBean CommR, String id, int comm_num) {
+	// 개인회원 댓글 등록
+	public int Community_reply_insert (CommunityReplyBean Comm, String id, int comm_num) {
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -100,7 +106,8 @@ private DBConnection pool;
 			}
 			
             											//번호                             글번호 아이디  날짜   내용  rep_ref rep_step rep_level
-			sql = "insert into comm_reply values(comm_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
+			sql = "insert into comm_reply (rep_num, rep_comm, rep_person, rep_date, rep_content, rep_ref, rep_step, rep_level)"
+		                                       + " values(comm_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 
 			pstmt.setInt(1, comm_num); //글번호
@@ -232,7 +239,6 @@ private DBConnection pool;
 	} 
 
 	//��紐�, �댁��, ���ㅼ�� 寃���
-	
 	public ArrayList<CommunityBean> Community_list_search(int sorting_num , String str) {
 		Connection con = null;
 		Statement st = null;
@@ -276,5 +282,33 @@ private DBConnection pool;
 			pool.closeConnection(con, st, rs);
 		}
 		return comm_arr_search;
+	}
+	
+	// 관리자 댓글 등록
+	public int insertAdminReply(CommunityReplyBean bean, String id, int comm_num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int re = -1;
+
+		try {
+			con = pool.getConnection();
+			sql = "insert into comm_reply (rep_num, rep_comm, rep_admin, rep_date, rep_content, rep_pos, rep_ref, rep_depth) " 
+							+ "values(comm_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, comm_num); //글번호
+			pstmt.setString(2, id); //아이디
+			pstmt.setString(3, bean.getRep_content()); //내용
+			pstmt.setInt(4, bean.getRep_pos()); //pos
+			pstmt.setInt(5, bean.getRep_ref()); //ref
+			pstmt.setInt(6, bean.getRep_depth()); //depth
+			pstmt.executeUpdate();
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+		return re;
 	}
 }

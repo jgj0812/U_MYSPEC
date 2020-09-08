@@ -1,6 +1,6 @@
 // header 검색 버튼
 $('#searchBtn').click(function(){
-	if($('#search').value == "") {
+	if($('#search').val() == "") {
 		alert("검색어를 입력해주세요.");
 		$('#search').focus;
 		return false;
@@ -484,8 +484,13 @@ function sendFile(file, editor) {
 }
 
 //커뮤니티 글쓰기
-function comm_write() {
-	window.location = "write.jsp";
+function comm_write(id) {
+	if(id == null) {
+		alert("로그인을 해야 글쓰기가 가능합니다.");
+		window.location = "../member/login.jsp";
+	}else {
+		window.location = "write.jsp";	
+	}
 }
 
 // 개인 리스트 검색(admin)
@@ -498,6 +503,16 @@ $("#personSearchBtn").click(function(){
 	$("#personSearchFrm").submit();
 });
 
+// 단체 리스트 검색(admin)
+$("#orgSearchBtn").click(function(){
+	if($("#orgSearch").val() == "") {
+		alert("검색어를 입력하세요");
+		$("#orgSearch").focus();
+		return false;
+	}
+	$("#orgSearchFrm").submit();
+});
+
 // 커뮤니티 공지글 검색(admin)
 $("#noticeSearchBtn").click(function(){
 	if($("#noticeSearch").val() == "") {
@@ -507,3 +522,13 @@ $("#noticeSearchBtn").click(function(){
 	}
 	$("#noticeSearchFrm").submit();
 });
+
+// 댓글 입력
+function reply_ok() {
+	if($("input[name=rep_content]").val() == "") {
+		alert("댓글 내용을 입력해주세요");
+		$("input[name=rep_content]").focus();
+		return false;
+	}
+	$("form[name=comm_reply_form]").submit();
+}
