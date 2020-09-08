@@ -11,6 +11,7 @@ private DBConnection pool;
 		pool = DBConnection.getInstance();
 	}
 	
+
 	//댓글 리스트
 	public ArrayList<CommunityReplyBean> Community_reply_list(int rep_comm) {
 		Connection con = null;
@@ -20,7 +21,8 @@ private DBConnection pool;
 		String sql = "select r.*, p.person_nick from "
 						+ "comm_reply r left outer join person_user p "
 						+ "on r.rep_person = p.person_id "
-						+ "where rep_comm = "+ rep_comm;
+						+ "where rep_comm = "+ rep_comm
+            + " order by rep_ref desc, rep_step asc";
 		
 		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		
@@ -36,13 +38,15 @@ private DBConnection pool;
 				commB.setRep_person(rs.getString("rep_person"));
 				commB.setRep_content(rs.getString("rep_content"));
 				commB.setRep_date(rs.getString("rep_date"));
-				commB.setRep_pos(rs.getInt("rep_pos"));
 				commB.setRep_ref(rs.getInt("rep_ref"));
-				commB.setRep_depth(rs.getInt("rep_depth"));
 				commB.setRep_admin(rs.getString("rep_admin"));
 				commB.setRep_nick(rs.getString("person_nick"));
+				commB.setRep_step(rs.getInt("rep_step"));
+				commB.setRep_level(rs.getInt("rep_level"));
+				
 				commreply_arr.add(commB);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -51,26 +55,68 @@ private DBConnection pool;
 		return commreply_arr;
 	}
 	
+
 	// 개인회원 댓글 등록
 	public int Community_reply_insert (CommunityReplyBean Comm, String id, int comm_num) {
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		int re = -1; 
-		                                       
-		String sql = "insert into comm_reply (rep_num, rep_comm, rep_person, rep_date, rep_content, rep_pos, rep_ref, rep_depth)" 
-													// 번호 글번호 아이디  날짜      내용 pos ref depth
-		                                       + " values(comm_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
+		int number = 0;
+		
+		int rep_num = CommR.getRep_num(); //글번호
+		int rep_ref= CommR.getRep_ref();
+		int rep_step =CommR.getRep_step();
+		int rep_level = CommR.getRep_level();
+		
+		String sql ="";
 		
 		try {
 			con = pool.getConnection();
+			//새댓글: ref= rep_num의 최대값+1, re_step=0, re_level=0
+			sql="select max(rep_num) from comm_reply";
 			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery(); //최대값 구하기
 			
+			if(rs.next()) {
+				number=rs.getInt(1)+1;
+				
+			}else {//테이블에 데이터가 하나도 없을 때
+				number = 1;
+				
+			}
+			//ref re_step re_level 결정
+			
+			if(rep_num!=0) { //대댓글
+				sql="update comm_reply set rep_step=rep_step+1 where rep_ref=? and rep_step>?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, rep_ref);
+				pstmt.setInt(2, rep_step);
+				pstmt.executeUpdate();
+				
+				
+				rep_step =rep_step+1; //부모 re_step+1
+				rep_level=rep_level+1;//부모 re_level+1
+				
+			}else {//새댓글
+				rep_ref=number;
+				rep_step=0;
+				rep_level=0;
+			}
+			
+            											//번호                             글번호 아이디  날짜   내용  rep_ref rep_step rep_level
+			sql = "insert into comm_reply (rep_num, rep_comm, rep_person, rep_date, rep_content, rep_ref, rep_step, rep_level)"
+		                                       + " values(comm_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+
 			pstmt.setInt(1, comm_num); //글번호
 			pstmt.setString(2, id); //아이디
-			pstmt.setString(3, Comm.getRep_content()); //내용
-			pstmt.setInt(4, Comm.getRep_pos()); //pos
-			pstmt.setInt(5, Comm.getRep_ref()); //ref
-			pstmt.setInt(6, Comm.getRep_depth()); //depth
+			
+			pstmt.setString(3, CommR.getRep_content()); //내용
+			pstmt.setInt(4, rep_ref); //rep_ref
+			pstmt.setInt(5, rep_step); //rep_step
+			pstmt.setInt(6, rep_level); //rep_level
 
 			pstmt.executeUpdate();
 			
@@ -83,17 +129,17 @@ private DBConnection pool;
 		return re;
 	}
 	
-	//湲�����
-	public void Community_delete (int comm_num) {
+	//댓글 삭제
+	public void Community_reply_delete (int rep_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int re = -1;
-		String sql = "delete from community where comm_num = ?";
+		String sql = "delete from comm_reply where rep_num = ?";
 		
 		try {
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, comm_num);
+			pstmt.setInt(1, rep_num);
 			pstmt.executeUpdate();
 			
 			re = 1;
@@ -131,42 +177,33 @@ private DBConnection pool;
 	
 	}
 	
-	//湲�蹂닿린
-	public CommunityBean Community_detailView(int comm_num) {
+	//댓글갯수
+	public int Community_reply_count (int rep_comm){
 		// TODO Auto-generated method stub
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;// 占쏙옙占쏙옙占쏙옙獵占� sql占쏙옙占쏙옙占쏙옙占쏙옙 占십울옙占싹댐옙
-		CommunityBean commB = null;
-		upHit(comm_num);
-		String sql = "select * from community where comm_num= '" + comm_num + "'";
+		ResultSet rs = null;
+		int count = 0;
+		
+		String sql = "SELECT COUNT(rep_comm) FROM comm_reply where rep_comm =" + rep_comm;
 
 		try {
-			
 			con = pool.getConnection();
 			st = con.prepareStatement(sql);
 			rs = st.executeQuery(sql);
 			
 			while (rs.next()) {
-				commB = new CommunityBean();
-				commB.setComm_num(rs.getInt("comm_num"));
-				commB.setComm_type(rs.getInt("comm_type"));
-				commB.setComm_title(rs.getString("comm_title"));
-				commB.setComm_person(rs.getString("comm_person"));
-				commB.setComm_date(rs.getString("comm_date"));
-				commB.setComm_hits(rs.getInt("comm_hits"));
-				commB.setComm_content(rs.getString("comm_content"));
-
+				count=rs.getInt(1);
 			}
-
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
-			pool.closeConnection(con, st, rs);
+			pool.closeConnection(con, st , rs);
 		}
 		
-		return commB;
+		return count;
 	}
 
 

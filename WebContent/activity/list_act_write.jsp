@@ -267,7 +267,7 @@
 
 			<div>
 				<h3>상세내용</h3>
-				<textarea id="content" name="act_content"></textarea>
+				<textarea id="act_content" name="act_content"></textarea>
 			</div>
 			<br /> <br />
 
@@ -278,9 +278,8 @@
 						<div class="input-group-text">썸네일</div>
 					</div>
 					<div class="custom-file">
-						<input type="file" class="custom-file-input form-control"
-							name="act_thumb" /> <label
-							class="custom-file-label">썸네일</label>
+						<input type="file" class="custom-file-input form-control" name="act_thumb" onchange="get_thumb_filename()" />
+						<label class="custom-file-label" id="thumb_filename">썸네일</label>
 					</div>
 				</div>
 				<div class="input-group">
@@ -288,9 +287,8 @@
 						<div class="input-group-text">포스터</div>
 					</div>
 					<div class="custom-file">
-						<input type="file" class="custom-file-input form-control"
-							name="act_post" /> <label
-							class="custom-file-label">포스터</label>
+						<input type="file" class="custom-file-input form-control"	name="act_post" onchange="get_post_filename()" />
+						<label class="custom-file-label" id="post_filename">포스터</label>
 					</div>
 				</div>
 			</div>

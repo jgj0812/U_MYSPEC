@@ -8,7 +8,7 @@ $('#searchBtn').click(function(){
 });
 
 var phoneExp = /^\d{3}-\d{3,4}-\d{4}$/; // 핸드폰번호 정규식
-var birthExp = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식
+var birthExp = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식
 var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
 
 // 개인회원 Join
@@ -446,22 +446,41 @@ function reset() {
 
 // summernote
 $(document).ready(function () {
-	$("#content").summernote({
+	$("#act_content").summernote({
 		lang: "ko-KR",
-      	height: "20em",
+      	callbacks : {
+			onImageUpload : function(files) {
+				sendFile(files[0], this);
+			}
+		}
     });
-});
-
-$(document).ready(function () {
+	
+	$("#act_form input[name='act_start']").datepicker({
+		dateFormat: "yy-mm-dd"
+	});
+	$("#act_form input[name='act_end']").datepicker({
+		dateFormat: "yy-mm-dd"
+	});
 	$("#comm_content").summernote({
-		lang: "ko-KR",
-      	height: "20em",
-    });
+			lang: "ko-KR",
+	      	height: "20em",
+	   });
 });
 
-// 대외활동 등록
-function act_submit() {
-	$("#act_form").submit();
+function sendFile(file, editor) {
+	data = new FormData();
+	data.append("uploadFile", file);
+	$.ajax({
+		data : data,
+		type : "POST",
+		url : "act_content_imageUpload.jsp",
+		cache : false,
+		contentType : false,
+		processData : false,
+		success : function(data) {
+			$(editor).summernote("insertImage", data.url);
+		}
+	});
 }
 
 //커뮤니티 글쓰기

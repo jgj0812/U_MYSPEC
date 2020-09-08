@@ -23,6 +23,7 @@
     	<meta charset="UTF-8" />
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     	<title>MYSPEC!</title>
+    	
 	    <!-- 부트스트랩 -->
 	    <link 
 	    	rel="stylesheet" 
@@ -56,6 +57,8 @@
 	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myspec.css" />
 	    <!-- summernote css -->
 	    <link href="${pageContext.request.contextPath}/summernote/summernote-bs4.min.css" rel="stylesheet" />
+	    <!-- jquery-ui -->
+	    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	</head>
   	<body class="d-flex flex-column h-100">
   		<!-- header -->

@@ -1,6 +1,16 @@
 // list_act_write.jsp
+function get_thumb_filename() {
+	var filename = $("#act_form input[name='act_thumb']")[0].files[0].name;
+	$("#thumb_filename").html(filename);
+}
+
+function get_post_filename() {
+	var filename = $("#act_form input[name='act_post']")[0].files[0].name;
+	$("#post_filename").html(filename);
+}
+
 function act_submit() {
-	var currDate = new Date();
+	var currDate = new Date(new Date().getYear() + 1900, new Date().getMonth(), new Date().getDate());
 	var startDate = Date.parse($("#act_form input[name='act_start']").val());
 	var endDate = Date.parse($("#act_form input[name='act_end']").val());
 
@@ -68,4 +78,28 @@ function act_submit() {
 		alert("포스터를 선택해주세요.");
 		return;
 	}
+	$("#act_form").submit();
+}
+
+function act_scrap(person_id, act_num) {
+	$.ajax({
+		url: "list_act_scrapPro.jsp",
+		data: {
+			person_id: person_id,
+			act_num: act_num
+		},
+		success: function(data) {
+			switch(data) {
+				case '-1':
+					alert("스크랩에 오류가 발생했습니다.");
+					break;
+				case '0':
+					alert("이미 스크랩한 활동입니다.");
+					break;
+				case '1':
+					alert("스크랩 했습니다.");
+					break;
+			}
+		}
+	});
 }
