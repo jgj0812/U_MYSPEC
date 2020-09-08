@@ -12,7 +12,7 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>();
 	
 	//페이징, 검색
-	pageSize = 5;	// 한 화면에 보여지는 수
+	pageSize = 10;	// 한 화면에 보여지는 수
 	
 	pageNum = request.getParameter("pageNum");
 	
@@ -61,7 +61,6 @@
 		 	<tbody>
 		 	
 <%
-
 		for(CommunityBean commB :comm_arr){
 			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
 			String Type =commB.getComm_type()==0?"공지사항":"일반게시판";

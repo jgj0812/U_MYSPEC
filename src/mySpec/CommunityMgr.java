@@ -27,7 +27,10 @@ private DBConnection pool;
 				// 검색이 아닌경우
 				sql = "select * from "
 						+ "(select rownum rn, aa.* from "
-						+ "(select * from community order by comm_num desc) aa)"
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id "
+						+ "order by comm_num desc) aa)"
 						+ " where rn between ? and ? ";
 				ps = con.prepareStatement(sql);
 				ps.setInt(1, startRow);
@@ -37,7 +40,10 @@ private DBConnection pool;
 				// 검색인 경우
 				sql = "select * from "
 						+ "(select rownum rn, aa.* from "
-						+ "(select * from community where " + keyField + " like ? order by comm_num desc) aa)"
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id "
+						+ "where " + keyField + " like ? order by comm_num desc) aa)"
 						+ " where rn between ? and ? ";
 				ps = con.prepareStatement(sql);
 				ps.setString(1, "%" + keyWord + "%");
