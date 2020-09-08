@@ -482,3 +482,35 @@ function sendFile(file, editor) {
 function comm_write() {
 	window.location = "write.jsp";
 }
+
+// 활동 리스트
+$(document).ready(function() {
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: {
+			act_type: 1
+		},
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			var htmlStr = "";
+			$.each(data, function(key, val) {
+				if(key % 4 == 0) {
+					htmlStr += "<div class='row'>";
+				}
+				htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
+				htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
+				htmlStr += "<br>";
+				htmlStr += "<div class='list_explain'>";
+				htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
+				htmlStr += val.org_name + "<br>";
+				htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
+				htmlStr += "</div></div>";
+				if(key % 4 == 3) {
+					htmlStr += "</div>";
+				}
+			});
+			$("#activityList").html(htmlStr);
+		}
+	});
+});
