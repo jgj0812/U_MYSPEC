@@ -112,26 +112,38 @@
 		<hr style="margin-top: 2px">
 		<!-- 댓글 보여주는 곳 -->	
 <%
+		int i = 0;
+
 		for(CommunityReplyBean commRB :commRe_arr){
-			
-			int wid =0;
-			if(commRB.getRep_level()>0){
+			int wid=0;
+			int h=0;
+			int fontwid=0;
+			int wid_margin=0;
+			i++;
+			 
+			if(commRB.getRep_level() > 0){
 				wid = 25*(commRB.getRep_level());
+				fontwid=15;
+				h=15;
+				wid_margin = 25*(commRB.getRep_level());
 			}
 	
 %>	
-	
-		<div>
+<div class ="reply_div">
+		<!-- 댓글 div  -->
 			<div class="row" style="font-size:0.75rem;" >
-				<%-- <img src="${pageContext.request.contextPath}/img/level.png" width=<%=wid%>>
-				<i class="fas fa-reply" style="width=<%=wid%>"></i> --%>
-				<p style="margin-left:40px;"><%=commRB.getRep_person()%></p>
-				<p style="margin-left:20px;"><%=commRB.getRep_date()%></p>
+				<img src="${pageContext.request.contextPath}/img/level.png" style="margin-left: 16px; width: <%=wid%>px;  height:<%=h%>px;"> <!-- 레벨 -->
+				<i class="fas fa-reply" style="margin-left: 5px; font-size:<%=fontwid%>px "></i> <!-- 답글 이모지 -->
+				<p style="margin-left:25px;"><%=commRB.getRep_person()%></p> <!-- 닉네임 -->
+				<p style="margin-left:20px;"><%=commRB.getRep_date()%></p> <!-- 날짜 -->
 			</div>
-			<div style="margin-left:25px; font-size:1rem;"><%=commRB.getRep_content()%></div>
 			
-			<div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">	
+			<div style="margin-left:25px; font-size:1rem;">
+				<img src="${pageContext.request.contextPath}/img/level.png" style="margin-left: <%=wid_margin%>px; height:<%=h%>px;">
+				<%=commRB.getRep_content()%>
+			</div> <!-- 댓글 내용 -->
 			
+			<div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex"> <!-- 삭제 수정 답글 -->
 				<!-- 삭제  -->
 				<form action="reply_deletePro.jsp"> 
 					<!-- 원래글로 돌아가기위한 글번호  -->
@@ -148,56 +160,56 @@
 				</form>  
 				 
 				<!-- 답글달기  -->
-				<input type="button" style="border: 0px" value="답글달기" onclick="rereply()"> 
+				<input type="button" style="border: 0px" value="답글달기" onclick="rereply<%=i%>()"> 
 			</div>
-		
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			         <h4 class="modal-title" id="myModalLabel">댓글 수정</h4>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			      </div>
-			      <div class="modal-body">
-			      	<pre><div style="margin-left:25px; font-size:1rem;"><%=commRB.getRep_content()%></div></pre>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-			      </div>
-			    </div>
-			  </div>	
- 			 </div>
-					
-		</div>
+
 		<br>
-		<hr>
+		<hr> <!-- 구분선 -->
 		
+<script>
+
+function rereply<%=i%>(){
+	var con = document.getElementById("rereply<%=i%>");
+	if(con.style.display =='none'){
+		con.style.display = 'block';
+	}else if(con.style.display =='block'){
+		con.style.display = 'none';
+	}
+}
+
+
+</script>
+
 		<!-- 답글 입력폼  -->
-		<div id="rereply" style="display: none">
+		
+		<div id="rereply<%=i%>" style="display: none">
 			<form action="replyPro.jsp" name="comm_reply_form" method="post">
-			<input type="hidden" name="comm_num" value="<%= comm_num%>">
-			
-			<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-			<input type="hidden" name="rep_ref" value="<%=commRB.getRep_ref() %>">
-			<input type="hidden" name="rep_step" value="<%=commRB.getRep_step() %>">
-			<input type="hidden" name="rep_level" value="<%=commRB.getRep_level() %>">
-			
+				<input type="hidden" name="comm_num" value="<%= comm_num%>">
+				<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+				<input type="hidden" name="rep_ref" value="<%=commRB.getRep_ref() %>">
+				<input type="hidden" name="rep_step" value="<%=commRB.getRep_step() %>">
+				<input type="hidden" name="rep_level" value="<%=commRB.getRep_level() %>">
+				
 				<div class="form-row">
-					 <i class="fas fa-reply" style="margin-left: 20px"></i>
+					 <i class="fas fa-reply" style="margin-left: 20px; font-size:25" ></i> <!-- 답글 이모지  -->
 					 
+					 <!-- 답글 입력창 -->
 					 <div class="col-8">
-					   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
-					   type="text" class="form-control" placeholder="댓글을 입력해주세요." >
-					</div>
-					
+					   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" type="text" class="form-control" placeholder="댓글을 입력해주세요." > 
+					 </div>
+					 
+					<!-- 답글 등록버튼 -->
 					<div class="col-2">
-						<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
-						type="submit" class="form-control" value="등록">
+						<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" type="submit" class="form-control" value="등록">
 					</div>
 				</div>
+				
 			</form>
+			
 			<hr style="margin-top: 0px">
 		</div>
+</div>
+	
 <%
 		}
 %>		
@@ -220,17 +232,8 @@
 		</div>
 	</form>
 	
- </div>
+
 </section>
 <%@ include file="../footer.jsp" %>
 
-<script>
-function rereply(){
-	var con = document.getElementById("rereply");
-	if(con.style.display =='none'){
-		con.style.display = 'block';
-	}else if(con.style.display =='block'){
-		con.style.display = 'none';
-	}
-}
-</script>
+

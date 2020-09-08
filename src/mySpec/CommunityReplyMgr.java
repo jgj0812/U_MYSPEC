@@ -17,7 +17,7 @@ private DBConnection pool;
 		Statement st = null;
 		ResultSet rs = null;
 		
-		String sql = "select * from comm_reply where rep_comm = "+ rep_comm + "order by rep_ref desc, rep__step asc";
+		String sql = "select * from comm_reply where rep_comm = "+ rep_comm + "order by rep_ref desc, rep_step asc";
 		
 		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		

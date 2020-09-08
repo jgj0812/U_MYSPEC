@@ -1,15 +1,15 @@
 package mySpec;
 
 public class CommunityReplyBean {
-	private int rep_num; 
-	private int rep_comm; 
-	private String rep_person;
-	private String rep_date;
+	private int rep_num; //댓글번호
+	private int rep_comm; //댓글이 속한 글번호
+	private String rep_person; //댓글 단사람
+	private String rep_date; //댓글 달린 날짜
 	
-	private String rep_content;
-	private int rep_ref; 
-	private int rep_step;
-	private int rep_level; 
+	private String rep_content; //댓글 내용
+	private int rep_ref; //댓글 그룹(댓글번호)
+	private int rep_step; //그룹내의 순서
+	private int rep_level; //들여쓰기 정도(답글인지 구분)
 
 	
 	public int getRep_num() {
