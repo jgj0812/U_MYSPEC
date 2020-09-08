@@ -504,6 +504,33 @@ private DBConnection pool;
 		return count;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 댓글 단 글 검색(myPage)
 	public ArrayList<CommunityBean> myCommentList(int startRow, int endRow, String keyField, String keyWord, String id) {
 		Connection con = null;
