@@ -26,6 +26,8 @@
 	      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
 	      crossorigin="anonymous"
 	    />
+	    <!-- jquery-ui -->
+	    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	    <!-- slick css -->
 	    <link
 	      rel="stylesheet"

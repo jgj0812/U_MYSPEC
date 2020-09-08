@@ -410,4 +410,200 @@ private DBConnection pool;
 		}
 		return count;
 	}
+	
+	// 내가 쓴 글 검색(myPage)
+	public ArrayList<CommunityBean> myCommunityList(int startRow, int endRow, String keyField, String keyWord, String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<CommunityBean> mListArr = new ArrayList<CommunityBean>();
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id "
+						+ "where comm_person=? "
+						+ "order by comm_num desc) aa) "
+						+ "where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}else {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id "
+						+ "where comm_person=? and "
+						+ keyField + " like ? "
+						+ "order by comm_num desc) aa) "
+						+ "where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, "%" + keyWord + "%");
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				CommunityBean bean = new CommunityBean();
+				bean.setComm_num(rs.getInt("comm_num"));
+				bean.setComm_type(rs.getInt("comm_type"));
+				bean.setComm_title(rs.getString("comm_title"));
+				bean.setComm_person(rs.getString("comm_person"));
+				bean.setComm_date(rs.getString("comm_date"));
+				bean.setComm_hits(rs.getInt("comm_hits"));
+				bean.setComm_content(rs.getString("comm_content"));
+				bean.setComm_admin(rs.getString("comm_admin"));
+				bean.setComm_nick(rs.getString("person_nick"));
+				mListArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return mListArr;
+	}
+	
+	// 내가 쓴 글 갯수(myPage)
+	public int myCommunityListCount(String keyField, String keyWord, String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select count(*) from community where comm_person=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+			}else {
+				sql = "select count(*) from community where comm_person=? and " + keyField + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, "%" + keyWord + "%");
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	// 댓글 단 글 검색(myPage)
+	public ArrayList<CommunityBean> myCommentList(int startRow, int endRow, String keyField, String keyWord, String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<CommunityBean> myComArr = new ArrayList<CommunityBean>();
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select cc.*, p.person_nick from "
+						+ "(select distinct c.* from "
+						+ "community c left outer join comm_reply r "
+						+ "on c.comm_num = r.rep_comm "
+						+ "where rep_person=?) cc left outer join person_user p "
+						+ "on cc.comm_person = p.person_id "
+						+ "order by comm_num desc) aa) "
+						+ "where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}else {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select cc.*, p.person_nick from "
+						+ "(select distinct c.*, from "
+						+ "community c left outer join comm_reply r "
+						+ "on c.comm_num = r.rep_comm "
+						+ "where rep_person=? and "+ keyField + "like ?) cc "
+						+ "left outer join person_user p "
+						+ "on cc.comm_person = p.person_id "
+						+ "order by comm_num desc) aa) "
+						+ "where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, "%" + keyWord + "%");
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				CommunityBean bean = new CommunityBean();
+				bean.setComm_num(rs.getInt("comm_num"));
+				bean.setComm_type(rs.getInt("comm_type"));
+				bean.setComm_title(rs.getString("comm_title"));
+				bean.setComm_person(rs.getString("comm_person"));
+				bean.setComm_date(rs.getString("comm_date"));
+				bean.setComm_hits(rs.getInt("comm_hits"));
+				bean.setComm_content(rs.getString("comm_content"));
+				bean.setComm_admin(rs.getString("comm_admin"));
+				bean.setComm_nick(rs.getString("person_nick"));
+				myComArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return myComArr;
+	}
+	
+	// 댓글 단 글 수
+	public int myCommentCount(String keyField, String keyWord, String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select count(distinct c.comm_num) from "
+						+ "community c left outer join comm_reply r "
+						+ "on c.comm_num = r.rep_comm "
+						+ "where rep_person=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+			}else {
+				sql = "select count(distinct c.comm_num) from "
+						+ "community c left outer join comm_reply r "
+						+ "on c.comm_num = r.rep_comm "
+						+ "where rep_person=? and " + keyField + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, "%" + keyWord + "%");
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
 }
