@@ -379,8 +379,8 @@ private DBConnection pool;
 		return notice_arr;
 	}
 	
-	// 게시글 수
-	public int communityCount(String keyField, String keyWord) {
+	// 공지 게시글 수
+	public int noticeCount(String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -396,6 +396,93 @@ private DBConnection pool;
 			}else {
 				// 검색인 경우
 				sql = "select count(*) from community where comm_type='0' and " + keyField + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	// admin 일반 게시글 조회
+	public ArrayList<CommunityBean> adminComList(int startRow, int endRow, String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<CommunityBean> adminComArr = new ArrayList<CommunityBean>();
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id "
+						+ "where comm_type='1' "
+						+ "order by comm_num desc) aa)"
+						+ " where rn between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}else {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id "
+						+ "where comm_type='1' and " 
+						+ keyField + " like ? order by comm_num desc) aa)"
+						+ " where rn between ? and ? ";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				CommunityBean bean = new CommunityBean();
+				bean.setComm_num(rs.getInt("comm_num"));
+				bean.setComm_type(rs.getInt("comm_type"));
+				bean.setComm_title(rs.getString("comm_title"));
+				bean.setComm_person(rs.getString("comm_person"));
+				bean.setComm_date(rs.getString("comm_date"));
+				bean.setComm_hits(rs.getInt("comm_hits"));
+				bean.setComm_content(rs.getString("comm_content"));
+				bean.setComm_admin(rs.getString("comm_admin"));
+				bean.setComm_nick(rs.getString("person_nick"));
+				adminComArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return adminComArr;
+	}
+	
+	public int adminComCount(String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select count(*) from community where comm_type='1'";
+				pstmt = con.prepareStatement(sql);
+			}else {
+				sql = "select count(*) from community where comm_type='1' and " + keyField + " like ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%" + keyWord + "%");
 			}

@@ -14,6 +14,6 @@
 		response.sendRedirect("adminNotice.jsp");
 	}else {
 		mgr.Community_delete(comm_num);
-		
+		response.sendRedirect("adminCom.jsp");
 	}
 %>
