@@ -435,7 +435,7 @@ $(document).ready(function () {
 });
 
 // 대외활동, 공모전 리스트 체크박스 동작
-function search() {
+function tagSearch() {
 	var data = $("#tagForm").serialize();
 	$.ajax({
 		url: "list_act_tagPro.jsp",
@@ -448,8 +448,13 @@ function search() {
 	});
 }
 
-function reset() {
-  $("#choicetag *").remove();
+function tagReset() {
+  $("#tagForm").remove();
+}
+
+function tagRemove(tag_num) {
+	$("#tagForm input:checkbox[value=" + tag_num + "]").prop("checked", false);
+	$("#tagForm").change();
 }
 
 // summernote

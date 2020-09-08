@@ -28,7 +28,7 @@
 	    </nav>
 		
 	    <!-- 태그: 활동분야, 관심분야, 활동혜택, 활동기간, 모임지역 의 서브태그-->
-	    <form id="tagForm" onchange="search()">
+	    <form id="tagForm" onchange="tagSearch()">
 	      <div class="tab-content" id="nav-tabContent">
 	
 	        <div class="tab-pane fade show active btn-group-toggle" id="nav-field" role="tabpanel"
@@ -487,7 +487,7 @@
 	    <div class="choice">
 	      <div id="choicetag">
 	      </div>
-	      <button type="button" id="reset" onclick="reset()"> <i class="fas fa-redo"></i> 초기화</button>
+	      <button type="button" id="reset" onclick="tagReset()"> <i class="fas fa-redo"></i> 초기화</button>
 	      
 	    </div>
 	

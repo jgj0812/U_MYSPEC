@@ -29,27 +29,27 @@
 	ActivityMgr manager = new ActivityMgr();
 	if(act_field != null) {
 		for(int tag_num : act_field) {
-			out.println("<button class='choiceButton'>" + manager.getTag(tag_num) + "</button>");
+			out.println("<button class='choiceButton' onclick='tagRemove(" + tag_num + ")'>" + manager.getTag(tag_num) + "</button>");
 		}
 	}
 	if(interest_num != null) {
 		for(int tag_num : interest_num) {
-			out.println("<button class='choiceButton'>" + manager.getTag(tag_num) + "</button>");
+			out.println("<button class='choiceButton' onclick='tagRemove(" + tag_num + ")'>" + manager.getTag(tag_num) + "</button>");
 		}
 	}
 	if(reward_num != null) {
 		for(int tag_num : reward_num) {
-			out.println("<button class='choiceButton'>" + manager.getTag(tag_num) + "</button>");
+			out.println("<button class='choiceButton' onclick='tagRemove(" + tag_num + ")'>" + manager.getTag(tag_num) + "</button>");
 		}
 	}
 	if(act_dday != null) {
 		for(int tag_num : act_dday) {
-			out.println("<button class='choiceButton'>" + manager.getTag(tag_num) + "</button>");
+			out.println("<button class='choiceButton' onclick='tagRemove(" + tag_num + ")'>" + manager.getTag(tag_num) + "</button>");
 		}
 	}
 	if(act_reg != null) {
 		for(int tag_num : act_reg) {
-			out.println("<button class='choiceButton'>" + manager.getTag(tag_num) + "</button>");
+			out.println("<button class='choiceButton' onclick='tagRemove(" + tag_num + ")'>" + manager.getTag(tag_num) + "</button>");
 		}
 	}
 	
