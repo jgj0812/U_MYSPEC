@@ -449,7 +449,10 @@ function tagSearch() {
 }
 
 function tagReset() {
-  $("#tagForm").remove();
+	$("#tagForm").each(function(){
+		this.reset();
+	});
+	$("#tagForm").change();
 }
 
 function tagRemove(tag_num) {

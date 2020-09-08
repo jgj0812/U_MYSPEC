@@ -11,8 +11,6 @@
 	          aria-controls="nav-profile" aria-selected="false">관심분야</a>
 	        <a class="nav-item nav-link" id="nav-reward-tab" data-toggle="tab" href="#nav-reward" role="tab"
 	          aria-controls="nav-reward" aria-selected="false">활동혜택</a>
-	        <a class="nav-item nav-link" id="nav-period-tab" data-toggle="tab" href="#nav-period" role="tab"
-	          aria-controls="nav-period" aria-selected="false">활동기간</a>
 	        <a class="nav-item nav-link" id="nav-region-tab" data-toggle="tab" href="#nav-region" role="tab"
 	          aria-controls="nav-region" aria-selected="false">모임지역</a>
 	      </div>
@@ -22,7 +20,6 @@
 	        <button class="btn" data-toggle="modal" data-target="#field"> 활동분야 </button>
 	        <button class="btn" data-toggle="modal" data-target="#interest"> 관심분야 </button>
 	        <button class="btn" data-toggle="modal" data-target="#reward"> 활동혜택 </button>
-	        <button class="btn" data-toggle="modal" data-target="#period"> 활동기간 </button>
 	        <button class="btn" data-toggle="modal" data-target="#region"> 모임지역 </button>
 	      </div>
 	    </nav>
@@ -152,20 +149,6 @@
 	          </label>
 	          <label class="btn btn-tag">
 	            <input type="checkbox" name="reward_num" value="38">교통비
-	          </label>
-	        </div>
-	        <div class="tab-pane fade btn-group-toggle" id="nav-period" role="tabpanel" aria-labelledby="nav-period-tab">
-	          <label class="btn btn-tag">
-	            <input type="checkbox" name="act_dday" value="39">3개월이하
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox" name="act_dday" value="40">3개월~6개월
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox" name="act_dday" value="41">6개월~1년
-	          </label>
-	          <label class="btn btn-tag">
-	            <input type="checkbox" name="act_dday" value="42">1년이상
 	          </label>
 	        </div>
 	        <div class="tab-pane fade btn-group-toggle" id="nav-region" role="tabpanel" aria-labelledby="nav-region-tab">
@@ -382,36 +365,6 @@
 	          <div class="modal-footer">
 	            <button type="button" class="btn modal_reset"> <i class="fas fa-redo"></i> 초기화</button>
 	            <button type="button" class="btn modal_search">검색</button>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	
-	    <div class="modal fade" id="period" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	      <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	          <div class="modal-header">
-	
-	            <h5 class="modal-title" id="myModalLabel">활동기간</h5>
-	          </div>
-	          <div class="modal-body">
-	            <label class="btn">
-	              <input type="checkbox" name="act_dday" value="39"> 3개월이하
-	            </label>
-	            <label class="btn">
-	              <input type="checkbox" name="act_dday" value="40"> 3개월~6개월
-	            </label>
-	            <label class="btn">
-	              <input type="checkbox" name="act_dday" value="41"> 6개월~1년
-	            </label>
-	            <label class="btn">
-	              <input type="checkbox" name="act_dday" value="42"> 1년이상
-	            </label>
-	          </div>
-	          <div class="modal-footer">
-	            <button type="button" class="btn modal_reset"> <i class="fas fa-redo"></i> 초기화</button>
-	            <button type="button" class="btn modal_search">검색</button>
-	
 	          </div>
 	        </div>
 	      </div>
