@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
-<%
+<%	
 	ArrayList<CommunityBean> noticeArr = mgr.noticeList(startRow, endRow, keyField, keyWord);
 %>
 <section class="py-3">
