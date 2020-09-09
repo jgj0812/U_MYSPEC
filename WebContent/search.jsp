@@ -5,7 +5,7 @@
 <%@ include file="/header.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
 <%
-	
+	ArrayList<CommunityBean> searchComArr = mgr.Community_list(startRow, endRow, keyField, keyWord);
 %>
 	<div class="container">
       <h2>검색</h2>
@@ -179,127 +179,37 @@
                 </tr>
               </thead>
               <tbody>
+              	<%
+              		for(CommunityBean bean : searchComArr) {
+              			String person = bean.getComm_admin() != null ? "관리자" : bean.getComm_nick();
+            			String Type =bean.getComm_type()==0?"공지사항":"일반게시판";
+            			String datestr = bean.getComm_date();
+            			String [] date = datestr.split(" ");
+            			String date_1 = date[0];
+              	%>
                 <tr class="d-flex">
-                  <td class="col-md-1 d-none d-lg-table-cell">공지</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-                  <td class="col-md-5">
-                    <a class="h5 d-none d-lg-table-cell"
-                      >MYSPEC 사이트를 오픈하였습니다. 어렵다 ㅋㅋㅋ</a
-                    >
-                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;">MYSPEC 사이트를 오픈하였습니다. 어렵다 ㅋㅋㅋ</a>
+                	<%
+		 				if(bean.getComm_type() == 0) {
+		 			%>	 
+                  	<td class="col-md-1 d-none d-lg-table-cell">공지</td>
+                  	<%}else { %>
+		 			<td class="col-md-1 d-none d-lg-table-cell"> <%=bean.getComm_num() %></td>
+		 			<%} %>
+                  	<td class="col-md-1 d-none d-lg-table-cell"><%=Type %></td>
+                  	<td class="col-md-5">
+                    	<a class="h5 d-none d-lg-table-cell">
+                    		<%=bean.getComm_title() %>
+                    	</a>
+                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;"><%=bean.getComm_title() %></a>
                     <p class="d-block d-sm-none">
-                      <small>글쓴이 등록일 조회수</small>
+                      <small><%=person %> <%=date_1%> 조회 <%=bean.getComm_hits() %></small>
                     </p>
                   </td>
-                  <td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-                  <td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">507</td>
+                  <td class="col-md-2 d-none d-lg-table-cell"><%=person %></td>
+                  <td class="col-md-2 d-none d-lg-table-cell"><%=date_1 %></td>
+                  <td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_hits() %></td>
                 </tr>
-                <tr class="d-flex">
-                  <td class="col-md-1 d-none d-lg-table-cell">
-                    <a href="detailView.jsp" class="text-dark">공지</a>
-                  </td>
-                  <td class="col-md-1 d-none d-lg-table-cell">
-                    <a href="detailView.jsp" class="text-dark">게시판명</a>
-                  </td>
-                  <td class="col-md-5">
-                    <a href="detailView.jsp" class="h5 d-none d-lg-table-cell">제목</a>
-                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;">제목</a>
-                    <p class="d-block d-sm-none">
-                      <small>글쓴이 등록일 조회수</small>
-                    </p>
-                  </td>
-                  <td class="col-md-2 d-none d-lg-table-cell">글쓴이</td>
-                  <td class="col-md-2 d-none d-lg-table-cell">등록일</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">조회수</td>
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-md-1 d-none d-lg-table-cell">공지</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-                  <td class="col-md-5">
-                    <a class="h5 d-none d-lg-table-cell">커뮤니티에서 제법 긴 제목입니다.</a>
-                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;">커뮤니티에서 중간 정도 제목입니다.</a>
-                    <p class="d-block d-sm-none">
-                      <small>글쓴이 등록일 조회수</small>
-                    </p>
-                  </td>
-                  <td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-                  <td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">507</td>
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-md-1 d-none d-lg-table-cell">번호</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">게시판명</td>
-                  <td class="col-md-5">
-                    <a class="h5 d-none d-lg-table-cell">제목</a>
-                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;">제목</a>
-                    <p class="d-block d-sm-none">
-                      <small>글쓴이 등록일 조회수</small>
-                    </p>
-                  </td>
-                  <td class="col-md-2 d-none d-lg-table-cell">글쓴이</td>
-                  <td class="col-md-2 d-none d-lg-table-cell">등록일</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">조회수</td>
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-md-1 d-none d-lg-table-cell">공지</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-                  <td class="col-md-5">
-                    <a class="h5 d-none d-lg-table-cell">MYSPEM 커뮤니티</a>
-                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;">MYSPEM 커뮤니티</a>
-                    <p class="d-block d-sm-none">
-                      <small>글쓴이 등록일 조회수</small>
-                    </p>
-                  </td>
-                  <td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-                  <td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">507</td>
-                </tr>
-
-                <tr class="d-flex">
-                  <td class="col-md-1 d-none d-lg-table-cell">공지</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-                  <td class="col-md-5">
-                    <a class="h5 d-none d-lg-table-cell">힘든 하루지만 모두 즐겁고 긍정적으로 보내요.</a>
-                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;">힘든 하루지만 모두 즐겁고 긍정적으로 보내요.</a>
-                    <p class="d-block d-sm-none">
-                      <small>글쓴이 등록일 조회수</small>
-                    </p>
-                  </td>
-                  <td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-                  <td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">507</td>
-                </tr>
-
-                <tr class="d-flex">
-                  <td class="col-md-1 d-none d-lg-table-cell">공지</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-                  <td class="col-md-5">
-                    <a class="h5 d-none d-lg-table-cell">링커리어</a>
-                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;">링커리어</a>
-                    <p class="d-block d-sm-none">
-                      <small>글쓴이 등록일 조회수</small>
-                    </p>
-                  </td>
-                  <td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-                  <td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">507</td>
-                </tr>
-
-                <tr class="d-flex">
-                  <td class="col-md-1 d-none d-lg-table-cell">공지</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-                  <td class="col-md-5">
-                    <a class="h5 d-none d-lg-table-cell">myspec!제목 myspec!제목 myspec!제목 myspec!제목</a>
-                    <a class="d-block d-sm-none text-truncate" style="max-width: 300px;">myspec!제목 myspec!제목 myspec!제목 myspec!제목 </a>
-                    <p class="d-block d-sm-none">
-                      <small>글쓴이 등록일 조회수</small>
-                    </p>
-                  </td>
-                  <td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-                  <td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-                  <td class="col-md-1 d-none d-lg-table-cell">507</td>
-                </tr>
+                <%	} %>
               </tbody>
             </table>
           </div>

@@ -255,6 +255,7 @@
 				<input style="width:75px; margin-left:20px; margin-bottom:40px; height:70px; background-color:#aaaaaa; color:white;" 
 				type="submit" class="form-control" value="등록">
 			</div>
+		</div>
 <%		}else { %>
 		<div class="container">
 			<p>댓글을 입력하려면 로그인을 해야합니다.</p>
@@ -262,7 +263,6 @@
 		</div>
 	</form>
 <%		} %>
- 	</div>
 </section>
 
 <script type="text/javascript">
@@ -303,7 +303,7 @@ function next(next_comm){
  	if(next_comm == 0){
 		alert("다음 글이 없습니다.");
 	}else{
-		window.location = "detailView.jsp?comm_num=<%=next_comm %>";
+		window.location = "detailView.jsp?comm_num=" + next_comm;
 	}
 }
 

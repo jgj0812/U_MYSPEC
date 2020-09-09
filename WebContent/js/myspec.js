@@ -595,3 +595,44 @@ function reply_ok() {
 	}
 	$("form[name=comm_reply_form]").submit();
 }
+
+// 댓글 수정관련
+function rereply(i){
+	var con = document.getElementById("rereply" + i);
+	if(con.style.display =='none'){
+		con.style.display = 'block';
+	}else if(con.style.display =='block'){
+		con.style.display = 'none';
+	}
+}
+
+function update(i){
+	var update = document.getElementById("update" + i);
+	var basic = document.getElementById("basic" + i);
+	
+	if(update.style.display =='none'){
+		update.style.display = 'block';
+		basic.style.display = 'none';
+	}else if(update.style.display =='block'){
+		update.style.display = 'none';
+		basic.style.display = 'block';
+	}
+}
+
+function updatecancel(i){
+	var update = document.getElementById("update" + i);
+	var basic = document.getElementById("basic" + i);
+	if(update.style.display =='block'){
+		update.style.display = 'none';
+		basic.style.display = 'block';
+	}
+}
+
+
+function next(next_comm){
+ 	if(next_comm == 0){
+		alert("다음 글이 없습니다.");
+	}else{
+		window.location = "detailView.jsp?comm_num=" + next_comm;
+	}
+}
