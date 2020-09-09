@@ -17,20 +17,40 @@
 	int endRow = currentPage * pageSize;				// 페이지 끝
 	int memType = Integer.parseInt(request.getParameter("memType"));
 	String id = request.getParameter("id");
+	int re = 0;
 	if(memType == 0) {
-		mgr.deletePerson(id);	// 삭제
-		response.sendRedirect("adminPerson.jsp");
-		/* ArrayList<PersonBean> arrPerson = mgr.listPerson(startRow, endRow);	// 전체 개인회원 가져오기
-		JSONArray jarr = new JSONArray();
-		for(PersonBean pb : arrPerson) {
-			JSONObject obj = new JSONObject();
-			obj.put("id", pb.getId());
-			obj.put("nick", pb.getNick());
-			obj.put("birth", pb.getBirth());
-			obj.put("email", pb.getEmail());
-			obj.put("phone", pb.getPhone());
-			jarr.add(obj);
+		re = mgr.deletePerson(id);	// 개인회원 삭제
+		if(re == 1) {
+%>
+			<script>
+				alert("개인회원 삭제 성공");
+				document.location.href="adminPerson.jsp";
+			</script>
+<%
+		}else {
+%>
+			<script>
+				alert("개인회원 삭제 실패");
+				history.go(-1);
+			</script>
+<%
 		}
-		out.println(jarr.toString()); */
+	}else {
+		re = mgr.deleteOrg(id);
+		if(re == 1) {
+%>
+			<script>
+				alert("단체회원 삭제 성공");
+				document.location.href="adminOrg.jsp";
+			</script>
+<%
+		}else {
+%>
+			<script>
+				alert("단체회원 삭제 실패");
+				history.go(-1);
+			</script>
+<%
+		}
 	}
 %>

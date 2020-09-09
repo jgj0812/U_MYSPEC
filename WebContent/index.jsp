@@ -1,6 +1,12 @@
+<%@page import="mySpec.CommunityBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
+<jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
+<%
+	ArrayList<CommunityBean> noticeArr = mgr.noticeList(startRow, endRow, keyField, keyWord);
+%>
 <section class="py-3">
 	<div class="container">
 		<h3 style="text-align: center; margin-bottom: 20px">MySpec 공지사항</h3>
@@ -17,39 +23,27 @@
 		 		</tr>
 		 	</thead>
 		    <tbody>
+		    	<%
+		    		for(CommunityBean bean : noticeArr) {
+			    		String admin = "";
+			    		if(bean.getComm_admin().equals("admin")) admin = "관리자";
+			    		String date[] = bean.getComm_date().split(" ");
+			    		String date1 = date[0];
+		    	%>
 		    	<tr class="d-flex">
 		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
 		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
 		 			<td class="col-md-5 text-truncate">
-		 				<a class="h5">MYSPEC 사이트를 오픈하였습니다. 어렵다 ㅋㅋㅋ</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
+		 				<a href="community/detailView.jsp?comm_num=<%=bean.getComm_num() %>" class="h5">
+		 					<%=bean.getComm_title() %>
+		 				</a>
+		 				<p class="d-block d-sm-none"><small><%=admin %> <%=date1 %> 조회 <%=bean.getComm_hits() %></small></p>
 		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">507</td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=admin %></td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date1 %></td>
+		 			<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_hits() %></td>
 		 		</tr>
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell"><a href="detailView.jsp" class="text-dark">공지</a></td>
-		 			<td class="col-md-1 d-none d-lg-table-cell"><a href="detailView.jsp" class="text-dark">게시판명</a></td>
-		 			<td class="col-md-5 text-truncate">
-		 				<a href="detailView.jsp" class="h5">MYSPEC 사이트를 오픈하였습니다.</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">글쓴이</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">등록일</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">조회수</td>	
-		 		</tr>
-		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-		 			<td class="col-md-5 text-truncate">
-		 				<a class="h5">MYSPEC 사이트를 오픈하였습니다. 어렵다 ㅋㅋㅋ</a>
-		 				<p class="d-block d-sm-none"><small>글쓴이 등록일 조회수</small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">링커리어~</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell">2020.07.15</td>
-		 			<td class="col-md-1 d-none d-lg-table-cell">507</td>
-		 		</tr>
+		 		<%	}%>
 		    </tbody>
 		  </table>
 		</div>

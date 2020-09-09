@@ -1,16 +1,28 @@
+<%@page import="java.sql.Date"%>
+<%@page import="mySpec.OrgBean"%>
+<%@page import="mySpec.ActivityBean"%>
+<%@page import="mySpec.ActivityMgr"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	int act_num = Integer.parseInt(request.getParameter("act_num"));
+	
+	ActivityMgr manager = new ActivityMgr();
+	ActivityBean activity = manager.getActivity(act_num);
+	OrgBean org = manager.getOrg(act_num);
+	
+	manager.upHit(act_num);
+%>
 <section>
 	<div class="container">
 		<div class="section">
-			<div>
-				<p class="badge badge-secondary">D-DAY</p>
-			</div>
+			<p class="badge badge-secondary">D-<%=activity.getAct_dday() %></p>
 			<div class="d-flex">
-				<h3>제목</h3>
+				<h3><%=activity.getAct_title() %></h3>
 				<h3 class="ml-auto">
-					<i class="fas fa-eye"></i> <i class="fas fa-share-alt-square" onclick="$('#shareModal').modal();"></i>
+					<i class="fas fa-eye" data-toggle="tooltip" data-placement="bottom" title="<%="조회수 : " + activity.getAct_hits() %>"></i>&nbsp;<i class="fas fa-share-alt-square" onclick="$('#shareModal').modal();"></i>
 				</h3>
 			</div>
 		</div>
@@ -19,12 +31,12 @@
 		<div class="section">
 			<div class="row">
 				<div class="col-md-4">
-					<img src="https://via.placeholder.com/150" width="100%">
+					<img src="http://localhost/U_MYSPEC/upload/<%=activity.getAct_post() %>" width="100%">
 				</div>
 				<div class="col-md-8 d-flex flex-column">
 					<div class="row">
 						<div class="col-md-12">
-							<h5>주최기관</h5>
+							<h5><%=org.getName() %></h5>
 						</div>
 					</div>
 					<div class="row">
@@ -32,27 +44,27 @@
 							<p>기관형태</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%=manager.getTag(org.getType()) %></p>
 						</div>
 						<div class="col-md-2">
 							<p>참여대상</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%=activity.getAct_target() %></p>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
-							<p>활동기간</p>
+							<p>접수기간</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%=activity.getAct_start() %> - <%=activity.getAct_end() %></p>
 						</div>
 						<div class="col-md-2">
 							<p>모집인원</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%=activity.getAct_pop() %></p>
 						</div>
 					</div>
 					<div class="row">
@@ -60,13 +72,13 @@
 							<p>모임지역</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%=manager.getTag(activity.getAct_reg()) %></p>
 						</div>
 						<div class="col-md-2">
 							<p>참여대상</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%=activity.getAct_target() %></p>
 						</div>
 					</div>
 					<div class="row">
@@ -74,13 +86,17 @@
 							<p>활동혜택</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%
+							for(int act_reward : activity.getAct_reward()) {
+								out.print(manager.getTag(act_reward) + " ");
+							}
+							%></p>
 						</div>
 						<div class="col-md-2">
 							<p>활동분야</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%=manager.getTag(activity.getAct_field()) %></p>
 						</div>
 					</div>
 					<div class="row">
@@ -88,18 +104,22 @@
 							<p>관심분야</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%
+							for(int act_interest : activity.getAct_interest()) {
+								out.print(manager.getTag(act_interest) + " ");
+							}
+							%></p>
 						</div>
 						<div class="col-md-2">
 							<p>홈페이지</p>
 						</div>
 						<div class="col-md-4">
-							<p></p>
+							<p><%=activity.getAct_home() %></p>
 						</div>
 					</div>
 					<div class="row h-100 align-content-end">
 						<div class="col-md-12">
-						  <button class="btn btn-cam btn-block">스크랩</button>
+						  <button class="btn btn-cam btn-block" onclick="act_scrap('abc', <%=act_num %>)">스크랩</button>
 						</div>
 					</div>
 				</div>
@@ -109,7 +129,7 @@
 
 		<div class="section">
 			<h5>상세내용</h5>
-			<img src="https://via.placeholder.com/150" width="100%">
+			<%=activity.getAct_content() %>
 		</div>
 		<br>
 
@@ -123,23 +143,23 @@
 				<div class="col-md-4">
 					<p>담당자</p>
 				</div>
-				<div class="col-md-8"></div>
+				<div class="col-md-8"><%=org.getManager() %></div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
 					<p>연락처</p>
 				</div>
-				<div class="col-md-8"></div>
+				<div class="col-md-8"><%=org.getPhone() %></div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
 					<p>이메일</p>
 				</div>
-				<div class="col-md-8"></div>
+				<div class="col-md-8"><%=org.getEmail() %></div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<input class="btn btn-cam btn-block" type="button" value="문의하기">
+					<input class="btn btn-cam btn-block" type="button" value="문의하기" onclick="location.href='mailto://<%=org.getEmail() %>'">
 				</div>
 			</div>
 		</div>
@@ -184,4 +204,5 @@
 		</div>
 	</div>
 </section>
+<script src="../js/activity.js"></script>
 <%@ include file="../footer.jsp" %>

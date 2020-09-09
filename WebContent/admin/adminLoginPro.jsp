@@ -6,6 +6,15 @@
 	String id = request.getParameter("admin_id");
 	String pwd = request.getParameter("admin_pwd");
 	int re = mgr.adminMemberLogin(id, pwd);
-	session.setAttribute("adminId", id);
-	response.sendRedirect("adminIndex.jsp");
+	if(re == 1) {
+		session.setAttribute("adminId", id);
+		response.sendRedirect("adminIndex.jsp");
+	}else {
+		%>
+			<script type="text/javascript">
+				alert("로그인 실패");
+				history.go(-1);
+			</script>
+		<%
+	}
 %>

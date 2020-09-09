@@ -13,6 +13,7 @@
 	<form action="writePro.jsp" name="comm_form" method="post">
 		<hr style="height: 2px; background-color: black;">
 		
+		
 			<div class="row">
 				<!--  comm_type 공지사항인지 일반글인지 -->
 				<div style="margin-left:20px; font-family:Noto Sans KR; font-weight:bolder;">게시판</div>

@@ -1,6 +1,6 @@
 // header 검색 버튼
 $('#searchBtn').click(function(){
-	if($('#search').value == "") {
+	if($('#search').val() == "") {
 		alert("검색어를 입력해주세요.");
 		$('#search').focus;
 		return false;
@@ -8,8 +8,27 @@ $('#searchBtn').click(function(){
 });
 
 var phoneExp = /^\d{3}-\d{3,4}-\d{4}$/; // 핸드폰번호 정규식
-var birthExp = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식
+var birthExp = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식
 var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
+
+//datepicker 공통
+$.datepicker.setDefaults({
+	dateFormat: "yy-mm-dd",
+	nextText: "다음 달",
+	prevText: "이전 달",
+	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	dayNamesMin: ['일','월','화','수','목','금','토'],
+	dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+	showMonthAfterYear: true,
+	yearSuffix: '년'
+});
+
+// 개인회원 생년월일 datepicker
+$("#person_birth").datepicker({
+	changeMonth: true,
+	changeYear: true,
+});
 
 // 개인회원 Join
 $("#personSend").click(function(){
@@ -435,32 +454,157 @@ $(document).ready(function () {
 });
 
 // 대외활동, 공모전 리스트 체크박스 동작
-$("input:checkbox").click(function (e) {
-  var id = $(e).attr("id")
-  var str = '<button>' + id + '</button>'
-  $("#choicetag").append(str);
-});
-function reset() {
-  $("#choicetag *").remove();
+function tagSearch() {
+	var data = $("#tagForm").serialize() + "&act_type=1";
+	$.ajax({
+		url: "list_act_tagPro.jsp",
+		data: data,
+		dataType: "html",
+		cache: false,
+		success: function(data) {
+			$("#choicetag").html(data);
+		}
+	});
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: data,
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			getActivityList(data);
+		}
+	});
+}
+
+function tagReset() {
+	$("#tagForm")[0].reset();
+	$("#tagForm").change();
+}
+
+function tagRemove(tag_num) {
+	$("#tagForm input:checkbox[value=" + tag_num + "]").prop("checked", false);
+	$("#tagForm").change();
 }
 
 // summernote
 $(document).ready(function () {
 	$("#act_content").summernote({
 		lang: "ko-KR",
-      	height: "20em",
+      	callbacks : {
+			onImageUpload : function(files) {
+				sendFile(files[0], this);
+			}
+		}
     });
-	$("#act_form input[name='act_start']").datepicker({
-		dateFormat: "yy-mm-dd"
-	});
-	$("#act_form input[name='act_end']").datepicker({
-		dateFormat: "yy-mm-dd"
+	
+	$("#act_form input[name='act_start']").datepicker();
+	$("#act_form input[name='act_end']").datepicker();
+	$("#comm_content").summernote({
+			lang: "ko-KR",
+	      	height: "20em",
 	});
 });
 
+function sendFile(file, editor) {
+	data = new FormData();
+	data.append("uploadFile", file);
+	$.ajax({
+		data : data,
+		type : "POST",
+		url : "act_content_imageUpload.jsp",
+		cache : false,
+		contentType : false,
+		processData : false,
+		success : function(data) {
+			$(editor).summernote("insertImage", data.url);
+		}
+	});
+}
+
 //커뮤니티 글쓰기
-function comm_write() {
-	window.location = "write.jsp";
+function comm_write(id) {
+	if(id == null) {
+		alert("로그인을 해야 글쓰기가 가능합니다.");
+		window.location = "../member/login.jsp";
+	}else {
+		window.location = "write.jsp";	
+	}
+}
+
+// 활동 리스트
+function getActivityList(data) {
+	var htmlStr = "";
+	$.each(data, function(key, val) {
+		if(key % 4 == 0) {
+			htmlStr += "<div class='row'>";
+		}
+		htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
+		htmlStr += "<br>";
+		htmlStr += "<div class='list_explain'>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
+		htmlStr += val.org_name + "<br>";
+		htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
+		htmlStr += "</div></div>";
+		if(key % 4 == 3) {
+			htmlStr += "</div>";
+		}
+	});
+	$("#activityList").html(htmlStr);
+}
+
+$(document).ready(function() {
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: {
+			act_type: 1
+		},
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			getActivityList(data);
+		}
+	});
+});
+
+// 개인 리스트 검색(admin)
+$("#personSearchBtn").click(function(){
+	if($("#personSearch").val() == "") {
+		alert("검색어를 입력하세요");
+		$("#personSearch").focus();
+		return false;
+	}
+	$("#personSearchFrm").submit();
+});
+
+// 단체 리스트 검색(admin)
+$("#orgSearchBtn").click(function(){
+	if($("#orgSearch").val() == "") {
+		alert("검색어를 입력하세요");
+		$("#orgSearch").focus();
+		return false;
+	}
+	$("#orgSearchFrm").submit();
+});
+
+// 커뮤니티 공지글 검색(admin)
+$("#noticeSearchBtn").click(function(){
+	if($("#noticeSearch").val() == "") {
+		alert("검색얼르 입력하세요");
+		$("#noticeSearch").focus();
+		return false;
+	}
+	$("#noticeSearchFrm").submit();
+});
+
+// 댓글 입력
+function reply_ok() {
+	if($("input[name=rep_content]").val() == "") {
+		alert("댓글 내용을 입력해주세요");
+		$("input[name=rep_content]").focus();
+		return false;
+	}
+	$("form[name=comm_reply_form]").submit();
 }
 
 // myPage 수정 양식, 비밀번호 변경

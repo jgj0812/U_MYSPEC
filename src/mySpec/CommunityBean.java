@@ -8,6 +8,8 @@ public class CommunityBean {
 	private String comm_date; // 작성일
 	private int comm_hits; //조회수
 	private String comm_content; //글내용
+	private String comm_nick;	// 참조하는 닉네임이 담길 변수
+	private String comm_admin;	// 관리자 아이디 참조용 변수
 	
 	public int getComm_num() {
 		return comm_num;
@@ -52,6 +54,16 @@ public class CommunityBean {
 	public void setComm_content(String comm_content) {
 		this.comm_content = comm_content;
 	}
-	
-	
+	public String getComm_nick() {
+		return comm_nick;
+	}
+	public void setComm_nick(String comm_nick) {
+		this.comm_nick = comm_nick;
+	}
+	public String getComm_admin() {
+		return comm_admin;
+	}
+	public void setComm_admin(String comm_admin) {
+		this.comm_admin = comm_admin;
+	}
 }

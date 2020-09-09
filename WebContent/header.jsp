@@ -1,7 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	request.setCharacterEncoding("utf-8");
 	String id = (String)session.getAttribute("id");
+	int pageSize = 5;
+	String pageNum = request.getParameter("pageNum");
+	if(pageNum == null) {
+		pageNum = "1";
+	}
+	String keyField = "", keyWord = "";
+	if(request.getParameter("keyWord") != null) {
+		keyField = request.getParameter("keyField");
+		keyWord = request.getParameter("keyWord");
+	}
+	int currentPage = Integer.parseInt(pageNum);
+	int startRow = (currentPage - 1) * pageSize + 1;
+	int endRow = currentPage * pageSize;
 %>
 <!DOCTYPE html>
 <html lang="ko" class="h-100">
@@ -9,6 +23,7 @@
     	<meta charset="UTF-8" />
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     	<title>MYSPEC!</title>
+    	
 	    <!-- 부트스트랩 -->
 	    <link 
 	    	rel="stylesheet" 
@@ -69,7 +84,8 @@
             				</div>
           				</div>
         			</form>
-        			<!-- /검색창 -->
+        			<!-- / 검색창 -->
+        			<!-- 로그인/로그아웃 -->
         			<%if(id != null) {	// 로그인이 되면 %>
         			<div class="col-md-3">  
           				<div class="d-flex justify-content-center row">
@@ -86,10 +102,11 @@
           				</div>
         			</div>
         			<%} %>
+        			<!-- / 로그인/로그아웃 -->
         		</div>
       		</nav>
     	</header>
-    	<!-- /header -->
+    	<!-- / header -->
     	<!-- navbar -->
     	<nav class="navbar navbar-expand-sm bg-cam navbar-dark">
       		<div class="container">
@@ -127,4 +144,4 @@
         		</div>
       		</div>
     	</nav>
-    	<!-- /navbar -->
+    	<!-- / navbar -->
