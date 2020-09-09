@@ -20,8 +20,8 @@
 	int currentPage = Integer.parseInt(pageNum);
 	int startRow = (currentPage - 1) * pageSize + 1;
 	int endRow = currentPage * pageSize;
-	ArrayList<CommunityBean> arrComm = mgr.noticeList(startRow, endRow, keyField, keyWord);
-	int count = mgr.noticeCount(keyField, keyWord);
+	ArrayList<CommunityBean> arrComm = mgr.adminComList(startRow, endRow, keyField, keyWord);
+	int count = mgr.adminComCount(keyField, keyWord);
 %>
 <main>
 	<div class="d-flex" id="wrapper">
@@ -42,10 +42,11 @@
 					<thead>
 		 				<tr class="d-flex">
 		 					<th class="col-md-1 d-none d-lg-table-cell">번호</th>
-		 					<th class="col-md-6 d-none d-lg-table-cell">제목</th>
+		 					<th class="col-md-5 d-none d-lg-table-cell">제목</th>
 		 					<th class="col-md-2 d-none d-lg-table-cell">글쓴이</th>
 		 					<th class="col-md-2 d-none d-lg-table-cell">등록일</th>
 		 					<th class="col-md-1 d-none d-lg-table-cell">조회수</th>
+		 					<th class="col-md-1 d-none d-lg-table-cell">삭제</th>
 		 				</tr>
 		 			</thead>
 		 			<tbody>
@@ -54,15 +55,20 @@
 							String date[] = bean.getComm_date().split(" ");
 							String date1 = date[0];
 %>	
-		 				<tr class="d-flex">	 		
+		 				<tr class="d-flex"> 		
 		 					<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_num() %></td>
-		 					<td class="col-md-6">
-		 						<a href="adminNoticeDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark"><%=bean.getComm_title() %></a>
-		 						<p class="d-block d-sm-none"><small>관리자 <%=date1%> <%=bean.getComm_hits() %></small></p>
+		 					<td class="col-md-5">
+		 						<a href="adminComDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark"><%=bean.getComm_title() %></a>
+		 						<p class="d-block d-sm-none"><small><%=bean.getComm_nick() %> <%=date1%> <%=bean.getComm_hits() %></small></p>
 		 					</td>
-		 					<td class="col-md-2 d-none d-lg-table-cell">관리자</td>
+		 					<td class="col-md-2 d-none d-lg-table-cell"><%=bean.getComm_nick() %></td>
 		 					<td class="col-md-2 d-none d-lg-table-cell"><%=date1 %></td>
 		 					<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_hits() %></td>
+		 					<td class="col-md-1 d-none d-lg-table-cell">
+		 						<a href="adminComDeletePro.jsp?comm_num=<%=bean.getComm_num() %>&type=1" class="btn btn-danger">
+		 							삭제
+		 						</a>
+		 					</td>
 		 				</tr>
 <%
 						}
@@ -73,7 +79,7 @@
 			<!-- /comNotice List -->
 			<!-- 글쓰기 -->
 			<div class="form-inline justify-content-end">
-				<a href="adminNoticeWrite.jsp" class="btn btn-com d-none d-md-block">글쓰기</a>
+				<a href="adminCom.jsp" class="btn btn-cam">전체글보기</a>
 			</div>
 			<!-- /글쓰기 -->
 			<!-- 페이징 -->

@@ -9,7 +9,8 @@ public class ActivityBean {
 	private String act_post;			// 포스터
 	private String act_title;			// 제목
 	private int act_hits;					// 조회수
-	private String act_org;			// 주최기관
+	private String act_org;			// 주최기관 아이디
+	private String org_name;		// 주최기관명
 	private String act_target;		// 참여대상
 	private Date act_start;			// 기간 시작
 	private Date act_end;				// 기간 마감
@@ -65,6 +66,12 @@ public class ActivityBean {
 	}
 	public void setAct_org(String act_org) {
 		this.act_org = act_org;
+	}
+	public String getOrg_name() {
+		return org_name;
+	}
+	public void setOrg_name(String org_name) {
+		this.org_name = org_name;
 	}
 	public String getAct_target() {
 		return act_target;

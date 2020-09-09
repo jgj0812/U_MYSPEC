@@ -23,26 +23,27 @@
 		 		</tr>
 		 	</thead>
 		    <tbody>
-		    	<%for(int i = 0; i < 3; i++) {
-		    		String admin = "";
-		    		
-		    		String date[] = noticeArr.get(i).getComm_date().split(" ");
-		    		String date1 = date[0];
+		    	<%
+		    		for(CommunityBean bean : noticeArr) {
+			    		String admin = "";
+			    		if(bean.getComm_admin().equals("admin")) admin = "관리자";
+			    		String date[] = bean.getComm_date().split(" ");
+			    		String date1 = date[0];
 		    	%>
 		    	<tr class="d-flex">
 		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
 		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
 		 			<td class="col-md-5 text-truncate">
-		 				<a href="community/detailView.jsp?comm_num=<%=noticeArr.get(i).getComm_num() %>" class="h5">
-		 					<%=noticeArr.get(i).getComm_title() %>
+		 				<a href="community/detailView.jsp?comm_num=<%=bean.getComm_num() %>" class="h5">
+		 					<%=bean.getComm_title() %>
 		 				</a>
-		 				<p class="d-block d-sm-none"><small><%=admin %> <%=date1 %> 조회 <%=noticeArr.get(i).getComm_hits() %></small></p>
+		 				<p class="d-block d-sm-none"><small><%=admin %> <%=date1 %> 조회 <%=bean.getComm_hits() %></small></p>
 		 			</td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=admin %></td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date1 %></td>
-		 			<td class="col-md-1 d-none d-lg-table-cell"><%=noticeArr.get(i).getComm_hits() %></td>
+		 			<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_hits() %></td>
 		 		</tr>
-		 		<%} %>
+		 		<%	}%>
 		    </tbody>
 		  </table>
 		</div>

@@ -39,7 +39,7 @@
 <section class="container my-3">
 	<div class="container py-3 d-flex justify-content-between bg-light">
 		<h4 style="margin-top: 8px;">커뮤니티 게시판</h4>
-		<a onclick="com_write()" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
+		<a onclick="comm_write('<%=id%>')" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
 	</div>
 	
 

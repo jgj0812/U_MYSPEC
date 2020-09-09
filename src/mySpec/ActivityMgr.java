@@ -1,5 +1,6 @@
 package mySpec;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,44 +37,40 @@ public class ActivityMgr {
 		
 	}
 
-	public ArrayList<ActivityBean> activityList(int act_type) {
-		ArrayList<ActivityBean> ret = new ArrayList<ActivityBean>();
-		String sql = "select * from activity where act_type=? and act_approve=1";
+	public ArrayList<ActivityBean> getActivityList(int act_type, String where, String order) {
+		ArrayList<ActivityBean> activityList = null;
+		String sql = null;
+		if(where.equals("")) {
+			sql = "select act_num, act_thumb, act_title, org_name,  trunc(act_end - sysdate) as act_dday, act_hits from activity, org_user where act_org = org_id and act_type=? and act_approve=1";
+		} else {
+			sql = "select distinct act_num, act_thumb, act_title, org_name,  trunc(act_end - sysdate) as act_dday, act_hits from (select * from activity, org_user, act_interest, act_reward where act_org = org_id and act_num=interest_act and act_num=reward_act and act_type=? and act_approve=1) where" + where;
+		}
+		sql += " order by act_num desc";
+		System.out.println(sql);
 		try {
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, act_type);
 			rs = ps.executeQuery();
+			activityList = new ArrayList<ActivityBean>();
 			while (rs.next()) {
-				ActivityBean e = new ActivityBean();
-				e.setAct_num(rs.getInt("act_num"));
-				e.setAct_type(rs.getInt("act_type"));
-				e.setAct_thumb(rs.getString("act_thumb"));
-				e.setAct_post(rs.getString("act_post"));
-				e.setAct_title(rs.getString("act_title"));
-				e.setAct_hits(rs.getInt("act_hits"));
-				e.setAct_org(rs.getString("act_org"));
-				e.setAct_target(rs.getString("act_target"));
-				e.setAct_start(rs.getDate("act_start"));
-				e.setAct_end(rs.getDate("act_end"));
-				e.setAct_pop(rs.getInt("act_pop"));
-				e.setAct_reg(rs.getInt("act_reg"));
-				e.setAct_field(rs.getInt("act_field"));
-				e.setAct_home(rs.getString("act_home"));
-				e.setAct_content(rs.getString("act_content"));
-				e.setAct_award(rs.getInt("act_award"));
-				e.setAct_approve(rs.getInt("act_approve"));
-				ret.add(e);
+				ActivityBean activity = new ActivityBean();
+				activity.setAct_num(rs.getInt("act_num"));
+				activity.setAct_thumb(rs.getString("act_thumb"));
+				activity.setAct_title(rs.getString("act_title"));
+				activity.setOrg_name(rs.getString("org_name"));
+				activity.setAct_dday(rs.getInt("act_dday"));
+				activity.setAct_hits(rs.getInt("act_hits"));
+				activityList.add(activity);
 			}
-			pool.closeConnection(con, ps);
-			return ret;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		pool.closeConnection(con, ps);
+		return activityList;
 	}
-
+	
 	public void insertActivity(ActivityBean activity) {
 		String sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content) values(act_seq.nextval, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {

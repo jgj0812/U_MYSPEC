@@ -23,6 +23,25 @@ var phoneExp = /^\d{3}-\d{3,4}-\d{4}$/; // 핸드폰번호 정규식
 var birthExp = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/; // 생년월일 정규식
 var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
 
+//datepicker 공통
+$.datepicker.setDefaults({
+	dateFormat: "yy-mm-dd",
+	nextText: "다음 달",
+	prevText: "이전 달",
+	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	dayNamesMin: ['일','월','화','수','목','금','토'],
+	dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+	showMonthAfterYear: true,
+	yearSuffix: '년'
+});
+
+// 개인회원 생년월일 datepicker
+$("#person_birth").datepicker({
+	changeMonth: true,
+	changeYear: true,
+});
+
 // 개인회원 Join
 $("#personSend").click(function(){
 	if($("#person_id").val() == "") {
@@ -447,13 +466,36 @@ $(document).ready(function () {
 });
 
 // 대외활동, 공모전 리스트 체크박스 동작
-$("input:checkbox").click(function (e) {
-  var id = $(e).attr("id")
-  var str = '<button>' + id + '</button>'
-  $("#choicetag").append(str);
-});
-function reset() {
-  $("#choicetag *").remove();
+function tagSearch() {
+	var data = $("#tagForm").serialize() + "&act_type=1";
+	$.ajax({
+		url: "list_act_tagPro.jsp",
+		data: data,
+		dataType: "html",
+		cache: false,
+		success: function(data) {
+			$("#choicetag").html(data);
+		}
+	});
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: data,
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			getActivityList(data);
+		}
+	});
+}
+
+function tagReset() {
+	$("#tagForm")[0].reset();
+	$("#tagForm").change();
+}
+
+function tagRemove(tag_num) {
+	$("#tagForm input:checkbox[value=" + tag_num + "]").prop("checked", false);
+	$("#tagForm").change();
 }
 
 // summernote
@@ -467,16 +509,12 @@ $(document).ready(function () {
 		}
     });
 	
-	$("#act_form input[name='act_start']").datepicker({
-		dateFormat: "yy-mm-dd"
-	});
-	$("#act_form input[name='act_end']").datepicker({
-		dateFormat: "yy-mm-dd"
-	});
+	$("#act_form input[name='act_start']").datepicker();
+	$("#act_form input[name='act_end']").datepicker();
 	$("#comm_content").summernote({
 			lang: "ko-KR",
 	      	height: "20em",
-	   });
+	});
 });
 
 function sendFile(file, editor) {
@@ -495,6 +533,42 @@ function sendFile(file, editor) {
 	});
 }
 
+
+// 활동 리스트
+function getActivityList(data) {
+	var htmlStr = "";
+	$.each(data, function(key, val) {
+		if(key % 4 == 0) {
+			htmlStr += "<div class='row'>";
+		}
+		htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
+		htmlStr += "<br>";
+		htmlStr += "<div class='list_explain'>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
+		htmlStr += val.org_name + "<br>";
+		htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
+		htmlStr += "</div></div>";
+		if(key % 4 == 3) {
+			htmlStr += "</div>";
+		}
+	});
+	$("#activityList").html(htmlStr);
+}
+
+$(document).ready(function() {
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: {
+			act_type: 1
+		},
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			getActivityList(data);
+		}
+	});
+});
 
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){
@@ -577,6 +651,70 @@ function reply_ok() {
 		$("#rep_content").focus();
 		return false;
 	}
+
 	$("#comm_reply_form").submit();
 }
 
+// myPage 수정 양식, 비밀번호 변경
+$("#UpdateBtn").click(function(){
+	
+	// 개인 회원 닉네임
+	if($("#nick_check").val() == "") {
+	alert("닉네임이 입력해 주세요.");
+	$("#nick_check").focus();
+	return false;
+	}
+	
+	// 단체 회원 담당자
+	if($("#manager_check").val() == "") {
+	alert("담당자 이름을 입력해 주세요.");
+	$("#manager_check").focus();
+	return false;
+	}
+	
+	// 공용 
+	if($("#phone_check").val() == "") {
+	alert("연락처를 입력해 주세요.");
+	$("#phone_check").focus();
+	return false;
+	}
+	
+	if(!$("#phone_check").val().match(phoneExp)) {
+		alert("연락처 입력 양식이 아닙니다.");
+		$("#phone_check").focus();
+		return false;
+	}
+	
+	if($("#email_check").val() == "") {
+	alert("연락처를 입력해 주세요.");
+	$("#email_check").focus();
+	return false;
+	}
+	
+	if(!$("#email_check").val().match(emailExp)) {
+		alert("이메일 입력양식이 아닙니다.");
+		$("#email_check").focus();
+		return false;
+	}
+	
+	
+	// 기존 비밀번호는 필수적 입력
+	if($("#old_pwd").val() == "") {
+	alert("기존 비밀번호를 입력해 주세요.");
+	return;
+	}
+	
+	
+	// 새로운 비밀번호칸이 빈칸이 아닐경우 실행
+	if($("#password").val() != "") {
+		if ($("#pwd_check").val() == "") {
+		alert("새로운 비밀번호 확인을 입력해 주세요.");
+		return;
+		}
+		if($("#pwd_check").val() != $("#password").val()) {
+			alert("새로운 비밀번호 확인이 틀렸습니다.");
+			return;
+		}
+	}
+	$("#UpdateFrm").submit();
+});

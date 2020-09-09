@@ -13,8 +13,8 @@
                 커뮤니티
               </h3>
 			<div class="list-group list-group-flush">
-				<a href="myPage_community.jsp" class="list-group-item list-group-item-action bg-light">내가 쓴 글</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">댓글 쓴 글</a>
+				<a href="myPage_myList.jsp" class="list-group-item list-group-item-action bg-light">내가 쓴 글</a>
+				<a href="myPage_myComment.jsp" class="list-group-item list-group-item-action bg-light">댓글 쓴 글</a>
 			</div>
 			
 			<h3
