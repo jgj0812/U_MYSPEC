@@ -455,7 +455,7 @@ $(document).ready(function () {
 
 // 대외활동, 공모전 리스트 체크박스 동작
 function tagSearch() {
-	var data = $("#tagForm").serialize();
+	var data = $("#tagForm").serialize() + "&act_type=1";
 	$.ajax({
 		url: "list_act_tagPro.jsp",
 		data: data,
@@ -465,12 +465,19 @@ function tagSearch() {
 			$("#choicetag").html(data);
 		}
 	});
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: data,
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			getActivityList(data);
+		}
+	});
 }
 
 function tagReset() {
-	$("#tagForm").each(function(){
-		this.reset();
-	});
+	$("#tagForm")[0].reset();
 	$("#tagForm").change();
 }
 
@@ -525,6 +532,27 @@ function comm_write(id) {
 }
 
 // 활동 리스트
+function getActivityList(data) {
+	var htmlStr = "";
+	$.each(data, function(key, val) {
+		if(key % 4 == 0) {
+			htmlStr += "<div class='row'>";
+		}
+		htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
+		htmlStr += "<br>";
+		htmlStr += "<div class='list_explain'>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
+		htmlStr += val.org_name + "<br>";
+		htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
+		htmlStr += "</div></div>";
+		if(key % 4 == 3) {
+			htmlStr += "</div>";
+		}
+	});
+	$("#activityList").html(htmlStr);
+}
+
 $(document).ready(function() {
 	$.ajax({
 		url: "list_actPro.jsp",
@@ -534,24 +562,7 @@ $(document).ready(function() {
 		dataType: "json",
 		cache: false,
 		success: function(data) {
-			var htmlStr = "";
-			$.each(data, function(key, val) {
-				if(key % 4 == 0) {
-					htmlStr += "<div class='row'>";
-				}
-				htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
-				htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
-				htmlStr += "<br>";
-				htmlStr += "<div class='list_explain'>";
-				htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
-				htmlStr += val.org_name + "<br>";
-				htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
-				htmlStr += "</div></div>";
-				if(key % 4 == 3) {
-					htmlStr += "</div>";
-				}
-			});
-			$("#activityList").html(htmlStr);
+			getActivityList(data);
 		}
 	});
 });

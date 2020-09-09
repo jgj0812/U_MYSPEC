@@ -435,12 +435,12 @@
 	      </div>
 	    </div>
 	    </form>
-	
+
 		<!-- 선택한 서브태그 보이는 부분-->
 	    <div class="choice">
 	      <div id="choicetag">
 	      </div>
-	      <button type="button" id="reset" onclick="tagReset()"> <i class="fas fa-redo"></i> 초기화</button>
+	      <button id="reset" onclick="tagReset()"><i class="fas fa-redo"></i> 초기화</button>
 	      
 	    </div>
 	
@@ -451,9 +451,8 @@
                  <option>스크랩순</option>
                  <option>댓글순</option>
             </select>
-
 	    <br><br>
-	
+	    
 		<!-- 리스트 -->
 	    <div class="container_search" id="activityList">
     	</div>
