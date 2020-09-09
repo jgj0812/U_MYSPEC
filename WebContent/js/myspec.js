@@ -462,3 +462,24 @@ $(document).ready(function () {
 function comm_write() {
 	window.location = "write.jsp";
 }
+
+// myPage 비밀번호 확인 체크
+$("#UpdateBtn").click(function(){
+	if($("#old_pwd").val() == "") {
+	alert("기존 비밀번호를 입력해 주세요.");
+	return;
+	}
+	
+	if($("#password").val() != "") {
+		if ($("#pwd_check").val() == "") {
+		alert("새로운 비밀번호 확인을 입력해 주세요.");
+		return;
+		}
+		if($("#pwd_check").val() != $("#password").val()) {
+			alert("새로운 비밀번호 확인이 틀렸습니다.");
+			return;
+		}
+	}
+	$("#UpdateFrm").submit();
+});
+
