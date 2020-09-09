@@ -10,7 +10,9 @@
 <jsp:useBean id="oup" class="mySpec.OrgBean"/>
 <jsp:setProperty property="*" name="oup"/>
 <%
-	
+	if(oup.getPwd() == null) {
+		oup.setPwd(pwd);
+	}
 	MemberMgr ogr = new MemberMgr();
 	int flag = ogr.updateOrg(oup, pwd);
 	if(flag==1) {

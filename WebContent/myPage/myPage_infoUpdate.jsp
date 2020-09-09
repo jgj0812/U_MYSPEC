@@ -10,6 +10,9 @@
 <jsp:useBean id="pup" class="mySpec.PersonBean"/>
 <jsp:setProperty property="*" name="pup"/>
 <%
+	if(pup.getPwd() == null) {
+		pup.setPwd(pwd);
+	}
 	MemberMgr mgr = new MemberMgr();
 	int flag = mgr.updatePerson(pup, pwd);
 	if(flag==1) {
