@@ -26,7 +26,6 @@ $.datepicker.setDefaults({
 
 // 개인회원 생년월일 datepicker
 $("#person_birth").datepicker({
-	dateFormat: "yy-mm-dd",
 	changeMonth: true,
 	changeYear: true,
 });
