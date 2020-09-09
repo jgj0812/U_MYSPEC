@@ -1,6 +1,9 @@
+<%@page import="mySpec.MemberMgr"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
+
+
 <main>
 	<div class="d-flex" id="wrapper">
 		
@@ -28,6 +31,7 @@
 		                        id=""
 		                        value="네"
 		                        class="btn btn-danger col-md-4"
+		                        onclick="javascript:window.location.href='myPage_deletePro.jsp'"
 		                      />
 		                      &nbsp;
 		                      <input

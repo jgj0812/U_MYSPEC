@@ -606,3 +606,68 @@ function reply_ok() {
 	}
 	$("form[name=comm_reply_form]").submit();
 }
+
+// myPage 수정 양식, 비밀번호 변경
+$("#UpdateBtn").click(function(){
+	
+	// 개인 회원 닉네임
+	if($("#nick_check").val() == "") {
+	alert("닉네임이 입력해 주세요.");
+	$("#nick_check").focus();
+	return false;
+	}
+	
+	// 단체 회원 담당자
+	if($("#manager_check").val() == "") {
+	alert("담당자 이름을 입력해 주세요.");
+	$("#manager_check").focus();
+	return false;
+	}
+	
+	// 공용 
+	if($("#phone_check").val() == "") {
+	alert("연락처를 입력해 주세요.");
+	$("#phone_check").focus();
+	return false;
+	}
+	
+	if(!$("#phone_check").val().match(phoneExp)) {
+		alert("연락처 입력 양식이 아닙니다.");
+		$("#phone_check").focus();
+		return false;
+	}
+	
+	if($("#email_check").val() == "") {
+	alert("연락처를 입력해 주세요.");
+	$("#email_check").focus();
+	return false;
+	}
+	
+	if(!$("#email_check").val().match(emailExp)) {
+		alert("이메일 입력양식이 아닙니다.");
+		$("#email_check").focus();
+		return false;
+	}
+	
+	
+	// 기존 비밀번호는 필수적 입력
+	if($("#old_pwd").val() == "") {
+	alert("기존 비밀번호를 입력해 주세요.");
+	return;
+	}
+	
+	
+	// 새로운 비밀번호칸이 빈칸이 아닐경우 실행
+	if($("#password").val() != "") {
+		if ($("#pwd_check").val() == "") {
+		alert("새로운 비밀번호 확인을 입력해 주세요.");
+		return;
+		}
+		if($("#pwd_check").val() != $("#password").val()) {
+			alert("새로운 비밀번호 확인이 틀렸습니다.");
+			return;
+		}
+	}
+	$("#UpdateFrm").submit();
+});
+

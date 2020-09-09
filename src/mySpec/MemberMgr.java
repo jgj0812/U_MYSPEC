@@ -3,6 +3,8 @@ package mySpec;
 import java.sql.*;
 import java.util.ArrayList;
 
+import jdk.nashorn.internal.ir.SetSplitState;
+
 public class MemberMgr {
 private DBConnection pool;
 	
@@ -381,6 +383,23 @@ private DBConnection pool;
 		}
 		return re;
 	}
+	// 단체회원 탈퇴, 삭제
+	public void deleteOrg(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from org_user where org_id=?";
+		
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+	}
 	
 	// 단체회원 리스트(admin)
 	public ArrayList<OrgBean> listOrg(int startRow, int endRow, String keyField, String keyWord) {
@@ -436,71 +455,135 @@ private DBConnection pool;
 		return arrOrg;
 	}
 	
-	// 단체회원 수
-	public int orgCount(String keyField, String keyWord) {
-		Connection con = null;
+//	MyPage 정보 보기(개인)
+	public PersonBean infoPerson(String id) {
+		Connection con  = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "";
-		int count = 0;
-
+		PersonBean person = null;
+		String sql = "select * from person_user where person_id=?";
+		
 		try {
 			con = pool.getConnection();
-			if(keyWord.trim().equals("") || keyWord == null) {
-				sql = "select count(*) from org_user";
-				pstmt = con.prepareStatement(sql);
-			}else {
-				sql = "select count(*) from org_user where " + keyField + " like ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, "%" + keyWord + "%");
-			}
-			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				count = rs.getInt(1);
+				person = new PersonBean();
+				person.setId(rs.getString("person_id"));
+				person.setNick(rs.getString("person_nick"));
+				person.setBirth(rs.getString("person_birth"));
+				person.setEmail(rs.getString("person_email"));
+				person.setPhone(rs.getString("person_phone"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.closeConnection(con, pstmt, rs);
 		}
-		return count;
+		return person;
 	}
 	
-	// 단체회원 탈퇴, 삭제
-	public int deleteOrg(String id) {
+//	MyPage 정보 보기(단체)
+	public OrgBean infoOrg(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String sql = "delete from org_user where org_id=?";
-		int re = -1;
-
+		ResultSet rs = null;
+		OrgBean org = null;
+		String sql = "select * from org_user where org_id=?";
+		
 		try {
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
-			pstmt.executeUpdate();
-			re = 1;
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				org = new OrgBean();
+				org.setId(rs.getString("org_id"));
+				org.setName(rs.getString("org_name"));
+				org.setType(rs.getInt("org_type"));
+				org.setManager(rs.getString("org_manager"));
+				org.setEmail(rs.getString("org_email"));
+				org.setPhone(rs.getString("org_phone"));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			pool.closeConnection(con, pstmt);
+			pool.closeConnection(con, pstmt, rs);
 		}
-		return re;
+		return org;
+	}
+	
+//	MyPage 수정(개인)
+	public int updatePerson(PersonBean pup, String pwd) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int flag = 0;
+		
+		try {
+			con = pool.getConnection();
+			sql = "select person_pwd from person_user where person_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, pup.getId());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("person_pwd").equals(pwd)) { 
+					sql = "update person_user set person_nick=?, person_phone=?, "
+							+ " person_email=?, person_pwd=? where person_id=?";
+						pstmt = con.prepareStatement(sql);
+						pstmt.setString(1, pup.getNick());
+						pstmt.setString(2, pup.getPhone());
+						pstmt.setString(3, pup.getEmail());
+						pstmt.setString(4, pup.getPwd());
+						pstmt.setString(5, pup.getId());
+						flag = pstmt.executeUpdate();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+
+		return flag;
+		
+	}
+	
+//	MyPage 수정(단체)
+	public int updateOrg(OrgBean oup, String pwd) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int flag = 0;
+		
+		try {
+			con = pool.getConnection();
+			sql = "select org_pwd from org_user where org_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, oup.getId());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("org_pwd").equals(pwd)) { 
+					sql = "update org_user set org_manager=?, org_phone=?, "
+							+ " org_email=?, org_pwd=? where org_id=?";
+						pstmt = con.prepareStatement(sql);
+						pstmt.setString(1, oup.getManager());
+						pstmt.setString(2, oup.getPhone());
+						pstmt.setString(3, oup.getEmail());
+						pstmt.setString(4, oup.getPwd());
+						pstmt.setString(5, oup.getId());
+						flag = pstmt.executeUpdate();
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return flag;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
