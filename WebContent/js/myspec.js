@@ -455,7 +455,7 @@ $(document).ready(function () {
 
 // 대외활동, 공모전 리스트 체크박스 동작
 function tagSearch() {
-	var data = $("#tagForm").serialize();
+	var data = $("#tagForm").serialize() + "&act_type=1";
 	$.ajax({
 		url: "list_act_tagPro.jsp",
 		data: data,
@@ -465,12 +465,19 @@ function tagSearch() {
 			$("#choicetag").html(data);
 		}
 	});
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: data,
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			getActivityList(data);
+		}
+	});
 }
 
 function tagReset() {
-	$("#tagForm").each(function(){
-		this.reset();
-	});
+	$("#tagForm")[0].reset();
 	$("#tagForm").change();
 }
 
@@ -525,6 +532,27 @@ function comm_write(id) {
 }
 
 // 활동 리스트
+function getActivityList(data) {
+	var htmlStr = "";
+	$.each(data, function(key, val) {
+		if(key % 4 == 0) {
+			htmlStr += "<div class='row'>";
+		}
+		htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
+		htmlStr += "<br>";
+		htmlStr += "<div class='list_explain'>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
+		htmlStr += val.org_name + "<br>";
+		htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
+		htmlStr += "</div></div>";
+		if(key % 4 == 3) {
+			htmlStr += "</div>";
+		}
+	});
+	$("#activityList").html(htmlStr);
+}
+
 $(document).ready(function() {
 	$.ajax({
 		url: "list_actPro.jsp",
@@ -534,24 +562,7 @@ $(document).ready(function() {
 		dataType: "json",
 		cache: false,
 		success: function(data) {
-			var htmlStr = "";
-			$.each(data, function(key, val) {
-				if(key % 4 == 0) {
-					htmlStr += "<div class='row'>";
-				}
-				htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
-				htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
-				htmlStr += "<br>";
-				htmlStr += "<div class='list_explain'>";
-				htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
-				htmlStr += val.org_name + "<br>";
-				htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
-				htmlStr += "</div></div>";
-				if(key % 4 == 3) {
-					htmlStr += "</div>";
-				}
-			});
-			$("#activityList").html(htmlStr);
+			getActivityList(data);
 		}
 	});
 });
@@ -596,43 +607,66 @@ function reply_ok() {
 	$("form[name=comm_reply_form]").submit();
 }
 
-// 댓글 수정관련
-function rereply(i){
-	var con = document.getElementById("rereply" + i);
-	if(con.style.display =='none'){
-		con.style.display = 'block';
-	}else if(con.style.display =='block'){
-		con.style.display = 'none';
-	}
-}
-
-function update(i){
-	var update = document.getElementById("update" + i);
-	var basic = document.getElementById("basic" + i);
+// myPage 수정 양식, 비밀번호 변경
+$("#UpdateBtn").click(function(){
 	
-	if(update.style.display =='none'){
-		update.style.display = 'block';
-		basic.style.display = 'none';
-	}else if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
+	// 개인 회원 닉네임
+	if($("#nick_check").val() == "") {
+	alert("닉네임이 입력해 주세요.");
+	$("#nick_check").focus();
+	return false;
 	}
-}
-
-function updatecancel(i){
-	var update = document.getElementById("update" + i);
-	var basic = document.getElementById("basic" + i);
-	if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
+	
+	// 단체 회원 담당자
+	if($("#manager_check").val() == "") {
+	alert("담당자 이름을 입력해 주세요.");
+	$("#manager_check").focus();
+	return false;
 	}
-}
-
-
-function next(next_comm){
- 	if(next_comm == 0){
-		alert("다음 글이 없습니다.");
-	}else{
-		window.location = "detailView.jsp?comm_num=" + next_comm;
+	
+	// 공용 
+	if($("#phone_check").val() == "") {
+	alert("연락처를 입력해 주세요.");
+	$("#phone_check").focus();
+	return false;
 	}
-}
+	
+	if(!$("#phone_check").val().match(phoneExp)) {
+		alert("연락처 입력 양식이 아닙니다.");
+		$("#phone_check").focus();
+		return false;
+	}
+	
+	if($("#email_check").val() == "") {
+	alert("연락처를 입력해 주세요.");
+	$("#email_check").focus();
+	return false;
+	}
+	
+	if(!$("#email_check").val().match(emailExp)) {
+		alert("이메일 입력양식이 아닙니다.");
+		$("#email_check").focus();
+		return false;
+	}
+	
+	
+	// 기존 비밀번호는 필수적 입력
+	if($("#old_pwd").val() == "") {
+	alert("기존 비밀번호를 입력해 주세요.");
+	return;
+	}
+	
+	
+	// 새로운 비밀번호칸이 빈칸이 아닐경우 실행
+	if($("#password").val() != "") {
+		if ($("#pwd_check").val() == "") {
+		alert("새로운 비밀번호 확인을 입력해 주세요.");
+		return;
+		}
+		if($("#pwd_check").val() != $("#password").val()) {
+			alert("새로운 비밀번호 확인이 틀렸습니다.");
+			return;
+		}
+	}
+	$("#UpdateFrm").submit();
+});
