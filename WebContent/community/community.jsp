@@ -34,7 +34,9 @@
 	endRow = currentPage * pageSize;	// 페이지 끝
 	
 	comm_arr = mgr.Community_list(startRow, endRow, keyField, keyWord);
-	int count = mgr.community_Count(keyField, keyWord);	
+	int count = mgr.community_Count(keyField, keyWord);
+	
+	ArrayList<CommunityBean> noticeArr = mgr.noticeList(1, 5, "", "");
 
 %>
 
@@ -61,6 +63,30 @@
 		 	<tbody>
 		 	
 <%
+		for(CommunityBean bean : noticeArr) {
+			String person = bean.getComm_admin() != null ? "관리자" : bean.getComm_nick();
+			String datestr = bean.getComm_date();
+			String [] date = datestr.split(" ");
+			String date_1 = date[0];
+			
+%>
+				<tr class="d-flex" style="background: #f2faff;">	 		
+		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
+		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
+		 			<td class="col-md-5">
+		 				<a href="detailView.jsp?comm_num=<%=bean.getComm_num()%>" class="h5 text-dark">
+		 					<span class="badge badge-secondary rounded-pill d-sm-none">공지</span>
+		 					<%=bean.getComm_title() %>
+		 				</a>
+		 				<p class="d-block d-sm-none"><small><%=person %> <%=date_1%> 조회 <%=bean.getComm_hits() %></small></p>
+		 			</td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=person %></td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date_1 %></td>
+		 			<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_hits() %></td>
+		 			
+		 		</tr>
+<%
+		}
 		for(CommunityBean commB :comm_arr){
 			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
 			String Type =commB.getComm_type()==0?"공지사항":"일반게시판";
