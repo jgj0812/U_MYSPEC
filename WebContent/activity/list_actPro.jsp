@@ -7,6 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+//gdg
 	ActivityMgr manager = new ActivityMgr();
 	String[] params = null;
 	int[] act_field = null;
