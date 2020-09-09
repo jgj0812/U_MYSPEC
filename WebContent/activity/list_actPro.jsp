@@ -9,60 +9,61 @@
 <%
 //gdg
 	ActivityMgr manager = new ActivityMgr();
+	int act_type = Integer.parseInt(request.getParameter("act_type"));
 	String[] params = null;
 	int[] act_field = null;
 	int[] interest_num = null;
 	int[] reward_num = null;
 	int[] act_reg = null;
-	String query="";
-	int act_type = Integer.parseInt(request.getParameter("act_type"));
+	String where ="";
+	int order = Integer.parseInt(request.getParameter("order"));
 	
 	if((params = request.getParameterValues("act_field")) != null) {
 		act_field = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
-		query += " (act_field=" + act_field[0];
+		where += " (act_field=" + act_field[0];
 		for(int i = 1; i < act_field.length; i++) {
-			query += " or act_field=" + act_field[i];
+			where += " or act_field=" + act_field[i];
 		}
-		query += ")";
+		where += ")";
 	}
 	if((params = request.getParameterValues("interest_num")) != null) {
 		interest_num = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
-		if(query == "") {
-			query += " (interest_num=" + interest_num[0];
+		if(where == "") {
+			where += " (interest_num=" + interest_num[0];
 		} else {
-			query += " and ( interest_num=" + interest_num[0];
+			where += " and ( interest_num=" + interest_num[0];
 		}
 		for(int i = 1; i < interest_num.length; i++) {
-			query += " or interest_num=" + interest_num[i];
+			where += " or interest_num=" + interest_num[i];
 		}
-		query += ")";
+		where += ")";
 	}
 	if((params = request.getParameterValues("reward_num")) != null) {
 		reward_num = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
-		if(query == "") {
-			query += " (reward_num=" + reward_num[0];
+		if(where == "") {
+			where += " (reward_num=" + reward_num[0];
 		} else {
-			query += " and ( reward_num=" + reward_num[0];
+			where += " and ( reward_num=" + reward_num[0];
 		}
 		for(int i = 1; i < reward_num.length; i++) {
-			query += " or reward_num=" + reward_num[i];
+			where += " or reward_num=" + reward_num[i];
 		}
-		query += ")";
+		where += ")";
 	}
 	if((params = request.getParameterValues("act_reg")) != null) {
 		act_reg = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
-		if(query == "") {
-			query += " (act_reg=" + act_reg[0];
+		if(where == "") {
+			where += " (act_reg=" + act_reg[0];
 		} else {
-			query += " and ( act_reg=" + act_reg[0];
+			where += " and ( act_reg=" + act_reg[0];
 		}
 		for(int i = 1; i < act_reg.length; i++) {
-			query += " or act_reg=" + act_reg[i];
+			where += " or act_reg=" + act_reg[i];
 		}
-		query += ")";
+		where += ")";
 	}
 	
-	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, query, null);
+	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, where, order);
 	JSONArray arr = new JSONArray(); 
 	for(ActivityBean activity : activityList) {
 		JSONObject obj = new JSONObject();

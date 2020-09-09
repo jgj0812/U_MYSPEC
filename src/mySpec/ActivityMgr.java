@@ -37,15 +37,49 @@ public class ActivityMgr {
 		
 	}
 
-	public ArrayList<ActivityBean> getActivityList(int act_type, String where, String order) {
+	public ArrayList<ActivityBean> getActivityList(int act_type, String where, int order) {
 		ArrayList<ActivityBean> activityList = null;
 		String sql = null;
-		if(where.equals("")) {
-			sql = "select act_num, act_thumb, act_title, org_name,  trunc(act_end - sysdate) as act_dday, act_hits from activity, org_user where act_org = org_id and act_type=? and act_approve=1";
-		} else {
-			sql = "select distinct act_num, act_thumb, act_title, org_name,  trunc(act_end - sysdate) as act_dday, act_hits from (select * from activity, org_user, act_interest, act_reward where act_org = org_id and act_num=interest_act and act_num=reward_act and act_type=? and act_approve=1) where" + where;
+		String select = "select distinct act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits";
+		String from = "";
+		switch(order) {
+		case 1:
+			if(where.equals("")) {
+				from += " from activity, org_user";
+				where = " where act_org = org_id and act_type = ? and act_approve = 1";
+				sql = select + from + where + " order by act_num desc";
+			} else {
+				
+			}
+			break;
+		case 2:
+			if(where.equals("")) {
+				from += " from activity, org_user";
+				where = " where act_org = org_id and act_type = ? and act_approve = 1";
+				sql = select + from + where + " order by act_dday, act_num desc";
+			} else {
+				
+			}
+			break;
+		case 3:
+			if(where.equals("")) {
+				from += " from activity, org_user";
+				where = " where act_org = org_id and act_type = ? and act_approve = 1";
+				sql = select + from + where + " order by act_dday, act_num desc";
+			} else {
+				
+			}
+			break;
+		case 4:
+			if(where.equals("")) {
+				from += " from activity, org_user";
+				where = " where act_org = org_id and act_type = ? and act_approve = 1";
+				sql = select + from + where + " order by act_dday, act_num desc";
+			} else {
+				
+			}
+			break;
 		}
-		sql += " order by act_num desc";
 		System.out.println(sql);
 		try {
 			con = pool.getConnection();
