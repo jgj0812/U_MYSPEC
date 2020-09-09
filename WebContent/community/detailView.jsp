@@ -301,18 +301,15 @@
 			<div class="col-2">
 				<input style="width:75px; margin-left:20px; margin-bottom:40px; height:70px; background-color:#aaaaaa; color:white;" type="button" onclick="reply_ok()" class="form-control" value="등록">
 			</div>
-			
-<%		} else { %>
+		</div>
+<%		}else { %>
 		<div class="container">
 			<p style="margin-left: 20px">댓글을 입력하려면 로그인을 해야합니다.</p>
 			<br>
 		</div>
 		
 	</form>
-<%	} %>
- 	</div>
- 	
- 	
+<%		} %>
 </section>
 
 <script type="text/javascript">
@@ -358,8 +355,6 @@ function updatecancel(i){
 		basic.style.display = 'block';
 	}
 }
-
-
 </script>
 
 <%@ include file="../footer.jsp" %>

@@ -11,21 +11,13 @@
 	request.setCharacterEncoding("utf-8");	
 
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>(); //일반글 arraylist
-	ArrayList<CommunityBean> comm_notice_arr = new ArrayList<CommunityBean>(); //공지사항 arraylist
-	comm_arr = mgr.Community_list(startRow, endRow, keyField, keyWord); //일반글 받아오기
-	comm_notice_arr =mgr.Community_notice_list(1, 3); //공지사항 받아오기
-	int count = mgr.community_Count(keyField, keyWord);	//게시글 갯수
 	
 	//페이징
 	pageSize = 8;	// 한 화면에 보여지는 게시글 수
 	pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
 		pageNum = "1";
-	}	
-	currentPage = Integer.parseInt(pageNum);		// 현재 페이지
-	startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
-	endRow = currentPage * pageSize;	// 페이지 끝
-	
+	}		
 	//검색
 	keyField = "";
 	keyWord = "";	
@@ -34,6 +26,14 @@
 		keyWord = request.getParameter("keyWord");
 	}
 	
+	currentPage = Integer.parseInt(pageNum);		// 현재 페이지
+	startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
+	endRow = currentPage * pageSize;	// 페이지 끝
+	
+	comm_arr = mgr.Community_list(startRow, endRow, keyField, keyWord); //일반글 받아오기
+	int count = mgr.community_Count(keyField, keyWord); //게시글 갯수
+	
+	ArrayList<CommunityBean> noticeArr = mgr.noticeList(1, 5, "", "");
 %>
 
 <section class="container my-3">
@@ -84,6 +84,30 @@
 
 		 	
 <%
+		for(CommunityBean bean : noticeArr) {
+			String person = bean.getComm_admin() != null ? "관리자" : bean.getComm_nick();
+			String datestr = bean.getComm_date();
+			String [] date = datestr.split(" ");
+			String date_1 = date[0];
+			
+%>
+				<tr class="d-flex" style="background: #f2faff;">	 		
+		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>
+		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
+		 			<td class="col-md-5">
+		 				<a href="detailView.jsp?comm_num=<%=bean.getComm_num()%>" class="h5 text-dark">
+		 					<span class="badge badge-secondary rounded-pill d-sm-none">공지</span>
+		 					<%=bean.getComm_title() %>
+		 				</a>
+		 				<p class="d-block d-sm-none"><small><%=person %> <%=date_1%> 조회 <%=bean.getComm_hits() %></small></p>
+		 			</td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=person %></td>
+		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date_1 %></td>
+		 			<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_hits() %></td>
+		 			
+		 		</tr>
+<%
+		}
 		for(CommunityBean commB :comm_arr){
 			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
 			String datestr = commB.getComm_date();

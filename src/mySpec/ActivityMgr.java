@@ -23,7 +23,7 @@ public class ActivityMgr {
 		pool = DBConnection.getInstance();
 		
 		try {
-			tagMap = (HashMap<Integer, String>) new ObjectInputStream(new FileInputStream("tag.map")).readObject();
+			tagMap = (HashMap<Integer, String>) new ObjectInputStream(new FileInputStream("C:\\Jsp\\U_MYSPEC\\tag.map")).readObject();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -249,5 +249,4 @@ public class ActivityMgr {
 		}
 		return -1;
 	}
-	
 }

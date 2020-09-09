@@ -31,7 +31,7 @@
 		<div class="section">
 			<div class="row">
 				<div class="col-md-4">
-					<img src="http://localhost/U_MYSPEC/upload/<%=activity.getAct_post() %>" width="100%">
+					<img src="../upload/<%=activity.getAct_post() %>" width="100%">
 				</div>
 				<div class="col-md-8 d-flex flex-column">
 					<div class="row">

@@ -74,7 +74,7 @@
           					<span class="navbar-toggler-icon"></span>
         			</button>
         			<!-- 검색창 -->
-        			<form class="form-inline w-100 py-2" action="${pageContext.request.contextPath}/search.jsp" method="POST">
+        			<form class="form-inline w-100 py-2" action="${pageContext.request.contextPath}/search.jsp" method="POST">  				
           				<div class="input-group">
             				<input type="text" id="search" name="search" class="form-control" size="50" />
             				<div class="input-group-append">

@@ -77,11 +77,11 @@
 				</table>	
 			</div>
 			<!-- /comNotice List -->
-			<!-- 글쓰기 -->
+			<!-- 전체글보기 -->
 			<div class="form-inline justify-content-end">
-				<a href="adminCom.jsp" class="btn btn-cam">전체글보기</a>
+				<a href="adminCom.jsp" class="btn btn-com">전체글보기</a>
 			</div>
-			<!-- /글쓰기 -->
+			<!-- /전체글보기 -->
 			<!-- 페이징 -->
 			<div class="form-inline justify-content-center">		
 				<nav aria-label="Page navigation example">

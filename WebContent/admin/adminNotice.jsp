@@ -57,7 +57,7 @@
 		 				<tr class="d-flex">	 		
 		 					<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_num() %></td>
 		 					<td class="col-md-6">
-		 						<a href="adminNoticeDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark"><%=bean.getComm_title() %></a>
+		 						<a href="adminComDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark"><%=bean.getComm_title() %></a>
 		 						<p class="d-block d-sm-none"><small>관리자 <%=date1%> <%=bean.getComm_hits() %></small></p>
 		 					</td>
 		 					<td class="col-md-2 d-none d-lg-table-cell">관리자</td>
@@ -73,6 +73,7 @@
 			<!-- /comNotice List -->
 			<!-- 글쓰기 -->
 			<div class="form-inline justify-content-end">
+				<a href="adminNotice.jsp" class="btn btn-com">전체글보기</a>&nbsp;
 				<a href="adminNoticeWrite.jsp" class="btn btn-com d-none d-md-block">글쓰기</a>
 			</div>
 			<!-- /글쓰기 -->
