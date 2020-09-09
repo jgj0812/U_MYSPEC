@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
-<%
+<%	
 	ArrayList<CommunityBean> noticeArr = mgr.noticeList(startRow, endRow, keyField, keyWord);
 %>
 <section class="py-3">
@@ -25,7 +25,7 @@
 		    <tbody>
 		    	<%for(int i = 0; i < 3; i++) {
 		    		String admin = "";
-		    		if(noticeArr.get(i).getComm_admin().equals("admin")) admin = "관리자";
+		    		
 		    		String date[] = noticeArr.get(i).getComm_date().split(" ");
 		    		String date1 = date[0];
 		    	%>
