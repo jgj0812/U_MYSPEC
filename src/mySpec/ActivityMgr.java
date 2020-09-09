@@ -36,7 +36,7 @@ public class ActivityMgr {
 		}
 		
 	}
-
+//
 	public ArrayList<ActivityBean> getActivityList(int act_type, String where, int order) {
 		ArrayList<ActivityBean> activityList = null;
 		String sql = null;
