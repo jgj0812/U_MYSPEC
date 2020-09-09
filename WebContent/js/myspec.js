@@ -1,3 +1,15 @@
+
+function twitter(comm_num) {
+	window.location.href = 'https://twitter.com/intent/tweet?text=MySpec 공유하기&url=http://192.168.0.42:8086/U_MYSPEC/community/detailView.jsp?comm_num=' + comm_num;
+}
+
+function facebook(comm_num){
+	window.location.href='https://www.facebook.com/sharer/sharer.php?u=http://192.168.0.42:8086/U_MYSPEC/community/detailView.jsp?comm_num=' + comm_num;
+}
+function line(comm_num){
+	window.location.href='https://social-plugins.line.me/lineit/share?url=http://192.168.0.42:8086/U_MYSPEC/community/detailView.jsp?comm_num=' + comm_num;
+}
+
 // header 검색 버튼
 $('#searchBtn').click(function(){
 	if($('#search').val() == "") {
@@ -521,15 +533,6 @@ function sendFile(file, editor) {
 	});
 }
 
-//커뮤니티 글쓰기
-function comm_write(id) {
-	if(id == null) {
-		alert("로그인을 해야 글쓰기가 가능합니다.");
-		window.location = "../member/login.jsp";
-	}else {
-		window.location = "write.jsp";	
-	}
-}
 
 // 활동 리스트
 function getActivityList(data) {
@@ -587,6 +590,7 @@ $("#orgSearchBtn").click(function(){
 	$("#orgSearchFrm").submit();
 });
 
+//-------------------------------커뮤니티 js--------------------------------------
 // 커뮤니티 공지글 검색(admin)
 $("#noticeSearchBtn").click(function(){
 	if($("#noticeSearch").val() == "") {
@@ -597,14 +601,58 @@ $("#noticeSearchBtn").click(function(){
 	$("#noticeSearchFrm").submit();
 });
 
-// 댓글 입력
-function reply_ok() {
-	if($("input[name=rep_content]").val() == "") {
-		alert("댓글 내용을 입력해주세요");
-		$("input[name=rep_content]").focus();
+//커뮤니티 글쓰기로 가기
+function comm_write(id) {
+	if(id == 'null') {
+		alert("로그인을 해야 글쓰기가 가능합니다.");
+		window.location = "../member/login.jsp";
+	}else {
+		window.location = "write.jsp";	
+	}
+}
+
+// 커뮤니티 글쓰기 유효성
+$("#comm_write").click(function(){
+	if($("#comm_title").val() == "") {
+		alert("제목을 입력해주세요.");
+		$("#comm_content").focus();
 		return false;
 	}
-	$("form[name=comm_reply_form]").submit();
+	if($("#comm_content").val() == "") {
+		alert("내용을 입력해주세요");
+		$("#comm_content").focus();
+		return false;
+	}
+	$("#comm_form").submit();
+});
+
+//이전글
+function prev(prev_comm){
+ 	if(prev_comm == 0){
+		alert("이전 글이 없습니다.");
+	}else{
+		window.location = "detailView.jsp?comm_num=" + prev_comm;
+	}
+}
+
+//다음글
+function next(next_comm){
+ 	if(next_comm == 0){
+		alert("다음 글이 없습니다.");
+	}else{
+		window.location = "detailView.jsp?comm_num=" + next_comm;
+	}
+}
+
+//댓글 유효성
+function reply_ok() {
+	if($("#rep_content").val() == "") {
+		alert("댓글 내용을 입력해주세요.");
+		$("#rep_content").focus();
+		return false;
+	}
+
+	$("#comm_reply_form").submit();
 }
 
 // myPage 수정 양식, 비밀번호 변경

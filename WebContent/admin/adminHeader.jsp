@@ -41,6 +41,8 @@
 	      type="text/css"
 	      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
 	    />
+	    <!-- jquery-ui -->
+	    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	    <!-- summernote css -->
 	    <link href="${pageContext.request.contextPath}/summernote/summernote-bs4.min.css" rel="stylesheet" />
 	    <!-- mySpec css -->
