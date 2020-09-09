@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class CommunityMgr {
 private DBConnection pool;
 	
-	// DB?占쎄껐
+	// DB 연결
 	public CommunityMgr() {
 		pool = DBConnection.getInstance();
 	}
@@ -149,7 +149,7 @@ private DBConnection pool;
 		}
 	
 	
-	//湲��곌린
+	// 글쓰기
 	public int Community_insert (CommunityBean Comm, String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -179,7 +179,7 @@ private DBConnection pool;
 		return re;
 	}
 	
-	//湲�����
+	// 게시글 삭제
 	public void Community_delete (int comm_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -201,7 +201,7 @@ private DBConnection pool;
 	
 	}
 	
-	//湲�����
+	// 게시글 수정
 	public int Community_update (CommunityBean Comm) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -227,7 +227,7 @@ private DBConnection pool;
 	
 	}
 	
-	//湲�蹂닿린
+	// 게시글 상세보기
 	public CommunityBean Community_detailView(int comm_num) {
 		// TODO Auto-generated method stub
 		Connection con = null;
@@ -270,7 +270,7 @@ private DBConnection pool;
 	}
 
 
-	//議고����
+	// 조회수 증가
 	private void upHit(int comm_num) {
 			
 		Connection con =null;
