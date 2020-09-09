@@ -60,7 +60,7 @@
 		 	
 <!-- 공지 --> 	
 <%
-		for(CommunityBean commB :comm_notice_arr){
+		for(CommunityBean commB :noticeArr){
 			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
 			String datestr = commB.getComm_date();
 			String [] date = datestr.split(" ");
