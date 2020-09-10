@@ -49,7 +49,9 @@ public class ActivityMgr {
 				where = " where act_org = org_id and act_type = ? and act_approve = 1";
 				sql = select + from + where + " order by act_num desc";
 			} else {
-				
+				from += " from (select * from activity, org_user, act_interest, act_reward where act_org = org_id and act_type=? and act_approve=1 and act_num = interest_act and act_num = reward_act)";
+				where = " where" + where;
+				sql = select + from + where + " order by act_num desc";
 			}
 			break;
 		case 2:
@@ -58,25 +60,31 @@ public class ActivityMgr {
 				where = " where act_org = org_id and act_type = ? and act_approve = 1";
 				sql = select + from + where + " order by act_dday, act_num desc";
 			} else {
-				
+				from += " from (select * from activity, org_user, act_interest, act_reward where act_org = org_id and act_type=? and act_approve=1 and act_num = interest_act and act_num = reward_act)";
+				where = " where" + where;
+				sql = select + from + where + " order by act_dday, act_num desc";
 			}
 			break;
 		case 3:
 			if(where.equals("")) {
-				from += " from activity, org_user";
-				where = " where act_org = org_id and act_type = ? and act_approve = 1";
-				sql = select + from + where + " order by act_dday, act_num desc";
+				from += " from (select * from activity, org_user, (select scrap_num, count(scrap_person) as scraps from scrap group by scrap_num) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = scrap_num(+) order by scraps)";
+				where = " where act_org = org_id ";
+				sql = select + from + where + " order by act_num desc";
 			} else {
-				
+				from += " from (select * from activity, org_user, act_interest, act_reward, (select scrap_num, count(scrap_person)  as scraps from scrap group by scrap_num) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = interest_act and act_num = reward_act and act_num = scrap_num(+) order by scraps)";
+				where = " where" + where;
+				sql = select + from + where + " order by act_num desc";
 			}
 			break;
 		case 4:
 			if(where.equals("")) {
-				from += " from activity, org_user";
-				where = " where act_org = org_id and act_type = ? and act_approve = 1";
-				sql = select + from + where + " order by act_dday, act_num desc";
+				from += " from (select * from activity, org_user, (select rep_act, count(rep_num) as reps from act_reply group by rep_act) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = rep_act(+) order by reps desc)";
+				where = " where act_org = org_id ";
+				sql = select + from + where + " order by act_num desc";
 			} else {
-				
+				from += " from (select * from activity, org_user, act_interest, act_reward, (select rep_act, count(rep_num) as reps from act_reply group by rep_act) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = interest_act and act_num = reward_act and act_num = rep_act(+) order by reps)";
+				where = " where" + where;
+				sql = select + from + where + " order by act_num desc";
 			}
 			break;
 		}
