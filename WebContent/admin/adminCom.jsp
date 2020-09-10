@@ -20,8 +20,8 @@
 	int currentPage = Integer.parseInt(pageNum);
 	int startRow = (currentPage - 1) * pageSize + 1;
 	int endRow = currentPage * pageSize;
-	ArrayList<CommunityBean> arrComm = mgr.adminComList(startRow, endRow, keyField, keyWord);
-	int count = mgr.adminComCount(keyField, keyWord);
+	ArrayList<CommunityBean> arrComm = mgr.Community_list(startRow, endRow, keyField, keyWord);
+	int count = mgr.community_Count(keyField, keyWord);
 %>
 <main>
 	<div class="d-flex" id="wrapper">
