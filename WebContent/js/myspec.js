@@ -555,12 +555,44 @@ function getActivityList(data) {
 			htmlStr += "</div>";
 		}
 	}
+	var act_count = data[len-1].act_count;
 	$("#activityList").html(htmlStr);
-	$("#activityCount").html("검색결과 " + data[len-1].act_count + "건");
+	$("#activityCount").html("검색결과 " + act_count + "건");
 }
 
-function getActivityCount(data) {
-	
+function pagination(totalPage) {
+	htmlStr = "<li class='page-item'>";
+	htmlStr += "<a class='page-link' href='#' aria-label='Previous'>";
+	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>처음</span>";
+	htmlStr += "<span class='sr-only'>Previous</span>";
+	htmlStr += "</a></li>";
+	for(var i = 1; i <= totalPage; i++) {
+		htmlStr += "<li class='page-item' onclick='pageing(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
+	}
+	htmlStr += "<a class='page-link' href='#'' aria-label='Next'>";
+	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>끝</span>";
+	htmlStr += "<span class='sr-only'>Next</span>";
+	htmlStr += "</a></li>";
+	$(".pagination").html(htmlStr);
+}
+
+function pageing(page) {
+	$(document).ready(function() {
+		$.ajax({
+			url: "list_actPro.jsp",
+			data: {
+				act_type: 1,
+				order: $("#activityListOrder option:selected").val(),
+				pageNum: page
+			},
+			dataType: "json",
+			cache: false,
+			success: function(data) {
+				getActivityList(data);
+				pagination(2);
+			}
+		});
+	});
 }
 
 // 개인 리스트 검색(admin)

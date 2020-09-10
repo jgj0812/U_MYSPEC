@@ -76,7 +76,7 @@ public class ActivityMgr {
 			}
 			break;
 		}
-		sql = "select rownum, act.* from (" + sql + ")act where rownum between " + start + " and " + end;
+		sql = "select * from (select rownum as rn, act.* from (" + sql + ")act) where rn between " + start + " and " + end;
 		System.out.println(sql);
 		try {
 			con = pool.getConnection();

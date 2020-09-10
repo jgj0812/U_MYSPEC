@@ -17,9 +17,11 @@
 	int[] act_reg = null;
 	String where ="";
 	int order = Integer.parseInt(request.getParameter("order"));
-	int start = Integer.parseInt(request.getParameter("start"));
-	int end = Integer.parseInt(request.getParameter("end"));
-	
+	int nowPage = 0;
+	int start = 0;
+	int end = 0;
+	int numPerPage = 16;
+
 	if((params = request.getParameterValues("act_field")) != null) {
 		act_field = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 		where += " (act_field=" + act_field[0];
@@ -63,6 +65,14 @@
 			where += " or act_reg=" + act_reg[i];
 		}
 		where += ")";
+	}
+	if(request.getParameter("page") != null) {
+		nowPage = Integer.parseInt(request.getParameter("page"));
+		start = nowPage * numPerPage - numPerPage;
+		end = numPerPage;
+	} else {
+		start = 1;
+		end = 16;
 	}
 	
 	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, where, order, start, end);
