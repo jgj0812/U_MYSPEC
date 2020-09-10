@@ -240,8 +240,8 @@ private DBConnection pool;
 				pstmt.setInt(2, rep_step);
 				pstmt.executeUpdate();
 				
-				rep_step += 1;		// 부모 rep_step + 1
-				rep_level += 1;		// 부모 rep_level + 1
+				rep_step += 1;
+				rep_level += 1;
 			}else {
 				rep_ref = number;
 				rep_step = 0;

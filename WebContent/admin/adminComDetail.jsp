@@ -104,9 +104,6 @@
 							style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
 							value="삭제"
 							onclick="location.href='adminComDeletePro.jsp?comm_num=<%=commB.getComm_num() %>&type=0'">
-							
-					<input type="button" class="btn text-dark"  style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;
-				    font-weight:bolder;" value="다음글">
 				    
 				    <!-- 이전, 다음글 -->
 					<button type="button"  
@@ -246,7 +243,6 @@
 				<form action="adminReplyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
 				  	<!-- 글번호를 넘긴다 -->
 				  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
-				  	<input type="hidden" name="adminCom" value="0">
 					<div class="form-row">
 						 <div class="col-8">
 						   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 

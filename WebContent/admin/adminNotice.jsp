@@ -73,7 +73,6 @@
 			<!-- /comNotice List -->
 			<!-- 글쓰기 -->
 			<div class="form-inline justify-content-end">
-				<a href="adminNotice.jsp" class="btn btn-com">전체글보기</a>&nbsp;
 				<a href="adminNoticeWrite.jsp" class="btn btn-com d-none d-md-block">글쓰기</a>
 			</div>
 			<!-- /글쓰기 -->
