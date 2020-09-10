@@ -46,7 +46,6 @@ public class ActivityMgr {
 			sql = "select distinct act_num, act_thumb, act_title, org_name,  trunc(act_end - sysdate) as act_dday, act_hits from (select * from activity, org_user, act_interest, act_reward where act_org = org_id and act_num=interest_act and act_num=reward_act and act_type=? and act_approve=1) where" + where;
 		}
 		sql += " order by act_num desc";
-		System.out.println(sql);
 		try {
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);

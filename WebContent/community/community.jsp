@@ -13,7 +13,7 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>(); //일반글 arraylist
 	
 	//페이징
-	pageSize = 8;	// 한 화면에 보여지는 게시글 수
+	pageSize = 5;	// 한 화면에 보여지는 게시글 수
 	pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
 		pageNum = "1";
@@ -58,31 +58,7 @@
 		 	</thead>
 		 	<tbody>
 		 	
-<!-- 공지 --> 	
-<%
-		for(CommunityBean commB :noticeArr){
-			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
-			String datestr = commB.getComm_date();
-			String [] date = datestr.split(" ");
-			String date_1 = date[0];
-%>	
-
-		 		<tr class="d-flex" style=" background-color: #1dcdff; color:white;">	 		
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>	
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-		 			<td class="col-md-5">
-		 				<a href="detailView.jsp?comm_num=<%=commB.getComm_num()%>" class="h5" style="color:white;"><%=commB.getComm_title() %></a>
-		 				<p class="d-block d-sm-none"><small><%=person %> <%=date_1%> 조회 <%=commB.getComm_hits() %></small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell"><%=person %></td>
-		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date_1 %></td>
-		 			<td class="col-md-1 d-none d-lg-table-cell"><%=commB.getComm_hits() %></td>
-		 		</tr>
-<%
-		}
-%>		
-
-		 	
+<!-- 공지 --> 		 	
 <%
 		for(CommunityBean bean : noticeArr) {
 			String person = bean.getComm_admin() != null ? "관리자" : bean.getComm_nick();

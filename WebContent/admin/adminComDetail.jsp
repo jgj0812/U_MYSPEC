@@ -15,8 +15,14 @@
 	ArrayList<CommunityReplyBean> commRe_arr  = Rmgr.Community_reply_list(comm_num);
 	
 	int num = commB.getComm_num(); //글번호
+	// 글 종류 0이면 공지, 1이면 일반글
 	int type = commB.getComm_type();
+	// 관리자가 쓴 글이면 관리자, 아니면 글쓴 유저 닉네임
 	String person = commB.getComm_admin() == null ? commB.getComm_nick() : "관리자";
+	
+	// 다음글, 이전글
+	int next_comm = mgr.next_community(comm_num);
+	int prev_comm = mgr.prev_community(comm_num);
 	
 	String str = commB.getComm_date();
 	String [] date = str.split(" ");
@@ -101,6 +107,17 @@
 							
 					<input type="button" class="btn text-dark"  style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;
 				    font-weight:bolder;" value="다음글">
+				    
+				    <!-- 이전, 다음글 -->
+					<button type="button"  
+					    	class="btn text-dark"  
+						    style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;font-weight:bolder; margin-right:5px;"  
+						    onclick="prev(<%=prev_comm%>)">이전글</button>
+						      		   
+					<button type="button"  
+					    	class="btn text-dark"  
+						    style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;font-weight:bolder;"  
+						    onclick="next(<%=next_comm%>)">다음글</button>
 			</div>
 			
 			
@@ -194,7 +211,7 @@
 					<!-- /댓글 수정 div -->
 					<!-- 답글 입력폼 -->
 					<div id="rereply<%=i%>" style="display: none">
-						<form action="adminReplyPro.jsp" name="comm_reply_form" method="post">
+						<form action="adminReplyPro.jsp" id="rereplyFrm<%=i %>" name="comm_reply_form" method="post">
 							<input type="hidden" name="comm_num" value="<%= comm_num%>">
 							<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
 							<input type="hidden" name="rep_ref" value="<%=commRB.getRep_ref() %>">
@@ -211,7 +228,7 @@
 								 
 								<!-- 답글 등록버튼 -->
 								<div class="col-2">
-									<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" type="submit" class="form-control" value="등록">
+									<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" type="button" onclick="rereply_ok(<%=i %>)" class="form-control" value="등록">
 								</div>
 							</div>
 							
@@ -226,7 +243,7 @@
 				}
 		%>				
 				<!-- 댓글 입력폼  -->
-				<form action="adminReplyPro.jsp" name="comm_reply_form" method="post">
+				<form action="adminReplyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
 				  	<!-- 글번호를 넘긴다 -->
 				  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
 				  	<input type="hidden" name="adminCom" value="0">
@@ -249,4 +266,34 @@
 	</div>
 	<!-- /wrapper -->
 </main>
+<script type="text/javascript">
+	function rereply(i){
+		var con = document.getElementById("rereply" + i);
+		if(con.style.display =='none'){
+			con.style.display = 'block';
+		}else if(con.style.display =='block'){
+			con.style.display = 'none';
+		}
+	}
+	function update(i){
+		var update = document.getElementById("update" + i);
+		var basic = document.getElementById("basic" + i);
+		
+		if(update.style.display =='none'){
+			update.style.display = 'block';
+			basic.style.display = 'none';
+		}else if(update.style.display =='block'){
+			update.style.display = 'none';
+			basic.style.display = 'block';
+		}
+	}
+	function updatecancel(i){
+		var update = document.getElementById("update" + i);
+		var basic = document.getElementById("basic" + i);
+		if(update.style.display =='block'){
+			update.style.display = 'none';
+			basic.style.display = 'block';
+		}
+	}
+</script>
 <%@ include file="/admin/adminFooter.jsp" %>

@@ -646,13 +646,22 @@ function next(next_comm){
 
 //댓글 유효성
 function reply_ok() {
-	if($("#rep_content").val() == "") {
+	if($("#replyFrm [name=rep_content]").val() == "") {
 		alert("댓글 내용을 입력해주세요.");
-		$("#rep_content").focus();
+		$("#replyFrm [name=rep_content]").focus();
 		return false;
 	}
+	$("#replyFrm").submit();
+}
 
-	$("#comm_reply_form").submit();
+// 대댓글 유효성
+function rereply_ok(i) {
+	if($("#rereplyFrm" + i +" [name=rep_content]").val() == "") {
+		alert("답글 내용을 입력해주세요.");
+		$("#rereplyFrm" + i +" [name=rep_content]").focus();
+		return false;
+	}
+	$("#rereplyFrm" + i).submit();
 }
 
 // myPage 수정 양식, 비밀번호 변경

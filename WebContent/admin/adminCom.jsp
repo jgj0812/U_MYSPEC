@@ -149,6 +149,7 @@
 				<select name="keyField" class="form-control" id="search_control">
 					<option value="comm_title">제목</option>
 					<option value="comm_content">내용</option>
+					<option value="person_nick">닉네임</option>
 				</select>
 				<div class="input-group">
 					<input type="text" id="noticeSearch" name="keyWord" class="form-control">

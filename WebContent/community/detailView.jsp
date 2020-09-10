@@ -260,7 +260,7 @@
 
 		<!-- 답글 입력폼  -->	
 		<div id="rereply<%=i%>" style="display: none">
-			<form action="replyPro.jsp" id="comm_rereply_form" name="comm_rereply_form" method="post">
+			<form action="replyPro.jsp" id="rereplyFrm<%=i %>" name="comm_rereply_form" method="post">
 				<input type="hidden" name="comm_num" value="<%= comm_num%>">
 				<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
 				<input type="hidden" name="rep_ref" value="<%=commRB.getRep_ref() %>">
@@ -289,7 +289,7 @@
 		} if(id != null) {
 %>				
 	<!-- 댓글 입력폼  -->
-	<form action="replyPro.jsp" id="comm_reply_form" name="comm_reply_form" method="post">
+	<form action="replyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
 	  	<!-- 글번호를 넘긴다 -->
 	  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
 			  	
