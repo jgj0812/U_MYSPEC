@@ -37,57 +37,46 @@ public class ActivityMgr {
 		
 	}
 //
-	public ArrayList<ActivityBean> getActivityList(int act_type, String where, int order) {
+	public ArrayList<ActivityBean> getActivityList(int act_type, String where, int order, int start, int end) {
 		ArrayList<ActivityBean> activityList = null;
-		String sql = null;
-		String select = "select distinct act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits";
-		String from = "";
+		String sql = "select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits from activity, org_user where act_org = org_id and act_type = ? and act_approve = 1";
 		switch(order) {
 		case 1:
 			if(where.equals("")) {
-				from += " from activity, org_user";
-				where = " where act_org = org_id and act_type = ? and act_approve = 1";
-				sql = select + from + where + " order by act_num desc";
+				sql += " order by act_num desc";
 			} else {
-				from += " from (select * from activity, org_user, act_interest, act_reward where act_org = org_id and act_type=? and act_approve=1 and act_num = interest_act and act_num = reward_act)";
-				where = " where" + where;
-				sql = select + from + where + " order by act_num desc";
+				where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+				sql = sql + " and act_num in (" + where + ") order by act_num desc";
 			}
 			break;
 		case 2:
 			if(where.equals("")) {
-				from += " from activity, org_user";
-				where = " where act_org = org_id and act_type = ? and act_approve = 1";
-				sql = select + from + where + " order by act_dday, act_num desc";
+				sql += " order by act_dday, act_num desc";
 			} else {
-				from += " from (select * from activity, org_user, act_interest, act_reward where act_org = org_id and act_type=? and act_approve=1 and act_num = interest_act and act_num = reward_act)";
-				where = " where" + where;
-				sql = select + from + where + " order by act_dday, act_num desc";
+				where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+				sql = sql + " and act_num in (" + where + ") order by act_dday, act_num desc";
 			}
 			break;
 		case 3:
+			sql = "select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits, nvl(scraps, 0) as scraps from activity, org_user, (select scrap_num, count(scrap_person) as scraps from scrap group by scrap_num) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = scrap_num(+)";
 			if(where.equals("")) {
-				from += " from (select * from activity, org_user, (select scrap_num, count(scrap_person) as scraps from scrap group by scrap_num) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = scrap_num(+) order by scraps)";
-				where = " where act_org = org_id ";
-				sql = select + from + where + " order by act_num desc";
+				sql += " order by scraps desc, act_num desc";
 			} else {
-				from += " from (select * from activity, org_user, act_interest, act_reward, (select scrap_num, count(scrap_person)  as scraps from scrap group by scrap_num) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = interest_act and act_num = reward_act and act_num = scrap_num(+) order by scraps)";
-				where = " where" + where;
-				sql = select + from + where + " order by act_num desc";
+				where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+				sql = sql + " and act_num in (" + where + ") order by scraps desc, act_num desc";
 			}
 			break;
 		case 4:
+			sql = "select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits, nvl(reps, 0) as reps from activity, org_user, (select rep_act, count(rep_num) as reps from act_reply group by rep_act) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = rep_act(+)";
 			if(where.equals("")) {
-				from += " from (select * from activity, org_user, (select rep_act, count(rep_num) as reps from act_reply group by rep_act) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = rep_act(+) order by reps desc)";
-				where = " where act_org = org_id ";
-				sql = select + from + where + " order by act_num desc";
+				sql += " order by reps desc, act_num desc";
 			} else {
-				from += " from (select * from activity, org_user, act_interest, act_reward, (select rep_act, count(rep_num) as reps from act_reply group by rep_act) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = interest_act and act_num = reward_act and act_num = rep_act(+) order by reps)";
-				where = " where" + where;
-				sql = select + from + where + " order by act_num desc";
+				where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+				sql = sql + " and act_num in (" + where + ") order by reps desc, act_num desc";
 			}
 			break;
 		}
+		sql = "select rownum, act.* from (" + sql + ")act where rownum between " + start + " and " + end;
 		System.out.println(sql);
 		try {
 			con = pool.getConnection();
@@ -111,6 +100,30 @@ public class ActivityMgr {
 		}
 		pool.closeConnection(con, ps);
 		return activityList;
+	}
+	
+	public int getActivityCount(int act_type, String where) {
+		String sql = null;
+		int count = 0;
+		if(where.equals("")) {
+			sql = "select count(act_num) from activity where act_type=? and act_approve=1";
+		} else {
+			sql = "select count(distinct act_num) from (select * from activity, act_interest, act_reward where act_type=? and act_approve=1 and act_num = interest_act and act_num = reward_act) where" + where;
+		}
+		System.out.println(sql);
+		try {
+			con = pool.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, act_type);
+			rs = ps.executeQuery();
+			rs.next();
+			count = rs.getInt(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pool.closeConnection(con, ps, rs);
+		return count;
 	}
 	
 	public void insertActivity(ActivityBean activity) {

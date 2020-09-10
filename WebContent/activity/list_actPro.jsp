@@ -17,6 +17,8 @@
 	int[] act_reg = null;
 	String where ="";
 	int order = Integer.parseInt(request.getParameter("order"));
+	int start = Integer.parseInt(request.getParameter("start"));
+	int end = Integer.parseInt(request.getParameter("end"));
 	
 	if((params = request.getParameterValues("act_field")) != null) {
 		act_field = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
@@ -63,10 +65,11 @@
 		where += ")";
 	}
 	
-	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, where, order);
+	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, where, order, start, end);
 	JSONArray arr = new JSONArray(); 
+	JSONObject obj = null;
 	for(ActivityBean activity : activityList) {
-		JSONObject obj = new JSONObject();
+		obj = new JSONObject();
 		obj.put("act_num", activity.getAct_num());
 		obj.put("act_thumb", activity.getAct_thumb());
 		obj.put("act_title", activity.getAct_title());
@@ -75,5 +78,8 @@
 		obj.put("act_hits", activity.getAct_hits());
 		arr.add(obj);
 	}
+	obj = new JSONObject();
+	obj.put("act_count", manager.getActivityCount(act_type, where));
+	arr.add(obj);
 	out.print(arr);
 %>

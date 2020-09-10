@@ -445,12 +445,15 @@
 	    </div>
 	
 		<br><br>
-	      <select class="form-control" id="activityListOrder" style="float: right; width: 110px" onchange="tagSearch()">
-                 <option value="1">최신순</option>
-                 <option value="2">마감순</option>
-                 <option value="3">스크랩순</option>
-                 <option value="4">댓글순</option>
-            </select>
+		<div class="d-flex justify-content-between">
+		<div id="activityCount">검색결과 건</div>
+		<select class="form-control" id="activityListOrder" style="width: 110px" onchange="tagSearch()">
+			<option value="1">최신순</option>
+			<option value="2">마감순</option>
+			<option value="3">스크랩순</option>
+			<option value="4">댓글순</option>
+		</select>
+        </div>
 	    <br><br>
 	    
 		<!-- 리스트 -->
@@ -483,3 +486,21 @@
 <br>
 </div>
 <%@ include file="../footer.jsp" %>
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			url: "list_actPro.jsp",
+			data: {
+				act_type: 1,
+				order: $("#activityListOrder option:selected").val(),
+				start: 1,
+				end: 16
+			},
+			dataType: "json",
+			cache: false,
+			success: function(data) {
+				getActivityList(data);
+			}
+		});
+	});
+</script>

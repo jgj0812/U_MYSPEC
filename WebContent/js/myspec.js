@@ -538,39 +538,30 @@ function sendFile(file, editor) {
 // 활동 리스트
 function getActivityList(data) {
 	var htmlStr = "";
-	$.each(data, function(key, val) {
-		if(key % 4 == 0) {
+	len = Object.keys(data).length;
+	for(var i = 0; i < len - 1; i++) {
+		if(i % 4 == 0) {
 			htmlStr += "<div class='row'>";
 		}
 		htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
-		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + data[i].act_num + "'><img src='../upload/" + data[i].act_thumb + "'></a>";
 		htmlStr += "<br>";
 		htmlStr += "<div class='list_explain'>";
-		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
-		htmlStr += val.org_name + "<br>";
-		htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
+		htmlStr += "<a href='list_act_detail.jsp?act_num=" + data[i].act_num + "'><div class='list_explain_title'>" + data[i].act_title + "<br></div></a>";
+		htmlStr += data[i].org_name + "<br>";
+		htmlStr += "D-" + data[i].act_dday + "&nbsp;조회수&nbsp;" + data[i].act_hits;
 		htmlStr += "</div></div>";
-		if(key % 4 == 3) {
+		if(i % 4 == 3) {
 			htmlStr += "</div>";
 		}
-	});
+	}
 	$("#activityList").html(htmlStr);
+	$("#activityCount").html("검색결과 " + data[len-1].act_count + "건");
 }
 
-$(document).ready(function() {
-	$.ajax({
-		url: "list_actPro.jsp",
-		data: {
-			act_type: 1,
-			order: $("#activityListOrder option:selected").val(),
-		},
-		dataType: "json",
-		cache: false,
-		success: function(data) {
-			getActivityList(data);
-		}
-	});
-});
+function getActivityCount(data) {
+	
+}
 
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){
