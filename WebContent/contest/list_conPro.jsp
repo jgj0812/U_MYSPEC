@@ -22,15 +22,6 @@
 	int startRow = (pageNum - 1) * pageSize + 1;
 	int endRow = pageNum * pageSize;
 	
-	int count = 0;
-	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-	int pageBlock = 4; // pagePerBlock
-	int startPage = (int) ((pageNum - 1) / pageBlock) * pageBlock + 1;
-	int endPage = startPage + pageBlock - 1;
-	if(endPage > pageCount) {
-		endPage = pageCount;
-	}
-	
 	if((params = request.getParameterValues("act_field")) != null) {
 		act_field = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 		where += " (act_field=" + act_field[0];
@@ -76,7 +67,15 @@
 		where += ")";
 	}
 	
-	count = manager.getActivityCount(act_type, where);
+	int count = manager.getActivityCount(act_type, where);
+	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+	int pageBlock = 4; // pagePerBlock
+	int startPage = (int) ((pageNum - 1) / pageBlock) * pageBlock + 1;
+	int endPage = startPage + pageBlock - 1;
+	if(endPage > pageCount) {
+		endPage = pageCount;
+	}
+	
 	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, where, order, startRow, endRow);
 	JSONArray arr = new JSONArray(); 
 	JSONObject obj = null;

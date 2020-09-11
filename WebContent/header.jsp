@@ -119,7 +119,7 @@
               					<a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link h5">대외활동</a>
             				</li>
 				            <li class="nav-item px-2">
-				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link h5">공모전</a>
+				            	<a href="${pageContext.request.contextPath}/contest/list_con.jsp" class="nav-link h5">공모전</a>
 				            </li>
 	            			<li class="nav-item px-2">
 	              				<a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link h5">커뮤니티</a>

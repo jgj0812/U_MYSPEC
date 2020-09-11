@@ -107,6 +107,7 @@ public class ActivityMgr {
 			break;
 		}
 		sql = "select * from (select rownum as rn, act.* from (" + sql + ")act) where rn between " + startRow + " and " + endRow;
+		System.out.println(sql);
 		try {
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);

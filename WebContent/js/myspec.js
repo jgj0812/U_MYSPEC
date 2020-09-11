@@ -469,8 +469,20 @@ $(document).ready(function () {
 function tagSearch() {
 	var order = $("#activityListOrder option:selected").val();
 	var data = $("#tagForm").serialize() + "&act_type=" + $.cookie("act_type") +"&order=" + order + "&pageNum=" + $.cookie("pageNum");
+	var list;
+	var tag;
+	switch($.cookie("act_type")) {
+		case "1":
+			list = "list_actPro.jsp";
+			tag = "list_act_tagPro.jsp";
+			break;
+		case "2":
+			list = "list_conPro.jsp";
+			tag = "list_con_tagPro.jsp";
+			break;
+	}
 	$.ajax({
-		url: "list_act_tagPro.jsp",
+		url: tag,
 		data: data,
 		dataType: "html",
 		cache: false,
@@ -479,7 +491,7 @@ function tagSearch() {
 		}
 	});
 	$.ajax({
-		url: "list_actPro.jsp",
+		url: list,
 		data: data,
 		dataType: "json",
 		cache: false,
@@ -540,16 +552,26 @@ function sendFile(file, editor) {
 // 활동 리스트
 function getActivityList(data) {
 	var htmlStr = "";
+	var detailUrl;
+	switch($.cookie("act_type")) {
+		case "1":
+			detailUrl = "list_act_detail.jsp"
+			break;
+		case "2":
+			detailUrl = "list_con_detail.jsp"
+			break;
+		break;
+	}
 	len = Object.keys(data).length;
 	for(var i = 0; i < len - 1; i++) {
 		if(i % 4 == 0) {
 			htmlStr += "<div class='row'>";
 		}
 		htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
-		htmlStr += "<a href='list_act_detail.jsp?act_num=" + data[i].act_num + "'><img src='../upload/" + data[i].act_thumb + "'></a>";
+		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><img src='../upload/" + data[i].act_thumb + "'></a>";
 		htmlStr += "<br>";
 		htmlStr += "<div class='list_explain'>";
-		htmlStr += "<a href='list_act_detail.jsp?act_num=" + data[i].act_num + "'><div class='list_explain_title'>" + data[i].act_title + "<br></div></a>";
+		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><div class='list_explain_title'>" + data[i].act_title + "<br></div></a>";
 		htmlStr += data[i].org_name + "<br>";
 		htmlStr += "D-" + data[i].act_dday + "&nbsp;조회수&nbsp;" + data[i].act_hits;
 		htmlStr += "</div></div>";
@@ -582,10 +604,20 @@ function makePagination(data) {
 	$(".pagination").html(htmlStr);
 }
 
+
 function getPage(pageNum) {
+	var url;
+	switch($.cookie("act_type")) {
+		case "1":
+			url = "list_actPro.jsp";
+			break;
+		case "2":
+			url = "list_conPro.jsp";
+			break;
+	}
 	$.cookie("pageNum", pageNum);
 	$.ajax({
-		url: "list_actPro.jsp",
+		url: url,
 		data: {
 			act_type: $.cookie("act_type"),
 			order: $("#activityListOrder option:selected").val(),
@@ -597,6 +629,38 @@ function getPage(pageNum) {
 			len = Object.keys(data).length;
 			getActivityList(data);
 			makePagination(data[len - 1]);
+		}
+	});
+}
+
+function scrap(person_id, act_num) {
+	var url;
+	switch($.cookie("act_type")) {
+		case "1":
+			url = "list_act_scrapPro.jsp";
+			break;
+		case "2":
+			url = "list_con_scrapPro.jsp";
+			break;			
+	}
+	$.ajax({
+		url: url,
+		data: {
+			person_id: person_id,
+			act_num: act_num
+		},
+		success: function(data) {
+			switch(data) {
+				case '-1':
+					alert("스크랩에 오류가 발생했습니다.");
+					break;
+				case '0':
+					alert("이미 스크랩한 활동입니다.");
+					break;
+				case '1':
+					alert("스크랩 했습니다.");
+					break;
+			}
 		}
 	});
 }

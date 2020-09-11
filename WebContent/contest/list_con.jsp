@@ -354,6 +354,7 @@
 <script>
 	$.cookie("act_type", 2);
 	$.cookie("pageNum", 1);
+	
 	$(document).ready(function() {
 		getPage(1);
 	});
