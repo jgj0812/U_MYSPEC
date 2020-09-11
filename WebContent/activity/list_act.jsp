@@ -472,20 +472,8 @@
 </div>
 <%@ include file="../footer.jsp" %>
 <script>
+	$.cookie("pageNum", 1);
 	$(document).ready(function() {
-		$.ajax({
-			url: "list_actPro.jsp",
-			data: {
-				act_type: 1,
-				order: $("#activityListOrder option:selected").val(),
-				page: 1
-			},
-			dataType: "json",
-			cache: false,
-			success: function(data) {
-				getActivityList(data);
-				pagination(2);
-			}
-		});
+		getPage();
 	});
 </script>

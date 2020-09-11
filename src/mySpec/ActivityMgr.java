@@ -37,7 +37,7 @@ public class ActivityMgr {
 		
 	}
 //
-	public ArrayList<ActivityBean> getActivityList(int act_type, String where, int order, int start, int end) {
+	public ArrayList<ActivityBean> getActivityList(int act_type, String where, int order, int startRow, int endRow) {
 		ArrayList<ActivityBean> activityList = null;
 		String sql = "select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits from activity, org_user where act_org = org_id and act_type = ? and act_approve = 1";
 		switch(order) {
@@ -76,7 +76,7 @@ public class ActivityMgr {
 			}
 			break;
 		}
-		sql = "select * from (select rownum as rn, act.* from (" + sql + ")act) where rn between " + start + " and " + end;
+		sql = "select * from (select rownum as rn, act.* from (" + sql + ")act) where rn between " + startRow + " and " + endRow;
 		System.out.println(sql);
 		try {
 			con = pool.getConnection();

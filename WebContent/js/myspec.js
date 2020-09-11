@@ -468,7 +468,7 @@ $(document).ready(function () {
 // 대외활동, 공모전 리스트 체크박스 동작
 function tagSearch() {
 	var order = $("#activityListOrder option:selected").val();
-	var data = $("#tagForm").serialize() + "&act_type=1&order=" + order;
+	var data = $("#tagForm").serialize() + "&act_type=1&order=" + order + "&pageNum=" + $.cookie("pageNum");
 	$.ajax({
 		url: "list_act_tagPro.jsp",
 		data: data,
@@ -484,7 +484,9 @@ function tagSearch() {
 		dataType: "json",
 		cache: false,
 		success: function(data) {
+			len = Object.keys(data).length;
 			getActivityList(data);
+			makePagination(data[len - 1]);
 		}
 	});
 }
@@ -555,43 +557,47 @@ function getActivityList(data) {
 			htmlStr += "</div>";
 		}
 	}
-	var act_count = data[len-1].act_count;
 	$("#activityList").html(htmlStr);
-	$("#activityCount").html("검색결과 " + act_count + "건");
 }
 
-function pagination(totalPage) {
+function makePagination(data) {
+	var count = data.act_count;
+	var startPage = data.act_startPage;
+	var endPage = data.act_endPage;
+	
 	htmlStr = "<li class='page-item'>";
 	htmlStr += "<a class='page-link' href='#' aria-label='Previous'>";
-	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>처음</span>";
+	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>이전</span>";
 	htmlStr += "<span class='sr-only'>Previous</span>";
 	htmlStr += "</a></li>";
-	for(var i = 1; i <= totalPage; i++) {
-		htmlStr += "<li class='page-item' onclick='pageing(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
+	for(var i = startPage; i <= endPage; i++) {
+		htmlStr += "<li class='page-item' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
 	}
 	htmlStr += "<a class='page-link' href='#'' aria-label='Next'>";
-	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>끝</span>";
+	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>다음</span>";
 	htmlStr += "<span class='sr-only'>Next</span>";
 	htmlStr += "</a></li>";
+	
+	$("#activityCount").html("검색결과 " + count + "건");
 	$(".pagination").html(htmlStr);
 }
 
-function pageing(page) {
-	$(document).ready(function() {
-		$.ajax({
-			url: "list_actPro.jsp",
-			data: {
-				act_type: 1,
-				order: $("#activityListOrder option:selected").val(),
-				pageNum: page
-			},
-			dataType: "json",
-			cache: false,
-			success: function(data) {
-				getActivityList(data);
-				pagination(2);
-			}
-		});
+function getPage(pageNum) {
+	$.cookie("pageNum", pageNum);
+	$.ajax({
+		url: "list_actPro.jsp",
+		data: {
+			act_type: 1,
+			order: $("#activityListOrder option:selected").val(),
+			pageNum: $.cookie("pageNum")
+		},
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			len = Object.keys(data).length;
+			getActivityList(data);
+			makePagination(data[len - 1]);
+		}
 	});
 }
 
@@ -722,13 +728,11 @@ $("#UpdateBtn").click(function(){
 		return false;
 	}
 	
-	
 	// 기존 비밀번호는 필수적 입력
 	if($("#old_pwd").val() == "") {
 	alert("기존 비밀번호를 입력해 주세요.");
 	return;
 	}
-	
 	
 	// 새로운 비밀번호칸이 빈칸이 아닐경우 실행
 	if($("#password").val() != "") {

@@ -7,7 +7,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-//gdg
 	ActivityMgr manager = new ActivityMgr();
 	int act_type = Integer.parseInt(request.getParameter("act_type"));
 	String[] params = null;
@@ -17,11 +16,21 @@
 	int[] act_reg = null;
 	String where ="";
 	int order = Integer.parseInt(request.getParameter("order"));
-	int nowPage = 0;
-	int start = 0;
-	int end = 0;
-	int numPerPage = 16;
-
+	
+	int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+	int pageSize = 16;
+	int startRow = (pageNum - 1) * pageSize + 1;
+	int endRow = pageNum * pageSize;
+	
+	int count = manager.getActivityCount(act_type, where);
+	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+	int pageBlock = 4; // pagePerBlock
+	int startPage = (int) ((pageNum - 1) / pageBlock) * pageBlock + 1;
+	int endPage = startPage + pageBlock - 1;
+	if(endPage > pageCount) {
+		endPage = pageCount;
+	}
+	
 	if((params = request.getParameterValues("act_field")) != null) {
 		act_field = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 		where += " (act_field=" + act_field[0];
@@ -66,16 +75,8 @@
 		}
 		where += ")";
 	}
-	if(request.getParameter("page") != null) {
-		nowPage = Integer.parseInt(request.getParameter("page"));
-		start = nowPage * numPerPage - numPerPage;
-		end = numPerPage;
-	} else {
-		start = 1;
-		end = 16;
-	}
 	
-	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, where, order, start, end);
+	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, where, order, startRow, endRow);
 	JSONArray arr = new JSONArray(); 
 	JSONObject obj = null;
 	for(ActivityBean activity : activityList) {
@@ -88,8 +89,12 @@
 		obj.put("act_hits", activity.getAct_hits());
 		arr.add(obj);
 	}
+	
 	obj = new JSONObject();
-	obj.put("act_count", manager.getActivityCount(act_type, where));
+	obj.put("act_count", count);
+	obj.put("act_pageCount", pageCount);
+	obj.put("act_startPage", startPage);
+	obj.put("act_endPage", endPage);
 	arr.add(obj);
 	out.print(arr);
 %>
