@@ -445,11 +445,11 @@
 	    </div>
 	
 		<br><br>
-	      <select class="form-control" name="type" style="float: right; width: 110px" >
-                 <option>최신순</option>
-                 <option>마감순</option>
-                 <option>스크랩순</option>
-                 <option>댓글순</option>
+	      <select class="form-control" id="activityListOrder" style="float: right; width: 110px" onchange="tagSearch()">
+                 <option value="1">최신순</option>
+                 <option value="2">마감순</option>
+                 <option value="3">스크랩순</option>
+                 <option value="4">댓글순</option>
             </select>
 	    <br><br>
 	    
