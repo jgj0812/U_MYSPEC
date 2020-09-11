@@ -117,6 +117,7 @@ private DBConnection pool;
 			return comm_notice_arr;
 		}
 	
+	//커뮤니티 글 개수
 	public int community_Count(String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -127,14 +128,30 @@ private DBConnection pool;
 		try {
 			con = pool.getConnection();
 			if(keyWord.trim().equals("") || keyWord == null) {
+
 				// 검색이 아닌경우
-				sql = "select count(*) from community";
+				//sql = "select count(*) from community";
+				
+				sql = "select count(*) from "
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id) "
+						+ "where comm_type=1 ";
+				
 				pstmt = con.prepareStatement(sql);
 			}else {
-					// 검색인 경우
-				sql = "select count(*) from community where " + keyField + " like ?";
+				// 검색인 경우
+				//sql = "select count(*) from community where " + keyField + " like ?";
+				sql = "select count(*) from "
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id "
+						+ "where " + keyField + " like ? and comm_type=1)";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%" + keyWord + "%");
+				
+				
+				
 			}
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -232,7 +249,7 @@ private DBConnection pool;
 		// TODO Auto-generated method stub
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;// 占쏙옙占쏙옙占쏙옙獵占� sql占쏙옙占쏙옙占쏙옙占쏙옙 占십울옙占싹댐옙
+		ResultSet rs = null;
 		CommunityBean commB = null;
 		upHit(comm_num);
 		String sql = "select c.*, p.person_nick from "
