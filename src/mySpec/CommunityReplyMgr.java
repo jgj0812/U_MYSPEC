@@ -19,10 +19,13 @@ private DBConnection pool;
 		ResultSet rs = null;
 		
 		String sql = "select r.*, p.person_nick from "
-						+ "comm_reply r left outer join person_user p "
-						+ "on r.rep_person = p.person_id "
-						+ "where rep_comm = "+ rep_comm
-						+ " order by rep_ref desc, rep_step asc";
+						+ "(select * from "
+						+ "(select * from comm_reply where rep_comm = " + rep_comm + ") "
+						+ "start with rep_ref = 0 "
+						+ "connect by prior rep_num = rep_ref "
+						+ "order siblings by rep_num) r "
+						+ "left outer join person_user p "
+						+ "on r.rep_person = p.person_id";
 		
 		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		
@@ -226,9 +229,7 @@ private DBConnection pool;
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();	// 최대값 구하기
 			if(rs.next()) {
-				number = rs.getInt(1) + 1;
-			}else {// 데이터가 없으면
-				number = 1;
+				number = 0;
 			}
 			// ref step level 결정
 			

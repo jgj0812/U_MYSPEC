@@ -129,22 +129,20 @@
 				<hr style="margin-top: 2px">
 				<!-- 댓글 보여주는 곳 -->	
 		<%
-				int i = 0;
-				for(CommunityReplyBean commRB :commRe_arr){
-					String repPerson = commRB.getRep_admin() != null ? "관리자" : commRB.getRep_nick();
+				for(int i = commRe_arr.size() - 1; i >= 0 ; i--) {
+					String repPerson = commRe_arr.get(i).getRep_admin() != null ? "관리자" : commRe_arr.get(i).getRep_nick();
 
 					int wid=0;
 					int h=0;
 					int fontwid=0;
 					int wid_margin=0;
-					i++;
 					 
-					if(commRB.getRep_level() > 0){
+					if(commRe_arr.get(i).getRep_level() > 0){
 
-						wid = 25*(commRB.getRep_level());
+						wid = 25*(commRe_arr.get(i).getRep_level());
 						fontwid=15;
 						h=15;
-						wid_margin = 25*(commRB.getRep_level());
+						wid_margin = 25*(commRe_arr.get(i).getRep_level());
 					}
 		%>	
 				<!-- 댓글 div -->
@@ -154,12 +152,12 @@
 							<img src="${pageContext.request.contextPath}/img/level.png" style="margin-left: 16px; width: <%=wid%>px;  height:<%=h%>px;"> <!-- 레벨 -->
 							<i class="fas fa-reply" style="margin-left: 5px; font-size:<%=fontwid%>px "></i> <!-- 답글 이모지 -->
 							<p style="margin-left:25px;"><%=repPerson%></p> <!-- 닉네임 -->
-							<p style="margin-left:20px;"><%=commRB.getRep_date()%></p> <!-- 날짜 -->
+							<p style="margin-left:20px;"><%=commRe_arr.get(i).getRep_date()%></p> <!-- 날짜 -->
 						</div>
 						
 						<div style="margin-left:25px; font-size:1rem;">
 							<img src="${pageContext.request.contextPath}/img/level.png" style="margin-left: <%=wid_margin%>px; height:<%=h%>px;">
-							<%=commRB.getRep_content()%>
+							<%=commRe_arr.get(i).getRep_content()%>
 						</div> <!-- 댓글 내용 -->
 						
 						<div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex"> <!-- 삭제 수정 답글 -->
@@ -167,15 +165,15 @@
 							<form action="adminReplyDeletePro.jsp"> 
 								<!-- 원래글로 돌아가기위한 글번호  -->
 								<input type="hidden" name="comm_num" value="<%= comm_num%>">
-								<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+								<input type="hidden" name="rep_num" value="<%=commRe_arr.get(i).getRep_num() %>">
 								<input type="submit" style="border: 0px" value="삭제">  
 							</form>
 							
-							<%if(id != null && id.trim().equals(commRB.getRep_admin())) { %>
+							<%if(id != null && id.trim().equals(commRe_arr.get(i).getRep_admin())) { %>
 							<!-- 수정  -->			
 							<form> 
 								<input type="hidden" name="comm_num" value="<%= comm_num%>">
-								<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+								<input type="hidden" name="rep_num" value="<%=commRe_arr.get(i).getRep_num() %>">
 								<input type="button" style="border: 0px" value="수정"  onclick="update(<%=i%>)"> 
 							</form>  
 							<%} %>
@@ -191,8 +189,8 @@
 					<div id="update<%=i %>" style="display: none">
 						<form action ="adminReplyUpdatePro.jsp" method="post"> 
 							<div style="margin-bottom: 5px">
-								<input name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB.getRep_content()%>"> 
-								<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+								<input name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRe_arr.get(i).getRep_content()%>"> 
+								<input type="hidden" name="rep_num" value="<%=commRe_arr.get(i).getRep_num() %>">
 								<input type="hidden" name="comm_num" value="<%= comm_num%>">
 							</div>
 							
@@ -210,10 +208,10 @@
 					<div id="rereply<%=i%>" style="display: none">
 						<form action="adminReplyPro.jsp" id="rereplyFrm<%=i %>" name="comm_reply_form" method="post">
 							<input type="hidden" name="comm_num" value="<%= comm_num%>">
-							<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-							<input type="hidden" name="rep_ref" value="<%=commRB.getRep_ref() %>">
-							<input type="hidden" name="rep_step" value="<%=commRB.getRep_step() %>">
-							<input type="hidden" name="rep_level" value="<%=commRB.getRep_level() %>">
+							<input type="hidden" name="rep_num" value="<%=commRe_arr.get(i).getRep_num() %>">
+							<input type="hidden" name="rep_ref" value="<%=commRe_arr.get(i).getRep_num() %>">
+							<input type="hidden" name="rep_step" value="<%=commRe_arr.get(i).getRep_step() %>">
+							<input type="hidden" name="rep_level" value="<%=commRe_arr.get(i).getRep_level() %>">
 							
 							<div class="form-row">
 								 <i class="fas fa-reply" style="margin-left: 20px; font-size:25" ></i> <!-- 답글 이모지  -->
