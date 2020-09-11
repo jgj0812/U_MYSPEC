@@ -468,7 +468,7 @@ $(document).ready(function () {
 // 대외활동, 공모전 리스트 체크박스 동작
 function tagSearch() {
 	var order = $("#activityListOrder option:selected").val();
-	var data = $("#tagForm").serialize() + "&act_type=1&order=" + order + "&pageNum=" + $.cookie("pageNum");
+	var data = $("#tagForm").serialize() + "&act_type=" + $.cookie("act_type") +"&order=" + order + "&pageNum=" + $.cookie("pageNum");
 	$.ajax({
 		url: "list_act_tagPro.jsp",
 		data: data,
@@ -587,7 +587,7 @@ function getPage(pageNum) {
 	$.ajax({
 		url: "list_actPro.jsp",
 		data: {
-			act_type: 1,
+			act_type: $.cookie("act_type"),
 			order: $("#activityListOrder option:selected").val(),
 			pageNum: $.cookie("pageNum")
 		},

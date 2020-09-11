@@ -36,24 +36,40 @@ public class ActivityMgr {
 		}
 		
 	}
-//
+
 	public ArrayList<ActivityBean> getActivityList(int act_type, String where, int order, int startRow, int endRow) {
 		ArrayList<ActivityBean> activityList = null;
-		String sql = "select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits from activity, org_user where act_org = org_id and act_type = ? and act_approve = 1";
+		String sql = null;
 		switch(order) {
 		case 1:
+			sql = "select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits from activity, org_user where act_org = org_id and act_type = ? and act_approve = 1";
 			if(where.equals("")) {
 				sql += " order by act_num desc";
 			} else {
-				where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+				switch(act_type) {
+				case 1:
+					where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+					break;
+				case 2:
+					where = "select act_num from (select act_num, act_field, act_award, reward_num, org_type from activity, act_reward, org_user where act_num = reward_act and act_org = org_id) where" + where;
+					break;
+				}
 				sql = sql + " and act_num in (" + where + ") order by act_num desc";
 			}
 			break;
 		case 2:
+			sql = "select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits from activity, org_user where act_org = org_id and act_type = ? and act_approve = 1";
 			if(where.equals("")) {
 				sql += " order by act_dday, act_num desc";
 			} else {
-				where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+				switch(act_type) {
+				case 1:
+					where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+					break;
+				case 2:
+					where = "select act_num from (select act_num, act_field, act_award, reward_num, org_type from activity, act_reward, org_user where act_num = reward_act and act_org = org_id) where" + where;
+					break;
+				}
 				sql = sql + " and act_num in (" + where + ") order by act_dday, act_num desc";
 			}
 			break;
@@ -62,7 +78,14 @@ public class ActivityMgr {
 			if(where.equals("")) {
 				sql += " order by scraps desc, act_num desc";
 			} else {
-				where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+				switch(act_type) {
+				case 1:
+					where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+					break;
+				case 2:
+					where = "select act_num from (select act_num, act_field, act_award, reward_num, org_type from activity, act_reward, org_user where act_num = reward_act and act_org = org_id) where" + where;
+					break;
+				}
 				sql = sql + " and act_num in (" + where + ") order by scraps desc, act_num desc";
 			}
 			break;
@@ -71,13 +94,19 @@ public class ActivityMgr {
 			if(where.equals("")) {
 				sql += " order by reps desc, act_num desc";
 			} else {
-				where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+				switch(act_type) {
+				case 1:
+					where = "select act_num from (select act_num, act_field, interest_num, reward_num, act_reg from activity, act_interest, act_reward where act_num = interest_act and act_num = reward_act) where" + where;
+					break;
+				case 2:
+					where = "select act_num from (select act_num, act_field, act_award, reward_num, org_type from activity, act_reward, org_user where act_num = reward_act and act_org = org_id) where" + where;
+					break;
+				}
 				sql = sql + " and act_num in (" + where + ") order by reps desc, act_num desc";
 			}
 			break;
 		}
 		sql = "select * from (select rownum as rn, act.* from (" + sql + ")act) where rn between " + startRow + " and " + endRow;
-		System.out.println(sql);
 		try {
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);
@@ -108,9 +137,15 @@ public class ActivityMgr {
 		if(where.equals("")) {
 			sql = "select count(act_num) from activity where act_type=? and act_approve=1";
 		} else {
-			sql = "select count(distinct act_num) from (select * from activity, act_interest, act_reward where act_type=? and act_approve=1 and act_num = interest_act and act_num = reward_act) where" + where;
+			switch(act_type) {
+			case 1:
+				sql = "select count(distinct act_num) from (select * from activity, act_interest, act_reward where act_type=? and act_approve=1 and act_num = interest_act and act_num = reward_act) where" + where;
+				break;
+			case 2:
+				sql = "select count(distinct act_num) from (select act_num, act_field, act_award, reward_num, org_type from activity, act_reward, org_user where act_type=? and act_approve=1 and act_num = reward_act and act_org=org_id) where" + where;
+				break;
+			}
 		}
-		System.out.println(sql);
 		try {
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);

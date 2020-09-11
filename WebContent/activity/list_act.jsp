@@ -472,8 +472,10 @@
 </div>
 <%@ include file="../footer.jsp" %>
 <script>
+	$.cookie("act_type", 1);
 	$.cookie("pageNum", 1);
+	
 	$(document).ready(function() {
-		getPage();
+		getPage(1);
 	});
 </script>
