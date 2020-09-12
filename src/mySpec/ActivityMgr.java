@@ -107,7 +107,7 @@ public class ActivityMgr {
 			break;
 		}
 		sql = "select * from (select rownum as rn, act.* from (" + sql + ")act) where rn between " + startRow + " and " + endRow;
-		System.out.println(sql);
+
 		try {
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);
@@ -128,7 +128,7 @@ public class ActivityMgr {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		pool.closeConnection(con, ps);
+		pool.closeConnection(con, ps, rs);
 		return activityList;
 	}
 	
@@ -333,11 +333,13 @@ public class ActivityMgr {
 			ps.setString(1, person_id);
 			ps.setInt(2, act_num);
 			ps.executeUpdate();
+			pool.closeConnection(con, ps, rs);
 			return 1;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		pool.closeConnection(con, ps, rs);
 		return -1;
 	}
 }

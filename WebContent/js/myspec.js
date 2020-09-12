@@ -590,14 +590,14 @@ function makePagination(data) {
 	htmlStr = "<li class='page-item'>";
 	htmlStr += "<a class='page-link' href='#' aria-label='Previous'>";
 	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>이전</span>";
-	htmlStr += "<span class='sr-only'>Previous</span>";
+	htmlStr += "<span class='sr-only'>이전</span>";
 	htmlStr += "</a></li>";
 	for(var i = startPage; i <= endPage; i++) {
 		htmlStr += "<li class='page-item' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
 	}
 	htmlStr += "<a class='page-link' href='#'' aria-label='Next'>";
 	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>다음</span>";
-	htmlStr += "<span class='sr-only'>Next</span>";
+	htmlStr += "<span class='sr-only'>다음</span>";
 	htmlStr += "</a></li>";
 	
 	$("#activityCount").html("검색결과 " + count + "건");

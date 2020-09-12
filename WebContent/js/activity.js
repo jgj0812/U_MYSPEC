@@ -13,6 +13,7 @@ function act_submit() {
 	var currDate = new Date(new Date().getYear() + 1900, new Date().getMonth(), new Date().getDate());
 	var startDate = Date.parse($("#act_form input[name='act_start']").val());
 	var endDate = Date.parse($("#act_form input[name='act_end']").val());
+	var act_type;
 
 	if($("#act_form input[name='act_title']").val().length == 0) {
 		alert("제목을 입력해주세요");
@@ -25,6 +26,8 @@ function act_submit() {
 	if($("#act_form input[name='act_type']:checked").length == 0) {
 		alert("종류를 선택해주세요.");
 		return;
+	} else {
+		act_type = $("#act_form input[name='act_type']:checked").val();
 	}
 	if($("#act_form input[name='act_start']").val().length == 0) {
 		alert("시작기간을 입력해주세요.");
@@ -38,17 +41,19 @@ function act_submit() {
 		alert("날짜를 정확하게 입력해주세요.");
 		return;
 	}
-	if($("#act_form input[name='act_pop']").val().length == 0) {
-		alert("모집인원을 입력해주세요.");
-		return;
-	}
-	if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
-		alert("모집인원을 정확하게 입력해주세요.");
-		return;
-	}
-	if($("#act_form input[name='act_reg']:checked").length == 0) {
-		alert("모임지역을 선택해주세요.");
-		return;
+	if(act_type == "1") {
+		if($("#act_form input[name='act_pop']").val().length == 0) {
+			alert("모집인원을 입력해주세요.");
+			return;
+		}
+		if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
+			alert("모집인원을 정확하게 입력해주세요.");
+			return;
+		}
+		if($("#act_form input[name='act_reg']:checked").length == 0) {
+			alert("모임지역을 선택해주세요.");
+			return;
+		}
 	}
 	if($("#act_form input[name='act_field']:checked").length == 0) {
 		alert("활동분야를 선택해주세요.");
@@ -61,6 +66,16 @@ function act_submit() {
 	if($("#act_form input[name='act_home']").val().length == 0) {
 		alert("홈페이지를 입력해주세요.");
 		return;
+	}
+	if(act_type == "2") {
+		if($("#act_form input[name='act_award']").val().length == 0) {
+			alert("시상규모을 입력해주세요.");
+			return;
+		}
+		if($("#act_form input[name='act_award']").val() < 0) {
+			alert("시상규모을 정확하게 입력해주세요.");
+			return;
+		}
 	}
 	if($("#act_form input[name='act_reward']:checked").length == 0) {
 		alert("활동혜택을 선택해주세요.");
