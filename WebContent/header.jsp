@@ -17,19 +17,13 @@
 	if(uri[2] != null) {
 		uri2 = uri[2];
 	}
-	int pageSize = 5;
-	String pageNum = request.getParameter("pageNum");
-	if(pageNum == null) {
-		pageNum = "1";
-	}
-	String keyField = "", keyWord = "";
+	
+	String keyField = "", keyField1 = "", keyWord = "";
 	if(request.getParameter("keyWord") != null) {
 		keyField = request.getParameter("keyField");
+		keyField1 = request.getParameter("keyField1");
 		keyWord = request.getParameter("keyWord");
 	}
-	int currentPage = Integer.parseInt(pageNum);
-	int startRow = (currentPage - 1) * pageSize + 1;
-	int endRow = currentPage * pageSize;
 %>
 <!DOCTYPE html>
 <html lang="ko" class="h-100">
@@ -88,9 +82,11 @@
           					<span class="navbar-toggler-icon"></span>
         			</button>
         			<!-- 검색창 -->
-        			<form class="form-inline w-100 py-2" action="${pageContext.request.contextPath}/search.jsp" method="POST">  				
+        			<form class="form-inline w-100 py-2" action="${pageContext.request.contextPath}/search.jsp" method="get">  				
+        				<input type="hidden" name="keyField" value="comm_title">
+        				<input type="hidden" name="keyField1" value="act_title">
           				<div class="input-group">
-            				<input type="text" id="search" name="search" class="form-control" size="50" />
+            				<input type="text" id="search" name="keyWord" class="form-control" size="50" />
             				<div class="input-group-append">
               					<button type="submit" id="searchBtn" class="btn btn-light px-2">
                 					<i class="fas fa-search"></i>

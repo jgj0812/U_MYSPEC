@@ -293,4 +293,181 @@ public class ActivityMgr {
 		}
 		return -1;
 	}
+	
+	// 활동 검색
+	public ArrayList<ActivityBean> searchActivity(int startRow, int endRow, String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select a.*, o.org_name from "
+						+ "(select * from activity where " + keyField + " like ? "
+						+ "and act_approve=1) a "
+						+ "left outer join org_user o "
+						+ "on a.act_org = o.org_id) aa) "
+						+ "where rn between ? and ? "
+						+ "order by act_num desc";
+		ArrayList<ActivityBean> actArr = new ArrayList<ActivityBean>();
+		
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%" + keyWord + "%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_type(rs.getInt("act_type"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				bean.setAct_org(rs.getString("act_org"));
+				bean.setAct_end(rs.getDate("act_end"));
+				bean.setOrg_name(rs.getString("org_name"));
+				actArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return actArr;
+	}
+	
+	// 검색된 활동 수
+	public int searchActivityCount(String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) from activity where " + keyField + " like ? and act_approve=1";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%" + keyWord + "%");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	// 관리자 대외활동 리스트
+	public ArrayList<ActivityBean> adminActivityList(int startRow, int endRow, String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<ActivityBean> adminActArr = new ArrayList<ActivityBean>();
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select a.*, o.org_name, o.org_manager from "
+						+ "activity a left outer join org_user o "
+						+ "on a.act_org = o.org_id) aa) "
+						+ "where rn between ? and ? "
+						+ "order by act_num desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}else {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select a.*, o.org_name, o.org_manager from "
+						+ "(select * from activity "
+						+ "where " + keyField + " like ?) a "
+						+ "left outer join org_user o "
+						+ "on a.act_org = o.org_id) aa) "
+						+ "where rn between ? and ? "
+						+ "order by act_num desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_type(rs.getInt("act_type"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				bean.setAct_org(rs.getString("act_org"));
+				bean.setAct_end(rs.getDate("act_end"));
+				bean.setOrg_name(rs.getString("org_name"));
+				bean.setAct_approve(rs.getInt("act_approve"));
+				bean.setOrg_manager(rs.getString("org_manager"));
+				adminActArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return adminActArr;
+	}
+	
+	// 관리자 대외활동 수
+	public int adminActivityCount(String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select count(*) from activity";
+				pstmt = con.prepareStatement(sql);
+			}else {
+				sql = "select count(*) from activity where " + keyField + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	// 대외활동, 공모전 삭제
+	public int deleteActCon(int act_num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from activity where act_num=?";
+		int re = 0;
+
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, act_num);
+			pstmt.executeUpdate();
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+		return re;
+	}
 }

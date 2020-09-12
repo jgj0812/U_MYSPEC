@@ -667,6 +667,40 @@ function rereply_ok(i) {
 	$("#rereplyFrm" + i).submit();
 }
 
+// 답글 입력폼
+function rereply(i){
+	var rereply = document.getElementById("rereply" + i);
+	if(rereply.style.display =='none'){
+		rereply.style.display = 'block';
+	}else if(rereply.style.display =='block'){
+		rereply.style.display = 'none';
+	}
+}
+
+// 댓글 수정 폼
+function update(i){
+	var update = document.getElementById("update" + i);
+	var basic = document.getElementById("basic" + i);
+	
+	if(update.style.display =='none'){
+		update.style.display = 'block';
+		basic.style.display = 'none';
+	}else if(update.style.display =='block'){
+		update.style.display = 'none';
+		basic.style.display = 'block';
+	}
+}
+
+// 댓글 수정 취소
+function updatecancel(i){
+	var update = document.getElementById("update" + i);
+	var basic = document.getElementById("basic" + i);
+	if(update.style.display =='block'){
+		update.style.display = 'none';
+		basic.style.display = 'block';
+	}
+}
+
 // myPage 수정 양식, 비밀번호 변경
 $("#UpdateBtn").click(function(){
 	

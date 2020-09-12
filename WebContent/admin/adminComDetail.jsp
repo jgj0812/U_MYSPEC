@@ -124,7 +124,7 @@
 				<hr style="margin-top: 2px">
 				<!-- 댓글 보여주는 곳 -->	
 		<%
-				for(int i = commRe_arr.size() - 1; i >= 0 ; i--) {
+				for(int i = 0; i < commRe_arr.size() ; i++) {
 					String repPerson = commRe_arr.get(i).getRep_admin() != null ? "관리자" : commRe_arr.get(i).getRep_nick();
 
 					int wid=0;
@@ -256,34 +256,4 @@
 	</div>
 	<!-- /wrapper -->
 </main>
-<script type="text/javascript">
-	function rereply(i){
-		var con = document.getElementById("rereply" + i);
-		if(con.style.display =='none'){
-			con.style.display = 'block';
-		}else if(con.style.display =='block'){
-			con.style.display = 'none';
-		}
-	}
-	function update(i){
-		var update = document.getElementById("update" + i);
-		var basic = document.getElementById("basic" + i);
-		
-		if(update.style.display =='none'){
-			update.style.display = 'block';
-			basic.style.display = 'none';
-		}else if(update.style.display =='block'){
-			update.style.display = 'none';
-			basic.style.display = 'block';
-		}
-	}
-	function updatecancel(i){
-		var update = document.getElementById("update" + i);
-		var basic = document.getElementById("basic" + i);
-		if(update.style.display =='block'){
-			update.style.display = 'none';
-			basic.style.display = 'block';
-		}
-	}
-</script>
 <%@ include file="/admin/adminFooter.jsp" %>

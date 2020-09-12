@@ -1,9 +1,9 @@
-<%@page import="mySpec.PersonBean"%>
+<%@page import="mySpec.ActivityBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/admin/adminHeader.jsp" %>
-<jsp:useBean id="mgr" class="mySpec.MemberMgr" />
+<jsp:useBean id="mgr" class="mySpec.ActivityMgr" />
 <%
 	request.setCharacterEncoding("utf-8");
 	int pageSize = 5;	// 한 화면에 보여지는 수
@@ -20,9 +20,8 @@
 	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
 	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
 	int endRow = currentPage * pageSize;				// 페이지 끝
-	ArrayList<PersonBean> arrPerson = mgr.listPerson(startRow, endRow, keyField, keyWord);
-	int count = mgr.personCount(keyField, keyWord);	// 전체 개인회원 수
-	int number = count - (currentPage - 1) * pageSize;
+	ArrayList<ActivityBean> adminActArr = mgr.adminActivityList(startRow, endRow, keyField, keyWord);
+	int count = mgr.adminActivityCount(keyField, keyWord);
 %>
 <main>
 	<div class="d-flex" id="wrapper">
@@ -47,30 +46,39 @@
 		        	<table class="table table-sm table-hover">
 		            	<thead>
 		                	<tr class="text-center d-flex">
-		                    	<th class="col-md-1">이미지</th>
+		                    	<th class="col-md-1">썸네일</th>
 		                    	<th class="col-5">제목</th>
 		                    	<th class="col-md-2">기관명</th>
-		                    	<th class="col-md-2">등록일</th>
+		                    	<th class="col-md-2">마감일</th>
 		                    	<th class="col-md-1">담당자</th>
 		                    	<th class="col-md-1">삭제</th>
 		                  	</tr>
 		                </thead>
 		                <!-- 예시 -->
 		                <tbody>
+		                	<%
+		                		for(ActivityBean bean : adminActArr) {
+		                	%>
 			             	<tr class="text-center d-flex">
 			                  <td class="col-md-1 col-4 d-flex align-items-center">
-			                    
+			                  	<img src="../upload/<%=bean.getAct_thumb()%>" width="100%">
 			                  </td>
 			                  <td class="col-md-5 text-truncate" >
+			                  	<%if(bean.getAct_approve() == 1) {%>
 			                  	<span class="badge badge-primary rounded-pill">승인대기중</span>
-			                    관리자 페이지에 나온 대외활동의 제목입니다. 대부분 이름이 깁니다.
+			                  	<%} %>
+			                    <%=bean.getAct_title() %>
 			                  </td>
-			                  <td class="col-md-2">대한대외활동</td>
-			                  <td class="col-md-2">2020.07.15</td>
-			                  <td class="col-md-1">홍길동</td>
-			                  <td class="col-md-1">삭제</td>
+			                  <td class="col-md-2"><%=bean.getOrg_name() %></td>
+			                  <td class="col-md-2">~<%=bean.getAct_end() %></td>
+			                  <td class="col-md-1"><%=bean.getOrg_manager() %></td>
+			                  <td class="col-md-1">
+			                  	<a href="" class="btn btn-danger">
+		 							삭제
+		 						</a>
+			                  </td>
               			    </tr>
-		                
+		                	<%	} %>
 		                </tbody>
 					</table>
 				</div>
