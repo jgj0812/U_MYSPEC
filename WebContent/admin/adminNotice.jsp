@@ -35,7 +35,7 @@
             		<i class="fa fa-bars"></i>
           		</button>
 			</nav>
-			
+			<div class="col-lg-12 bg-light p-4">공지사항</div>
 			<!-- comNotice List -->
 			<div class="table-responsive">
 				<table class="table table-sm table-hover">
@@ -94,7 +94,7 @@
 		  					if(startPage > pageBlock) {
 		  			%>
 		    			<li class="page-item">
-		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage - pageBlock %>" aria-label="Previous">
+		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage - pageBlock %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 		        				<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 		        				<span class="sr-only">Previous</span>
 		      				</a>
@@ -115,7 +115,7 @@
 		  						}else {
 		  			%>
 		  				<li class="page-item">
-				    		<a class="page-link text-dark" href="adminNotice.jsp?pageNum=<%= i %>">
+				    		<a class="page-link text-dark" href="adminNotice.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -126,7 +126,7 @@
 		  					if(endPage < pageCount) {
 		    		%>
 		    			<li class="page-item">
-		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage + pageBlock %>" aria-label="Next">
+		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage + pageBlock %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 		        				<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 		        				<span class="sr-only">Next</span>
 		      				</a>
@@ -140,7 +140,7 @@
 			</div>
 			<!-- /페이징 -->
 			<!-- 검색 -->
-			<form method="post" id="noticeSearchFrm" class="form-inline justify-content-center">
+			<form method="get" id="noticeSearchFrm" class="form-inline justify-content-center">
 				<select name="keyField" class="form-control" id="search_control">
 					<option value="comm_title">제목</option>
 					<option value="comm_content">내용</option>

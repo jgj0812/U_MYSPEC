@@ -26,6 +26,7 @@ var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*
 //datepicker 공통
 $.datepicker.setDefaults({
 	dateFormat: "yy-mm-dd",
+	yearRange:"c-100:c+10",
 	nextText: "다음 달",
 	prevText: "이전 달",
 	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -648,13 +649,12 @@ function next(next_comm){
 
 //댓글 유효성
 function reply_ok() {
-	if($("#rep_content").val() == "") {
+	if($("#replyFrm [name=rep_content]").val() == "") {
 		alert("댓글 내용을 입력해주세요.");
-		$("#rep_content").focus();
+		$("#replyFrm [name=rep_content]").focus();
 		return false;
 	}
-
-	$("#comm_reply_form").submit();
+	$("#replyFrm").submit();
 }
 
 // myPage 수정 양식, 비밀번호 변경

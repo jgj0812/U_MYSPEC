@@ -22,7 +22,7 @@ private DBConnection pool;
 						+ "comm_reply r left outer join person_user p "
 						+ "on r.rep_person = p.person_id "
 						+ "where rep_comm = "+ rep_comm
-						+ " order by rep_ref desc, rep_step asc";
+						+ " order by rep_ref asc, rep_step asc";
 		
 		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		
@@ -94,8 +94,7 @@ private DBConnection pool;
 				pstmt.setInt(1, rep_ref);
 				pstmt.setInt(2, rep_step);
 				pstmt.executeUpdate();
-				
-				
+					
 				rep_step =rep_step+1; //부모 re_step+1
 				rep_level=rep_level+1;//부모 re_level+1
 				
