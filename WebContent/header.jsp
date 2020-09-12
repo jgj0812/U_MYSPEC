@@ -2,7 +2,21 @@
     pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
-	String id = (String)session.getAttribute("id");
+	String id = null;
+	int type = 0;
+	if(session.getAttribute("personId") != null) {
+		id = (String)session.getAttribute("personId");
+	}
+	if(session.getAttribute("orgId") != null) {
+		id = (String)session.getAttribute("orgId");
+		type = 1;
+	}
+	String uriAll = request.getRequestURI();
+	String uri[] = request.getRequestURI().split("/");
+	String uri2 = null;
+	if(uri[2] != null) {
+		uri2 = uri[2];
+	}
 	int pageSize = 5;
 	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
@@ -113,31 +127,97 @@
         		<div
           			id="navbarCollapse"
           			class="navbar-collapse collapse justify-content-center">
-        				<%if(id != null) {	// 로그인이 되면 %>
+        				<%if(id != null && type == 1) {	// 단체회원 로그인이면 %>
           				<ul class="navbar-nav">
             				<li class="nav-item px-2">
+            					<%if(uri2.equals("activity") && !uriAll.equals("/U_MYSPEC/activity/list_act_write.jsp")) {%>
+              					<a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link active h5">대외활동</a>
+              					<%}else { %>
               					<a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link h5">대외활동</a>
+              					<%} %>
             				</li>
 				            <li class="nav-item px-2">
+				            	<%if(uri2.equals("contest")) {%>
+				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link active h5">공모전</a>
+				            	<%}else { %>
 				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link h5">공모전</a>
+				            	<%} %>
 				            </li>
 	            			<li class="nav-item px-2">
+	            				<%if(uri2.equals("community")) {%>
+	              				<a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link active h5">커뮤니티</a>
+	              				<%}else { %>
 	              				<a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link h5">커뮤니티</a>
+	              				<%} %>
 	            			</li>
 	            			<li class="nav-item px-2">
+	            				<%if(uri2.equals("myPage")) {%>
+	              				<a href="${pageContext.request.contextPath}/myPage/myPage.jsp" class="nav-link active h5">마이페이지</a>
+	              				<%}else { %>
 	              				<a href="${pageContext.request.contextPath}/myPage/myPage.jsp" class="nav-link h5">마이페이지</a>
+	              				<%} %>
+	            			</li>
+	            			<li class="nav-item px-2">
+	            				<%if(uriAll.equals("/U_MYSPEC/activity/list_act_write.jsp")) {%>
+	              				<a href="${pageContext.request.contextPath}/activity/list_act_write.jsp" class="nav-link active h5">활동등록</a>
+	              				<%}else {%>
+	              				<a href="${pageContext.request.contextPath}/activity/list_act_write.jsp" class="nav-link h5">활동등록</a>
+	              				<%} %>
+	            			</li>
+          				</ul>
+          				<%}else if(id != null) { // 개인회원 로그인이면 %>
+          				<ul class="navbar-nav">
+            				<li class="nav-item px-2">
+            					<%if(uri2.equals("activity")) {%>
+              					<a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link active h5">대외활동</a>
+              					<%}else { %>
+              					<a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link h5">대외활동</a>
+              					<%} %>
+            				</li>
+				            <li class="nav-item px-2">
+				            	<%if(uri2.equals("contest")) {%>
+				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link active h5">공모전</a>
+				            	<%}else { %>
+				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link h5">공모전</a>
+				            	<%} %>
+				            </li>
+	            			<li class="nav-item px-2">
+	              				<%if(uri2.equals("community")) {%>
+	              				<a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link active h5">커뮤니티</a>
+	              				<%}else { %>
+	              				<a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link h5">커뮤니티</a>
+	              				<%} %>
+	            			</li>
+	            			<li class="nav-item px-2">
+	              				<%if(uri2.equals("myPage")) {%>
+	              				<a href="${pageContext.request.contextPath}/myPage/myPage.jsp" class="nav-link active h5">마이페이지</a>
+	              				<%}else { %>
+	              				<a href="${pageContext.request.contextPath}/myPage/myPage.jsp" class="nav-link h5">마이페이지</a>
+	              				<%} %>
 	            			</li>
           				</ul>
         				<%}else {	// 로그인이 되지 않으면 %>
           				<ul class="navbar-nav">
             				<li class="nav-item px-2">
+              					<%if(uri2.equals("activity")) {%>
+              					<a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link active h5">대외활동</a>
+              					<%}else { %>
               					<a href="${pageContext.request.contextPath}/activity/list_act.jsp" class="nav-link h5">대외활동</a>
+              					<%} %>
             				</li>
             				<li class="nav-item px-2">
-              					<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link h5">공모전</a>
+              					<%if(uri2.equals("contest")) {%>
+				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link active h5">공모전</a>
+				            	<%}else { %>
+				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link h5">공모전</a>
+				            	<%} %>
             				</li>
             				<li class="nav-item px-2">
-              					<a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link h5">커뮤니티</a>
+              					<%if(uri2.equals("community")) {%>
+	              				<a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link active h5">커뮤니티</a>
+	              				<%}else { %>
+	              				<a href="${pageContext.request.contextPath}/community/community.jsp" class="nav-link h5">커뮤니티</a>
+	              				<%} %>
             				</li>
           				</ul>
         				<%} %>

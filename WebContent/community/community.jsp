@@ -14,7 +14,7 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>(); //일반글 arraylist
 	
 	//페이징
-	pageSize = 8;	// 한 화면에 보여지는 게시글 수
+	pageSize = 5;	// 한 화면에 보여지는 게시글 수
 	pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
 		pageNum = "1";

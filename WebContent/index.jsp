@@ -5,7 +5,7 @@
 <%@ include file="/header.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
 <%	
-	ArrayList<CommunityBean> noticeArr = mgr.noticeList(startRow, endRow, keyField, keyWord);
+	ArrayList<CommunityBean> noticeArr = mgr.noticeList(1, 5, "", "");
 %>
 <section class="py-3">
 	<div class="container">

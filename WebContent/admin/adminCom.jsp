@@ -21,8 +21,8 @@
 	int currentPage = Integer.parseInt(pageNum);
 	int startRow = (currentPage - 1) * pageSize + 1;
 	int endRow = currentPage * pageSize;
-	ArrayList<CommunityBean> arrComm = mgr.adminComList(startRow, endRow, keyField, keyWord);
-	int count = mgr.adminComCount(keyField, keyWord);
+	ArrayList<CommunityBean> arrComm = mgr.Community_list(startRow, endRow, keyField, keyWord);
+	int count = mgr.community_Count(keyField, keyWord);
 %>
 <main>
 	<div class="d-flex" id="wrapper">
@@ -84,11 +84,6 @@
 				</table>	
 			</div>
 			<!-- /comNotice List -->
-			<!-- 전체글보기 -->
-			<div class="form-inline justify-content-end">
-				<a href="adminCom.jsp" class="btn btn-com">전체글보기</a>
-			</div>
-			<!-- /전체글보기 -->
 			<!-- 페이징 -->
 			<div class="form-inline justify-content-center">		
 				<nav aria-label="Page navigation example">

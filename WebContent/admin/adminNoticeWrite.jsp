@@ -23,7 +23,7 @@
 				</div>
 			</div>
 	
-			<form action="adminNoticeWritePro.jsp" name="comm_form" method="post">
+			<form action="adminNoticeWritePro.jsp" id="comm_form" name="comm_form" method="post">
 				<hr style="height: 2px; background-color: black;">
 		
 				<div class="row">
@@ -37,7 +37,7 @@
 				<!--  제목-->
 				<div class="row">
 					<div style="margin-left:20px; font-family:Noto Sans KR; font-weight:bolder;">제목</div>
-					<input type="text" name="comm_title" class="form-control col-8" placeholder="내용을 입력하세요" style="margin-left:32px;">
+					<input type="text" id="comm_title" name="comm_title" class="form-control col-8" placeholder="내용을 입력하세요" style="margin-left:32px;">
 				</div>
 			
 				<hr>
@@ -49,7 +49,7 @@
 				<!--  입력, 취소버튼-->
 				<div class="form-inline justify-content-end">
 					<button type="button" class="btn btn-danger text-white" onclick="location.href='adminNotice.jsp'">취소</button>&nbsp;
-					<input type="submit" class="btn btn-com" value="확인">
+					<input type="button" id="comm_write" class="btn btn-com" value="확인">
 				</div>
 			</form>
 			<!-- /Notice Write -->

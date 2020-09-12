@@ -88,6 +88,8 @@ public class ActivityMgr {
 			}
 			break;
 		}
+
+		sql += " order by act_num desc";
 		System.out.println(sql);
 		try {
 			con = pool.getConnection();

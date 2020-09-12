@@ -24,8 +24,14 @@
 	int count = Rmgr.Community_reply_count(comm_num);
 	
 	int num = commB.getComm_num(); //글번호
+	// 글 종류 0이면 공지, 1이면 일반글
 	int type = commB.getComm_type();
+	// 관리자가 쓴 글이면 관리자, 아니면 글쓴 유저 닉네임
 	String person = commB.getComm_admin() == null ? commB.getComm_nick() : "관리자";
+	
+	// 다음글, 이전글
+	int next_comm = mgr.next_community(comm_num);
+	int prev_comm = mgr.prev_community(comm_num);
 	
 	String str = commB.getComm_date();
 	String [] date = str.split(" ");
@@ -118,22 +124,21 @@
 				<hr style="margin-top: 2px">
 				<!-- 댓글 보여주는 곳 -->	
 		<%
-					
-					for(int i = commRe_arr.size() - 1; i >= 0 ; i--) {
-						String repPerson = commRe_arr.get(i).getRep_admin() != null ? "관리자" : commRe_arr.get(i).getRep_nick();
+				for(int i = commRe_arr.size() - 1; i >= 0 ; i--) {
+					String repPerson = commRe_arr.get(i).getRep_admin() != null ? "관리자" : commRe_arr.get(i).getRep_nick();
 
-						int wid=0;
-						int h=0;
-						int fontwid=0;
-						int wid_margin=0;
-						 
-						if(commRe_arr.get(i).getRep_level() > 0){
+					int wid=0;
+					int h=0;
+					int fontwid=0;
+					int wid_margin=0;
+					 
+					if(commRe_arr.get(i).getRep_level() > 0){
 
-							wid = 25*(commRe_arr.get(i).getRep_level());
-							fontwid=15;
-							h=15;
-							wid_margin = 25*(commRe_arr.get(i).getRep_level());
-						}
+						wid = 25*(commRe_arr.get(i).getRep_level());
+						fontwid=15;
+						h=15;
+						wid_margin = 25*(commRe_arr.get(i).getRep_level());
+					}
 		%>	
 				<!-- 댓글 div -->
 				<div class="reply_div">
@@ -196,10 +201,11 @@
 					<!-- /댓글 수정 div -->
 					<!-- 답글 입력폼 -->
 					<div id="rereply<%=i%>" style="display: none">
-						<form action="adminReplyPro.jsp" name="comm_reply_form" method="post">
+						<form action="adminReplyPro.jsp" id="rereplyFrm<%=i %>" name="comm_reply_form" method="post">
 							<input type="hidden" name="comm_num" value="<%= comm_num%>">
 							<input type="hidden" name="rep_num" value="<%=commRe_arr.get(i).getRep_num() %>">
-							<input type="hidden" name="rep_ref" value="<%=commRe_arr.get(i).getRep_ref() %>">
+
+							<input type="hidden" name="rep_ref" value="<%=commRe_arr.get(i).getRep_num() %>">
 							<input type="hidden" name="rep_step" value="<%=commRe_arr.get(i).getRep_step() %>">
 							<input type="hidden" name="rep_level" value="<%=commRe_arr.get(i).getRep_level() %>">
 							
@@ -213,7 +219,7 @@
 								 
 								<!-- 답글 등록버튼 -->
 								<div class="col-2">
-									<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" type="submit" class="form-control" value="등록">
+									<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" type="button" onclick="rereply_ok(<%=i %>)" class="form-control" value="등록">
 								</div>
 							</div>
 							
@@ -228,10 +234,9 @@
 				}
 		%>				
 				<!-- 댓글 입력폼  -->
-				<form action="adminReplyPro.jsp" name="comm_reply_form" method="post">
+				<form action="adminReplyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
 				  	<!-- 글번호를 넘긴다 -->
 				  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
-				  	<input type="hidden" name="adminCom" value="0">
 					<div class="form-row">
 						 <div class="col-8">
 						   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
@@ -251,6 +256,34 @@
 	</div>
 	<!-- /wrapper -->
 </main>
-
-
+<script type="text/javascript">
+	function rereply(i){
+		var con = document.getElementById("rereply" + i);
+		if(con.style.display =='none'){
+			con.style.display = 'block';
+		}else if(con.style.display =='block'){
+			con.style.display = 'none';
+		}
+	}
+	function update(i){
+		var update = document.getElementById("update" + i);
+		var basic = document.getElementById("basic" + i);
+		
+		if(update.style.display =='none'){
+			update.style.display = 'block';
+			basic.style.display = 'none';
+		}else if(update.style.display =='block'){
+			update.style.display = 'none';
+			basic.style.display = 'block';
+		}
+	}
+	function updatecancel(i){
+		var update = document.getElementById("update" + i);
+		var basic = document.getElementById("basic" + i);
+		if(update.style.display =='block'){
+			update.style.display = 'none';
+			basic.style.display = 'block';
+		}
+	}
+</script>
 <%@ include file="/admin/adminFooter.jsp" %>
