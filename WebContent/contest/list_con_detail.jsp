@@ -79,7 +79,7 @@
 							%></p>
 						</div>
 						<div class="col-md-2">
-							<p>활동분야</p>
+							<p>공모분야</p>
 						</div>
 						<div class="col-md-4">
 							<p><%=manager.getTag(activity.getAct_field()) %></p>

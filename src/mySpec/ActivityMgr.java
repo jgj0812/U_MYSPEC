@@ -163,22 +163,44 @@ public class ActivityMgr {
 	}
 	
 	public void insertActivity(ActivityBean activity) {
-		String sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content) values(act_seq.nextval, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = null;
 		try {
 			con = pool.getConnection();
-			ps = con.prepareStatement(sql);
-			ps.setString(1, activity.getAct_thumb());
-			ps.setString(2, activity.getAct_post());
-			ps.setString(3, activity.getAct_title());
-			ps.setString(4, activity.getAct_org());
-			ps.setString(5, activity.getAct_target());
-			ps.setDate(6, activity.getAct_start());
-			ps.setDate(7, activity.getAct_end());
-			ps.setInt(8, activity.getAct_pop());
-			ps.setInt(9, activity.getAct_reg());
-			ps.setInt(10, activity.getAct_field());
-			ps.setString(11, activity.getAct_home());
-			ps.setString(12, activity.getAct_content());
+			switch(activity.getAct_type()) {
+			case 1:
+				sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, activity.getAct_type());
+				ps.setString(2, activity.getAct_thumb());
+				ps.setString(3, activity.getAct_post());
+				ps.setString(4, activity.getAct_title());
+				ps.setString(5, activity.getAct_org());
+				ps.setString(6, activity.getAct_target());
+				ps.setDate(7, activity.getAct_start());
+				ps.setDate(8, activity.getAct_end());
+				ps.setInt(9, activity.getAct_pop());
+				ps.setInt(10, activity.getAct_reg());
+				ps.setInt(11, activity.getAct_field());
+				ps.setString(12, activity.getAct_home());
+				ps.setString(13, activity.getAct_content());
+				break;
+			case 2:
+				sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_field, act_award, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, activity.getAct_type());
+				ps.setString(2, activity.getAct_thumb());
+				ps.setString(3, activity.getAct_post());
+				ps.setString(4, activity.getAct_title());
+				ps.setString(5, activity.getAct_org());
+				ps.setString(6, activity.getAct_target());
+				ps.setDate(7, activity.getAct_start());
+				ps.setDate(8, activity.getAct_end());
+				ps.setInt(9, activity.getAct_field());
+				ps.setInt(10, activity.getAct_award());
+				ps.setString(11, activity.getAct_home());
+				ps.setString(12, activity.getAct_content());
+				break;
+			}
 			ps.executeUpdate();
 			
 			sql = "insert into act_reward values(act_seq.currval, ?)";
@@ -195,19 +217,6 @@ public class ActivityMgr {
 				ps.executeUpdate();
 			}
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		pool.closeConnection(con, ps);
-	}
-	
-	public void insertContest(ActivityBean activity) {
-		String sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_hits, act_org, act_target, act_start, act_end, act_field, act_home, act_content, act_approve) values(ACT_SEQ, 2, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
-		try {
-			con = pool.getConnection();
-			ps = con.prepareStatement(sql);
-			ps.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

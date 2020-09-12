@@ -6,6 +6,21 @@
 <%@page import="mySpec.ActivityMgr"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%!
+	String getAward(int act_award) {
+		switch(act_award) {
+			case 74:
+				return "act_award < 1000";
+			case 75:
+				return "act_award >= 1000 and act_award < 3000";
+			case 76:
+				return "act_award >= 3000 and act_award < 5000";
+			case 77:
+				return "act_award >= 5000";
+		}
+		return null;
+	}
+%>
 <%
 	ActivityMgr manager = new ActivityMgr();
 	int act_type = Integer.parseInt(request.getParameter("act_type"));
@@ -33,12 +48,12 @@
 	if((params = request.getParameterValues("act_award")) != null) {
 		act_award = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 		if(where == "") {
-			where += " (act_award=" + act_award[0];
+			where += " ((" + getAward(act_award[0]) + ")";
 		} else {
-			where += " and ( act_award=" + act_award[0];
+			where += " and ((" + getAward(act_award[0]) + ")";
 		}
 		for(int i = 1; i < act_award.length; i++) {
-			where += " or act_award=" + act_award[i];
+			where += " or (" + getAward(act_award[i]) + ")";
 		}
 		where += ")";
 	}
@@ -47,7 +62,7 @@
 		if(where == "") {
 			where += " (reward_num=" + reward_num[0];
 		} else {
-			where += " and ( reward_num=" + reward_num[0];
+			where += " and (reward_num=" + reward_num[0];
 		}
 		for(int i = 1; i < reward_num.length; i++) {
 			where += " or reward_num=" + reward_num[i];
@@ -59,7 +74,7 @@
 		if(where == "") {
 			where += " (org_type=" + org_type[0];
 		} else {
-			where += " and ( org_type=" + org_type[0];
+			where += " and (org_type=" + org_type[0];
 		}
 		for(int i = 1; i < org_type.length; i++) {
 			where += " or org_type=" + org_type[i];

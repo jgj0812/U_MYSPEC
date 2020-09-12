@@ -3,7 +3,7 @@
 <%@ include file="../header.jsp"%>
 <div class="container py-3">
 	<form action="list_act_writePro.jsp" method="post" id="act_form"
-		enctype="multipart/form-data" onchange="setForm()">
+		enctype="multipart/form-data" onchange="activityContext()">
 		<h3>활동개요</h3>
 		<hr />
 		<h5>제목</h5>
@@ -109,38 +109,98 @@
 				</div>
 				<br />
 			</div>
-
-			<h5>활동분야</h5>
-			<div class="row">
-				<div class="col-md-3">
-					<input type="radio" name="act_field" value="1" /> 서포터즈
+			
+			<div class="activity">
+				<h5>활동분야</h5>
+				<div class="row">
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="1" /> 서포터즈
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="2" /> 해외탐방
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="3" /> 봉사단
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="4" /> 마케터
+					</div>
 				</div>
-				<div class="col-md-3">
-					<input type="radio" name="act_field" value="2" /> 해외탐방
+				<div class="row">
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="5" /> 기자단
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="6" /> 강연
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="7" /> 멘토링
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="8" /> 기타
+					</div>
 				</div>
-				<div class="col-md-3">
-					<input type="radio" name="act_field" value="3" /> 봉사단
-				</div>
-				<div class="col-md-3">
-					<input type="radio" name="act_field" value="4" /> 마케터
-				</div>
+				<br />
 			</div>
-			<div class="row">
-				<div class="col-md-3">
-					<input type="radio" name="act_field" value="5" /> 기자단
+			
+			<div class="contest">
+				<h5>공모분야</h5>
+				<div class="row">
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="59" /> 기획/아이디어
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="60" /> 광고/마케팅
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="61" /> 사진/영상/UCC
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="62" /> 디자인/순수미술/공예
+					</div>
 				</div>
-				<div class="col-md-3">
-					<input type="radio" name="act_field" value="6" /> 강연
+				<div class="row">
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="63" /> 네이밍/슬로건
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="64" /> 캐릭터/만화/게임
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="65" /> 건축/건설/인테리어
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="66" /> 과학/공학
+					</div>
 				</div>
-				<div class="col-md-3">
-					<input type="radio" name="act_field" value="7" /> 멘토링
+				<div class="row">
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="67" /> 예체능/패션
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="68" /> 전시/페스티벌
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="69" /> 문학/시나리오
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="70" /> 해외
+					</div>
 				</div>
-				<div class="col-md-3">
-					<input type="radio" name="act_field" value="8" /> 기타
+				<div class="row">
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="71" /> 학술
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="72" /> 창업
+					</div>
+					<div class="col-md-3">
+						<input type="radio" name="act_field" value="73" /> 기타
+					</div>
 				</div>
+				<br />
 			</div>
-			<br />
-
+			
 			<h5>관심분야</h5>
 			<div class="row">
 				<div class="col-md-3">
@@ -297,7 +357,7 @@
 	$(document).ready(function() {
 		$(".all").hide();
 	});
-	function setForm() {
+	function activityContext() {
 		switch ($("#act_form input[name='act_type']:checked").val()) {
 		case "1":
 			$(".all").show();
