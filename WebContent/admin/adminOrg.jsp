@@ -126,7 +126,7 @@
 							if(startPage > pageBlock) {
 					%>	
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage - pageBlock%>" aria-label="Previous">
+				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage - pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 				        		<span class="sr-only">Previous</span>
 				      		</a>
@@ -147,7 +147,7 @@
 								} else {
 				    %>
 				    	<li class="page-item">
-				    		<a class="page-link text-dark" href="adminPerson.jsp?pageNum=<%= i %>">
+				    		<a class="page-link text-dark" href="adminPerson.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -159,7 +159,7 @@
 							if(endPage < pageCount) {
 				    %>
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage + pageBlock%>" aria-label="Next">
+				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage + pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 				        		<span class="sr-only">Next</span>
 				      		</a>
@@ -173,7 +173,7 @@
 			</div>
 			<!-- /페이징 -->
 			<!-- 검색 -->
-			<form method="post" id="orgSearchFrm" class="form-inline justify-content-center">
+			<form method="get" id="orgSearchFrm" class="form-inline justify-content-center">
 				<input type="hidden" name="pageNum" value="1">
 				<select name="keyField" class="form-control" id="search_control">
 					<option value="org_id">ID</option>

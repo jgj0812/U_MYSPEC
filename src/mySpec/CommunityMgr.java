@@ -86,11 +86,22 @@ private DBConnection pool;
 			con = pool.getConnection();
 			if(keyWord.trim().equals("") || keyWord == null) {
 				// 검색이 아닌경우
-				sql = "select count(*) from community where comm_type='1'";
+				//sql = "select count(*) from community";
+				sql = "select count(*) from "
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id) "
+						+ "where comm_type=1 ";
+				
 				pstmt = con.prepareStatement(sql);
 			}else {
-					// 검색인 경우
-				sql = "select count(*) from community where comm_type='1' and " + keyField + " like ?";
+				// 검색인 경우
+				//sql = "select count(*) from community where " + keyField + " like ?";
+				sql = "select count(*) from "
+						+ "(select c.*, p.person_nick from "
+						+ "community c left outer join person_user p "
+						+ "on c.comm_person = p.person_id "
+						+ "where " + keyField + " like ? and comm_type=1)";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%" + keyWord + "%");
 			}
@@ -190,7 +201,7 @@ private DBConnection pool;
 		// TODO Auto-generated method stub
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;// 占쏙옙占쏙옙占쏙옙獵占� sql占쏙옙占쏙옙占쏙옙占쏙옙 占십울옙占싹댐옙
+		ResultSet rs = null;
 		CommunityBean commB = null;
 		upHit(comm_num);
 		String sql = "select c.*, p.person_nick from "

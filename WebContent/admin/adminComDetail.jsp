@@ -4,8 +4,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/admin/adminHeader.jsp" %>
+
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
 <jsp:useBean id="Rmgr" class="mySpec.CommunityReplyMgr" />
+
+<jsp:useBean id="bean" class="mySpec.CommunityBean" />
+<jsp:useBean id="Rbean" class="mySpec.CommunityReplyBean" />
+
+<jsp:setProperty property="*" name="bean"/>
+<jsp:setProperty property="*" name="Rbean"/>
+
 <%
 	// 글번호
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
@@ -13,6 +21,7 @@
 	CommunityBean commB = mgr.Community_detailView(comm_num);
 	// 글번호로 댓글 리스트 보여주기
 	ArrayList<CommunityReplyBean> commRe_arr  = Rmgr.Community_reply_list(comm_num);
+	int count = Rmgr.Community_reply_count(comm_num);
 	
 	int num = commB.getComm_num(); //글번호
 	// 글 종류 0이면 공지, 1이면 일반글
@@ -71,18 +80,15 @@
 							<div style="margin-left:10px;"><p>조회수</p></div>
 							<div style="margin-left:3px;"><p><%= hits %></p></div><!-- 조회수 -->
 						</div>
+						
 						<hr>
-			<div class="jumbotron jumbotron-fluid" style="background-color:white;">
-			  <div>
-			    <pre><%= content %></pre><!-- 내용 -->
-			  </div>
-			</div>
-			
-			<!-- 공유   -->
-			<div class="form-inline justify-content-end">
-				<a href="#"><img src="${pageContext.request.contextPath}/img/icon.png" width="30px" height="30px" style="background-color:#eeeeee; padding: 5px"></a>
-			</div>
-			<hr>
+				
+					<div class="jumbotron jumbotron-fluid" style="background-color:white;">
+					  <div style="margin-left: 40px">
+					    <pre><p class="lead"><%= content %></p></pre><!-- 내용 -->
+					  </div>
+					</div>
+					
 			
 			<div class="form-inline justify-content-end">
 					<button type="button" 
@@ -104,17 +110,6 @@
 							style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR; font-weight:bolder; margin-right:5px;" 
 							value="삭제"
 							onclick="location.href='adminComDeletePro.jsp?comm_num=<%=commB.getComm_num() %>&type=0'">
-				    
-				    <!-- 이전, 다음글 -->
-					<button type="button"  
-					    	class="btn text-dark"  
-						    style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;font-weight:bolder; margin-right:5px;"  
-						    onclick="prev(<%=prev_comm%>)">이전글</button>
-						      		   
-					<button type="button"  
-					    	class="btn text-dark"  
-						    style="background-color:#eeeeee; font-size: 12px; font-family:Noto Sans KR;font-weight:bolder;"  
-						    onclick="next(<%=next_comm%>)">다음글</button>
 			</div>
 			
 			
@@ -123,7 +118,7 @@
 				<!-- 댓글수 -->
 				<div class="row" style="font-size:0.75rem; margin-top:23px;" >
 					<p style="font-weight:bold; margin-left:40px; margin-top:15px;">댓글</p>
-					<p style="font-weight:bold; margin-top:15px; margin-left:5px;">0</p>
+					<p style="font-weight:bold; margin-top:15px; margin-left:5px;"><%=count %></p>
 				</div>
 				
 				<hr style="margin-top: 2px">
@@ -209,6 +204,7 @@
 						<form action="adminReplyPro.jsp" id="rereplyFrm<%=i %>" name="comm_reply_form" method="post">
 							<input type="hidden" name="comm_num" value="<%= comm_num%>">
 							<input type="hidden" name="rep_num" value="<%=commRe_arr.get(i).getRep_num() %>">
+
 							<input type="hidden" name="rep_ref" value="<%=commRe_arr.get(i).getRep_num() %>">
 							<input type="hidden" name="rep_step" value="<%=commRe_arr.get(i).getRep_step() %>">
 							<input type="hidden" name="rep_level" value="<%=commRe_arr.get(i).getRep_level() %>">

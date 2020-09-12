@@ -97,8 +97,7 @@ private DBConnection pool;
 				pstmt.setInt(1, rep_ref);
 				pstmt.setInt(2, rep_step);
 				pstmt.executeUpdate();
-				
-				
+					
 				rep_step =rep_step+1; //부모 re_step+1
 				rep_level=rep_level+1;//부모 re_level+1
 				
