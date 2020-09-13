@@ -30,29 +30,29 @@ act_post VARCHAR2(200 CHAR),				-- 포스터 이미지
 act_title VARCHAR2(200 CHAR),				-- 활동 제목
 act_hits NUMBER,							-- 조회수
 act_org VARCHAR2(20 CHAR),					-- FK 단체회원 ID 
-act_target VARCHAR2(20 CHAR),				-- 
+act_target VARCHAR2(20 CHAR),				-- 참여대상
 act_start DATE,								-- 시작일
 act_end DATE,								-- 종료일
-act_pop NUMBER,								-- 
-act_reg NUMBER,								-- 
-act_field NUMBER,							--
+act_pop NUMBER,								-- 모집인원
+act_reg NUMBER,								-- 모임지역
+act_field NUMBER,							-- 활동분야
 act_home VARCHAR2(200 CHAR),				-- 홈페이지
 act_content VARCHAR2(2000 CHAR),			-- 상세내용
-act_award NUMBER,
-act_approve NUMBER,
-CONSTRAINT activity_fk1 FOREIGN KEY (act_org) REFERENCES org_user (org_id)
+act_award NUMBER,							-- 시상규모
+act_approve NUMBER DEFAULT 0,				-- 승인여부
+CONSTRAINT activity_fk1 FOREIGN KEY (act_org) REFERENCES org_user (org_id) ON DELETE CASCADE
 );
 
 CREATE TABLE act_interest (
 interest_act NUMBER,
 interest_num NUMBER,
-CONSTRAINT interest_fk1 FOREIGN KEY (interest_act) REFERENCES activity (act_num)
+CONSTRAINT interest_fk1 FOREIGN KEY (interest_act) REFERENCES activity (act_num) ON DELETE CASCADE
 );
 
 CREATE TABLE act_reward (
 reward_act NUMBER,
 reward_num NUMBER,
-CONSTRAINT reward_fk1 FOREIGN KEY (reward_act) REFERENCES activity (act_num)
+CONSTRAINT reward_fk1 FOREIGN KEY (reward_act) REFERENCES activity (act_num) ON DELETE CASCADE
 );
 
 CREATE TABLE act_reply (
@@ -61,11 +61,11 @@ rep_act NUMBER,								-- FK 활동 글번호
 rep_person VARCHAR2(20 CHAR),				-- FK 개인회원 ID
 rep_date DATE,								-- 댓글 작성일
 rep_content VARCHAR2(200 CHAR),				-- 댓글 내용
-rep_step NUMBER,							-- 
+rep_pos NUMBER,							-- 그룹내 순서
 rep_ref NUMBER,								-- 댓글 그룹
-rep_level NUMBER,							-- 댓글 깊이
+rep_depth NUMBER,							-- 댓글 깊이
 CONSTRAINT act_reply_fk1 FOREIGN KEY (rep_act) REFERENCES activity (act_num) ON DELETE CASCADE,
-CONSTRAINT act_reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person_id)
+CONSTRAINT act_reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person_id) ON DELETE CASCADE
 );
 
 CREATE TABLE community (
@@ -77,9 +77,8 @@ comm_date DATE,								-- 글 작성일
 comm_hits NUMBER,							-- 조회수
 comm_content VARCHAR2(2000 CHAR),			-- 글 내용
 comm_admin VARCHAR2(20 CHAR),				-- FK 관리자 ID
-delete_at CHAR(1) DEFAULT 'n' NOT NULL,		-- 삭제여부 'y' 삭제 'n' 미용
-CONSTRAINT community_fk1 FOREIGN KEY (comm_person) REFERENCES person_user (person_id),
-CONSTRAINT community_fk2 FOREIGN KEY (comm_admin) REFERENCES admin (admin_id)
+CONSTRAINT community_fk1 FOREIGN KEY (comm_person) REFERENCES person_user (person_id) ON DELETE CASCADE,
+CONSTRAINT community_fk2 FOREIGN KEY (comm_admin) REFERENCES admin (admin_id) ON DELETE CASCADE
 );
 
 CREATE TABLE comm_reply (
@@ -88,14 +87,13 @@ rep_comm NUMBER,							-- FK 글 번호
 rep_person VARCHAR2(20 CHAR),				-- FK 개인회원 ID
 rep_date DATE,								-- 댓글 작성일
 rep_content VARCHAR2(200 CHAR),				-- 댓글 내용
-rep_step NUMBER,							-- 
+rep_step NUMBER,							-- 그룹내 순서
 rep_ref NUMBER,								-- 댓글 그룹
 rep_level NUMBER,							-- 댓글 깊이
 rep_admin VARCHAR2(20 CHAR),				-- FK 관리자 ID
-delete_at CHAR(1) DEFAULT 'n' NOT NULL,		-- 삭제여부 'y' 삭제 'n' 미용
 CONSTRAINT reply_fk1 FOREIGN KEY (rep_comm) REFERENCES community (comm_num) ON DELETE CASCADE,
-CONSTRAINT reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person_id),
-CONSTRAINT reply_fk3 FOREIGN KEY (rep_admin) REFERENCES admin (admin_id)
+CONSTRAINT reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person_id) ON DELETE CASCADE,
+CONSTRAINT reply_fk3 FOREIGN KEY (rep_admin) REFERENCES admin (admin_id) ON DELETE CASCADE
 );
 
 CREATE TABLE interest (

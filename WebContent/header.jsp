@@ -134,9 +134,9 @@
             				</li>
 				            <li class="nav-item px-2">
 				            	<%if(uri2.equals("contest")) {%>
-				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link active h5">공모전</a>
+				            	<a href="${pageContext.request.contextPath}/contest/list_con.jsp" class="nav-link active h5">공모전</a>
 				            	<%}else { %>
-				            	<a href="${pageContext.request.contextPath}/contest/list_gongmo.jsp" class="nav-link h5">공모전</a>
+				            	<a href="${pageContext.request.contextPath}/contest/list_con.jsp" class="nav-link h5">공모전</a>
 				            	<%} %>
 				            </li>
 	            			<li class="nav-item px-2">
