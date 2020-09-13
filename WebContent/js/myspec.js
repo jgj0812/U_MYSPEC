@@ -484,10 +484,14 @@ function tagSearch() {
 	$.ajax({
 		url: tag,
 		data: data,
-		dataType: "html",
+		dataType: "json",
 		cache: false,
 		success: function(data) {
-			$("#choicetag").html(data);
+			var htmlStr = "";
+			$.each(data, function(key, val) {
+				htmlStr += "<input type='button' class='choiceButton' onclick='tagRemove(" + val.tag_num + ")' value='" + val.tag + "'>";
+			});
+			$("#choicetag").html(htmlStr);
 		}
 	});
 	$.ajax({
@@ -664,6 +668,8 @@ function scrap(person_id, act_num) {
 		}
 	});
 }
+
+
 
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){

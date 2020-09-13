@@ -351,4 +351,67 @@ public class ActivityMgr {
 		pool.closeConnection(con, ps, rs);
 		return -1;
 	}
+	
+	public void updateActivity(ActivityBean activity) {
+		String sql = null;
+		try {
+			con = pool.getConnection();
+			switch(activity.getAct_type()) {
+			case 1:
+				sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_pop=?, act_reg=?, act_field=?, act_home=?, act_content=? where act_num=?";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, activity.getAct_thumb());
+				ps.setString(2, activity.getAct_post());
+				ps.setString(3, activity.getAct_title());
+				ps.setString(4, activity.getAct_target());
+				ps.setDate(5, activity.getAct_start());
+				ps.setDate(6, activity.getAct_end());
+				ps.setInt(7, activity.getAct_pop());
+				ps.setInt(8, activity.getAct_reg());
+				ps.setInt(9, activity.getAct_field());
+				ps.setString(10, activity.getAct_home());
+				ps.setString(11, activity.getAct_content());
+				ps.setInt(12, activity.getAct_num());
+				break;
+			case 2:
+				sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, activity.getAct_thumb());
+				ps.setString(2, activity.getAct_post());
+				ps.setString(3, activity.getAct_title());
+				ps.setString(4, activity.getAct_target());
+				ps.setDate(5, activity.getAct_start());
+				ps.setDate(6, activity.getAct_end());
+				ps.setInt(7, activity.getAct_field());
+				ps.setInt(8, activity.getAct_award());
+				ps.setString(9, activity.getAct_home());
+				ps.setString(10, activity.getAct_content());
+				ps.setInt(11, activity.getAct_num());
+				break;
+			}
+			ps.executeUpdate();
+			
+			sql = "delete from act_reward where reward_act=?";
+			sql = "delete from act_interest where reward_act=?";
+			
+			sql = "insert into act_reward values(act_seq.currval, ?)";
+			for(int act_reward : activity.getAct_reward()) {
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, act_reward);
+				ps.executeUpdate();
+			}
+			
+			sql = "insert into act_interest values(act_seq.currval, ?)";
+			for(int act_interest : activity.getAct_interest()) {
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, act_interest);
+				ps.executeUpdate();
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pool.closeConnection(con, ps);
+	}
 }

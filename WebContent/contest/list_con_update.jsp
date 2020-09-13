@@ -35,7 +35,28 @@
 			<div class="section">
 				<div class="row">
 					<div class="col-md-4">
+						<img src="../upload/<%=activity.getAct_thumb()%>" width="100%" />
+						<div class="input-group mb-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text">썸네일</div>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input form-control"
+									name="act_thumb" onchange="get_thumb_filename()" /> <label
+									class="custom-file-label" id="thumb_filename"><%=activity.getAct_thumb()%></label>
+							</div>
+						</div>
 						<img src="../upload/<%=activity.getAct_post()%>" width="100%" />
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<div class="input-group-text">포스터</div>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input form-control"
+									name="act_post" onchange="get_post_filename()" /> <label
+									class="custom-file-label" id="post_filename"><%=activity.getAct_post()%></label>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-8 d-flex flex-column">
 						<div class="row">
@@ -115,7 +136,7 @@
 			<div class="section">
 				<h5>상세내용</h5>
 				<textarea id="act_content"><%=activity.getAct_content()%></textarea>
-				<button class="btn btn-cam btn-block">수정하기</button>
+				<button class="btn btn-cam btn-block" onclick="act_update()">수정하기</button>
 			</div>
 			<br />
 		</form>
@@ -142,35 +163,37 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="29" /> 활동비
+					<form id="act_reward">
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="29" /> 활동비
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="30" /> 사은품지급
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="31" /> 실무교육
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="32" /> 봉사활동기간
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="30" /> 사은품지급
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="33" /> 전문가/임직원
+								멘토링
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="34" /> 행사 참여
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="35" /> 수료증 및 인증서
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="36" /> 입사시 혜택
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="31" /> 실무교육
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="32" /> 봉사활동기간
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="33" /> 전문가/임직원
-							멘토링
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="34" /> 행사 참여
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="35" /> 수료증 및 인증서
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="36" /> 입사시 혜택
-						</div>
-					</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -192,59 +215,61 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="59" /> 기획/아이디어
+					<form id="act_field">
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="59" /> 기획/아이디어
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="60" /> 광고/마케팅
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="61" /> 사진/영상/UCC
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="62" /> 디자인/순수미술/공예
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="60" /> 광고/마케팅
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="63" /> 네이밍/슬로건
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="64" /> 캐릭터/만화/게임
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="65" /> 건축/건설/인테리어
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="66" /> 과학/공학
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="61" /> 사진/영상/UCC
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="67" /> 예체능/패션
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="68" /> 전시/페스티벌
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="69" /> 문학/시나리오
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="70" /> 해외
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="62" /> 디자인/순수미술/공예
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="71" /> 학술
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="72" /> 창업
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="73" /> 기타
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="63" /> 네이밍/슬로건
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="64" /> 캐릭터/만화/게임
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="65" /> 건축/건설/인테리어
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="66" /> 과학/공학
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="67" /> 예체능/패션
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="68" /> 전시/페스티벌
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="69" /> 문학/시나리오
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="70" /> 해외
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="71" /> 학술
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="72" /> 창업
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="73" /> 기타
-						</div>
-					</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -256,3 +281,20 @@
 	</div>
 </section>
 <%@ include file="../footer.jsp"%>
+<%
+	for (int act_reward : activity.getAct_reward()) {
+		%>
+		<script>
+			$("#act_reward input[value=<%=act_reward%>]").prop("checked", true);
+		</script>
+		<%
+	}
+	%>
+	<script>
+		$("#act_field input[value=<%=activity.getAct_field()%>]").prop("checked", true);
+	</script>
+	<%
+%>
+<script>
+	
+</script>

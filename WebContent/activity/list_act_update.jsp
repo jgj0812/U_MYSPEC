@@ -35,7 +35,28 @@
 			<div class="section">
 				<div class="row">
 					<div class="col-md-4">
+						<img src="../upload/<%=activity.getAct_thumb()%>" width="100%" />
+						<div class="input-group mb-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text">썸네일</div>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input form-control"
+									name="act_thumb" onchange="get_thumb_filename()" /> <label
+									class="custom-file-label" id="thumb_filename"><%=activity.getAct_thumb()%></label>
+							</div>
+						</div>
 						<img src="../upload/<%=activity.getAct_post()%>" width="100%" />
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<div class="input-group-text">포스터</div>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input form-control"
+									name="act_post" onchange="get_post_filename()" /> <label
+									class="custom-file-label" id="post_filename"><%=activity.getAct_post()%></label>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-8 d-flex flex-column">
 						<div class="row">
@@ -138,7 +159,7 @@
 			<div class="section">
 				<h5>상세내용</h5>
 				<textarea id="act_content"><%=activity.getAct_content()%></textarea>
-				<button class="btn btn-cam btn-block">수정하기</button>
+				<button class="btn btn-cam btn-block" onclick="act_update()">수정하기</button>
 			</div>
 			<br />
 		</form>
@@ -165,62 +186,64 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="row">
-						<div class="col-sm-12 col-md-3">
-							<input type="radio" name="act_reg" value="43" /> 지역제한없음
+					<form id="act_reg" onchange="getValue(this)">
+						<div class="row">
+							<div class="col-sm-12 col-md-3">
+								<input type="radio" name="act_reg" value="43" /> 지역제한없음
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="44" /> 서울
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="45" /> 부산
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="46" /> 대구
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="44" /> 서울
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="47" /> 인천
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="48" /> 광주
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="49" /> 대전
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="50" /> 울산
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="45" /> 부산
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="51" /> 경기
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="52" /> 강원
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="53" /> 충청
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="54" /> 전라
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="46" /> 대구
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="55" /> 경상
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="56" /> 제주
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="57" /> 세종
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_reg" value="58" /> 해외
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="47" /> 인천
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="48" /> 광주
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="49" /> 대전
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="50" /> 울산
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="51" /> 경기
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="52" /> 강원
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="53" /> 충청
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="54" /> 전라
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="55" /> 경상
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="56" /> 제주
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="57" /> 세종
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_reg" value="58" /> 해외
-						</div>
-					</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -242,35 +265,37 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="29" /> 활동비
+					<form id="act_reward" onchange="getValue(this)">
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="29" /> 활동비
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="30" /> 사은품지급
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="31" /> 실무교육
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="32" /> 봉사활동기간
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="30" /> 사은품지급
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="33" /> 전문가/임직원
+								멘토링
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="34" /> 행사 참여
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="35" /> 수료증 및 인증서
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="act_reward" value="36" /> 입사시 혜택
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="31" /> 실무교육
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="32" /> 봉사활동기간
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="33" /> 전문가/임직원
-							멘토링
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="34" /> 행사 참여
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="35" /> 수료증 및 인증서
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_reward" value="36" /> 입사시 혜택
-						</div>
-					</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -292,34 +317,36 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="1" /> 서포터즈
+					<form id="act_field" onchange="getValue(this)">
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="1" /> 서포터즈
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="2" /> 해외탐방
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="3" /> 봉사단
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="4" /> 마케터
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="2" /> 해외탐방
+						<div class="row">
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="5" /> 기자단
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="6" /> 강연
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="7" /> 멘토링
+							</div>
+							<div class="col-md-3">
+								<input type="radio" name="act_field" value="8" /> 기타
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="3" /> 봉사단
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="4" /> 마케터
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="5" /> 기자단
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="6" /> 강연
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="7" /> 멘토링
-						</div>
-						<div class="col-md-3">
-							<input type="radio" name="act_field" value="8" /> 기타
-						</div>
-					</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -341,81 +368,83 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="9" /> 여행/호텔/항공
+					<form id="act_interest" onchange="getValue(this)">
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="9" /> 여행/호텔/항공
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="10" /> 언론/미디어
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="11" /> 문화/역사
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="12" /> 행사/페스티벌
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="10" /> 언론/미디어
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="13" /> 교육
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="14" />
+								디자인/사진/예술/영상
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="15" /> 경제/금융
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="16" />
+								경영/컨설팅/마케팅
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="11" /> 문화/역사
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="17" />
+								정치/사회/법률
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="18" /> 체육/헬스
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="19" /> 의료/보건
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="20" />
+								뷰티/미용/화장품
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="12" /> 행사/페스티벌
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="21" />
+								과학/공학/기술/IT
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="22" /> 요리/식품
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="23" /> 창업/자기계발
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="24" /> 환경/에너지
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="13" /> 교육
+						<div class="row">
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="25" /> 콘텐츠
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="26" /> 사회공헌/교류
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="27" /> 유통/물류
+							</div>
+							<div class="col-md-3">
+								<input type="checkbox" name="interest_num" value="28" /> 기타
+							</div>
 						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="14" />
-							디자인/사진/예술/영상
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="15" /> 경제/금융
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="16" />
-							경영/컨설팅/마케팅
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="17" />
-							정치/사회/법률
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="18" /> 체육/헬스
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="19" /> 의료/보건
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="20" />
-							뷰티/미용/화장품
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="21" />
-							과학/공학/기술/IT
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="22" /> 요리/식품
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="23" /> 창업/자기계발
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="24" /> 환경/에너지
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="25" /> 콘텐츠
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="26" /> 사회공헌/교류
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="27" /> 유통/물류
-						</div>
-						<div class="col-md-3">
-							<input type="checkbox" name="act_interest" value="28" /> 기타
-						</div>
-					</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -427,3 +456,41 @@
 	</div>
 </section>
 <%@ include file="../footer.jsp"%>
+<script>
+	$("#act_reg input[value=<%=activity.getAct_reg()%>]").prop("checked", true);
+	$("#act_field input[value=<%=activity.getAct_field()%>]").prop("checked", true);
+</script>
+<%
+	for (int act_reward : activity.getAct_reward()) {
+		%>
+		<script>
+			$("#act_reward input[value=<%=act_reward%>]").prop("checked", true);
+		</script>
+		<%
+	}
+	for (int act_interest : activity.getAct_interest()) {
+		%>
+		<script>
+			$("#act_interest input[value=<%=act_interest%>]").prop("checked", true);
+		</script>
+		<%
+	}
+%>
+<script>
+	function getValue(frm) {
+		var data = $(frm).serialize();
+		$.ajax({
+			url: "list_act_tagPro.jsp",
+			data: data,
+			dataType: "json",
+			cache: false,
+			success: function(data) {
+				var htmlStr = "";
+				$.each(data, function(key, val) {
+					htmlStr += val.tag + " ";
+				});
+				$("#act_form input[name='" + frm.id + "']").val(htmlStr);
+			}
+		});
+	}
+</script>
