@@ -3,27 +3,28 @@ package mySpec;
 import java.sql.Date;
 
 public class ActivityBean {
-	private int act_num;				// 번호
-	private int act_type;				// 유형(1 : 대외활동, 2 : 공모전)
+	private int act_num;			// 번호
+	private int act_type;			// 유형(1 : 대외활동, 2 : 공모전)
 	private String act_thumb;		// 썸네일
-	private String act_post;			// 포스터
-	private String act_title;			// 제목
-	private int act_hits;					// 조회수
+	private String act_post;		// 포스터
+	private String act_title;		// 제목
+	private int act_hits;			// 조회수
 	private String act_org;			// 주최기관 아이디
 	private String org_name;		// 주최기관명
 	private String act_target;		// 참여대상
 	private Date act_start;			// 기간 시작
-	private Date act_end;				// 기간 마감
-	private int act_dday;				// d-day
-	private int act_pop;					// 모집인원
-	private int act_reg;					// 모임지역
+	private Date act_end;			// 기간 마감
+	private int act_dday;			// d-day
+	private int act_pop;			// 모집인원
+	private int act_reg;			// 모임지역
 	private int[] act_reward;		// 활동혜택
-	private int act_field;				// 활동분야
+	private int act_field;			// 활동분야
 	private int[] act_interest;		// 관심분야
 	private String act_home;		// 홈페이지
-	private String act_content;	// 상세내용
+	private String act_content;		// 상세내용
 	private int act_award;			// 시상규모
 	private int act_approve;		// 승인여부
+	private String org_manager;		// 담당자이름
 	
 	public int getAct_num() {
 		return act_num;
@@ -150,5 +151,11 @@ public class ActivityBean {
 	}
 	public void setAct_approve(int act_approve) {
 		this.act_approve = act_approve;
+	}
+	public String getOrg_manager() {
+		return org_manager;
+	}
+	public void setOrg_manager(String org_manager) {
+		this.org_manager = org_manager;
 	}
 }

@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="mySpec.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,7 +6,7 @@
 <%@ include file="../header.jsp" %>
 
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
-
+<jsp:useBean id="Remgr" class="mySpec.CommunityReplyMgr" />
 
 <% 
 	request.setCharacterEncoding("utf-8");	
@@ -13,27 +14,31 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>(); //일반글 arraylist
 	
 	//페이징
-	pageSize = 8;	// 한 화면에 보여지는 게시글 수
-	pageNum = request.getParameter("pageNum");
+	int pageSize = 5;	// 한 화면에 보여지는 게시글 수
+	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
 		pageNum = "1";
 	}		
 	//검색
 	keyField = "";
 	keyWord = "";	
+	
 	if(request.getParameter("keyWord") != null) {
 		keyField = request.getParameter("keyField");
 		keyWord = request.getParameter("keyWord");
+		
 	}
 	
-	currentPage = Integer.parseInt(pageNum);		// 현재 페이지
-	startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
-	endRow = currentPage * pageSize;	// 페이지 끝
+	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
+	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
+	int endRow = currentPage * pageSize;	// 페이지 끝
 	
 	comm_arr = mgr.Community_list(startRow, endRow, keyField, keyWord); //일반글 받아오기
 	int count = mgr.community_Count(keyField, keyWord); //게시글 갯수
 	
 	ArrayList<CommunityBean> noticeArr = mgr.noticeList(1, 5, "", "");
+	
+	
 %>
 
 <section class="container my-3">
@@ -58,31 +63,7 @@
 		 	</thead>
 		 	<tbody>
 		 	
-<!-- 공지 --> 	
-<%
-		for(CommunityBean commB :noticeArr){
-			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
-			String datestr = commB.getComm_date();
-			String [] date = datestr.split(" ");
-			String date_1 = date[0];
-%>	
-
-		 		<tr class="d-flex" style=" background-color: #1dcdff; color:white;">	 		
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지</td>	
-		 			<td class="col-md-1 d-none d-lg-table-cell">공지사항</td>
-		 			<td class="col-md-5">
-		 				<a href="detailView.jsp?comm_num=<%=commB.getComm_num()%>" class="h5" style="color:white;"><%=commB.getComm_title() %></a>
-		 				<p class="d-block d-sm-none"><small><%=person %> <%=date_1%> 조회 <%=commB.getComm_hits() %></small></p>
-		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell"><%=person %></td>
-		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date_1 %></td>
-		 			<td class="col-md-1 d-none d-lg-table-cell"><%=commB.getComm_hits() %></td>
-		 		</tr>
-<%
-		}
-%>		
-
-		 	
+<!-- 공지 --> 		 	
 <%
 		for(CommunityBean bean : noticeArr) {
 			String person = bean.getComm_admin() != null ? "관리자" : bean.getComm_nick();
@@ -108,18 +89,31 @@
 		 		</tr>
 <%
 		}
+		if(comm_arr.isEmpty()) {	%>
+			<tr>
+				<td style="text-align: center;"> <h5> 결과가 없습니다.</h5></td>	 			
+			</tr>			
+		
+	<% } else {
+		
 		for(CommunityBean commB :comm_arr){
+			
 			String person = commB.getComm_admin() != null ? "관리자" : commB.getComm_nick();
 			String datestr = commB.getComm_date();
 			String [] date = datestr.split(" ");
 			String date_1 = date[0];
+			int comm_num = commB.getComm_num();
+			int recount = Remgr.Community_reply_count(comm_num);
 %>	
-
+			<!-- 일반글 -->
 		 		<tr class="d-flex">
 		 			<td class="col-md-1 d-none d-lg-table-cell"> <%=commB.getComm_num() %></td>
 		 			<td class="col-md-1 d-none d-lg-table-cell">일반게시판</td>
 		 			<td class="col-md-5">
-		 				<a href="detailView.jsp?comm_num=<%=commB.getComm_num()%>" class="h5 text-dark"><%=commB.getComm_title() %></a>
+		 				<a href="detailView.jsp?comm_num=<%=comm_num%>" class="h5 text-dark">
+			 				<%=commB.getComm_title() %> 
+			 				<span style="color: #ff6f6f; font-size: 14px">[<%=recount %>]</span>
+		 				</a>
 		 				<p class="d-block d-sm-none"><small><%=person %> <%=date_1%> 조회 <%=commB.getComm_hits() %></small></p>
 		 			</td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=person %></td>
@@ -127,6 +121,7 @@
 		 			<td class="col-md-1 d-none d-lg-table-cell"><%=commB.getComm_hits() %></td>	 			
 		 		</tr>
 <%
+	}
 		}
 %>		
 	 		</tbody>
@@ -135,6 +130,7 @@
 	
 	<!-- 글쓰기 -->
 	<div class="form-inline justify-content-end">
+		<a href="community.jsp" class="btn btn-com">전체글보기</a>&nbsp;
 		<button type="button" class="btn btn-com d-none d-md-block"  
 		onclick="comm_write('<%=id%>')">글쓰기</button>
 	</div>
@@ -156,7 +152,7 @@
 							// 이전
 							if(startPage > pageBlock) { %>	
 				    	<li class="page-item">
-				      		<a class="page-link" href="community.jsp?pageNum=<%=startPage - pageBlock%>" aria-label="Previous">
+				      		<a class="page-link" href="community.jsp?pageNum=<%=startPage - pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 				        		<span class="sr-only">Previous</span>
 				      		</a>
@@ -176,7 +172,7 @@
 								} else {
 				    %>
 				    	<li class="page-item">
-				    		<a class="page-link text-dark" href="community.jsp?pageNum=<%= i %>">
+				    		<a class="page-link text-dark" href="community.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -188,7 +184,7 @@
 							if(endPage < pageCount) {
 				    %>
 				    	<li class="page-item">
-				      		<a class="page-link" href="community.jsp?pageNum=<%=startPage + pageBlock%>" aria-label="Next">
+				      		<a class="page-link" href="community.jsp?pageNum=<%=startPage + pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 				        		<span class="sr-only">Next</span>
 				      		</a>
@@ -202,12 +198,12 @@
 	</div>
 
 	<!-- 검색 -->
-	<form method="post" id="commSearchFrm" class="form-inline justify-content-center">
-		<input type="hidden" name="pageNum" value="1">	
+	<form method="get" id="commSearchFrm" class="form-inline justify-content-center">
+	<input type="hidden" name="pageNum" value="1">
 		<select name="keyField" class="form-control" id="search_control">
 			<option value="comm_title">제목</option>
 			<option value="comm_content">내용</option>
-			<option value="comm_person">닉네임</option>
+			<option value="person_nick">닉네임</option>
 		</select>
 		
 		<div class="input-group">

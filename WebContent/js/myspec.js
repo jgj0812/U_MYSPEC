@@ -26,6 +26,7 @@ var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*
 //datepicker 공통
 $.datepicker.setDefaults({
 	dateFormat: "yy-mm-dd",
+	yearRange: "c-100:c+10",
 	nextText: "다음 달",
 	prevText: "이전 달",
 	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -747,13 +748,56 @@ function next(next_comm){
 
 //댓글 유효성
 function reply_ok() {
-	if($("#rep_content").val() == "") {
+	if($("#replyFrm [name=rep_content]").val() == "") {
 		alert("댓글 내용을 입력해주세요.");
-		$("#rep_content").focus();
+		$("#replyFrm [name=rep_content]").focus();
 		return false;
 	}
+	$("#replyFrm").submit();
+}
 
-	$("#comm_reply_form").submit();
+// 대댓글 유효성
+function rereply_ok(i) {
+	if($("#rereplyFrm" + i +" [name=rep_content]").val() == "") {
+		alert("답글 내용을 입력해주세요.");
+		$("#rereplyFrm" + i +" [name=rep_content]").focus();
+		return false;
+	}
+	$("#rereplyFrm" + i).submit();
+}
+
+// 답글 입력폼
+function rereply(i){
+	var rereply = document.getElementById("rereply" + i);
+	if(rereply.style.display =='none'){
+		rereply.style.display = 'block';
+	}else if(rereply.style.display =='block'){
+		rereply.style.display = 'none';
+	}
+}
+
+// 댓글 수정 폼
+function update(i){
+	var update = document.getElementById("update" + i);
+	var basic = document.getElementById("basic" + i);
+	
+	if(update.style.display =='none'){
+		update.style.display = 'block';
+		basic.style.display = 'none';
+	}else if(update.style.display =='block'){
+		update.style.display = 'none';
+		basic.style.display = 'block';
+	}
+}
+
+// 댓글 수정 취소
+function updatecancel(i){
+	var update = document.getElementById("update" + i);
+	var basic = document.getElementById("basic" + i);
+	if(update.style.display =='block'){
+		update.style.display = 'none';
+		basic.style.display = 'block';
+	}
 }
 
 // myPage 수정 양식, 비밀번호 변경

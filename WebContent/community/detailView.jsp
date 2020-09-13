@@ -14,10 +14,33 @@
 <jsp:setProperty property="*" name="Rbean"/>
 
 <style>
-
+ .recontent{
+ 	width: 800px; 
+ 	margin-left:20px; 
+ 	height:60px; 
+ 	font-weight:bolder;
+ }
+ .rebtn{
+ 	width:75px; 
+ 	margin-left:10px; 
+ 	margin-bottom:40px; 
+ 	height:60px; 
+ 	background-color:#aaaaaa; 
+ 	color:white;
+ }
+ 
 @media (max-width:360px) {
 
+ .recontent{
+ 	width: 200px;
+ 	height:55px;
+ }
+ .rebtn{
+ 	width:60px; 	
+ 	height:55px; 
 
+ }
+ 
 }
 
 </style>
@@ -172,7 +195,8 @@
 		
 		<hr style="margin-top: 2px">
 		
-		<!-- 댓글 보여주는 곳 -->		
+
+<!-- --------댓글 보여주는 곳--------- -->		
 <%
 		int i = 0;
 		for(CommunityReplyBean commRB :commRe_arr){
@@ -191,6 +215,8 @@
 			}
 %>	
 
+
+<!-- -----------------------------------------댓글 반복되는 div------------------------------------------  -->
 <div class ="reply_div">
 
 		<!-- 댓글 기본 div  -->
@@ -199,14 +225,15 @@
 			<div class="row" style="font-size:0.75rem;" >
 				<img src="${pageContext.request.contextPath}/img/level.png" style="margin-left: 16px; width: <%=wid%>px;  height:<%=h%>px;"> <!-- 레벨 -->
 				<i class="fas fa-reply" style="margin-left: 5px; font-size:<%=fontwid%>px "></i> <!-- 답글 이모지 -->
-				<p style="margin-left:25px;"><%=repPerson%></p> <!-- 닉네임 -->
+				<p style="margin-left:20px;"><%=repPerson%></p> <!-- 닉네임 -->
 				<p style="margin-left:20px;"><%=commRB.getRep_date()%></p> <!-- 날짜 -->
 			</div>
 			
-			<div style="margin-left:25px; font-size:1rem;">
+			<div style="margin-left:20px; font-size:1rem;">
 				<img src="${pageContext.request.contextPath}/img/level.png" style="margin-left: <%=wid_margin%>px; height:<%=h%>px;"> <!-- 댓글 레벨 -->
 				<%=commRB.getRep_content()%> <!-- 댓글내용 -->
 			</div> 
+			
 			
 			<!-- 삭제 수정 답글 -->
 			<div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex"> 
@@ -260,7 +287,7 @@
 
 		<!-- 답글 입력폼  -->	
 		<div id="rereply<%=i%>" style="display: none">
-			<form action="replyPro.jsp" id="comm_rereply_form" name="comm_rereply_form" method="post">
+			<form action="replyPro.jsp" id="rereplyFrm<%=i %>" name="comm_rereply_form" method="post">
 				<input type="hidden" name="comm_num" value="<%= comm_num%>">
 				<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
 				<input type="hidden" name="rep_ref" value="<%=commRB.getRep_ref() %>">
@@ -271,13 +298,14 @@
 					 <i class="fas fa-reply" style="margin-left: 20px; font-size:25" ></i> <!-- 답글 이모지  -->
 					 
 					 <!-- 답글 입력창 -->
-					 <div class="col-8" id="rere_content">
-					   <input id="rerep_content<%=i%>" name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" type="text" class="form-control" placeholder="댓글을 입력해주세요." > 
+					 <div id="rere_content">
+					   <input "id="rerep_content<%=i%>" name="rep_content"  type="text" class="form-control recontent" placeholder="답글을 입력해주세요." > 
 					 </div>
 					 
 					<!-- 답글 등록버튼 -->
-					<div class="col-2" id="rere_content">
-						<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" type="button" onclick="rereply_ok(<%=i%>)" class="form-control" value="등록">
+					<div id="rere_content">
+						<input  
+						type="button" onclick="rereply_ok(<%=i%>)" class="form-control rebtn" value="등록">
 					</div>
 				</div>		
 			</form>
@@ -289,73 +317,30 @@
 		} if(id != null) {
 %>				
 	<!-- 댓글 입력폼  -->
-	<form action="replyPro.jsp" id="comm_reply_form" name="comm_reply_form" method="post">
+	<form action="replyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
 	  	<!-- 글번호를 넘긴다 -->
 	  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
 			  	
 		<div class="form-row" >
 			 <div class="col-8">
-			   <input id="rep_content" name="rep_content" style="margin-left:20px; height:70px; font-weight:bolder;" type="text" class="form-control" placeholder="댓글을 입력해주세요." >
+			   <input id="rep_content" name="rep_content" style=" margin-left:20px; height:70px; font-weight:bolder;" type="text" class="form-control" placeholder="댓글을 입력해주세요." >
 			</div>
 			
 			<div class="col-2">
-				<input style="width:75px; margin-left:20px; margin-bottom:40px; height:70px; background-color:#aaaaaa; color:white;" type="button" onclick="reply_ok()" class="form-control" value="등록">
+				<input style="width:70px; margin-left:20px; margin-bottom:40px; height:70px; background-color:#aaaaaa; color:white;" type="button" onclick="reply_ok()" class="form-control" value="등록">
 			</div>
-		</div>
-<%		}else { %>
+			
+<%		} else { %>
 		<div class="container">
 			<p style="margin-left: 20px">댓글을 입력하려면 로그인을 해야합니다.</p>
 			<br>
 		</div>
 		
 	</form>
-<%		} %>
+<%	} %>
+ 	</div>
+ 	
+ 	
 </section>
-
-<script type="text/javascript">
-
-function rereply_ok(i) {
-	var rereply = document.getElementById("rerep_content" + i);
-	if(rereply == "") {
-		alert("답글 내용을 입력해주세요.");
-		rereply.focus();
-		return false;
-	}
-	$("#comm_rereply_form").submit();
-}
-
-
-function rereply(i){
-	var rereply = document.getElementById("rereply" + i);
-	if(rereply.style.display =='none'){
-		rereply.style.display = 'block';
-	}else if(rereply.style.display =='block'){
-		rereply.style.display = 'none';
-	}
-}
-
-function update(i){
-	var update = document.getElementById("update" + i);
-	var basic = document.getElementById("basic" + i);
-	
-	if(update.style.display =='none'){
-		update.style.display = 'block';
-		basic.style.display = 'none';
-	}else if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
-	}
-}
-
-function updatecancel(i){
-	var update = document.getElementById("update" + i);
-	var basic = document.getElementById("basic" + i);
-	if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
-	}
-}
-</script>
-
 <%@ include file="../footer.jsp" %>
 

@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/admin/adminHeader.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
+<jsp:useBean id="Remgr" class="mySpec.CommunityReplyMgr" />
 <%
 	request.setCharacterEncoding("utf-8");
 	int pageSize = 5;	// 한 화면에 보여지는 수
@@ -20,8 +21,8 @@
 	int currentPage = Integer.parseInt(pageNum);
 	int startRow = (currentPage - 1) * pageSize + 1;
 	int endRow = currentPage * pageSize;
-	ArrayList<CommunityBean> arrComm = mgr.adminComList(startRow, endRow, keyField, keyWord);
-	int count = mgr.adminComCount(keyField, keyWord);
+	ArrayList<CommunityBean> arrComm = mgr.Community_list(startRow, endRow, keyField, keyWord);
+	int count = mgr.community_Count(keyField, keyWord);
 %>
 <main>
 	<div class="d-flex" id="wrapper">
@@ -36,6 +37,7 @@
           		</button>
 			</nav>
 			
+			<div class="col-lg-12 bg-light p-4">일반글</div>
 			<!-- comNotice List -->
 			<div class="table-responsive">
 				<table class="table table-sm table-hover">
@@ -54,11 +56,16 @@
 						for(CommunityBean bean : arrComm) {
 							String date[] = bean.getComm_date().split(" ");
 							String date1 = date[0];
+							int comm_num = bean.getComm_num();
+							int recount = Remgr.Community_reply_count(comm_num);
 %>	
 		 				<tr class="d-flex"> 		
 		 					<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_num() %></td>
 		 					<td class="col-md-5">
-		 						<a href="adminComDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark"><%=bean.getComm_title() %></a>
+		 						<a href="adminComDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark">
+		 							<%=bean.getComm_title() %>
+		 							<span style="color: #ff6f6f; font-size: 14px">[<%=recount %>]</span>
+		 						</a>
 		 						<p class="d-block d-sm-none"><small><%=bean.getComm_nick() %> <%=date1%> <%=bean.getComm_hits() %></small></p>
 		 					</td>
 		 					<td class="col-md-2 d-none d-lg-table-cell"><%=bean.getComm_nick() %></td>
@@ -77,11 +84,6 @@
 				</table>	
 			</div>
 			<!-- /comNotice List -->
-			<!-- 전체글보기 -->
-			<div class="form-inline justify-content-end">
-				<a href="adminCom.jsp" class="btn btn-com">전체글보기</a>
-			</div>
-			<!-- /전체글보기 -->
 			<!-- 페이징 -->
 			<div class="form-inline justify-content-center">		
 				<nav aria-label="Page navigation example">
@@ -89,7 +91,7 @@
 		  			<%
 		  				if(count > 0) {
 		  					int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);	// 총 페이지 수 구하기
-		  					int pageBlock = 2;	// 이전 다음 나오게 하는것
+		  					int pageBlock = 4;	// 이전 다음 나오게 하는것
 		  					int startPage = (int)((currentPage - 1) / pageBlock) * pageBlock + 1;
 		  					int endPage = startPage + pageBlock - 1;	// 계산상 마지막 페이지
 		  					if(endPage > pageCount) {
@@ -99,7 +101,7 @@
 		  					if(startPage > pageBlock) {
 		  			%>
 		    			<li class="page-item">
-		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage - pageBlock %>" aria-label="Previous">
+		      				<a class="page-link" href="adminCom.jsp?pageNum=<%=startPage - pageBlock %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 		        				<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 		        				<span class="sr-only">Previous</span>
 		      				</a>
@@ -120,7 +122,7 @@
 		  						}else {
 		  			%>
 		  				<li class="page-item">
-				    		<a class="page-link text-dark" href="adminNotice.jsp?pageNum=<%= i %>">
+				    		<a class="page-link text-dark" href="adminCom.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -131,7 +133,7 @@
 		  					if(endPage < pageCount) {
 		    		%>
 		    			<li class="page-item">
-		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage + pageBlock %>" aria-label="Next">
+		      				<a class="page-link" href="adminCom.jsp?pageNum=<%=startPage + pageBlock %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 		        				<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 		        				<span class="sr-only">Next</span>
 		      				</a>
@@ -144,11 +146,13 @@
 				</nav>
 			</div>
 			<!-- /페이징 -->
+			
 			<!-- 검색 -->
-			<form method="post" id="noticeSearchFrm" class="form-inline justify-content-center">
+			<form method="get" id="noticeSearchFrm" class="form-inline justify-content-center">
 				<select name="keyField" class="form-control" id="search_control">
 					<option value="comm_title">제목</option>
 					<option value="comm_content">내용</option>
+					<option value="person_nick">닉네임</option>
 				</select>
 				<div class="input-group">
 					<input type="text" id="noticeSearch" name="keyWord" class="form-control">
