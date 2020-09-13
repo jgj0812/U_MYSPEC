@@ -375,7 +375,8 @@ public class ActivityMgr {
 				sql = "select * from "
 						+ "(select rownum rn, aa.* from "
 						+ "(select a.*, o.org_name, o.org_manager from "
-						+ "activity a left outer join org_user o "
+						+ "activity where act_type=1 a "
+						+ "left outer join org_user o "
 						+ "on a.act_org = o.org_id) aa) "
 						+ "where rn between ? and ? "
 						+ "order by act_num desc";
@@ -387,7 +388,7 @@ public class ActivityMgr {
 						+ "(select rownum rn, aa.* from "
 						+ "(select a.*, o.org_name, o.org_manager from "
 						+ "(select * from activity "
-						+ "where " + keyField + " like ?) a "
+						+ "where " + keyField + " like ? and act_type=1) a "
 						+ "left outer join org_user o "
 						+ "on a.act_org = o.org_id) aa) "
 						+ "where rn between ? and ? "
@@ -431,10 +432,100 @@ public class ActivityMgr {
 		try {
 			con = pool.getConnection();
 			if(keyWord.trim().equals("") || keyWord == null) {
-				sql = "select count(*) from activity";
+				sql = "select count(*) from activity where act_type=1";
 				pstmt = con.prepareStatement(sql);
 			}else {
-				sql = "select count(*) from activity where " + keyField + " like ?";
+				sql = "select count(*) from activity where " + keyField + " like ? and act_type=1";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	// 관리자 공모전 리스트
+	public ArrayList<ActivityBean> adminContestList(int startRow, int endRow, String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<ActivityBean> adminConArr = new ArrayList<ActivityBean>();
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select a.*, o.org_name, o.org_manager from "
+						+ "activity where act_type=2 a "
+						+ "left outer join org_user o "
+						+ "on a.act_org = o.org_id) aa) "
+						+ "where rn between ? and ? "
+						+ "order by act_num desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}else {
+				sql = "select * from "
+						+ "(select rownum rn, aa.* from "
+						+ "(select a.*, o.org_name, o.org_manager from "
+						+ "(select * from activity "
+						+ "where " + keyField + " like ? and act_type=2) a "
+						+ "left outer join org_user o "
+						+ "on a.act_org = o.org_id) aa) "
+						+ "where rn between ? and ? "
+						+ "order by act_num desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_type(rs.getInt("act_type"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				bean.setAct_org(rs.getString("act_org"));
+				bean.setAct_end(rs.getDate("act_end"));
+				bean.setOrg_name(rs.getString("org_name"));
+				bean.setAct_approve(rs.getInt("act_approve"));
+				bean.setOrg_manager(rs.getString("org_manager"));
+				adminConArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return adminConArr;
+	}
+	
+	// 관리자 공모전 수
+	public int adminContestCount(String keyField, String keyWord) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			if(keyWord.trim().equals("") || keyWord == null) {
+				sql = "select count(*) from activity where act_type=2";
+				pstmt = con.prepareStatement(sql);
+			}else {
+				sql = "select count(*) from activity where " + keyField + " like ? and act_type=2";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%" + keyWord + "%");
 			}

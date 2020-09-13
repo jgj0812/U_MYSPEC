@@ -1,9 +1,9 @@
-<%@page import="mySpec.PersonBean"%>
+<%@page import="mySpec.ActivityBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/admin/adminHeader.jsp" %>
-<jsp:useBean id="mgr" class="mySpec.MemberMgr" />
+<jsp:useBean id="mgr" class="mySpec.ActivityMgr" />
 <%
 	request.setCharacterEncoding("utf-8");
 	int pageSize = 5;	// 한 화면에 보여지는 수
@@ -20,9 +20,8 @@
 	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
 	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
 	int endRow = currentPage * pageSize;				// 페이지 끝
-	ArrayList<PersonBean> arrPerson = mgr.listPerson(startRow, endRow, keyField, keyWord);
-	int count = mgr.personCount(keyField, keyWord);	// 전체 개인회원 수
-	int number = count - (currentPage - 1) * pageSize;
+	ArrayList<ActivityBean> adminConArr = mgr.adminContestList(startRow, endRow, keyField, keyWord);
+	int count = mgr.adminContestCount(keyField, keyWord);
 %>
 <main>
 	<div class="d-flex" id="wrapper">
@@ -51,25 +50,35 @@
 		                    	<th class="col-5">제목</th>
 		                    	<th class="col-md-2">기관명</th>
 		                    	<th class="col-md-2">등록일</th>
-		                    	<th class="col-md-1">담당자</th>
+		                    	<th class="col-md-1">마감일</th>
 		                    	<th class="col-md-1">삭제</th>
 		                  	</tr>
 		                </thead>
 		                <!-- 예시 -->
 		                <tbody>
+		                	<%
+		                		for(ActivityBean bean : adminConArr) {
+		                	%>
 			             	<tr class="text-center d-flex">
-			                  <td class="col-md-1 col-4 d-flex align-items-center">
-			                    
-			                  </td>
-			                  <td class="col-md-5 text-truncate" >
-			                  	<span class="badge badge-primary rounded-pill">승인대기중</span>
-			                     공모전&참가인원&규모등등 긴 제목의 공모전 제목입니다. 영역을 넘은 긴 제목은 생략으로 처리합니다.
-			                  </td>
-			                  <td class="col-md-2">공모공모공모전</td>
-			                  <td class="col-md-2">2020.09.26</td>
-			                  <td class="col-md-1">강감찬</td>
-			                  <td class="col-md-1">삭제</td>
-              			    </tr>
+			                	<td class="col-md-1 col-4 d-flex align-items-center">
+			                    	<img src="../upload/<%=bean.getAct_thumb()%>" width="100%">
+			                	</td>
+			                  	<td class="col-md-5 text-truncate" >
+			                  		<%if(bean.getAct_approve() == 0) {%>
+			                  		<span class="badge badge-primary rounded-pill">승인대기중</span>
+			                  		<%} %>
+			                     	<%=bean.getAct_title() %>
+			                  	</td>
+			                  	<td class="col-md-2"><%=bean.getOrg_name() %></td>
+			                  	<td class="col-md-2">~<%=bean.getAct_end() %></td>
+			                  	<td class="col-md-1"><%=bean.getOrg_manager() %></td>
+			                  	<td class="col-md-1">
+			                  		<a href="" class="btn btn-danger">
+		 							삭제
+		 						</a>
+			                  	</td>
+              				</tr>
+              			    <%	} %>
 		                
 		                </tbody>
 					</table>
@@ -93,7 +102,7 @@
 							if(startPage > pageBlock) {
 					%>	
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage - pageBlock%>" aria-label="Previous">
+				      		<a class="page-link" href="adminContest.jsp?pageNum=<%=startPage - pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 				        		<span class="sr-only">Previous</span>
 				      		</a>
@@ -114,7 +123,7 @@
 								} else {
 				    %>
 				    	<li class="page-item">
-				    		<a class="page-link text-dark" href="adminPerson.jsp?pageNum=<%= i %>">
+				    		<a class="page-link text-dark" href="adminContest.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -126,7 +135,7 @@
 							if(endPage < pageCount) {
 				    %>
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage + pageBlock%>" aria-label="Next">
+				      		<a class="page-link" href="adminContest.jsp?pageNum=<%=startPage + pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 				        		<span class="sr-only">Next</span>
 				      		</a>

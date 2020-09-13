@@ -64,7 +64,7 @@
 			                  	<img src="../upload/<%=bean.getAct_thumb()%>" width="100%">
 			                  </td>
 			                  <td class="col-md-5 text-truncate" >
-			                  	<%if(bean.getAct_approve() == 1) {%>
+			                  	<%if(bean.getAct_approve() == 0) {%>
 			                  	<span class="badge badge-primary rounded-pill">승인대기중</span>
 			                  	<%} %>
 			                    <%=bean.getAct_title() %>
@@ -101,7 +101,7 @@
 							if(startPage > pageBlock) {
 					%>	
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage - pageBlock%>" aria-label="Previous">
+				      		<a class="page-link" href="adminActivity.jsp?pageNum=<%=startPage - pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 				        		<span class="sr-only">Previous</span>
 				      		</a>
@@ -122,7 +122,7 @@
 								} else {
 				    %>
 				    	<li class="page-item">
-				    		<a class="page-link text-dark" href="adminPerson.jsp?pageNum=<%= i %>">
+				    		<a class="page-link text-dark" href="adminActivity.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -134,7 +134,7 @@
 							if(endPage < pageCount) {
 				    %>
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage + pageBlock%>" aria-label="Next">
+				      		<a class="page-link" href="adminActivity.jsp?pageNum=<%=startPage + pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 				        		<span class="sr-only">Next</span>
 				      		</a>
