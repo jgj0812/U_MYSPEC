@@ -268,31 +268,31 @@
 					<form id="act_reward" onchange="getValue(this)">
 						<div class="row">
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="29" /> 활동비
+								<input type="checkbox" name="reward_num" value="29" /> 활동비
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="30" /> 사은품지급
+								<input type="checkbox" name="reward_num" value="30" /> 사은품지급
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="31" /> 실무교육
+								<input type="checkbox" name="reward_num" value="31" /> 실무교육
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="32" /> 봉사활동기간
+								<input type="checkbox" name="reward_num" value="32" /> 봉사활동기간
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="33" /> 전문가/임직원
+								<input type="checkbox" name="reward_num" value="33" /> 전문가/임직원
 								멘토링
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="34" /> 행사 참여
+								<input type="checkbox" name="reward_num" value="34" /> 행사 참여
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="35" /> 수료증 및 인증서
+								<input type="checkbox" name="reward_num" value="35" /> 수료증 및 인증서
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="36" /> 입사시 혜택
+								<input type="checkbox" name="reward_num" value="36" /> 입사시 혜택
 							</div>
 						</div>
 					</form>
