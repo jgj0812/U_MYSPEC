@@ -469,23 +469,41 @@ $(document).ready(function () {
 // 대외활동, 공모전 리스트 체크박스 동작
 function tagSearch() {
 	var order = $("#activityListOrder option:selected").val();
-	var data = $("#tagForm").serialize() + "&act_type=1&order=" + order;
+	var data = $("#tagForm").serialize() + "&act_type=" + $.cookie("act_type") +"&order=" + order + "&pageNum=" + $.cookie("pageNum");
+	var list;
+	var tag;
+	switch($.cookie("act_type")) {
+		case "1":
+			list = "list_actPro.jsp";
+			tag = "list_act_tagPro.jsp";
+			break;
+		case "2":
+			list = "list_conPro.jsp";
+			tag = "list_con_tagPro.jsp";
+			break;
+	}
 	$.ajax({
-		url: "list_act_tagPro.jsp",
-		data: data,
-		dataType: "html",
-		cache: false,
-		success: function(data) {
-			$("#choicetag").html(data);
-		}
-	});
-	$.ajax({
-		url: "list_actPro.jsp",
+		url: tag,
 		data: data,
 		dataType: "json",
 		cache: false,
 		success: function(data) {
+			var htmlStr = "";
+			$.each(data, function(key, val) {
+				htmlStr += "<input type='button' class='choiceButton' onclick='tagRemove(" + val.tag_num + ")' value='" + val.tag + "'>";
+			});
+			$("#choicetag").html(htmlStr);
+		}
+	});
+	$.ajax({
+		url: list,
+		data: data,
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			len = Object.keys(data).length;
 			getActivityList(data);
+			makePagination(data[len - 1]);
 		}
 	});
 }
@@ -539,39 +557,120 @@ function sendFile(file, editor) {
 // 활동 리스트
 function getActivityList(data) {
 	var htmlStr = "";
-	$.each(data, function(key, val) {
-		if(key % 4 == 0) {
+	var detailUrl;
+	switch($.cookie("act_type")) {
+		case "1":
+			detailUrl = "list_act_detail.jsp"
+			break;
+		case "2":
+			detailUrl = "list_con_detail.jsp"
+			break;
+		break;
+	}
+	len = Object.keys(data).length;
+	for(var i = 0; i < len - 1; i++) {
+		if(i % 4 == 0) {
 			htmlStr += "<div class='row'>";
 		}
 		htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
-		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><img src='../upload/" + val.act_thumb + "'></a>";
+		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><img src='../upload/" + data[i].act_thumb + "'></a>";
 		htmlStr += "<br>";
 		htmlStr += "<div class='list_explain'>";
-		htmlStr += "<a href='list_act_detail.jsp?act_num=" + val.act_num + "'><div class='list_explain_title'>" + val.act_title + "<br></div></a>";
-		htmlStr += val.org_name + "<br>";
-		htmlStr += "D-" + val.act_dday + "&nbsp;조회수&nbsp;" + val.act_hits;
+		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><div class='list_explain_title'>" + data[i].act_title + "<br></div></a>";
+		htmlStr += data[i].org_name + "<br>";
+		htmlStr += "D-" + data[i].act_dday + "&nbsp;조회수&nbsp;" + data[i].act_hits;
 		htmlStr += "</div></div>";
-		if(key % 4 == 3) {
+		if(i % 4 == 3) {
 			htmlStr += "</div>";
 		}
-	});
+	}
 	$("#activityList").html(htmlStr);
 }
 
-$(document).ready(function() {
+function makePagination(data) {
+	var count = data.act_count;
+	var startPage = data.act_startPage;
+	var endPage = data.act_endPage;
+	
+	htmlStr = "<li class='page-item'>";
+	htmlStr += "<a class='page-link' href='#' aria-label='Previous'>";
+	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>이전</span>";
+	htmlStr += "<span class='sr-only'>이전</span>";
+	htmlStr += "</a></li>";
+	for(var i = startPage; i <= endPage; i++) {
+		htmlStr += "<li class='page-item' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
+	}
+	htmlStr += "<a class='page-link' href='#'' aria-label='Next'>";
+	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>다음</span>";
+	htmlStr += "<span class='sr-only'>다음</span>";
+	htmlStr += "</a></li>";
+	
+	$("#activityCount").html("검색결과 " + count + "건");
+	$(".pagination").html(htmlStr);
+}
+
+
+function getPage(pageNum) {
+	var url;
+	switch($.cookie("act_type")) {
+		case "1":
+			url = "list_actPro.jsp";
+			break;
+		case "2":
+			url = "list_conPro.jsp";
+			break;
+	}
+	$.cookie("pageNum", pageNum);
 	$.ajax({
-		url: "list_actPro.jsp",
+		url: url,
 		data: {
-			act_type: 1,
+			act_type: $.cookie("act_type"),
 			order: $("#activityListOrder option:selected").val(),
+			pageNum: $.cookie("pageNum")
 		},
 		dataType: "json",
 		cache: false,
 		success: function(data) {
+			len = Object.keys(data).length;
 			getActivityList(data);
+			makePagination(data[len - 1]);
 		}
 	});
-});
+}
+
+function scrap(person_id, act_num) {
+	var url;
+	switch($.cookie("act_type")) {
+		case "1":
+			url = "list_act_scrapPro.jsp";
+			break;
+		case "2":
+			url = "list_con_scrapPro.jsp";
+			break;			
+	}
+	$.ajax({
+		url: url,
+		data: {
+			person_id: person_id,
+			act_num: act_num
+		},
+		success: function(data) {
+			switch(data) {
+				case '-1':
+					alert("스크랩에 오류가 발생했습니다.");
+					break;
+				case '0':
+					alert("이미 스크랩한 활동입니다.");
+					break;
+				case '1':
+					alert("스크랩 했습니다.");
+					break;
+			}
+		}
+	});
+}
+
+
 
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){
@@ -743,13 +842,11 @@ $("#UpdateBtn").click(function(){
 		return false;
 	}
 	
-	
 	// 기존 비밀번호는 필수적 입력
 	if($("#old_pwd").val() == "") {
 	alert("기존 비밀번호를 입력해 주세요.");
 	return;
 	}
-	
 	
 	// 새로운 비밀번호칸이 빈칸이 아닐경우 실행
 	if($("#password").val() != "") {

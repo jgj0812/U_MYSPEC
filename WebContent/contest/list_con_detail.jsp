@@ -61,24 +61,10 @@
 							<p><%=activity.getAct_start() %> - <%=activity.getAct_end() %></p>
 						</div>
 						<div class="col-md-2">
-							<p>모집인원</p>
+							<p>시상규모</p>
 						</div>
 						<div class="col-md-4">
-							<p><%=activity.getAct_pop() %></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-2">
-							<p>모임지역</p>
-						</div>
-						<div class="col-md-4">
-							<p><%=manager.getTag(activity.getAct_reg()) %></p>
-						</div>
-						<div class="col-md-2">
-							<p>참여대상</p>
-						</div>
-						<div class="col-md-4">
-							<p><%=activity.getAct_target() %></p>
+							<p><%=activity.getAct_award() %></p>
 						</div>
 					</div>
 					<div class="row">
@@ -93,23 +79,13 @@
 							%></p>
 						</div>
 						<div class="col-md-2">
-							<p>활동분야</p>
+							<p>공모분야</p>
 						</div>
 						<div class="col-md-4">
 							<p><%=manager.getTag(activity.getAct_field()) %></p>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-2">
-							<p>관심분야</p>
-						</div>
-						<div class="col-md-4">
-							<p><%
-							for(int act_interest : activity.getAct_interest()) {
-								out.print(manager.getTag(act_interest) + " ");
-							}
-							%></p>
-						</div>
 						<div class="col-md-2">
 							<p>홈페이지</p>
 						</div>
