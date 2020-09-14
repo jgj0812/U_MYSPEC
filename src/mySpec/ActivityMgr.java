@@ -182,6 +182,14 @@ public class ActivityMgr {
 				ps.setInt(11, activity.getAct_field());
 				ps.setString(12, activity.getAct_home());
 				ps.setString(13, activity.getAct_content());
+				ps.executeUpdate();
+				
+				sql = "insert into act_interest values(act_seq.currval, ?)";
+				for(int act_interest : activity.getAct_interest()) {
+					ps = con.prepareStatement(sql);
+					ps.setInt(1, act_interest);
+					ps.executeUpdate();
+				}
 				break;
 			case 2:
 				sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_field, act_award, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -198,21 +206,14 @@ public class ActivityMgr {
 				ps.setInt(10, activity.getAct_award());
 				ps.setString(11, activity.getAct_home());
 				ps.setString(12, activity.getAct_content());
+				ps.executeUpdate();
 				break;
 			}
-			ps.executeUpdate();
-			
+
 			sql = "insert into act_reward values(act_seq.currval, ?)";
 			for(int act_reward : activity.getAct_reward()) {
 				ps = con.prepareStatement(sql);
 				ps.setInt(1, act_reward);
-				ps.executeUpdate();
-			}
-			
-			sql = "insert into act_interest values(act_seq.currval, ?)";
-			for(int act_interest : activity.getAct_interest()) {
-				ps = con.prepareStatement(sql);
-				ps.setInt(1, act_interest);
 				ps.executeUpdate();
 			}
 			
