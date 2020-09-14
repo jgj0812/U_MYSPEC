@@ -476,21 +476,3 @@
 		<%
 	}
 %>
-<script>
-	function getValue(frm) {
-		var data = $(frm).serialize();
-		$.ajax({
-			url: "list_act_tagPro.jsp",
-			data: data,
-			dataType: "json",
-			cache: false,
-			success: function(data) {
-				var htmlStr = "";
-				$.each(data, function(key, val) {
-					htmlStr += val.tag + " ";
-				});
-				$("#act_form input[name='" + frm.id + "']").val(htmlStr);
-			}
-		});
-	}
-</script>

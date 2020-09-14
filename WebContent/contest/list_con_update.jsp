@@ -288,6 +288,3 @@
 	</script>
 	<%
 %>
-<script>
-	
-</script>
