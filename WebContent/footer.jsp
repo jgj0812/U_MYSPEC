@@ -38,6 +38,8 @@
 	    <script src="/U_MYSPEC/summernote/lang/summernote-ko-KR.js"></script>
 	    <!-- jquery-ui -->
 	    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+	    <!-- jquery cookie -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous"></script>
 	    <!-- myspec.js -->
 	<script src="/U_MYSPEC/js/myspec.js"></script>
     

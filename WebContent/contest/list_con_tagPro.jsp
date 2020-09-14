@@ -7,22 +7,22 @@
 <%
 	String[] params = null;
 	int[] act_field = null;
-	int[] interest_num = null;
+	int[] act_award = null;
 	int[] reward_num = null;
-	int[] act_reg = null;
+	int[] org_type = null;
 	ActivityMgr manager = new ActivityMgr();
 	
 	if((params = request.getParameterValues("act_field")) != null) {
 		act_field = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 	}
-	if((params = request.getParameterValues("interest_num")) != null) {
-		interest_num = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
+	if((params = request.getParameterValues("act_award")) != null) {
+		act_award = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 	}
 	if((params = request.getParameterValues("reward_num")) != null) {
 		reward_num = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 	}
-	if((params = request.getParameterValues("act_reg")) != null) {
-		act_reg = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
+	if((params = request.getParameterValues("org_type")) != null) {
+		org_type = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 	}
 	
 	JSONArray arr = new JSONArray();
@@ -35,8 +35,8 @@
 			arr.add(obj);
 		}
 	}
-	if(interest_num != null) {
-		for(int tag_num : interest_num) {
+	if(act_award != null) {
+		for(int tag_num : act_award) {
 			JSONObject obj = new JSONObject();
 			obj.put("tag_num", tag_num);
 			obj.put("tag", manager.getTag(tag_num));
@@ -51,8 +51,8 @@
 			arr.add(obj);
 		}
 	}
-	if(act_reg != null) {
-		for(int tag_num : act_reg) {
+	if(org_type != null) {
+		for(int tag_num : org_type) {
 			JSONObject obj = new JSONObject();
 			obj.put("tag_num", tag_num);
 			obj.put("tag", manager.getTag(tag_num));

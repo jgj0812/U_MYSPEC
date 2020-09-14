@@ -45,7 +45,7 @@
 		<div class="section">
 			<div class="row">
 				<div class="col-md-4">
-					<img src="http://localhost/U_MYSPEC/upload/<%=activity.getAct_post() %>" width="100%">
+					<img src="../upload/<%=activity.getAct_post() %>" width="100%">
 				</div>
 				<div class="col-md-8 d-flex flex-column">
 					<div class="row">
@@ -133,7 +133,7 @@
 					</div>
 					<div class="row h-100 align-content-end">
 						<div class="col-md-12">
-						  <button class="btn btn-cam btn-block" onclick="act_scrap('abc', <%=act_num %>)">스크랩</button>
+						  <button class="btn btn-cam btn-block" onclick="scrap('<%=id %>', <%=act_num %>)">스크랩</button>
 						</div>
 					</div>
 				</div>

@@ -19,10 +19,13 @@ private DBConnection pool;
 		ResultSet rs = null;
 		
 		String sql = "select r.*, p.person_nick from "
-						+ "comm_reply r left outer join person_user p "
-						+ "on r.rep_person = p.person_id "
-						+ "where rep_comm = "+ rep_comm
-						+ " order by rep_ref desc, rep_step asc";
+						+ "(select * from "
+						+ "(select * from comm_reply where rep_comm = " + rep_comm + ") "
+						+ "start with rep_ref = 0 "
+						+ "connect by prior rep_num = rep_ref "
+						+ "order siblings by rep_num) r "
+						+ "left outer join person_user p "
+						+ "on r.rep_person = p.person_id";
 		
 		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		
@@ -80,11 +83,7 @@ private DBConnection pool;
 			rs = pstmt.executeQuery(); //최대값 구하기
 			
 			if(rs.next()) {
-				number=rs.getInt(1)+1;
-				
-			}else {//테이블에 데이터가 하나도 없을 때
-				number = 1;
-				
+				number=0;	
 			}
 			//ref re_step re_level 결정
 			
@@ -94,8 +93,7 @@ private DBConnection pool;
 				pstmt.setInt(1, rep_ref);
 				pstmt.setInt(2, rep_step);
 				pstmt.executeUpdate();
-				
-				
+					
 				rep_step =rep_step+1; //부모 re_step+1
 				rep_level=rep_level+1;//부모 re_level+1
 				
@@ -124,7 +122,7 @@ private DBConnection pool;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			pool.closeConnection(con, pstmt);
+			pool.closeConnection(con, pstmt, rs);
 		}
 		return re;
 	}
@@ -210,26 +208,57 @@ private DBConnection pool;
 	public int insertAdminReply(CommunityReplyBean bean, String id, int comm_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String sql = null;
+		ResultSet rs = null;
+		String sql = "";
 		int re = -1;
+		int number = 0;
+		int rep_num = bean.getRep_num();	// 글번호
+		int rep_ref = bean.getRep_ref();
+		int rep_step = bean.getRep_step();
+		int rep_level = bean.getRep_level();
 
 		try {
 			con = pool.getConnection();
+			// 새댓글: ref= rep_num의 최대값 + 1, rep_step = 0, rep_level = 0
+			sql = "select max(rep_num) from comm_reply";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();	// 최대값 구하기
+			if(rs.next()) {
+				number = 0;
+			}
+			// ref step level 결정
+			
+			// 대댓글
+			if(rep_num != 0) {
+				sql = "update comm_reply set rep_step=rep_step+1 where rep_ref=? and rep_step>?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, rep_ref);
+				pstmt.setInt(2, rep_step);
+				pstmt.executeUpdate();
+				
+				rep_step += 1;
+				rep_level += 1;
+			}else {
+				rep_ref = number;
+				rep_step = 0;
+				rep_level = 0;
+			}
+			
 			sql = "insert into comm_reply (rep_num, rep_comm, rep_admin, rep_date, rep_content, rep_ref, rep_step, rep_level) " 
 							+ "values(comm_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, comm_num); //글번호
 			pstmt.setString(2, id); //아이디
 			pstmt.setString(3, bean.getRep_content()); //내용
-			pstmt.setInt(4, bean.getRep_ref()); //pos
-			pstmt.setInt(5, bean.getRep_step()); //ref
-			pstmt.setInt(6, bean.getRep_level()); //depth
+			pstmt.setInt(4, rep_ref); 
+			pstmt.setInt(5, rep_step); 
+			pstmt.setInt(6, rep_level);
 			pstmt.executeUpdate();
 			re = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			pool.closeConnection(con, pstmt);
+			pool.closeConnection(con, pstmt, rs);
 		}
 		return re;
 	}

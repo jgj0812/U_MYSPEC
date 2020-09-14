@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/admin/adminHeader.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
+<jsp:useBean id="Remgr" class="mySpec.CommunityReplyMgr" />
 <%
 	request.setCharacterEncoding("utf-8");
 	int pageSize = 5;	// 한 화면에 보여지는 수
@@ -35,7 +36,7 @@
             		<i class="fa fa-bars"></i>
           		</button>
 			</nav>
-			
+			<div class="col-lg-12 bg-light p-4">공지사항</div>
 			<!-- comNotice List -->
 			<div class="table-responsive">
 				<table class="table table-sm table-hover">
@@ -53,11 +54,16 @@
 						for(CommunityBean bean : arrComm) {
 							String date[] = bean.getComm_date().split(" ");
 							String date1 = date[0];
+							int comm_num = bean.getComm_num();
+							int recount = Remgr.Community_reply_count(comm_num);
 %>	
 		 				<tr class="d-flex">	 		
 		 					<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_num() %></td>
 		 					<td class="col-md-6">
-		 						<a href="adminNoticeDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark"><%=bean.getComm_title() %></a>
+		 						<a href="adminComDetail.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 text-dark">
+		 							<%=bean.getComm_title() %>
+		 							<span style="color: #ff6f6f; font-size: 14px">[<%=recount %>]</span>
+		 						</a>
 		 						<p class="d-block d-sm-none"><small>관리자 <%=date1%> <%=bean.getComm_hits() %></small></p>
 		 					</td>
 		 					<td class="col-md-2 d-none d-lg-table-cell">관리자</td>
@@ -93,7 +99,7 @@
 		  					if(startPage > pageBlock) {
 		  			%>
 		    			<li class="page-item">
-		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage - pageBlock %>" aria-label="Previous">
+		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage - pageBlock %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 		        				<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 		        				<span class="sr-only">Previous</span>
 		      				</a>
@@ -114,7 +120,7 @@
 		  						}else {
 		  			%>
 		  				<li class="page-item">
-				    		<a class="page-link text-dark" href="adminNotice.jsp?pageNum=<%= i %>">
+				    		<a class="page-link text-dark" href="adminNotice.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -125,7 +131,7 @@
 		  					if(endPage < pageCount) {
 		    		%>
 		    			<li class="page-item">
-		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage + pageBlock %>" aria-label="Next">
+		      				<a class="page-link" href="adminNotice.jsp?pageNum=<%=startPage + pageBlock %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 		        				<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 		        				<span class="sr-only">Next</span>
 		      				</a>
@@ -139,7 +145,7 @@
 			</div>
 			<!-- /페이징 -->
 			<!-- 검색 -->
-			<form method="post" id="noticeSearchFrm" class="form-inline justify-content-center">
+			<form method="get" id="noticeSearchFrm" class="form-inline justify-content-center">
 				<select name="keyField" class="form-control" id="search_control">
 					<option value="comm_title">제목</option>
 					<option value="comm_content">내용</option>

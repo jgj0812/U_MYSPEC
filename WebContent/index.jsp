@@ -4,8 +4,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/header.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
-<%
-	ArrayList<CommunityBean> noticeArr = mgr.noticeList(startRow, endRow, keyField, keyWord);
+<%	
+	ArrayList<CommunityBean> noticeArr = mgr.noticeList(1, 5, "", "");
 %>
 <section class="py-3">
 	<div class="container">
@@ -25,8 +25,6 @@
 		    <tbody>
 		    	<%
 		    		for(CommunityBean bean : noticeArr) {
-			    		String admin = "";
-			    		if(bean.getComm_admin().equals("admin")) admin = "관리자";
 			    		String date[] = bean.getComm_date().split(" ");
 			    		String date1 = date[0];
 		    	%>
@@ -37,9 +35,9 @@
 		 				<a href="community/detailView.jsp?comm_num=<%=bean.getComm_num() %>" class="h5">
 		 					<%=bean.getComm_title() %>
 		 				</a>
-		 				<p class="d-block d-sm-none"><small><%=admin %> <%=date1 %> 조회 <%=bean.getComm_hits() %></small></p>
+		 				<p class="d-block d-sm-none"><small>관리자 <%=date1 %> 조회 <%=bean.getComm_hits() %></small></p>
 		 			</td>
-		 			<td class="col-md-2 d-none d-lg-table-cell"><%=admin %></td>
+		 			<td class="col-md-2 d-none d-lg-table-cell">관리자</td>
 		 			<td class="col-md-2 d-none d-lg-table-cell"><%=date1 %></td>
 		 			<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getComm_hits() %></td>
 		 		</tr>
