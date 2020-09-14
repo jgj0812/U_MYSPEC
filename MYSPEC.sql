@@ -104,6 +104,7 @@ CONSTRAINT interest_fk1 FOREIGN KEY (inter_person) REFERENCES person_user (perso
 CREATE TABLE scrap (
 scrap_person VARCHAR2(20 CHAR),
 scrap_num NUMBER,
+CONSTRAINT scrap_pk PRIMARY KEY (scrap_person, scrap_num),
 CONSTRAINT scrap_fk1 FOREIGN KEY (scrap_person) REFERENCES person_user (person_id) ON DELETE CASCADE,
 CONSTRAINT scrap_fk2 FOREIGN KEY (scrap_num) REFERENCES activity (act_num) ON DELETE CASCADE
 );
