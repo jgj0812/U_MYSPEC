@@ -408,19 +408,8 @@
  	
  	
 </section>
-
 <script type="text/javascript" >
-
-function rereply_ok(i) {
-	if($("#rereplyFrm" + i + " [name=rep_content]").val() == "") {
-		alert("답글 내용을 입력해주세요.");
-		$("#rereplyFrm" + i + " [name=rep_content]").focus();
-		return false;
-	}
-
-	$("#rereplyFrm" + i).submit();
-}
-
+                              
 function rereplylist(i){
 	var rereplylist = document.getElementById("rereplylist" + i);
 	if(rereplylist.style.display =='none'){
@@ -429,41 +418,6 @@ function rereplylist(i){
 		rereplylist.style.display = 'none';
 	}
 }
-
-
-function rereply(i){
-	var rereply = document.getElementById("rereply" + i);
-	if(rereply.style.display =='none'){
-		rereply.style.display = 'block';
-	}else if(rereply.style.display =='block'){
-		rereply.style.display = 'none';
-	}
-}
-
-function update(i){
-	var update = document.getElementById("update" + i);
-	var basic = document.getElementById("basic" + i);
-	
-	if(update.style.display =='none'){
-		update.style.display = 'block';
-		basic.style.display = 'none';
-	}else if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
-	}
-}
-
-function updatecancel(i){
-	var update = document.getElementById("update" + i);
-	var basic = document.getElementById("basic" + i);
-	if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
-	}
-}
-
-
 </script>
-
 <%@ include file="../footer.jsp" %>
 

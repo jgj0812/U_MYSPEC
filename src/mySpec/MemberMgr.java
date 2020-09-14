@@ -518,6 +518,36 @@ private DBConnection pool;
 		return org;
 	}
 	
+//	MyPage (단체) 활동 보기
+	public ActivityBean actlist_Org(int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ActivityBean alorg = null;
+		String sql = "select * from activity where act_num=?";
+		
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				alorg = new ActivityBean();
+				
+				alorg.setAct_num(rs.getInt("act_num"));
+				alorg.setAct_type(rs.getInt("act_type"));
+				alorg.setAct_title(rs.getString("act_title"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return alorg;
+	}
+	
+	
 //	MyPage 수정(개인)
 	public int updatePerson(PersonBean pup, String pwd) {
 		Connection con = null;

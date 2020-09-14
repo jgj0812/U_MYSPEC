@@ -18,8 +18,8 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>(); //일반글 arraylist
 	
 	//페이징
-	pageSize = 8;	// 한 화면에 보여지는 게시글 수
-	pageNum = request.getParameter("pageNum");
+	int pageSize = 5;	// 한 화면에 보여지는 게시글 수
+	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
 		pageNum = "1";
 	}		
@@ -33,9 +33,9 @@
 		
 	}
 	
-	currentPage = Integer.parseInt(pageNum);		// 현재 페이지
-	startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
-	endRow = currentPage * pageSize;	// 페이지 끝
+	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
+	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
+	int endRow = currentPage * pageSize;	// 페이지 끝
 	
 	comm_arr = mgr.Community_list(startRow, endRow, keyField, keyWord); //일반글 받아오기
 	int count = mgr.community_Count(keyField, keyWord); //게시글 갯수

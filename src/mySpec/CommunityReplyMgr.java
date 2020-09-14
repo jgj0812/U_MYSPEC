@@ -23,7 +23,6 @@ private DBConnection pool;
 						+ "on r.rep_person = p.person_id "
 						+ "where rep_parent = 0 and rep_comm = "+ rep_comm 
 						+ "order by rep_date";
-					
 		ArrayList<CommunityReplyBean> commreply_arr = new ArrayList<CommunityReplyBean>();
 		
 		try {
@@ -84,6 +83,7 @@ private DBConnection pool;
 				commB.setRep_nick(rs.getString("person_nick"));
 				
 				commrereply_arr.add(commB);
+
 			}
 			
 		} catch (Exception e) {
