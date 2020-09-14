@@ -10,6 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+System.out.println(request.getRealPath("upload"));
 	MultipartRequest multi = new MultipartRequest(request, request.getRealPath("upload"), 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
 	int act_type = Integer.parseInt(multi.getParameter("act_type"));
 	String act_thumb = multi.getFilesystemName("act_thumb");
