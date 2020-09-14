@@ -290,7 +290,7 @@
 			<form action="replyPro.jsp" id="rereplyFrm<%=i %>" name="comm_rereply_form" method="post">
 				<input type="hidden" name="comm_num" value="<%= comm_num%>">
 				<input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-				<input type="hidden" name="rep_ref" value="<%=commRB.getRep_ref() %>">
+				<input type="hidden" name="rep_ref" value="<%=commRB.getRep_num() %>">
 				<input type="hidden" name="rep_step" value="<%=commRB.getRep_step() %>">
 				<input type="hidden" name="rep_level" value="<%=commRB.getRep_level() %>">
 				

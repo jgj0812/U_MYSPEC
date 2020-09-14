@@ -83,11 +83,7 @@ private DBConnection pool;
 			rs = pstmt.executeQuery(); //최대값 구하기
 			
 			if(rs.next()) {
-				number=rs.getInt(1)+1;
-				
-			}else {//테이블에 데이터가 하나도 없을 때
-				number = 1;
-				
+				number=0;	
 			}
 			//ref re_step re_level 결정
 			
