@@ -728,8 +728,11 @@ $("#noticeSearchBtn").click(function(){
 });
 
 //커뮤니티 글쓰기로 가기
-function comm_write(id) {
-	if(id == 'null') {
+function comm_write(id,member) {
+	if(member == 1){
+		alert('단체회원은 글쓰기를 이용할 수 없습니다.')
+		window.location = "community.jsp";
+	}else if(id == 'null') {
 		alert("로그인을 해야 글쓰기가 가능합니다.");
 		window.location = "../member/login.jsp";
 	}else {
