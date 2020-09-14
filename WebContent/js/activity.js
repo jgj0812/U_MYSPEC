@@ -56,9 +56,11 @@ function act_submit() {
 		alert("활동분야를 선택해주세요.");
 		return;
 	}
-	if($("#act_form input[name='act_interest']:checked").length == 0) {
-		alert("관심분야를 선택해주세요.");
-		return;
+	if($("#act_form input[name='act_type']:checked").val() == "1") {
+		if($("#act_form input[name='act_interest']:checked").length == 0) {
+			alert("관심분야를 선택해주세요.");
+			return;
+		}
 	}
 	if($("#act_form input[name='act_home']").val().length == 0) {
 		alert("홈페이지를 입력해주세요.");

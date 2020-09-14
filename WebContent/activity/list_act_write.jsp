@@ -201,6 +201,7 @@
 				<br />
 			</div>
 			
+			<div class="activity">
 			<h5>관심분야</h5>
 			<div class="row">
 				<div class="col-md-3">
@@ -276,7 +277,8 @@
 				</div>
 			</div>
 			<br />
-
+			</div>
+			
 			<h5>홈페이지</h5>
 			<input type="text" placeholder="홈페이지" class="form-control"
 				name="act_home" /> <br /> <br />

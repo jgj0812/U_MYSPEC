@@ -54,9 +54,9 @@
 	if(act_type == 1) {
 		activity.setAct_pop(act_pop);
 		activity.setAct_reg(act_reg);
+		activity.setAct_interest(act_interest);
 	}
 	
-	activity.setAct_interest(act_interest);
 	activity.setAct_field(act_field);
 	
 	if(act_type ==2) {
