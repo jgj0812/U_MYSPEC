@@ -94,13 +94,14 @@
 	
 	<hr style="height: 2px; background-color: black;">
 	
+	<!-- 제목   -->
 	<div style="margin-left:20px;">
-			<!-- 제목   -->
 		<h3><%= title %></h3>
 	</div>	
 			
 	<hr>
 	
+	<!-- 글 글쓴이, 날짜, 조회수 -->
 	<div class="row" style="font-size: 0.75rem; color: #999;" >
 		<div style="margin-left:40px;"><p><%= person %></p></div>	<!-- 글쓴이 -->
 		<hr class="name_line">
@@ -190,7 +191,8 @@
 			    
 	</div>
 
-	<div style="background-color:#eeeeee;">
+	<!-- --------댓글 보여주는 곳--------- -->	
+	<div class="reply" style="background-color:#eeeeee;">
 		<div class="row" style="font-size:0.75rem; margin-top:23px;" >
 			<p style="font-weight:bold; margin-left:40px; margin-top:15px;">댓글</p>
 			<p style="font-weight:bold; margin-top:15px; margin-left:5px;"><%=count %></p>	<!-- 댓글수 -->
@@ -198,10 +200,7 @@
 		
 		<hr style="margin-top: 2px">
 		
-
-<!-- --------댓글 보여주는 곳--------- -->	
-	
-<%
+		<%
 		int i = 0;
 		for(CommunityReplyBean commRB :commRe_arr){
 			
@@ -209,220 +208,219 @@
       		int recount = Rmgr.Community_rereply_count(comm_num, commRB.getRep_num());
       		i++;
 	
-%>	
-
-<!-- -----------------------------------------댓글 반복되는 div------------------------------------------  -->
-<div class ="reply_div">
-
-    <!-- 댓글 기본 div  -->
-    <div id="basic<%=i%>" style="display: block">
-        
-        <!-- 닉네임 날짜 -->
-        <div class="row" style="font-size:0.85rem;" >
-        	<% if(repPerson.equals(commRB.getRep_nick())) {%>
-            <p style="margin-left:40px;"><%=repPerson%></p>
-            <% } else {%>
-            <p style="margin-left:40px; font-style:bold; color:#1dcdff"><%=repPerson%></p> <!-- 닉네임 -->
-            <%} %>
-            
-            <p style="margin-left:20px;"><%=commRB.getRep_date()%></p> <!-- 날짜 -->
-        </div>
-      
-        <!-- 댓글내용 -->
-        <div style="margin-left:30px; font-size:1rem;">
-            <%=commRB.getRep_content()%> <!-- 댓글내용 -->
-        </div> 
-        
-        <br>
-        <!-- 답글보기 삭제 수정 답글 -->
-        <div>
-            <!-- 답글 리스트 보기  -->
-            <div style="font-size:0.75rem; margin-left:20px; float: left;"> 
-                <input type="button" style="border: 0px" value="답글보기 [<%=recount %>]" onclick="rereplylist(<%=i%>)">  
-            </div>
-        
-            <!-- 삭제 수정 답글 -->
-            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex"> 
-            
-                <% if(id != null && id.trim().equals(commRB.getRep_person())) { %>	
-                <!-- 삭제  -->
-                <form action="reply_deletePro.jsp"> 
-                    <!-- 원래글로 돌아가기위한 글번호  -->
-                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
-                    <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-                    <input type="submit" style="border: 0px" value="삭제">  
-                </form>
-                
-                <!-- 수정  -->			
-                <form> 
-                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
-                    <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-                    <input type="button" style="border: 0px" value="수정"  onclick="update(<%=i%>)"> 
-                </form>	  
-                <%} %>	 
-                 
-                <!-- 답글달기  -->
-                <% if(id != null && member != 1) { %>
-                <div>
-                    <input type="button" style="border: 0px" value="답글달기" onclick="rereply(<%=i%>)"> 
-                </div>	
-                <%} %>
-            </div>	
-        </div>
-
-    <br>
-    <hr> 
-
-    </div> 
-    <!-- 댓글 기본 div끝  -->
-
-    <!-- 댓글 수정 div -->
-    <div id="update<%=i %>" style="display: none">
-        <form action ="reply_updatePro.jsp" method="post"> 
-            <div style="margin-bottom: 5px">
-                <input name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB.getRep_content()%>"> 
-                <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-                <input type="hidden" name="comm_num" value="<%= comm_num%>">
-            </div>
-            
-            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">			
-                <input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem"  value="취소" onclick="updatecancel(<%=i%>)"> 
-                <input type="submit" class="btn btn-danger" style="font-size: 0.75rem" value="수정">  		
-            </div>
-            
-            <br>
-            <hr> 
-        </form>  	
-    </div>
-
-    <!-- 답글 입력폼  -->	
-    <div id="rereply<%=i%>" style="display: none">
-        <form action="replyPro.jsp" id="rereplyFrm<%=i %>" name="comm_rereply_form" method="post">
-            <input type="hidden" name="comm_num" value="<%= comm_num%>">
-            <!-- 부모댓글의 댓글번호를 부모댓글번호로 들고온다 -->
-            <input type="hidden" name="rep_parent" value="<%=commRB.getRep_num() %>">
-            
-            <div class="form-row">
-                 <img style="margin-left:30px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
-                 
-                 <!-- 답글 입력창 -->
-                 <div id="rere_content">
-                   <input "id="rerep_content<%=i%>" name="rep_content"  type="text" class="form-control recontent" placeholder="답글을 입력해주세요." > 
-                 </div>
-                 
-                <!-- 답글 등록버튼 -->
-                <div id="rere_content">
-                    <input  
-                    type="button" onclick="rereply_ok(<%=i%>)" class="form-control rebtn" value="등록">
-                </div>
-            </div>		
-        </form>
-        <hr style="margin-top: 0px">
-    </div>		
- 
- <div id="rereply_div">
-    <% 
-    
-        ArrayList<CommunityReplyBean> commRere_arr  = Rmgr.Community_rereply_list(comm_num, commRB.getRep_num());
-    
-        for(CommunityReplyBean commRB2 :commRere_arr){
-              String repPerson2 = commRB2.getRep_admin() != null ? "관리자" : commRB2.getRep_nick();
-      %>
-                      
-    <!-- 답글 리스트  -->	
-    <div id="rereplylist<%=i%>" style="display: none">
-        <!-- 닉네임 날짜 -->
-        <div class="row" style="font-size:0.85rem;" >
-            <img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
-            
-           <% if(repPerson2.equals(commRB2.getRep_nick())) {%>
-            <p style="margin-left:10px;"><%=repPerson2%></p> <!-- 닉네임 -->
-			<% } else{ %>
-			 <p style="margin-left:10px; font-style:bold; color:#1dcdff""><%=repPerson2%></p> <!-- 닉네임 -->
-			<%} %>
-
-            <p style="margin-left:20px;"><%=commRB2.getRep_date()%></p> <!-- 날짜 -->
-        </div>
-        
-        <!-- 댓글내용 -->
-        <div style="margin-left:65px; font-size:1rem;">
-            <%=commRB2.getRep_content()%> <!-- 댓글내용 -->
-        </div> 
-
-        <!-- 답글보기 삭제 수정 답글 -->
-        <div>
-        
-            <!-- 삭제 수정 답글 -->
-            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex"> 
-            
-                <% if(id != null && id.trim().equals(commRB2.getRep_person())) { %>	
-                <!-- 삭제  -->
-                <form action="reply_deletePro.jsp"> 
-                    <!-- 원래글로 돌아가기위한 글번호  -->
-                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
-                    <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
-                    <input type="submit" style="border: 0px" value="삭제">  
-                </form>
-                
-                <!-- 수정  -->			
-                <form> 
-                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
-                    <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
-                    <input type="button" style="border: 0px" value="수정"  onclick="reupdate(<%=i%>)"> 
-                </form>	  
-                 <%} %>	 
-            </div>
-        
-        </div>	
-    <br>
-    <hr>
-    
-      <% }%>
-      
-    </div>		
- </div>		
- </div>
-    <%
-        } if(id != null && member != 1) {
-    %>				
-    <!-- 댓글 입력폼  -->
-    <form action="replyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
-        <!-- 글번호 -->
-        <input type="hidden" name="comm_num" value="<%= comm_num%>">
-        <!-- 부모댓글번호 -->
-        <input type="hidden" name="rep_parent" value="0">
-        
-        <div class="form-row" >
-            <div class="col-8">
-            <textarea id="rep_content" name="rep_content" style=" margin-left:20px; height:70px; font-weight:bolder;" type="text" class="form-control">
-            
-            </textarea>
-            
-            </div>
-            
-            <div class="col-2">
-                <input style="width:70px; margin-left:20px; margin-bottom:40px; height:70px; background-color:#aaaaaa; color:white;" type="button" onclick="reply_ok()" class="form-control" value="등록">
-            </div>
-            
-    <%		}  else if(member == 1) { %>
-        <div class="container">
-            <p style="margin-left: 20px">단체회원은 댓글 기능을 이용할 수 없습니다.</p>
-            <br>
-        </div>
-        
-    </form>
-
-    <%	}else { %>
-        <div class="container">
-            <p style="margin-left: 20px">댓글을 입력하려면 로그인을 해야합니다.</p>
-            <br>
-        </div>
-    </form>
-
-    <%	} %>
-
+		%>	
+		<div class="reply_div">
+		    <!-- 댓글 기본 div  -->
+		    <div id="basic<%=i%>" style="display: block">
+		        
+		        <!-- 닉네임 날짜 -->
+		        <div class="row" style="font-size:0.85rem;" >
+		        	<% if(repPerson.equals(commRB.getRep_nick())) {%>
+		            <p style="margin-left:40px;"><%=repPerson%></p>
+		            <% } else {%>
+		            <p style="margin-left:40px; font-style:bold; color:#1dcdff"><%=repPerson%></p> <!-- 닉네임 -->
+		            <%} %>
+		            
+		            <p style="margin-left:20px;"><%=commRB.getRep_date()%></p> <!-- 날짜 -->
+		        </div>
+		      
+		        <!-- 댓글내용 -->
+		        <div style="margin-left:30px; font-size:1rem;">
+		            <%=commRB.getRep_content()%> <!-- 댓글내용 -->
+		        </div> 
+		        
+		        <br>
+		        <!-- 답글보기 삭제 수정 답글 -->
+		        <div>
+		            <!-- 답글 리스트 보기  -->
+		            <div style="font-size:0.75rem; margin-left:20px; float: left;"> 
+		                <input type="button" style="border: 0px" value="답글보기 [<%=recount %>]" onclick="rereplylist(<%=i%>)">  
+		            </div>
+		        
+		            <!-- 삭제 수정 답글 -->
+		            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex"> 
+		            
+		                <% if(id != null && id.trim().equals(commRB.getRep_person())) { %>	
+		                <!-- 삭제  -->
+		                <form action="reply_deletePro.jsp"> 
+		                    <!-- 원래글로 돌아가기위한 글번호  -->
+		                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
+		                    <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+		                    <input type="submit" style="border: 0px" value="삭제">  
+		                </form>
+		                
+		                <!-- 수정  -->			
+		                <form> 
+		                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
+		                    <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+		                    <input type="button" style="border: 0px" value="수정"  onclick="update(<%=i%>)"> 
+		                </form>	  
+		                <%} %>	 
+		                 
+		                <!-- 답글달기  -->
+		                <% if(id != null && member != 1) { %>
+		                <div>
+		                    <input type="button" style="border: 0px" value="답글달기" onclick="rereply(<%=i%>)"> 
+		                </div>	
+		                <%} %>
+		            </div>	
+		        </div>
+		
+		    <br>
+		    <hr> 
+		
+		    </div> 
+		    <!-- 댓글 기본 div끝  -->
+		
+		    <!-- 댓글 수정 div -->
+		    <div id="update<%=i %>" style="display: none">
+		        <form action ="reply_updatePro.jsp" method="post"> 
+		            <div style="margin-bottom: 5px">
+		                <input name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB.getRep_content()%>"> 
+		                <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+		                <input type="hidden" name="comm_num" value="<%= comm_num%>">
+		            </div>
+		            
+		            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">			
+		                <input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem"  value="취소" onclick="updatecancel(<%=i%>)"> 
+		                <input type="submit" class="btn btn-danger" style="font-size: 0.75rem" value="수정">  		
+		            </div>
+		            
+		            <br>
+		            <hr> 
+		        </form>  	
+		    </div>
+		
+		    <!-- 답글 입력폼  -->	
+		    <div id="rereply<%=i%>" style="display: none">
+		        <form action="replyPro.jsp" id="rereplyFrm<%=i %>" name="comm_rereply_form" method="post">
+		            <input type="hidden" name="comm_num" value="<%= comm_num%>">
+		            <!-- 부모댓글의 댓글번호를 부모댓글번호로 들고온다 -->
+		            <input type="hidden" name="rep_parent" value="<%=commRB.getRep_num() %>">
+		            
+		            <div class="form-row">
+		                 <img style="margin-left:30px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
+		                 
+		                 <!-- 답글 입력창 -->
+		                 <div id="rere_content">
+		                   <input "id="rerep_content<%=i%>" name="rep_content"  type="text" class="form-control recontent" placeholder="답글을 입력해주세요." > 
+		                 </div>
+		                 
+		                <!-- 답글 등록버튼 -->
+		                <div id="rere_content">
+		                    <input  
+		                    type="button" onclick="rereply_ok(<%=i%>)" class="form-control rebtn" value="등록">
+		                </div>
+		            </div>		
+		        </form>
+		        <hr style="margin-top: 0px">
+		    </div>
+			
+			<!-- 답글 시작 -->
+			<div class="rereply_div">
+	
+		       <div id="rereplylist<%=i%>" style="display: none">
+		        <%
+		        ArrayList<CommunityReplyBean> commRere_arr  = Rmgr.Community_rereply_list(comm_num, commRB.getRep_num());
+		    
+		        for(CommunityReplyBean commRB2 :commRere_arr){
+		              String repPerson2 = commRB2.getRep_admin() != null ? "관리자" : commRB2.getRep_nick();
+		     	 %>
+		      
+		       	 <!-- 닉네임 날짜 -->
+		            <div class="row" style="font-size:0.85rem;" >
+		                <img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
+		                
+		            <% if(repPerson2.equals(commRB2.getRep_nick())) {%>
+		                <p style="margin-left:10px;"><%=repPerson2%></p> <!-- 닉네임 -->
+		                <% } else{ %>
+		                <p style="margin-left:10px; font-style:bold; color:#1dcdff""><%=repPerson2%></p> <!-- 닉네임 -->
+		                <%} %>
+		
+		                <p style="margin-left:20px;"><%=commRB2.getRep_date()%></p> <!-- 날짜 -->
+		            </div>
+		         
+		         <!-- 댓글내용 -->
+	            <div style="margin-left:65px; font-size:1rem;">
+	                <%=commRB2.getRep_content()%> <!-- 댓글내용 -->
+	            </div> 
+		       
+		        <!-- 답글보기 삭제 수정 답글 -->
+            	<div>
+               	 	<!-- 삭제 수정 답글 -->
+	                <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex"> 
+	                
+	                    <% if(id != null && id.trim().equals(commRB2.getRep_person())) { %>	
+	                    <!-- 삭제  -->
+	                    <form action="reply_deletePro.jsp"> 
+	                        <!-- 원래글로 돌아가기위한 글번호  -->
+	                        <input type="hidden" name="comm_num" value="<%= comm_num%>">
+	                        <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
+	                        <input type="submit" style="border: 0px" value="삭제">  
+	                    </form>
+	                    
+	                    <!-- 수정  -->			
+	                    <form> 
+	                        <input type="hidden" name="comm_num" value="<%= comm_num%>">
+	                        <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
+	                        <input type="button" style="border: 0px" value="수정"  onclick="reupdate(<%=i%>)"> 
+	                    </form>	  
+	                    <%} %>	 
+	                </div>  
+            	</div>	
+        	<br>
+        	<hr>
+		    </div> <!-- rereplylist -->     
+		      <%} %>
+			</div> <!-- rereply_div  -->
+					
+		</div> <!-- reply_div끝  -->
+		
+		<%}//commRe_arr끝 %>
+		
+		 <!-- 댓글 입력폼  -->
+	    <%
+	        if(id != null && member != 1) {
+	    %>				
+	    <form action="replyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
+	        <!-- 글번호 -->
+	        <input type="hidden" name="comm_num" value="<%= comm_num%>">
+	        <!-- 부모댓글번호 -->
+	        <input type="hidden" name="rep_parent" value="0">
+	        
+	        <div class="form-row" >
+	            <div class="col-8">
+	            <textarea id="rep_content" name="rep_content" style=" margin-left:20px; height:70px; font-weight:bolder;" type="text" class="form-control">
+	            
+	            </textarea>
+	            
+	            </div>
+	            
+	            <div class="col-2">
+	                <input style="width:70px; margin-left:20px; margin-bottom:40px; height:70px; background-color:#aaaaaa; color:white;" type="button" onclick="reply_ok()" class="form-control" value="등록">
+	            </div>
+	            
+	    <%		}  else if(member == 1) { %>
+	        <div class="container">
+	            <p style="margin-left: 20px">단체회원은 댓글 기능을 이용할 수 없습니다.</p>
+	            <br>
+	        </div>
+	        
+	    </form>
+	
+	    <%	}else { %>
+	        <div class="container">
+	            <p style="margin-left: 20px">댓글을 입력하려면 로그인을 해야합니다.</p>
+	            <br>
+	        </div>
+	    </form>
+	
+	    <%	} %>
+			
+	</div><!-- reply끝 -->
+	
+	
 
 </section>
 
 <%@ include file="../footer.jsp" %>
-
