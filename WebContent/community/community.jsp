@@ -74,6 +74,8 @@
 			String datestr = bean.getComm_date();
 			String [] date = datestr.split(" ");
 			String date_1 = date[0];
+			int comm_num = bean.getComm_num();
+			int recount = Remgr.Community_reply_count(comm_num);
 			
 %>
 				<tr class="d-flex" style="background: #f2faff;">	 		
@@ -83,6 +85,7 @@
 		 				<a href="detailView.jsp?comm_num=<%=bean.getComm_num()%>" class="h5 text-dark">
 		 					<span class="badge badge-secondary rounded-pill d-sm-none">공지</span>
 		 					<%=bean.getComm_title() %>
+		 					<span style="color: #ff6f6f; font-size: 14px">[<%=recount %>]</span>
 		 				</a>
 		 				<p class="d-block d-sm-none"><small><%=person %> <%=date_1%> 조회 <%=bean.getComm_hits() %></small></p>
 		 			</td>

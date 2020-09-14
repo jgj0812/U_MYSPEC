@@ -531,9 +531,15 @@ $(document).ready(function () {
 	
 	$("#act_form input[name='act_start']").datepicker();
 	$("#act_form input[name='act_end']").datepicker();
+	
 	$("#comm_content").summernote({
 			lang: "ko-KR",
 	      	height: "20em",
+			callbacks : {
+				onImageUpload : function(files) {
+					sendFile(files[0], this);
+					}
+			}
 	});
 });
 
@@ -543,7 +549,7 @@ function sendFile(file, editor) {
 	$.ajax({
 		data : data,
 		type : "POST",
-		url : "act_content_imageUpload.jsp",
+		url : "../activity/act_content_imageUpload.jsp",
 		cache : false,
 		contentType : false,
 		processData : false,
@@ -834,6 +840,22 @@ function updatecancel(i){
 		basic.style.display = 'block';
 	}
 }
+
+
+// 답글 수정 폼
+function reupdate(i){
+	var update = document.getElementById("update" + i);
+	var rereplylist = document.getElementById("rereplylist" + i);
+	
+	if(update.style.display =='none'){
+		update.style.display = 'block';
+		rereplylist.style.display = 'none';
+	}else if(update.style.display =='block'){
+		update.style.display = 'none';
+		rereplylist.style.display = 'block';
+	}
+}
+
 
 // myPage 수정 양식, 비밀번호 변경
 $("#UpdateBtn").click(function(){

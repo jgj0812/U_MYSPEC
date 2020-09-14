@@ -319,9 +319,8 @@
         </form>
         <hr style="margin-top: 0px">
     </div>		
-            
-    <!-- 답글 리스트  -->	
-    <div id="rereplylist<%=i%>" style="display: none">
+ 
+ <div id="rereply_div">
     <% 
     
         ArrayList<CommunityReplyBean> commRere_arr  = Rmgr.Community_rereply_list(comm_num, commRB.getRep_num());
@@ -329,7 +328,9 @@
         for(CommunityReplyBean commRB2 :commRere_arr){
               String repPerson2 = commRB2.getRep_admin() != null ? "관리자" : commRB2.getRep_nick();
       %>
-          
+                      
+    <!-- 답글 리스트  -->	
+    <div id="rereplylist<%=i%>" style="display: none">
         <!-- 닉네임 날짜 -->
         <div class="row" style="font-size:0.85rem;" >
             <img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
@@ -367,7 +368,7 @@
                 <form> 
                     <input type="hidden" name="comm_num" value="<%= comm_num%>">
                     <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
-                    <input type="button" style="border: 0px" value="수정"  onclick="update(<%=i%>)"> 
+                    <input type="button" style="border: 0px" value="수정"  onclick="reupdate(<%=i%>)"> 
                 </form>	  
                  <%} %>	 
             </div>
@@ -379,7 +380,8 @@
       <% }%>
       
     </div>		
-
+ </div>		
+ </div>
     <%
         } if(id != null && member != 1) {
     %>				
@@ -392,7 +394,10 @@
         
         <div class="form-row" >
             <div class="col-8">
-            <input id="rep_content" name="rep_content" style=" margin-left:20px; height:70px; font-weight:bolder;" type="text" class="form-control" placeholder="댓글을 입력해주세요." >
+            <textarea id="rep_content" name="rep_content" style=" margin-left:20px; height:70px; font-weight:bolder;" type="text" class="form-control">
+            
+            </textarea>
+            
             </div>
             
             <div class="col-2">
