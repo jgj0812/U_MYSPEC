@@ -156,41 +156,34 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header bg-cam text-white">
-					<h5 class="modal-title">활동혜택</h5>
+					<h5 class="modal-title">수상혜택</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true" class="text-white">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="act_reward">
+					<form id="act_reward" onchange="getValue(this)">
 						<div class="row">
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="29" /> 활동비
+								<input type="checkbox" name="reward_num" value="78"> 입사시 가산점
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="30" /> 사은품지급
+								<input type="checkbox" name="reward_num" value="79"> 인턴/정규직채용
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="31" /> 실무교육
+								<input type="checkbox" name="reward_num" value="80"> 해외연수, 전시기회
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="32" /> 봉사활동기간
+								<input type="checkbox" name="reward_num" value="81"> 실제상용화
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="33" /> 전문가/임직원
-								멘토링
+								<input type="checkbox" name="reward_num" value="82"> 상장 수여
 							</div>
 							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="34" /> 행사 참여
-							</div>
-							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="35" /> 수료증 및 인증서
-							</div>
-							<div class="col-md-3">
-								<input type="checkbox" name="act_reward" value="36" /> 입사시 혜택
+								<input type="checkbox" name="reward_num" value="83"> 기타
 							</div>
 						</div>
 					</form>
@@ -215,7 +208,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="act_field">
+					<form id="act_field" onchange="getValue(this)">
 						<div class="row">
 							<div class="col-md-3">
 								<input type="radio" name="act_field" value="59" /> 기획/아이디어

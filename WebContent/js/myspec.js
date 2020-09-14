@@ -670,7 +670,31 @@ function scrap(person_id, act_num) {
 	});
 }
 
-
+function getValue(frm) {
+	var url;
+	switch($.cookie("act_type")) {
+		case "1":
+			url = "list_act_tagPro.jsp";
+			break;
+		case "2":
+			url = "list_con_tagPro.jsp";
+			break;
+	}
+	var data = $(frm).serialize();
+	$.ajax({
+		url: url,
+		data: data,
+		dataType: "json",
+		cache: false,
+		success: function(data) {
+			var htmlStr = "";
+			$.each(data, function(key, val) {
+				htmlStr += val.tag + " ";
+			});
+			$("#act_form input[name='" + frm.id + "']").val(htmlStr);
+		}
+	});
+}
 
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){

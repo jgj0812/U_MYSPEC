@@ -321,6 +321,31 @@
 				</div>
 			</div>
 			<br /> <br />
+			
+			<h5>수상혜택</h5>
+			<div class="row">
+				<div class="col-md-3">
+					<input type="checkbox" name="reward_num" value="78"> 입사시 가산점
+				</div>
+				<div class="col-md-3">
+					<input type="checkbox" name="reward_num" value="79"> 인턴/정규직채용
+				</div>
+				<div class="col-md-3">
+					<input type="checkbox" name="reward_num" value="80"> 해외연수, 전시기회
+				</div>
+				<div class="col-md-3">
+					<input type="checkbox" name="reward_num" value="81"> 실제상용화
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<input type="checkbox" name="reward_num" value="82"> 상장 수여
+				</div>
+				<div class="col-md-3">
+					<input type="checkbox" name="reward_num" value="83"> 기타
+				</div>
+			</div>
+			<br /> <br />
 
 			<h3>상세내용</h3>
 			<textarea id="act_content" name="act_content"></textarea>
