@@ -19,8 +19,6 @@
 	ActivityBean activity = manager.getActivity(act_num);
 	OrgBean org = manager.getOrg(act_num);
 	
-	manager.upHit(act_num);
-	
 	
 
 	
@@ -87,12 +85,6 @@
 						</div>
 						<div class="col-md-4">
 							<p><%=manager.getTag(activity.getAct_reg()) %></p>
-						</div>
-						<div class="col-md-2">
-							<p>참여대상</p>
-						</div>
-						<div class="col-md-4">
-							<p><%=activity.getAct_target() %></p>
 						</div>
 					</div>
 					<div class="row">

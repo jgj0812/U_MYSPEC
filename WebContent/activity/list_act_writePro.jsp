@@ -16,7 +16,7 @@
 	String act_thumb = multi.getFilesystemName("act_thumb");
 	String act_post = multi.getFilesystemName("act_post");
 	String act_title = multi.getParameter("act_title");
-	String act_org = (String) session.getAttribute("id");
+	String act_org = (String) session.getAttribute("orgId");
 	String act_target = multi.getParameter("act_target");
 	Date act_start = Date.valueOf(multi.getParameter("act_start"));
 	Date act_end = Date.valueOf(multi.getParameter("act_end"));

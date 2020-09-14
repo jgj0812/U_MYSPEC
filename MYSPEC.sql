@@ -28,7 +28,7 @@ act_type NUMBER,							-- 활동종류 대외활동, 공모전
 act_thumb VARCHAR2(200 CHAR),				-- 썸네일 이미지
 act_post VARCHAR2(200 CHAR),				-- 포스터 이미지
 act_title VARCHAR2(200 CHAR),				-- 활동 제목
-act_hits NUMBER,							-- 조회수
+act_hits NUMBER DEFAULT 0,					-- 조회수
 act_org VARCHAR2(20 CHAR),					-- FK 단체회원 ID 
 act_target VARCHAR2(20 CHAR),				-- 참여대상
 act_start DATE,								-- 시작일
@@ -46,7 +46,7 @@ CONSTRAINT activity_fk1 FOREIGN KEY (act_org) REFERENCES org_user (org_id) ON DE
 CREATE TABLE act_interest (
 interest_act NUMBER,
 interest_num NUMBER,
-CONSTRAINT interest_fk1 FOREIGN KEY (interest_act) REFERENCES activity (act_num) ON DELETE CASCADE
+CONSTRAINT act_interest_fk1 FOREIGN KEY (interest_act) REFERENCES activity (act_num) ON DELETE CASCADE
 );
 
 CREATE TABLE act_reward (
@@ -61,11 +61,11 @@ rep_act NUMBER,								-- FK 활동 글번호
 rep_person VARCHAR2(20 CHAR),				-- FK 개인회원 ID
 rep_date DATE,								-- 댓글 작성일
 rep_content VARCHAR2(200 CHAR),				-- 댓글 내용
-rep_pos NUMBER,							-- 그룹내 순서
-rep_ref NUMBER,								-- 댓글 그룹
-rep_depth NUMBER,							-- 댓글 깊이
+rep_parent NUMBER,							-- 부모 댓글번호
+rep_org VARCHAR2(20 CHAR),					-- FK 단체회원 ID
 CONSTRAINT act_reply_fk1 FOREIGN KEY (rep_act) REFERENCES activity (act_num) ON DELETE CASCADE,
-CONSTRAINT act_reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person_id) ON DELETE CASCADE
+CONSTRAINT act_reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person_id) ON DELETE CASCADE,
+CONSTRAINT act_reply_fk3 FOREIGN KEY (rep_org) REFERENCES org_user (org_id) ON DELETE CASCADE
 );
 
 CREATE TABLE community (
@@ -87,9 +87,7 @@ rep_comm NUMBER,							-- FK 글 번호
 rep_person VARCHAR2(20 CHAR),				-- FK 개인회원 ID
 rep_date DATE,								-- 댓글 작성일
 rep_content VARCHAR2(200 CHAR),				-- 댓글 내용
-rep_step NUMBER,							-- 그룹내 순서
-rep_ref NUMBER,								-- 댓글 그룹
-rep_level NUMBER,							-- 댓글 깊이
+rep_parent NUMBER,							-- 부모 댓글번호
 rep_admin VARCHAR2(20 CHAR),				-- FK 관리자 ID
 CONSTRAINT reply_fk1 FOREIGN KEY (rep_comm) REFERENCES community (comm_num) ON DELETE CASCADE,
 CONSTRAINT reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person_id) ON DELETE CASCADE,
@@ -100,14 +98,14 @@ CREATE TABLE interest (
 inter_person VARCHAR2(20 CHAR),
 inter_num NUMBER,
 inter_count NUMBER,
-CONSTRAINT inter_fk1 FOREIGN KEY (inter_person) REFERENCES person_user (person_id)
+CONSTRAINT interest_fk1 FOREIGN KEY (inter_person) REFERENCES person_user (person_id)
 );
 
 CREATE TABLE scrap (
 scrap_person VARCHAR2(20 CHAR),
 scrap_num NUMBER,
-CONSTRAINT scrap_fk1 FOREIGN KEY (scrap_person) REFERENCES person_user (person_id),
-CONSTRAINT scrap_fk2 FOREIGN KEY (scrap_num) REFERENCES activity (act_num)
+CONSTRAINT scrap_fk1 FOREIGN KEY (scrap_person) REFERENCES person_user (person_id) ON DELETE CASCADE,
+CONSTRAINT scrap_fk2 FOREIGN KEY (scrap_num) REFERENCES activity (act_num) ON DELETE CASCADE
 );
 
 
@@ -115,3 +113,4 @@ CONSTRAINT scrap_fk2 FOREIGN KEY (scrap_num) REFERENCES activity (act_num)
 CREATE SEQUENCE  "SCOTT"."ACT_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
 CREATE SEQUENCE  "SCOTT"."COMMUNITY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
 CREATE SEQUENCE  "SCOTT"."COMM_REPLY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+CREATE SEQUENCE  "SCOTT"."ACT_REPLY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER NOCYCLE;

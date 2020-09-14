@@ -695,7 +695,7 @@ function getValue(frm) {
 		}
 	});
 }
-
+//-----------------------------admin js---------------------------------------
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){
 	if($("#personSearch").val() == "") {
@@ -714,6 +714,16 @@ $("#orgSearchBtn").click(function(){
 		return false;
 	}
 	$("#orgSearchFrm").submit();
+});
+
+// admin 대외활동, 공모전 검색
+$("#adminActSearchBtn").click(function(){
+	if($("#adminActSearch").val() == "") {
+		alert("검색어를 입력해주세요.");
+		$("#adminActSearch").focus();
+		return false;
+	}
+	$("#adminActSearchFrm").submit();
 });
 
 //-------------------------------커뮤니티 js--------------------------------------
