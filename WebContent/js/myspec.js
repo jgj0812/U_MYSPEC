@@ -792,7 +792,15 @@ function rereply_ok(i) {
 	}
 	$("#rereplyFrm" + i).submit();
 }
-
+//대댓글 리스트
+function rereplylist(i){
+	var rereplylist = document.getElementById("rereplylist" + i);
+	if(rereplylist.style.display =='none'){
+		rereplylist.style.display = 'block';
+	}else if(rereplylist.style.display =='block'){
+		rereplylist.style.display = 'none';
+	}
+}
 // 답글 입력폼
 function rereply(i){
 	var rereply = document.getElementById("rereply" + i);

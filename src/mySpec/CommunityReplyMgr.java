@@ -109,8 +109,8 @@ private DBConnection pool;
 			con = pool.getConnection();
 			
 			sql = "insert into comm_reply "
-							+ "(rep_num, rep_comm, rep_person,  rep_date, rep_content, rep_parent)"
-							+ " values(comm_reply_seq.nextval, ?, ?, sysdate,  ?, ?)";
+					+ "(rep_num, rep_comm, rep_person,  rep_date, rep_content, rep_parent)"
+					+ " values(comm_reply_seq.nextval, ?, ?, sysdate,  ?, ?)";
 		
 			pstmt = con.prepareStatement(sql);
 
@@ -234,7 +234,41 @@ private DBConnection pool;
 			
 			return count;
 		}
-	}
-	
+
 	// 관리자 댓글 등록
+	public int insertAdminReply (CommunityReplyBean bean, String id, int comm_num, int rep_parent) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int re = -1; 	
+		String sql="";
+		
+		try {        				
+			//댓글
+			con = pool.getConnection();
+			
+			sql = "insert into comm_reply "
+							+ "(rep_num, rep_comm, rep_admin,  rep_date, rep_content, rep_parent)"
+							+ " values(comm_reply_seq.nextval, ?, ?, sysdate,  ?, ?)";
+		
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(1, comm_num); //글번호
+			pstmt.setString(2, id); //아이디
+			pstmt.setString(3, bean.getRep_content()); //내용
+			pstmt.setInt(4, rep_parent); //rep_parent
+
+			pstmt.executeUpdate();
+			
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return re;
+	}
+		
 	
+}
