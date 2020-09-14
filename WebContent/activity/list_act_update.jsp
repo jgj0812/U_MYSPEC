@@ -13,7 +13,7 @@
 %>
 <section>
 	<div class="container">
-		<form action="list_act_updatePro.jsp" method="post" id="act_form">
+		<form method="post" id="act_form" enctype="multipart/form-data">
 			<div class="section">
 				<div>
 					<p class="badge badge-secondary">
@@ -35,25 +35,25 @@
 			<div class="section">
 				<div class="row">
 					<div class="col-md-4">
-						<img src="../upload/<%=activity.getAct_thumb()%>" width="100%" />
+						<img src="../upload/<%=activity.getAct_thumb()%>" width="100%" id="thumb_image"/>
 						<div class="input-group mb-2">
 							<div class="input-group-prepend">
 								<div class="input-group-text">썸네일</div>
 							</div>
 							<div class="custom-file">
 								<input type="file" class="custom-file-input form-control"
-									name="act_thumb" onchange="get_thumb_filename()" /> <label
+									name="act_thumb"  onchange="get_thumb()" /> <label
 									class="custom-file-label" id="thumb_filename"><%=activity.getAct_thumb()%></label>
 							</div>
 						</div>
-						<img src="../upload/<%=activity.getAct_post()%>" width="100%" />
+						<img src="../upload/<%=activity.getAct_post()%>" width="100%" id="post_image"/>
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<div class="input-group-text">포스터</div>
 							</div>
 							<div class="custom-file">
 								<input type="file" class="custom-file-input form-control"
-									name="act_post" onchange="get_post_filename()" /> <label
+									name="act_post" onchange="get_post()" /> <label
 									class="custom-file-label" id="post_filename"><%=activity.getAct_post()%></label>
 							</div>
 						</div>
@@ -107,7 +107,7 @@
 								<input type="text" class="form-control"
 									onclick="$('#regionModal').modal();"
 									value="<%=manager.getTag(activity.getAct_reg())%>"
-									name="act_reg" />
+									id="act_reg_view"/>
 							</div>
 							<div class="col-md-2">
 								<p>활동혜택</p>
@@ -118,7 +118,7 @@
 									value="<%for (int act_reward : activity.getAct_reward()) {
 															out.print(manager.getTag(act_reward) + " ");
 									}%>"
-									name="act_reward" />
+									id="act_reward_view"/>
 							</div>
 						</div>
 						<div class="row">
@@ -129,7 +129,7 @@
 								<input type="text" class="form-control"
 									onclick="$('#fieldModal').modal();"
 									value="<%=manager.getTag(activity.getAct_field())%>"
-									name="act_field" />
+									id="act_field_view"/>
 							</div>
 							<div class="col-md-2">
 								<p>관심분야</p>
@@ -140,7 +140,7 @@
 									value="<%for (int act_interest : activity.getAct_interest()) {
 														out.print(manager.getTag(act_interest) + " ");
 									}%>"
-									name="act_interest" />
+									id="act_interest_view"/>
 							</div>
 						</div>
 						<div class="row">
@@ -148,7 +148,7 @@
 								<p>홈페이지</p>
 							</div>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="act_home" />
+								<input type="text" class="form-control" name="act_home" value="<%=activity.getAct_home()%>"/>
 							</div>
 						</div>
 					</div>
@@ -158,21 +158,11 @@
 
 			<div class="section">
 				<h5>상세내용</h5>
-				<textarea id="act_content"><%=activity.getAct_content()%></textarea>
-				<button class="btn btn-cam btn-block" onclick="act_update()">수정하기</button>
+				<textarea id="act_content" name="act_content"><%=activity.getAct_content()%></textarea>
+				<input type="button" class="btn btn-cam btn-block" onclick="act_update(<%=act_num%>)" value="수정하기">
 			</div>
 			<br />
 		</form>
-
-		<div class="section">
-			<form>
-				<h5>담당자 Q&A</h5>
-				<div class="form-group">
-					<textarea class="form-control"></textarea>
-					<input class="btn btn-cam btn-block" type="button" value="등록" />
-				</div>
-			</form>
-		</div>
 	</div>
 
 	<div class="modal" tabindex="-1" id="regionModal">
@@ -186,7 +176,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="act_reg" onchange="getValue(this)">
+					<form id="act_reg" onchange="getValue(this)" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-sm-12 col-md-3">
 								<input type="radio" name="act_reg" value="43" /> 지역제한없음
@@ -265,7 +255,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="act_reward" onchange="getValue(this)">
+					<form id="act_reward" onchange="getValue(this)" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-md-3">
 								<input type="checkbox" name="reward_num" value="29" /> 활동비
@@ -317,7 +307,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="act_field" onchange="getValue(this)">
+					<form id="act_field" onchange="getValue(this)" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-md-3">
 								<input type="radio" name="act_field" value="1" /> 서포터즈
@@ -368,7 +358,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="act_interest" onchange="getValue(this)">
+					<form id="act_interest" onchange="getValue(this)" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-md-3">
 								<input type="checkbox" name="interest_num" value="9" /> 여행/호텔/항공
