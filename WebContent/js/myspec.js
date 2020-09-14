@@ -723,6 +723,7 @@ $("#orgSearchBtn").click(function(){
 });
 
 //-------------------------------커뮤니티 js--------------------------------------
+
 // 커뮤니티 공지글 검색(admin)
 $("#noticeSearchBtn").click(function(){
 	if($("#noticeSearch").val() == "") {
@@ -798,6 +799,7 @@ function rereply_ok(i) {
 	}
 	$("#rereplyFrm" + i).submit();
 }
+
 //대댓글 리스트
 function rereplylist(i){
 	var rereplylist = document.getElementById("rereplylist" + i);
@@ -807,6 +809,7 @@ function rereplylist(i){
 		rereplylist.style.display = 'none';
 	}
 }
+
 // 답글 입력폼
 function rereply(i){
 	var rereply = document.getElementById("rereply" + i);
@@ -819,7 +822,13 @@ function rereply(i){
 
 // 댓글 수정 폼
 function update(i){
-	var update = document.getElementById("update" + i);
+	var content =document.getElementById("re_content"+i).innerHTML;
+	
+	$(function(){
+        $("#re_upcontent").val(content);
+    });
+	
+	var update = document.getElementById("update");
 	var basic = document.getElementById("basic" + i);
 	
 	if(update.style.display =='none'){
@@ -833,7 +842,7 @@ function update(i){
 
 // 댓글 수정 취소
 function updatecancel(i){
-	var update = document.getElementById("update" + i);
+	var update = document.getElementById("update");
 	var basic = document.getElementById("basic" + i);
 	if(update.style.display =='block'){
 		update.style.display = 'none';
@@ -843,19 +852,35 @@ function updatecancel(i){
 
 
 // 답글 수정 폼
-function reupdate(i){
-	var update = document.getElementById("update" + i);
-	var rereplylist = document.getElementById("rereplylist" + i);
+function rereupdate(i){
+	var content =document.getElementById("rere_content"+i).innerHTML;
 	
-	if(update.style.display =='none'){
-		update.style.display = 'block';
-		rereplylist.style.display = 'none';
-	}else if(update.style.display =='block'){
-		update.style.display = 'none';
-		rereplylist.style.display = 'block';
+	$(function(){
+        $("#rere_upcontent").val(content);
+    });
+	
+	var rereupdate = document.getElementById("rereupdate");
+	var rereply_repeat = document.getElementById("rereply_repeat" + i);
+	
+	if(rereupdate.style.display =='none'){
+		rereupdate.style.display = 'block';
+		rereply_repeat.style.display = 'none';
+		
+	}else if(rereupdate.style.display =='block'){
+		rereupdate.style.display = 'none';
+		rereply_repeat.style.display = 'block';
 	}
 }
 
+//답글 수정 취소
+function rereupdatecancel(i){
+	var rereupdate = document.getElementById("rereupdate" );
+	var rereply_repeat = document.getElementById("rereply_repeat" + i);
+	if(rereupdate.style.display =='block'){
+		rereupdate.style.display = 'none';
+		rereply_repeat.style.display = 'block';
+	}
+}
 
 // myPage 수정 양식, 비밀번호 변경
 $("#UpdateBtn").click(function(){
