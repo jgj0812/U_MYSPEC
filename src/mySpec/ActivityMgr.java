@@ -431,19 +431,59 @@ public class ActivityMgr {
 				}
 				break;
 			case 2:
-				sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
-				ps = con.prepareStatement(sql);
-				ps.setString(1, activity.getAct_thumb());
-				ps.setString(2, activity.getAct_post());
-				ps.setString(3, activity.getAct_title());
-				ps.setString(4, activity.getAct_target());
-				ps.setDate(5, activity.getAct_start());
-				ps.setDate(6, activity.getAct_end());
-				ps.setInt(7, activity.getAct_field());
-				ps.setInt(8, activity.getAct_award());
-				ps.setString(9, activity.getAct_home());
-				ps.setString(10, activity.getAct_content());
-				ps.setInt(11, activity.getAct_num());
+				if(activity.getAct_thumb() == null && activity.getAct_post() == null) {
+					sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
+					ps = con.prepareStatement(sql);
+					ps.setString(1, activity.getAct_title());
+					ps.setString(2, activity.getAct_target());
+					ps.setDate(3, activity.getAct_start());
+					ps.setDate(4, activity.getAct_end());
+					ps.setInt(5, activity.getAct_field());
+					ps.setInt(6, activity.getAct_award());
+					ps.setString(7, activity.getAct_home());
+					ps.setString(8, activity.getAct_content());
+					ps.setInt(9, activity.getAct_num());
+				} else if(activity.getAct_thumb() == null) {
+					sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
+					ps = con.prepareStatement(sql);
+					ps.setString(1, activity.getAct_post());
+					ps.setString(2, activity.getAct_title());
+					ps.setString(3, activity.getAct_target());
+					ps.setDate(4, activity.getAct_start());
+					ps.setDate(5, activity.getAct_end());
+					ps.setInt(6, activity.getAct_field());
+					ps.setInt(7, activity.getAct_award());
+					ps.setString(8, activity.getAct_home());
+					ps.setString(9, activity.getAct_content());
+					ps.setInt(10, activity.getAct_num());
+				} else if(activity.getAct_post() == null) {
+					sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
+					ps = con.prepareStatement(sql);
+					ps.setString(1, activity.getAct_thumb());
+					ps.setString(2, activity.getAct_title());
+					ps.setString(3, activity.getAct_target());
+					ps.setDate(4, activity.getAct_start());
+					ps.setDate(5, activity.getAct_end());
+					ps.setInt(6, activity.getAct_field());
+					ps.setInt(7, activity.getAct_award());
+					ps.setString(8, activity.getAct_home());
+					ps.setString(9, activity.getAct_content());
+					ps.setInt(10, activity.getAct_num());
+				} else {
+					sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
+					ps = con.prepareStatement(sql);
+					ps.setString(1, activity.getAct_thumb());
+					ps.setString(2, activity.getAct_post());
+					ps.setString(3, activity.getAct_title());
+					ps.setString(4, activity.getAct_target());
+					ps.setDate(5, activity.getAct_start());
+					ps.setDate(6, activity.getAct_end());
+					ps.setInt(7, activity.getAct_field());
+					ps.setInt(8, activity.getAct_award());
+					ps.setString(9, activity.getAct_home());
+					ps.setString(10, activity.getAct_content());
+					ps.setInt(11, activity.getAct_num());
+				}
 				ps.executeUpdate();
 				break;
 			}
