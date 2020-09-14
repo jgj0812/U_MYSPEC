@@ -3,6 +3,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String id = (String)session.getAttribute("id");
+	
 	int pageSize = 5;
 	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {

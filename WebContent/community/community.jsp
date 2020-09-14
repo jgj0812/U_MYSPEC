@@ -9,8 +9,12 @@
 <jsp:useBean id="Remgr" class="mySpec.CommunityReplyMgr" />
 
 <% 
-	request.setCharacterEncoding("utf-8");	
-
+	request.setCharacterEncoding("utf-8");
+	int member = -1;
+	if(id != null) {
+		member = (int)session.getAttribute("member");
+	}
+	
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>(); //일반글 arraylist
 	
 	//페이징
@@ -44,7 +48,7 @@
 <section class="container my-3">
 	<div class="container py-3 d-flex justify-content-between bg-light">
 		<h4 style="margin-top: 8px;">커뮤니티 게시판</h4>
-		<a onclick="comm_write('<%=id%>')" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
+		<a onclick="comm_write('<%=id%>', '<%=member%>')" class="h3 d-block d-sm-none"><i class="fas fa-edit"></i></a>
 	</div>
 	
 
@@ -132,7 +136,7 @@
 	<div class="form-inline justify-content-end">
 		<a href="community.jsp" class="btn btn-com">전체글보기</a>&nbsp;
 		<button type="button" class="btn btn-com d-none d-md-block"  
-		onclick="comm_write('<%=id%>')">글쓰기</button>
+		onclick="comm_write('<%=id%>',<%=member%>)">글쓰기</button>
 	</div>
 	
 	
