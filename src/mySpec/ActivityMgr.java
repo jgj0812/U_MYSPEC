@@ -450,7 +450,7 @@ public class ActivityMgr {
 		pool.closeConnection(con, ps);
 	}
 
-	// 활동 검색
+	// ���� 寃���
 	public ArrayList<ActivityBean> searchActivity(int startRow, int endRow, String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -493,7 +493,7 @@ public class ActivityMgr {
 		return actArr;
 	}
 	
-	// 검색된 활동 수
+	// 寃����� ���� ��
 	public int searchActivityCount(String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -517,9 +517,9 @@ public class ActivityMgr {
 		return count;
 	}
 
-//---------- 활동 댓글 기능
+//---------- 댓글
 	
-	//댓글 리스트(등록된 댓글 보기)
+	//댓글 리스트
 	public ArrayList<ActivityReplyBean> act_reply_list(int rep_act) {
 		Connection con = null;
 		Statement st = null;
@@ -529,10 +529,10 @@ public class ActivityMgr {
 						+ "(select r.*, p.person_nick from "
 						+ "act_reply r left outer join person_user p "
 						+ "on r.rep_person = p.person_id "
-						+ "where rep_act = "+ rep_act + ") ar "
+						+ "where rep_parent = 0 and rep_act = "+ rep_act + ") ar "
 						+ "left outer join org_user o "
 						+ "on ar.rep_org = o.org_id "
-						+ " order by rep_ref desc, rep_pos asc";
+						+ " order by rep_date";
 		
 		ArrayList<ActivityReplyBean> actreply_arr = new ArrayList<ActivityReplyBean>();
 		
@@ -548,10 +548,8 @@ public class ActivityMgr {
 				actB.setRep_person(rs.getString("rep_person"));
 				actB.setRep_content(rs.getString("rep_content"));
 				actB.setRep_date(rs.getString("rep_date"));
-				actB.setRep_ref(rs.getInt("rep_ref"));
 				actB.setRep_nick(rs.getString("person_nick"));
-				actB.setRep_pos(rs.getInt("rep_pos"));
-				actB.setRep_depth(rs.getInt("rep_depth"));
+				actB.setRep_parent(rs.getInt("rep_parent"));
 				actB.setRep_org(rs.getString("rep_org"));
 				actB.setRep_orgName(rs.getString("org_name"));
 				
@@ -566,7 +564,52 @@ public class ActivityMgr {
 		return actreply_arr;
 	}
 	
-//	// 댓글 정보 : ActivityReplyBean 만 들고오기, 정보 보기용
+	//답글 리스트
+	public ArrayList<ActivityReplyBean> act_rereply_list(int rep_act, int rep_parent) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		String sql = "select ar.*, o.org_name from "	
+						+ "(select r.*, p.person_nick from "
+						+ "act_reply r left outer join person_user p "
+						+ "on r.rep_person = p.person_id "
+						+ "where rep_parent =" + rep_parent +" and rep_act = "+ rep_act + ") ar "
+						+ "left outer join org_user o "
+						+ "on ar.rep_org = o.org_id "
+						+ " order by rep_date";
+		
+		ArrayList<ActivityReplyBean> actreply_arr = new ArrayList<ActivityReplyBean>();
+		
+		try {
+			con = pool.getConnection();
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery(sql);
+			
+			while (rs.next()) {
+				ActivityReplyBean  actB = new ActivityReplyBean();
+				actB.setRep_num(rs.getInt("rep_num"));
+				actB.setRep_act(rs.getInt("rep_act"));
+				actB.setRep_person(rs.getString("rep_person"));
+				actB.setRep_content(rs.getString("rep_content"));
+				actB.setRep_date(rs.getString("rep_date"));
+				actB.setRep_nick(rs.getString("person_nick"));
+				actB.setRep_parent(rs.getInt("rep_parent"));
+				actB.setRep_org(rs.getString("rep_org"));
+				actB.setRep_orgName(rs.getString("org_name"));
+				
+				actreply_arr.add(actB);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, st, rs);
+		}
+		return actreply_arr;
+	}
+	
+//	// ��湲� ��蹂� : ActivityReplyBean 留� �ㅺ��ㅺ린, ��蹂� 蹂닿린��
 //
 //	public ActivityReplyBean act_reply_target(int rep_num) {
 //		Connection con = null;
@@ -610,69 +653,29 @@ public class ActivityMgr {
 //	}
 	
 
-	// 개인회원 댓글 등록
-	public int act_reply_insertPerson (ActivityReplyBean actR, String id, int act_num) {
+	// 媛��명���� ��湲� �깅�
+	public int act_reply_insertPerson (ActivityReplyBean actR, String id, int act_num, int rep_parent) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int re = -1; 
-		int number = 0;
-		
-		int rep_num = actR.getRep_num(); //글번호
-		int rep_ref= actR.getRep_ref();
-		int rep_pos =actR.getRep_pos();
-		int rep_depth = actR.getRep_depth();
 		
 		String sql ="";
 		
 		try {
 			con = pool.getConnection();
-			//새댓글: ref= rep_num의 최대값+1, re_pos=0, re_depth=0
-			sql="select max(rep_num) from act_reply";
+			
+			sql = "insert into act_reply "
+					+ "(rep_num, rep_act, rep_person,  rep_date, rep_content, rep_parent)"
+					+ " values(act_reply_seq.nextval, ?, ?, sysdate,  ?, ?)";
+			
 			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery(); //최대값 구하기
-			
-			if(rs.next()) {
-				number=rs.getInt(1)+1;
-				
-			}else {//테이블에 데이터가 하나도 없을 때
-				number = 1;
-				
-			}
-			//ref re_pos re_level 결정
-			
-			if(rep_num!=0) { //대댓글
-				sql="update act_reply set rep_pos=rep_pos+1 where rep_ref=? and rep_pos>?";
-				pstmt=con.prepareStatement(sql);
-				pstmt.setInt(1, rep_ref);
-				pstmt.setInt(2, rep_pos);
-				pstmt.executeUpdate();
-				
-				
-				rep_pos =rep_pos+1; //부모 re_step+1
-				rep_depth=rep_depth+1;//부모 re_level+1
-			
-			}else {//새댓글
-				rep_ref=number;
-				rep_pos=0;
-				rep_depth=0;
-			}
-			
-            			//번호                             글번호 아이디  날짜   내용  rep_ref rep_pos rep_depth
-			sql = "insert into act_reply (rep_num, rep_act, rep_person, rep_date, rep_content, rep_ref, rep_pos, rep_depth)"
-		                                       + " values(act_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
-			pstmt = con.prepareStatement(sql);
-			
-			
+
 			pstmt.setInt(1, act_num); //글번호
 			pstmt.setString(2, id); //아이디
-			
 			pstmt.setString(3, actR.getRep_content()); //내용
-			pstmt.setInt(4, rep_ref); //rep_ref
-			pstmt.setInt(5, rep_pos); //rep_pos
-			pstmt.setInt(6, rep_depth); //rep_depth
-			
+			pstmt.setInt(4, rep_parent); //rep_parent
 
 			pstmt.executeUpdate();
 			
@@ -685,60 +688,27 @@ public class ActivityMgr {
 		return re;
 	}
 	
-	public int act_reply_insertOrg(ActivityReplyBean actR, String id, int act_num) {
+	public int act_reply_insertOrg(ActivityReplyBean actR, String id, int act_num, int rep_parent) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "";
 		int re = -1; 
-		int number = 0;
-		
-		int rep_num = actR.getRep_num(); //글번호
-		int rep_ref= actR.getRep_ref();
-		int rep_pos =actR.getRep_pos();
-		int rep_depth = actR.getRep_depth();
 
 		try {
 			con = pool.getConnection();
-			sql="select max(rep_num) from act_reply";
+			sql = "insert into act_reply "
+					+ "(rep_num, rep_act, rep_org,  rep_date, rep_content, rep_parent)"
+					+ " values(act_reply_seq.nextval, ?, ?, sysdate,  ?, ?)";
+			
 			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery(); //최대값 구하기
-			
-			if(rs.next()) {
-				number=rs.getInt(1)+1;
-				
-			}else {//테이블에 데이터가 하나도 없을 때
-				number = 1;
-				
-			}
-			//ref re_pos re_level 결정
-			
-			if(rep_num!=0) { //대댓글
-				sql="update act_reply set rep_pos=rep_pos+1 where rep_ref=? and rep_pos>?";
-				pstmt=con.prepareStatement(sql);
-				pstmt.setInt(1, rep_ref);
-				pstmt.setInt(2, rep_pos);
-				pstmt.executeUpdate();
-				
-				
-				rep_pos =rep_pos+1; //부모 re_step+1
-				rep_depth=rep_depth+1;//부모 re_level+1
-			
-			}else {//새댓글
-				rep_ref=number;
-				rep_pos=0;
-				rep_depth=0;
-			}
-			
-			sql = "insert into act_reply (rep_num, rep_act, rep_org, rep_date, rep_content, rep_ref, rep_pos, rep_depth) "
-					+ "values(act_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, act_num);
-			pstmt.setString(2, id);
-			pstmt.setString(3, actR.getRep_content());
-			pstmt.setInt(4, rep_ref);
-			pstmt.setInt(5, rep_pos);
-			pstmt.setInt(6, rep_depth);
+
+			pstmt.setInt(1, act_num); //글번호
+			pstmt.setString(2, id); //아이디
+			pstmt.setString(3, actR.getRep_content()); //내용
+			pstmt.setInt(4, rep_parent); //rep_parent
+
 			pstmt.executeUpdate();
+			
 			re = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -748,7 +718,7 @@ public class ActivityMgr {
 		return re;
 	}
 	
-	//댓글갯수
+	//��湲�媛���
 	public int act_reply_count (int actrep_act){
 		// TODO Auto-generated method stub
 		Connection con = null;
@@ -756,7 +726,7 @@ public class ActivityMgr {
 		ResultSet rs = null;
 		int count = 0;
 		
-		String sql = "SELECT COUNT(rep_act) FROM act_reply where rep_act =" + actrep_act;
+		String sql = "SELECT COUNT(*) FROM act_reply where rep_act =" + actrep_act;
 
 		try {
 			con = pool.getConnection();
@@ -776,29 +746,68 @@ public class ActivityMgr {
 		return count;
 	}
 	
-	//댓글 삭제
-	public void act_reply_delete (int actrep_num) {
+	public int act_rereply_count (int actrep_act, int rep_parent){
+		// TODO Auto-generated method stub
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		int count = 0;
+		
+		String sql = "SELECT COUNT(*) FROM act_reply where rep_parent = " + rep_parent + "and rep_act =" + actrep_act;
+
+		try {
+			con = pool.getConnection();
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery(sql);
+			
+			while (rs.next()) {
+				count=rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, st , rs);
+		}
+		return count;
+	}
+	
+	
+	//��湲� ����
+	public int act_reply_delete (int actrep_num, int rep_parent) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int re = -1;
-		String sql = "delete from act_reply where rep_num = ?";
+		
+		String sql = "";
 		
 		try {
 			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, actrep_num);
-			pstmt.executeUpdate();
-			
+			if(rep_parent == 0) {
+				//부모댓글의 경우
+				sql="delete from act_reply where rep_num = ? or rep_parent = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, actrep_num);
+				pstmt.setInt(2, actrep_num);
+				pstmt.executeUpdate();
+			}else {
+				sql="delete from act_reply where rep_num = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, actrep_num);
+				pstmt.executeUpdate();
+			}
+
 			re = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.closeConnection(con, pstmt);
 		}
-	
+		return re;
 	}
 	
-	//댓글 수정
+	//��湲� ����
 	public int act_reply_update (ActivityReplyBean actRB) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -821,7 +830,7 @@ public class ActivityMgr {
 		return re;
 	}
   
-  	// 관리자 대외활동 리스트
+  	// 愿�由ъ�� ���명���� 由ъ�ㅽ��
 	public ArrayList<ActivityBean> adminActivityList(int startRow, int endRow, String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -880,7 +889,7 @@ public class ActivityMgr {
 		return adminActArr;
 	}
 	
-	// 관리자 대외활동 수
+	// 愿�由ъ�� ���명���� ��
 	public int adminActivityCount(String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -910,7 +919,7 @@ public class ActivityMgr {
 		return count;
 	}
 	
-	// 관리자 공모전 리스트
+	// 愿�由ъ�� 怨듬え�� 由ъ�ㅽ��
 	public ArrayList<ActivityBean> adminContestList(int startRow, int endRow, String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -969,7 +978,7 @@ public class ActivityMgr {
 		return adminConArr;
 	}
 	
-	// 관리자 공모전 수
+	// 愿�由ъ�� 怨듬え�� ��
 	public int adminContestCount(String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -999,7 +1008,7 @@ public class ActivityMgr {
 		return count;
 	}
 	
-	// 대외활동, 공모전 삭제
+	// ���명����, 怨듬え�� ����
 	public int deleteActCon(int act_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1020,7 +1029,7 @@ public class ActivityMgr {
     return re;
 	}
 	
-	// 대외활동, 공모전 승인
+	// ���명����, 怨듬え�� �뱀��
 	public int approveActCon(int act_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1041,7 +1050,7 @@ public class ActivityMgr {
 		return re;
 	}
 	
-	// 인기 대외활동 리스트
+	// �멸린 ���명���� 由ъ�ㅽ��
 	public ArrayList<ActivityBean> popActivityList(int stratRow, int endRow) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1081,7 +1090,7 @@ public class ActivityMgr {
 		return popActArr;
 	}
 	
-	// 인기 공모전 리스트
+	// �멸린 怨듬え�� 由ъ�ㅽ��
 	public ArrayList<ActivityBean> popContestList(int startRow, int endRow) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1121,7 +1130,7 @@ public class ActivityMgr {
 		return popConArr;
 	}
 	
-	// 스크랩한 대외활동
+	// �ㅽ�щ�⑺�� ���명����
 	public ArrayList<ActivityBean> actScrapList(int startRow, int endRow, String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1166,7 +1175,7 @@ public class ActivityMgr {
 		return actScrapArr;
 	}
 	
-	// 스크랩한 대외활동 수
+	// �ㅽ�щ�⑺�� ���명���� ��
 	public int actScrapCount(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1195,7 +1204,7 @@ public class ActivityMgr {
 		return count;
 	}
 	
-	// 스크랩한 공모전
+	// �ㅽ�щ�⑺�� 怨듬え��
 	public ArrayList<ActivityBean> conScrapList(int startRow, int endRow, String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1240,7 +1249,7 @@ public class ActivityMgr {
 		return conScrapArr;
 	}
 	
-	// 스크랩 공모전 수
+	// �ㅽ�щ�� 怨듬え�� ��
 	public int conScrapCount(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;

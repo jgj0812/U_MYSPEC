@@ -100,7 +100,6 @@ private DBConnection pool;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		int re = -1; 	
 		String sql="";
 		
@@ -125,7 +124,7 @@ private DBConnection pool;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			pool.closeConnection(con, pstmt, rs);
+			pool.closeConnection(con, pstmt);
 		}
 		return re;
 	}
@@ -136,7 +135,7 @@ private DBConnection pool;
 		PreparedStatement pstmt = null;
 		int re = -1;
 		
-		String sql = "delete from comm_reply where rep_num = ?";
+		String sql = "";
 		
 		try {
 			con = pool.getConnection();

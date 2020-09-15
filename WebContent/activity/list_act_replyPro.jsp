@@ -15,20 +15,14 @@
 	
 	int memberType = (int)session.getAttribute("member");
 	int act_num= Integer.parseInt(request.getParameter("act_num"));
+	int rep_parent= Integer.parseInt(request.getParameter("rep_parent"));
 	int re = 0;
 
-	int rep_num=0, rep_ref=1, rep_pos=1, rep_depth=0;	
 	
-	if(request.getParameter("rep_num")!=null){
-		rep_num = Integer.parseInt(request.getParameter("rep_num"));
-		rep_ref = Integer.parseInt(request.getParameter("rep_ref"));
-		rep_pos = Integer.parseInt(request.getParameter("rep_pos"));
-		rep_depth = Integer.parseInt(request.getParameter("rep_depth"));
-	}
 	if(memberType == 0) {
-		re = mgr.act_reply_insertPerson(bean, id, act_num);
+		re = mgr.act_reply_insertPerson(bean, id, act_num,rep_parent);
 	}else {
-		re = mgr.act_reply_insertOrg(bean, id, act_num);
+		re = mgr.act_reply_insertOrg(bean, id, act_num,rep_parent);
 	}
 	
 
