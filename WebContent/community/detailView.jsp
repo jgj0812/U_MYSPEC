@@ -242,6 +242,7 @@
 		                    <!-- 원래글로 돌아가기위한 글번호  -->
 		                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
 		                    <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
+		                    <input type="hidden" name="rep_parent" value="<%=commRB.getRep_parent() %>">
 		                    <input type="submit" style="border: 0px" value="삭제">  
 		                </form>
 		                
@@ -354,6 +355,7 @@
 	                        <!-- 원래글로 돌아가기위한 글번호  -->
 	                        <input type="hidden" name="comm_num" value="<%= comm_num%>">
 	                        <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
+	                         <input type="hidden" name="rep_parent" value="<%=commRB2.getRep_parent() %>">
 	                        <input type="submit" style="border: 0px" value="삭제">  
 	                    </form>
 	                    
