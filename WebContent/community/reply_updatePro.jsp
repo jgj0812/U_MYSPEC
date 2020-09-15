@@ -12,8 +12,7 @@
 <jsp:setProperty property="*" name="Rbean"/>
 
 <%
-/* 	String rep_content = request.getParameter("rep_content");
-	int rep_num = Integer.parseInt(request.getParameter("rep_num")); */
+
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
 	
 	int re = Rmgr.Community_reply_update(Rbean);
