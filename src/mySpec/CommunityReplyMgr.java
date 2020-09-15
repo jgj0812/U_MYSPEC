@@ -131,17 +131,30 @@ private DBConnection pool;
 	}
 	
 	//댓글 삭제
-	public void Community_reply_delete (int rep_num) {
+	public int Community_reply_delete (int rep_num, int rep_parent) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int re = -1;
+		
 		String sql = "delete from comm_reply where rep_num = ?";
 		
 		try {
 			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, rep_num);
-			pstmt.executeUpdate();
+			if(rep_parent == 0) {
+				//부모댓글 삭제
+				sql="delete from comm_reply where rep_num=? or rep_parent = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, rep_num);
+				pstmt.setInt(2, rep_num);
+				pstmt.executeUpdate();
+				
+			}else {
+				sql="delete from comm_reply where rep_num=? ";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, rep_num);
+				pstmt.executeUpdate();
+				
+			}
 			
 			re = 1;
 		} catch (Exception e) {
@@ -149,7 +162,7 @@ private DBConnection pool;
 		} finally {
 			pool.closeConnection(con, pstmt);
 		}
-	
+		return re;
 	}
 	
 	//湲�����

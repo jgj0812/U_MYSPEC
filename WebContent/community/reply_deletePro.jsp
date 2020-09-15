@@ -14,7 +14,7 @@
 <%
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
 	int rep_num = Integer.parseInt(request.getParameter("rep_num"));
-
-	Rmgr.Community_reply_delete(rep_num);
+	int rep_parent = Integer.parseInt(request.getParameter("rep_parent"));
+	Rmgr.Community_reply_delete(rep_num, rep_parent);
 	response.sendRedirect("detailView.jsp?comm_num="+comm_num);
 %>
