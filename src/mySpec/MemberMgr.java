@@ -519,33 +519,46 @@ private DBConnection pool;
 	}
 	
 //	MyPage (단체) 활동 보기
-	public ActivityBean actlist_Org(int num) {
-		Connection con = null;
+	public ArrayList<ActivityBean> act_Org(int act_type, String org_id) {
+ 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ActivityBean alorg = null;
-		String sql = "select * from activity where act_num=?";
+		
+		String sql = "select a.*, org_name, trunc(act_end - sysdate) as act_dday from " 
+				+ "activity a left outer join org_user o "
+				+ "on a.act_org = o.org_id "
+				+ "where a.act_type = ? and o.org_id = ?";
+				
+		
+		ArrayList<ActivityBean> alistorg = new ArrayList<ActivityBean>();
 		
 		try {
 			con = pool.getConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, num);
+			pstmt.setInt(1, act_type);
+			pstmt.setString(2, org_id);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				alorg = new ActivityBean();
-				
-				alorg.setAct_num(rs.getInt("act_num"));
-				alorg.setAct_type(rs.getInt("act_type"));
-				alorg.setAct_title(rs.getString("act_title"));
-				
+			while(rs.next()) {
+				ActivityBean orgRec = new ActivityBean();
+				// 마이페이지에서 나오는 항목
+				orgRec.setAct_num(rs.getInt("act_num")); 
+				orgRec.setAct_type(rs.getInt("act_type")); 		// 대외활동? 공모전?
+				orgRec.setAct_thumb(rs.getString("act_thumb"));	// 썸네일
+				orgRec.setAct_title(rs.getString("act_title"));	// 제목
+				orgRec.setAct_hits(rs.getInt("act_hits"));		// 조회수
+				orgRec.setOrg_name(rs.getString("org_name"));		// 기관명
+				orgRec.setAct_dday(rs.getInt("act_dday"));		// D-Day
+				orgRec.setAct_approve(rs.getInt("act_approve"));  // 승인여부
+				alistorg.add(orgRec);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.closeConnection(con, pstmt, rs);
 		}
-		return alorg;
+		return alistorg;
 	}
+	
 	
 	
 //	MyPage 수정(개인)
