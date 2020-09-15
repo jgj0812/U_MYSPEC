@@ -25,6 +25,7 @@ public class ActivityBean {
 	private int act_award;			// 시상규모
 	private int act_approve;		// 승인여부
 	private String org_manager;		// 담당자이름
+	private String scrap_person;	// 스크랩 ID
 	
 	public int getAct_num() {
 		return act_num;
@@ -157,5 +158,11 @@ public class ActivityBean {
 	}
 	public void setOrg_manager(String org_manager) {
 		this.org_manager = org_manager;
+	}
+	public String getScrap_person() {
+		return scrap_person;
+	}
+	public void setScrap_person(String scrap_person) {
+		this.scrap_person = scrap_person;
 	}
 }

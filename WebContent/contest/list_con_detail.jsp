@@ -12,8 +12,6 @@
 	ActivityMgr manager = new ActivityMgr();
 	ActivityBean activity = manager.getActivity(act_num);
 	OrgBean org = manager.getOrg(act_num);
-	
-	manager.upHit(act_num);
 %>
 <section>
 	<div class="container">
@@ -181,4 +179,7 @@
 	</div>
 </section>
 <script src="../js/activity.js"></script>
+<script>
+	$.cookie("act_type", <%=activity.getAct_type()%>);
+</script>
 <%@ include file="../footer.jsp" %>
