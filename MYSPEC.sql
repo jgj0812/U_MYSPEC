@@ -31,7 +31,6 @@ CREATE TABLE activity (
 act_num NUMBER PRIMARY KEY,					-- 활동 글 번호
 act_type NUMBER,							-- 활동종류 대외활동, 공모전
 act_thumb VARCHAR2(200 CHAR),				-- 썸네일 이미지
-act_post VARCHAR2(200 CHAR),				-- 포스터 이미지
 act_title VARCHAR2(200 CHAR),				-- 활동 제목
 act_hits NUMBER DEFAULT 0,					-- 조회수
 act_org VARCHAR2(20 CHAR),					-- FK 단체회원 ID 

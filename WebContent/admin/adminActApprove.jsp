@@ -126,7 +126,6 @@
 		
 		      	<div class="section">
 		        	<h5>상세내용</h5>
-		        	<img src="../upload/<%=bean.getAct_post() %>" width="100%" />
 		        	<%=bean.getAct_content() %>
 		      	</div>
 		      	<br />
