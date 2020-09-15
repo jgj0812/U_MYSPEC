@@ -182,3 +182,6 @@
 </section>
 <script src="../js/activity.js"></script>
 <%@ include file="../footer.jsp" %>
+<script>
+	$.cookie("act_type", <%=activity.getAct_type()%>);
+</script>
