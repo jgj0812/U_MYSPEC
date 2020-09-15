@@ -14,7 +14,22 @@
 <%
 	int act_num = Integer.parseInt(request.getParameter("act_num"));
 	int rep_num = Integer.parseInt(request.getParameter("rep_num"));
-
-	Rmgr.act_reply_delete(rep_num);
+	int rep_parent = Integer.parseInt(request.getParameter("rep_parent"));
+	
+	int re = Rmgr.act_reply_delete(rep_num,rep_parent);
+	if(re == 1){
+		%>
+			<script>
+				alert("댓글이 삭제되었습니다.");	
+			</script>
+		<% 
+			}else{
+		%>
+			<script>
+				alert("댓글 삭제를 실패하였습니다.");
+			</script>
+		<%
+			}
+	
 	response.sendRedirect("list_act_detail.jsp?act_num="+act_num);
 %>
