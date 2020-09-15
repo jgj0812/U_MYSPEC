@@ -73,22 +73,23 @@ public class ActivityMgr {
 	}
 	
 	public void insertActivity(ActivityBean activity) {
-		String sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content) values(act_seq.nextval, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, activity.getAct_thumb());
-			ps.setString(2, activity.getAct_post());
-			ps.setString(3, activity.getAct_title());
-			ps.setString(4, activity.getAct_org());
-			ps.setString(5, activity.getAct_target());
-			ps.setDate(6, activity.getAct_start());
-			ps.setDate(7, activity.getAct_end());
-			ps.setInt(8, activity.getAct_pop());
-			ps.setInt(9, activity.getAct_reg());
-			ps.setInt(10, activity.getAct_field());
-			ps.setString(11, activity.getAct_home());
-			ps.setString(12, activity.getAct_content());
+			ps.setInt(1, activity.getAct_type());
+			ps.setString(2, activity.getAct_thumb());
+			ps.setString(3, activity.getAct_post());
+			ps.setString(4, activity.getAct_title());
+			ps.setString(5, activity.getAct_org());
+			ps.setString(6, activity.getAct_target());
+			ps.setDate(7, activity.getAct_start());
+			ps.setDate(8, activity.getAct_end());
+			ps.setInt(9, activity.getAct_pop());
+			ps.setInt(10, activity.getAct_reg());
+			ps.setInt(11, activity.getAct_field());
+			ps.setString(12, activity.getAct_home());
+			ps.setString(13, activity.getAct_content());
 			ps.executeUpdate();
 			
 			sql = "insert into act_reward values(act_seq.currval, ?)";
@@ -302,48 +303,7 @@ public class ActivityMgr {
 		return actreply_arr;
 	}
 	
-//	// 댓글 정보 : ActivityReplyBean 만 들고오기, 정보 보기용
-//
-//	public ActivityReplyBean act_reply_target(int rep_num) {
-//		Connection con = null;
-//		Statement st = null;
-//		ResultSet rs = null;
-//		String sql = "select ar.*, o.org_name from "	
-//				+ "(select r.*, p.person_nick from "
-//				+ "act_reply r left outer join person_user p "
-//				+ "on r.rep_person = p.person_id "
-//				+ "where rep_num = "+ rep_num + ") ar "
-//				+ "left outer join org_user o "
-//				+ "on ar.rep_org = o.org_id "
-//				+ " order by rep_ref desc, rep_pos asc";
-//		
-//		ArrayList<ActivityReplyBean> actreply_target = new ArrayList<ActivityReplyBean>();
-//
-//		try {
-//			con = pool.getConnection();
-//			st = con.prepareStatement(sql);
-//			rs = st.executeQuery(sql);
-//			
-//			if(rs.next()) {
-//				ActivityReplyBean  actT = new ActivityReplyBean();
-//				actT.setRep_num(rs.getInt("rep_num"));
-//				actT.setRep_act(rs.getInt("rep_act"));
-//				actT.setRep_person(rs.getString("rep_person"));
-//				actT.setRep_org(rs.getString("rep_org"));
-//				actT.setRep_orgName(rs.getString("org_name"));
-//				
-//				actreply_target.add(actT);
-//			}
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			pool.closeConnection(con, st, rs);
-//		}
-//		
-//		return actreply_target;
-//		
-//	}
+
 	
 
 	// 개인회원 댓글 등록
