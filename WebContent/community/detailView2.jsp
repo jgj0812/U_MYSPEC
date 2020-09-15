@@ -41,6 +41,7 @@
 	 }
  
 }
+
 </style>
 
 <%
@@ -48,8 +49,10 @@
 	if(id != null) {
 		member = (int)session.getAttribute("member");
 	}
+
 	//글번호 저장
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
+
 	//글번호로 게시물 보여주기
 	CommunityBean commB = mgr.Community_detailView(comm_num);	
 	
@@ -65,6 +68,7 @@
 	
 	//글번호
 	int num = commB.getComm_num();
+
 	String person = commB.getComm_admin() == null ? commB.getComm_nick() : "관리자";
 	int hits = commB.getComm_hits();
 	String content = commB.getComm_content();
@@ -202,7 +206,6 @@
 			
       		String repPerson = commRB.getRep_admin() != null ? "관리자" : commRB.getRep_nick();
       		int recount = Rmgr.Community_rereply_count(comm_num, commRB.getRep_num());
-      		int rep_num = commRB.getRep_num();
       		i++;
 	
 		%>	
@@ -216,14 +219,17 @@
 		        	<% if(repPerson.equals(commRB.getRep_nick())) {%>
 		            <p style="margin-left:40px;"><%=repPerson%></p>
 		            <% } else {%>
-		            <p style="margin-left:40px; font-weight: 800"><%=repPerson%></p> <!-- 닉네임 -->
+		            <p style="margin-left:40px; font-style:bold; color:#1dcdff"><%=repPerson%></p> <!-- 닉네임 -->
 		            <%} %>
 		            
 		            <p style="margin-left:20px;"><%=commRB.getRep_date()%></p> <!-- 날짜 -->
 		        </div>
 		      
 		        <!-- 댓글내용 -->
-		        <div style="margin-left:30px; font-size:1rem;" id="re_content<%=i %>"><%=commRB.getRep_content()%></div> 
+		        <div style="margin-left:30px; font-size:1rem;" id="re_content<%=i %>">
+		            <%=commRB.getRep_content()%> <!-- 댓글내용 -->
+		        </div> 
+		         <input type="button" value="값" onclick="getcontent(<%=i %>)">  
 		        <br>
 		        <!-- 답글보기 삭제 수정 답글 -->
 		        <div>
@@ -242,14 +248,13 @@
 		                    <!-- 원래글로 돌아가기위한 글번호  -->
 		                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
 		                    <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
-		                    <input type="hidden" name="rep_parent" value="<%=commRB.getRep_parent() %>">
 		                    <input type="submit" style="border: 0px" value="삭제">  
 		                </form>
 		                
 		                <!-- 수정  -->			
 		                <form> 
 		                    <input type="hidden" name="comm_num" value="<%= comm_num%>">
-		                    <input type="hidden" name="rep_num" value="<%=commRB.getRep_num()%>">
+		                    <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
 		                    <input type="button" style="border: 0px" value="수정"  onclick="update(<%=i%>)"> 
 		                </form>	  
 		                <%} %>	 
@@ -271,16 +276,16 @@
 		
 		    <!-- 댓글 수정 div -->
 		    <div id="update<%=i %>" style="display: none">
-		        <form action ="reply_updatePro.jsp" method="post" id="reply_update<%=i %>"> 
+		        <form action ="reply_updatePro.jsp" method="post"> 
 		            <div style="margin-bottom: 5px">
-		                <input id="re_upcontent" name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB.getRep_content()%>"> 
-		                <input type="hidden" name="rep_num" value="<%=commRB.getRep_num()%>">
+		                <input name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB.getRep_content()%>"> 
+		                <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
 		                <input type="hidden" name="comm_num" value="<%= comm_num%>">
 		            </div>
 		            
 		            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">			
 		                <input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem" value="취소" onclick="updatecancel(<%=i%>)"> 
-		                <input type="button" class="btn btn-danger" style="font-size: 0.75rem" value="수정" onclick="replyupdate_ok(<%=i%>)">  		
+		                <input type="submit" class="btn btn-danger" style="font-size: 0.75rem" value="수정">  		
 		            </div>
 		            
 		            <br>
@@ -319,15 +324,15 @@
 		       <div id="rereplylist<%=i %>" style="display: none">
 		       
 		        <%
-		    
+		        int j =0;
 		        ArrayList<CommunityReplyBean> commRere_arr  = Rmgr.Community_rereply_list(comm_num, commRB.getRep_num());
 		    
 		        for(CommunityReplyBean commRB2 :commRere_arr){
 		              String repPerson2 = commRB2.getRep_admin() != null ? "관리자" : commRB2.getRep_nick();
-		             
+		              j++;
 		     	 %>
 		     	 
-		      	<div id="rereply_repeat<%=commRB2.getRep_num() %>" >
+		      	<div style="display: block;" id="rereply_repeat<%=i %><%=j %>" >
 		       	 <!-- 닉네임 날짜 -->
 		            <div class="row" style="font-size:0.85rem;" >
 		                <img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
@@ -335,14 +340,16 @@
 		            <% if(repPerson2.equals(commRB2.getRep_nick())) {%>
 		                <p style="margin-left:10px;"><%=repPerson2%></p> <!-- 닉네임 -->
 		                <% } else{ %>
-		                <p style="margin-left:10px; font-weight: 800"><%=repPerson2%></p> <!-- 닉네임 -->
+		                <p style="margin-left:10px; font-style:bold; color:#1dcdff""><%=repPerson2%></p> <!-- 닉네임 -->
 		                <%} %>
 		
 		                <p style="margin-left:20px;"><%=commRB2.getRep_date()%></p> <!-- 날짜 -->
 		            </div>
 		         
 		         <!-- 댓글내용 -->
-	            <div style="margin-left:65px; font-size:1rem;"><%=commRB2.getRep_content()%></div> 
+	            <div style="margin-left:65px; font-size:1rem;" id="rerecontent">
+	               <%=commRB2.getRep_content()%> <!-- 댓글내용 -->
+	            </div> 
 		       
 		        <!-- 답글보기 삭제 수정 답글 -->
             	<div>
@@ -355,7 +362,6 @@
 	                        <!-- 원래글로 돌아가기위한 글번호  -->
 	                        <input type="hidden" name="comm_num" value="<%= comm_num%>">
 	                        <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
-	                        <input type="hidden" name="rep_parent" value="<%=commRB2.getRep_parent() %>">
 	                        <input type="submit" style="border: 0px" value="삭제">  
 	                    </form>
 	                    
@@ -363,7 +369,7 @@
 	                    <form> 
 	                        <input type="hidden" name="comm_num" value="<%= comm_num%>">
 	                        <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
-	                        <input type="button" style="border: 0px" value="수정"  onclick="rereupdate(<%=commRB2.getRep_num()%>)"> 
+	                        <input type="button" style="border: 0px" value="수정"  onclick="rereupdate(<%=j%>)"> 
 	                    </form>	  
 	                    <%} %>	 
 	                </div>  
@@ -374,17 +380,17 @@
         	</div> <!-- rereply_repeat -->
         	
         	<!-- 답글 수정 div -->
-		    <div id="rereupdate<%=commRB2.getRep_num() %>" style="display: none">
-		        <form action ="reply_updatePro.jsp" method="post" id="rereply_update<%=commRB2.getRep_num() %>"> 
+		    <div id="rereupdate<%=i %><%=j %>" style="display: none">
+		        <form action ="reply_updatePro.jsp" method="post"> 
 		            <div style="margin-bottom: 5px">
-		                <input id="rere_upcontent" name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB2.getRep_content()%>"> 
-		                <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
+		                <input name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB.getRep_content()%>"> 
+		                <input type="hidden" name="rep_num" value="<%=commRB.getRep_num() %>">
 		                <input type="hidden" name="comm_num" value="<%= comm_num%>">
 		            </div>
 		            
 		            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">			
-		                <input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem"  value="취소" onclick="rereupdatecancel(<%=commRB2.getRep_num() %>)"> 
-		                <input type="button" class="btn btn-danger" style="font-size: 0.75rem" value="수정"  onclick="rereplyupdate_ok(<%=commRB2.getRep_num() %>)">  		
+		                <input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem"  value="취소" onclick="rereupdatecancel(<%=j%>)"> 
+		                <input type="submit" class="btn btn-danger" style="font-size: 0.75rem" value="수정">  		
 		            </div>
 		            
 		            <br>
@@ -440,5 +446,8 @@
 	</div><!-- reply끝 -->
 	
 	
+
 </section>
+
 <%@ include file="../footer.jsp" %>
+

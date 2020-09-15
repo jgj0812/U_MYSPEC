@@ -531,9 +531,15 @@ $(document).ready(function () {
 	
 	$("#act_form input[name='act_start']").datepicker();
 	$("#act_form input[name='act_end']").datepicker();
+	
 	$("#comm_content").summernote({
 			lang: "ko-KR",
 	      	height: "20em",
+			callbacks : {
+				onImageUpload : function(files) {
+					sendFile(files[0], this);
+					}
+			}
 	});
 });
 
@@ -1015,6 +1021,7 @@ function copy_to_clipboard() {
 	document.execCommand("copy");
 }
 
+//-----------------------------admin js---------------------------------------
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){
 	if($("#personSearch").val() == "") {
@@ -1035,7 +1042,18 @@ $("#orgSearchBtn").click(function(){
 	$("#orgSearchFrm").submit();
 });
 
+// admin 대외활동, 공모전 검색
+$("#adminActSearchBtn").click(function(){
+	if($("#adminActSearch").val() == "") {
+		alert("검색어를 입력해주세요.");
+		$("#adminActSearch").focus();
+		return false;
+	}
+	$("#adminActSearchFrm").submit();
+});
+
 //-------------------------------커뮤니티 js--------------------------------------
+
 // 커뮤니티 공지글 검색(admin)
 $("#noticeSearchBtn").click(function(){
 	if($("#noticeSearch").val() == "") {
@@ -1047,8 +1065,11 @@ $("#noticeSearchBtn").click(function(){
 });
 
 //커뮤니티 글쓰기로 가기
-function comm_write(id) {
-	if(id == 'null') {
+function comm_write(id,member) {
+	if(member == 1){
+		alert('단체회원은 글쓰기를 이용할 수 없습니다.')
+		window.location = "community.jsp";
+	}else if(id == 'null') {
 		alert("로그인을 해야 글쓰기가 가능합니다.");
 		window.location = "../member/login.jsp";
 	}else {
@@ -1109,7 +1130,17 @@ function rereply_ok(i) {
 	$("#rereplyFrm" + i).submit();
 }
 
-// 답글 입력폼
+//대댓글 리스트 숨기고 보여주기
+function rereplylist(i){
+	var rereplylist = document.getElementById("rereplylist" + i);
+	if(rereplylist.style.display =='none'){
+		rereplylist.style.display = 'block';
+	}else if(rereplylist.style.display =='block'){
+		rereplylist.style.display = 'none';
+	}
+}
+
+// 답글 입력폼 숨기고 보여주기
 function rereply(i){
 	var rereply = document.getElementById("rereply" + i);
 	if(rereply.style.display =='none'){
@@ -1119,9 +1150,15 @@ function rereply(i){
 	}
 }
 
-// 댓글 수정 폼
+// 댓글 수정 폼 숨기고 보여주기
 function update(i){
-	var update = document.getElementById("update" + i);
+	var content =document.getElementById("re_content"+i).innerHTML;
+	
+	$(function(){
+        $("#re_upcontent").val(content);
+    });
+	
+	var update = document.getElementById("update");
 	var basic = document.getElementById("basic" + i);
 	
 	if(update.style.display =='none'){
@@ -1135,12 +1172,57 @@ function update(i){
 
 // 댓글 수정 취소
 function updatecancel(i){
-	var update = document.getElementById("update" + i);
+	var update = document.getElementById("update");
 	var basic = document.getElementById("basic" + i);
 	if(update.style.display =='block'){
 		update.style.display = 'none';
 		basic.style.display = 'block';
 	}
+}
+
+
+// 답글 수정 폼 숨기고 보여주기
+function rereupdate(i){
+	var rereupdate = document.getElementById("rereupdate" + i);
+	var rereply_repeat = document.getElementById("rereply_repeat" + i);
+	
+	if(rereupdate.style.display =='none'){
+		rereupdate.style.display = 'block';
+		rereply_repeat.style.display = 'none';
+	}else if(rereupdate.style.display =='block'){
+		rereupdate.style.display = 'none';
+		rereply_repeat.style.display = 'block';
+	}
+}
+
+// 댓글 수정 취소
+function rereupdatecancel(i){
+	var rereupdate = document.getElementById("rereupdate" + i);
+	var rereply_repeat = document.getElementById("rereply_repeat" + i);
+	if(rereupdate.style.display =='block'){
+		rereupdate.style.display = 'none';
+		rereply_repeat.style.display = 'block';
+	}
+}
+
+//댓글 수정 입력폼 유효성
+function replyupdate_ok(i) {
+	if($("#reply_update" + i +" [name=rep_content]").val() == "") {
+		alert("수정할 댓글 내용을 입력해주세요.");
+		$("#reply_update" + i +"  [name=rep_content]").focus();
+		return false;
+	}
+	$("#reply_update" +i).submit();
+}
+
+//답글 수정 입력폼 유효성
+function rereplyupdate_ok(i) {
+	if($("#rereply_update" + i +" [name=rep_content]").val() == "") {
+		alert("수정할 답글 내용을 입력해주세요.");
+		$("#rereply_update" + i +" [name=rep_content]").focus();
+		return false;
+	}
+	$("#rereply_update"+i).submit();
 }
 
 // myPage 수정 양식, 비밀번호 변경

@@ -6,16 +6,16 @@
 	request.setCharacterEncoding("UTF-8");
 
 %>
-<jsp:useBean id="Rmgr" class="mySpec.CommunityReplyMgr" />
-<jsp:useBean id="Rbean" class="mySpec.CommunityReplyBean" />
+<jsp:useBean id="Rmgr" class="mySpec.ActivityMgr" />
+<jsp:useBean id="Rbean" class="mySpec.ActivityReplyBean" />
 
 <jsp:setProperty property="*" name="Rbean"/>
 
 <%
 
-	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
+	int act_num = Integer.parseInt(request.getParameter("act_num"));
 	
-	int re = Rmgr.Community_reply_update(Rbean);
+	int re = Rmgr.act_reply_update(Rbean);
 	
 	if(re == 1){
 		%>
@@ -32,5 +32,5 @@
 			}
 	
 	
-	response.sendRedirect("detailView.jsp?comm_num="+comm_num);
+	response.sendRedirect("list_act_detail.jsp?act_num="+act_num);
 %>

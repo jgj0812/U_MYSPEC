@@ -48,7 +48,7 @@
 		                	<tr class="text-center">
 		                    	<th>ID</th>
 		                    	<th>기관명칭</th>
-		                    	<th>기관타입</th>
+		                    	<th>기관형태</th>
 		                    	<th>담당자</th>
 		                    	<th>담당자 메일</th>
 		                    	<th>담당자 전화번호</th>
@@ -123,7 +123,7 @@
 							if(startPage > pageBlock) {
 					%>	
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage - pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
+				      		<a class="page-link" href="adminOrg.jsp?pageNum=<%=startPage - pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 				        		<span class="sr-only">Previous</span>
 				      		</a>
@@ -144,7 +144,7 @@
 								} else {
 				    %>
 				    	<li class="page-item">
-				    		<a class="page-link text-dark" href="adminPerson.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
+				    		<a class="page-link text-dark" href="adminOrg.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -156,7 +156,7 @@
 							if(endPage < pageCount) {
 				    %>
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage + pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
+				      		<a class="page-link" href="adminOrg.jsp?pageNum=<%=startPage + pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 				        		<span class="sr-only">Next</span>
 				      		</a>

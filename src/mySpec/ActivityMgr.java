@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,7 +22,6 @@ public class ActivityMgr {
 	public ActivityMgr() {
 		super();
 		pool = DBConnection.getInstance();
-		
 		try {
 			tagMap = (HashMap<Integer, String>) new ObjectInputStream(new FileInputStream("C:\\Jsp\\U_MYSPEC\\tag.map")).readObject();
 		} catch (FileNotFoundException e) {
@@ -225,6 +225,7 @@ public class ActivityMgr {
 	public ActivityBean getActivity(int act_num) {
 		String sql;
 		ActivityBean activity = new ActivityBean();
+		upHit(act_num);
 		try {
 			sql = "select act_type, act_thumb, act_title, act_hits, act_target, act_start, act_end, trunc(act_end - sysdate) as act_dday, act_pop, act_reg, act_field, act_home, act_content, act_award, act_approve from activity where act_num = ? ";
 			con = pool.getConnection();
@@ -515,8 +516,312 @@ public class ActivityMgr {
 		}
 		return count;
 	}
+
+//---------- 활동 댓글 기능
 	
-	// 관리자 대외활동 리스트
+	//댓글 리스트(등록된 댓글 보기)
+	public ArrayList<ActivityReplyBean> act_reply_list(int rep_act) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		String sql = "select ar.*, o.org_name from "	
+						+ "(select r.*, p.person_nick from "
+						+ "act_reply r left outer join person_user p "
+						+ "on r.rep_person = p.person_id "
+						+ "where rep_act = "+ rep_act + ") ar "
+						+ "left outer join org_user o "
+						+ "on ar.rep_org = o.org_id "
+						+ " order by rep_ref desc, rep_pos asc";
+		
+		ArrayList<ActivityReplyBean> actreply_arr = new ArrayList<ActivityReplyBean>();
+		
+		try {
+			con = pool.getConnection();
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery(sql);
+			
+			while (rs.next()) {
+				ActivityReplyBean  actB = new ActivityReplyBean();
+				actB.setRep_num(rs.getInt("rep_num"));
+				actB.setRep_act(rs.getInt("rep_act"));
+				actB.setRep_person(rs.getString("rep_person"));
+				actB.setRep_content(rs.getString("rep_content"));
+				actB.setRep_date(rs.getString("rep_date"));
+				actB.setRep_ref(rs.getInt("rep_ref"));
+				actB.setRep_nick(rs.getString("person_nick"));
+				actB.setRep_pos(rs.getInt("rep_pos"));
+				actB.setRep_depth(rs.getInt("rep_depth"));
+				actB.setRep_org(rs.getString("rep_org"));
+				actB.setRep_orgName(rs.getString("org_name"));
+				
+				actreply_arr.add(actB);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, st, rs);
+		}
+		return actreply_arr;
+	}
+	
+//	// 댓글 정보 : ActivityReplyBean 만 들고오기, 정보 보기용
+//
+//	public ActivityReplyBean act_reply_target(int rep_num) {
+//		Connection con = null;
+//		Statement st = null;
+//		ResultSet rs = null;
+//		String sql = "select ar.*, o.org_name from "	
+//				+ "(select r.*, p.person_nick from "
+//				+ "act_reply r left outer join person_user p "
+//				+ "on r.rep_person = p.person_id "
+//				+ "where rep_num = "+ rep_num + ") ar "
+//				+ "left outer join org_user o "
+//				+ "on ar.rep_org = o.org_id "
+//				+ " order by rep_ref desc, rep_pos asc";
+//		
+//		ArrayList<ActivityReplyBean> actreply_target = new ArrayList<ActivityReplyBean>();
+//
+//		try {
+//			con = pool.getConnection();
+//			st = con.prepareStatement(sql);
+//			rs = st.executeQuery(sql);
+//			
+//			if(rs.next()) {
+//				ActivityReplyBean  actT = new ActivityReplyBean();
+//				actT.setRep_num(rs.getInt("rep_num"));
+//				actT.setRep_act(rs.getInt("rep_act"));
+//				actT.setRep_person(rs.getString("rep_person"));
+//				actT.setRep_org(rs.getString("rep_org"));
+//				actT.setRep_orgName(rs.getString("org_name"));
+//				
+//				actreply_target.add(actT);
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			pool.closeConnection(con, st, rs);
+//		}
+//		
+//		return actreply_target;
+//		
+//	}
+	
+
+	// 개인회원 댓글 등록
+	public int act_reply_insertPerson (ActivityReplyBean actR, String id, int act_num) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int re = -1; 
+		int number = 0;
+		
+		int rep_num = actR.getRep_num(); //글번호
+		int rep_ref= actR.getRep_ref();
+		int rep_pos =actR.getRep_pos();
+		int rep_depth = actR.getRep_depth();
+		
+		String sql ="";
+		
+		try {
+			con = pool.getConnection();
+			//새댓글: ref= rep_num의 최대값+1, re_pos=0, re_depth=0
+			sql="select max(rep_num) from act_reply";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery(); //최대값 구하기
+			
+			if(rs.next()) {
+				number=rs.getInt(1)+1;
+				
+			}else {//테이블에 데이터가 하나도 없을 때
+				number = 1;
+				
+			}
+			//ref re_pos re_level 결정
+			
+			if(rep_num!=0) { //대댓글
+				sql="update act_reply set rep_pos=rep_pos+1 where rep_ref=? and rep_pos>?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, rep_ref);
+				pstmt.setInt(2, rep_pos);
+				pstmt.executeUpdate();
+				
+				
+				rep_pos =rep_pos+1; //부모 re_step+1
+				rep_depth=rep_depth+1;//부모 re_level+1
+			
+			}else {//새댓글
+				rep_ref=number;
+				rep_pos=0;
+				rep_depth=0;
+			}
+			
+            			//번호                             글번호 아이디  날짜   내용  rep_ref rep_pos rep_depth
+			sql = "insert into act_reply (rep_num, rep_act, rep_person, rep_date, rep_content, rep_ref, rep_pos, rep_depth)"
+		                                       + " values(act_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			
+			
+			pstmt.setInt(1, act_num); //글번호
+			pstmt.setString(2, id); //아이디
+			
+			pstmt.setString(3, actR.getRep_content()); //내용
+			pstmt.setInt(4, rep_ref); //rep_ref
+			pstmt.setInt(5, rep_pos); //rep_pos
+			pstmt.setInt(6, rep_depth); //rep_depth
+			
+
+			pstmt.executeUpdate();
+			
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+		return re;
+	}
+	
+	public int act_reply_insertOrg(ActivityReplyBean actR, String id, int act_num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "";
+		int re = -1; 
+		int number = 0;
+		
+		int rep_num = actR.getRep_num(); //글번호
+		int rep_ref= actR.getRep_ref();
+		int rep_pos =actR.getRep_pos();
+		int rep_depth = actR.getRep_depth();
+
+		try {
+			con = pool.getConnection();
+			sql="select max(rep_num) from act_reply";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery(); //최대값 구하기
+			
+			if(rs.next()) {
+				number=rs.getInt(1)+1;
+				
+			}else {//테이블에 데이터가 하나도 없을 때
+				number = 1;
+				
+			}
+			//ref re_pos re_level 결정
+			
+			if(rep_num!=0) { //대댓글
+				sql="update act_reply set rep_pos=rep_pos+1 where rep_ref=? and rep_pos>?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, rep_ref);
+				pstmt.setInt(2, rep_pos);
+				pstmt.executeUpdate();
+				
+				
+				rep_pos =rep_pos+1; //부모 re_step+1
+				rep_depth=rep_depth+1;//부모 re_level+1
+			
+			}else {//새댓글
+				rep_ref=number;
+				rep_pos=0;
+				rep_depth=0;
+			}
+			
+			sql = "insert into act_reply (rep_num, rep_act, rep_org, rep_date, rep_content, rep_ref, rep_pos, rep_depth) "
+					+ "values(act_reply_seq.nextval, ?, ?, sysdate, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, act_num);
+			pstmt.setString(2, id);
+			pstmt.setString(3, actR.getRep_content());
+			pstmt.setInt(4, rep_ref);
+			pstmt.setInt(5, rep_pos);
+			pstmt.setInt(6, rep_depth);
+			pstmt.executeUpdate();
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+		return re;
+	}
+	
+	//댓글갯수
+	public int act_reply_count (int actrep_act){
+		// TODO Auto-generated method stub
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		int count = 0;
+		
+		String sql = "SELECT COUNT(rep_act) FROM act_reply where rep_act =" + actrep_act;
+
+		try {
+			con = pool.getConnection();
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery(sql);
+			
+			while (rs.next()) {
+				count=rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, st , rs);
+		}
+		return count;
+	}
+	
+	//댓글 삭제
+	public void act_reply_delete (int actrep_num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int re = -1;
+		String sql = "delete from act_reply where rep_num = ?";
+		
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, actrep_num);
+			pstmt.executeUpdate();
+			
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+	
+	}
+	
+	//댓글 수정
+	public int act_reply_update (ActivityReplyBean actRB) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int re = -1;
+		String sql = "update act_reply set rep_content=? where rep_num = ?";
+		
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, actRB.getRep_content());
+			pstmt.setInt(2, actRB.getRep_num());
+			
+			pstmt.executeUpdate();
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+		return re;
+	}
+  
+  	// 관리자 대외활동 리스트
 	public ArrayList<ActivityBean> adminActivityList(int startRow, int endRow, String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -530,9 +835,9 @@ public class ActivityMgr {
 				sql = "select * from "
 						+ "(select rownum rn, aa.* from "
 						+ "(select a.*, o.org_name, o.org_manager from "
-						+ "activity where act_type=1 a "
-						+ "left outer join org_user o "
-						+ "on a.act_org = o.org_id) aa) "
+						+ "activity a left outer join org_user o "
+						+ "on a.act_org = o.org_id "
+						+ "where act_type=1) aa) "
 						+ "where rn between ? and ? "
 						+ "order by act_num desc";
 				pstmt = con.prepareStatement(sql);
@@ -542,10 +847,9 @@ public class ActivityMgr {
 				sql = "select * from "
 						+ "(select rownum rn, aa.* from "
 						+ "(select a.*, o.org_name, o.org_manager from "
-						+ "(select * from activity "
-						+ "where " + keyField + " like ? and act_type=1) a "
-						+ "left outer join org_user o "
-						+ "on a.act_org = o.org_id) aa) "
+						+ "activity a left outer join org_user o "
+						+ "on a.act_org = o.org_id "
+						+ "where " + keyField + " like ? and act_type=1) aa) "
 						+ "where rn between ? and ? "
 						+ "order by act_num desc";
 				pstmt = con.prepareStatement(sql);
@@ -620,9 +924,9 @@ public class ActivityMgr {
 				sql = "select * from "
 						+ "(select rownum rn, aa.* from "
 						+ "(select a.*, o.org_name, o.org_manager from "
-						+ "activity where act_type=2 a "
-						+ "left outer join org_user o "
-						+ "on a.act_org = o.org_id) aa) "
+						+ "activity a left outer join org_user o "
+						+ "on a.act_org = o.org_id "
+						+ "where act_type=2) aa) "
 						+ "where rn between ? and ? "
 						+ "order by act_num desc";
 				pstmt = con.prepareStatement(sql);
@@ -632,10 +936,9 @@ public class ActivityMgr {
 				sql = "select * from "
 						+ "(select rownum rn, aa.* from "
 						+ "(select a.*, o.org_name, o.org_manager from "
-						+ "(select * from activity "
-						+ "where " + keyField + " like ? and act_type=2) a "
-						+ "left outer join org_user o "
-						+ "on a.act_org = o.org_id) aa) "
+						+ "activity a left outer join org_user o "
+						+ "on a.act_org = o.org_id "
+						+ "where " + keyField + " like ? and act_type=2) aa) "
 						+ "where rn between ? and ? "
 						+ "order by act_num desc";
 				pstmt = con.prepareStatement(sql);
@@ -708,6 +1011,27 @@ public class ActivityMgr {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, act_num);
 			pstmt.executeUpdate();
+      re=1;
+    }catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      pool.closeConnection(con, pstmt);
+    }
+    return re;
+	}
+	
+	// 대외활동, 공모전 승인
+	public int approveActCon(int act_num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "update activity set act_approve=1 where act_num=?";
+		int re = 0;
+
+		try {
+			con = pool.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, act_num);
+			pstmt.executeUpdate();
 			re = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -715,5 +1039,233 @@ public class ActivityMgr {
 			pool.closeConnection(con, pstmt);
 		}
 		return re;
+	}
+	
+	// 인기 대외활동 리스트
+	public ArrayList<ActivityBean> popActivityList(int stratRow, int endRow) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<ActivityBean> popActArr = new ArrayList<ActivityBean>();
+
+		try {
+			con = pool.getConnection();
+			sql = "select * from "
+					+ "(select rownum rn, aa.* from "
+					+ "(select a.act_num, a.act_thumb, a.act_title, trunc(a.act_end - sysdate) as act_dday, a.act_hits, o.org_name from "
+					+ "activity a left outer join org_user o "
+					+ "on a.act_org = o.org_id "
+					+ "where act_type=1 and act_approve=1) aa) "
+					+ "where rn between ? and ? "
+					+ "order by act_hits desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, stratRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setOrg_name(rs.getString("org_name"));
+				bean.setAct_dday(rs.getInt("act_dday"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				popActArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return popActArr;
+	}
+	
+	// 인기 공모전 리스트
+	public ArrayList<ActivityBean> popContestList(int startRow, int endRow) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<ActivityBean> popConArr = new ArrayList<ActivityBean>();
+
+		try {
+			con = pool.getConnection();
+			sql = "select * from "
+					+ "(select rownum rn, aa.* from "
+					+ "(select a.act_num, a.act_thumb, a.act_title, trunc(a.act_end - sysdate) as act_dday, a.act_hits, o.org_name from "
+					+ "activity a left outer join org_user o "
+					+ "on a.act_org = o.org_id "
+					+ "where act_type=2 and act_approve=1) aa) "
+					+ "where rn between ? and ? "
+					+ "order by act_hits desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setOrg_name(rs.getString("org_name"));
+				bean.setAct_dday(rs.getInt("act_dday"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				popConArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return popConArr;
+	}
+	
+	// 스크랩한 대외활동
+	public ArrayList<ActivityBean> actScrapList(int startRow, int endRow, String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<ActivityBean> actScrapArr = new ArrayList<ActivityBean>();
+
+		try {
+			con = pool.getConnection();
+			sql = "select * from "
+					+ "(select rownum rn, aa.* from "
+					+ "(select ab.*, o.org_name from "
+					+ "(select a.*, trunc(a.act_end - sysdate), s.scrap_person from "
+					+ "activity a left outer join scrap s "
+					+ "on a.act_num = s.scrap_num) ab "
+					+ "left outer join org_user o "
+					+ "on ab.act_org = o.org_id "
+					+ "where scrap_person=? and act_type=1) aa) "
+					+ "where rn between ? and ? "
+					+ "order by act_num desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_type(rs.getInt("act_type"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				bean.setAct_dday(rs.getInt("act_dday"));
+				bean.setOrg_name(rs.getString("org_name"));
+				actScrapArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return actScrapArr;
+	}
+	
+	// 스크랩한 대외활동 수
+	public int actScrapCount(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			sql = "select count(*) from "
+					+ "(select a.*, s.scrap_person from "
+					+ "activity a left outer join scrap s "
+					+ "on a.act_num = s.scrap_num) "
+					+ "where scrap_person=? and act_type=1";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	// 스크랩한 공모전
+	public ArrayList<ActivityBean> conScrapList(int startRow, int endRow, String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<ActivityBean> conScrapArr = new ArrayList<ActivityBean>();
+
+		try {
+			con = pool.getConnection();
+			sql = "select * from "
+					+ "(select rownum rn, aa.* from "
+					+ "(select ab.*, o.org_name from "
+					+ "(select a.*, trunc(a.act_end - sysdate) as act_dday, s.scrap_person from "
+					+ "activity a left outer join scrap s "
+					+ "on a.act_num = s.scrap_num) ab "
+					+ "left outer join org_user o "
+					+ "on ab.act_org = o.org_id "
+					+ "where scrap_person=? and act_type=2) aa) "
+					+ "where rn between ? and ? "
+					+ "order by act_num desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_type(rs.getInt("act_type"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				bean.setAct_dday(rs.getInt("act_dday"));
+				bean.setOrg_name(rs.getString("org_name"));
+				conScrapArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return conScrapArr;
+	}
+	
+	// 스크랩 공모전 수
+	public int conScrapCount(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+		
+		try {
+			con = pool.getConnection();
+			sql = "select count(*) from "
+					+ "(select * from "
+					+ "activity a left outer join scrap s "
+					+ "on a.act_num = s.scrap_num) "
+					+ "where scrap_person=? and act_type=2";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
 	}
 }

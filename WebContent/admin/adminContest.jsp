@@ -49,8 +49,8 @@
 		                    	<th class="col-md-1">이미지</th>
 		                    	<th class="col-5">제목</th>
 		                    	<th class="col-md-2">기관명</th>
-		                    	<th class="col-md-2">등록일</th>
-		                    	<th class="col-md-1">마감일</th>
+		                    	<th class="col-md-2">접수마감일</th>
+		                    	<th class="col-md-1">담당자</th>
 		                    	<th class="col-md-1">삭제</th>
 		                  	</tr>
 		                </thead>
@@ -67,15 +67,17 @@
 			                  		<%if(bean.getAct_approve() == 0) {%>
 			                  		<span class="badge badge-primary rounded-pill">승인대기중</span>
 			                  		<%} %>
-			                     	<%=bean.getAct_title() %>
+			                  		<a href="adminConApprove.jsp?act_num=<%=bean.getAct_num()%>">
+			                     		<%=bean.getAct_title() %>
+			                     	</a>
 			                  	</td>
 			                  	<td class="col-md-2"><%=bean.getOrg_name() %></td>
 			                  	<td class="col-md-2">~<%=bean.getAct_end() %></td>
 			                  	<td class="col-md-1"><%=bean.getOrg_manager() %></td>
 			                  	<td class="col-md-1">
-			                  		<a href="" class="btn btn-danger">
-		 							삭제
-		 						</a>
+			                  		<a href="adminActConDeletePro.jsp?act_num=<%=bean.getAct_num() %>&act_type=<%=bean.getAct_type() %>" class="btn btn-danger" >
+		            					삭제
+		            				</a>
 			                  	</td>
               				</tr>
               			    <%	} %>
@@ -148,6 +150,22 @@
 				</nav>
 			</div>
 			<!-- /페이징 -->
+			<!-- 검색 -->
+			<form method="get" id="adminActSearchFrm" class="form-inline justify-content-center">
+				<input type="hidden" name="pageNum" value="1">
+				<select name="keyField" class="form-control" id="search_control">
+					<option value="act_title">제목</option>
+					<option value="org_name">기관명</option>
+				</select>
+				
+				<div class="input-group">
+					<input type="text" id="adminActSearch" name="keyWord" class="form-control">
+					<div class="input-group-append">
+						<button type="button" id="adminActSearchBtn" class="btn btn-cam">검색</button>	
+					</div>
+				</div>
+			</form>
+			<!-- /검색 -->
 		</div>
 		<!-- /page Content -->
 	</div>
