@@ -191,7 +191,7 @@ public class ActivityMgr {
 				}
 				break;
 			case 2:
-				sql = "insert into activity(act_num, act_type, act_thumb, act_title, act_org, act_target, act_start, act_end, act_field, act_award, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				sql = "insert into activity(act_num, act_type, act_thumb, act_title, act_org, act_target, act_start, act_end, act_field, act_award, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				ps = con.prepareStatement(sql);
 				ps.setInt(1, activity.getAct_type());
 				ps.setString(2, activity.getAct_thumb());
