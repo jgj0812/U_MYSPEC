@@ -13,7 +13,7 @@
 %>
 <section>
 	<div class="container">
-		<form action="list_con_updatePro.jsp" method="post" id="act_form">
+		<form method="post" id="act_form" enctype="multipart/form-data">
 			<div class="section">
 				<div>
 					<p class="badge badge-secondary">
@@ -26,7 +26,18 @@
 					</h3>
 					&nbsp;
 					<h3>
-						<i class="fas fa-eye"></i> <i class="far fa-square"></i>
+						<i class="fas fa-eye" data-toggle="tooltip" data-placement="bottom" title="<%="조회수 : " + activity.getAct_hits() %>"></i>
+						&nbsp;
+						<%
+							switch(activity.getAct_approve()) {
+							case 0:
+								%><i class="far fa-square" data-toggle="tooltip" data-placement="bottom" title="승인대기"></i><%
+								break;
+							case 1:
+								%><i class="far fa-check-square" data-toggle="tooltip" data-placement="bottom" title="승인"></i><%
+								break;
+							}
+						 %>
 					</h3>
 				</div>
 			</div>
@@ -35,26 +46,15 @@
 			<div class="section">
 				<div class="row">
 					<div class="col-md-4">
-						<img src="../upload/<%=activity.getAct_thumb()%>" width="100%" />
+						<img src="../upload/<%=activity.getAct_thumb()%>" width="100%" id="thumb_image"/>
 						<div class="input-group mb-2">
 							<div class="input-group-prepend">
 								<div class="input-group-text">썸네일</div>
 							</div>
 							<div class="custom-file">
 								<input type="file" class="custom-file-input form-control"
-									name="act_thumb" onchange="get_thumb_filename()" /> <label
+									name="act_thumb" onchange="get_thumb()" /> <label
 									class="custom-file-label" id="thumb_filename"><%=activity.getAct_thumb()%></label>
-							</div>
-						</div>
-						<img src="../upload/<%=activity.getAct_post()%>" width="100%" />
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">포스터</div>
-							</div>
-							<div class="custom-file">
-								<input type="file" class="custom-file-input form-control"
-									name="act_post" onchange="get_post_filename()" /> <label
-									class="custom-file-label" id="post_filename"><%=activity.getAct_post()%></label>
 							</div>
 						</div>
 					</div>
@@ -85,10 +85,20 @@
 								<p>접수기간</p>
 							</div>
 							<div class="col-md-4">
-								<input type="text" class="form-control"
-									value="<%=activity.getAct_start()%>" name="act_start" /> - <input
-									type="text" class="form-control"
-									value="<%=activity.getAct_end()%>" name="act_end" />
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">시작</span>
+									</div>
+									<input type="text" class="form-control"
+										value="<%=activity.getAct_start()%>" name="act_start" />
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">마감</span>
+									</div>
+									<input type="text" class="form-control"
+										value="<%=activity.getAct_end()%>" name="act_end" />
+								</div>
 							</div>
 							<div class="col-md-2">
 								<p>시상규모</p>
@@ -100,7 +110,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-2">
-								<p>활동혜택</p>
+								<p>수상혜택</p>
 							</div>
 							<div class="col-md-4">
 								<input type="text" class="form-control"
@@ -108,7 +118,7 @@
 									value="<%for (int act_reward : activity.getAct_reward()) {
 															out.print(manager.getTag(act_reward) + " ");
 														}%>"
-									name="act_reward" />
+									id="act_reward_view" />
 							</div>
 							<div class="col-md-2">
 								<p>공모분야</p>
@@ -117,7 +127,7 @@
 								<input type="text" class="form-control"
 									onclick="$('#fieldModal').modal();"
 									value="<%=manager.getTag(activity.getAct_field())%>"
-									name="act_field" />
+									id="act_field_view" />
 							</div>
 						</div>
 						<div class="row">
@@ -125,7 +135,7 @@
 								<p>홈페이지</p>
 							</div>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="act_home" />
+								<input type="text" class="form-control" name="act_home" value="<%=activity.getAct_home()%>"/>
 							</div>
 						</div>
 					</div>
@@ -135,21 +145,11 @@
 
 			<div class="section">
 				<h5>상세내용</h5>
-				<textarea id="act_content"><%=activity.getAct_content()%></textarea>
-				<button class="btn btn-cam btn-block" onclick="act_update()">수정하기</button>
+				<textarea id="act_content" name="act_content"><%=activity.getAct_content()%></textarea>
+				<input type="button" class="btn btn-cam btn-block" onclick="con_update(<%=act_num%>)" value="수정하기">
 			</div>
 			<br />
 		</form>
-
-		<div class="section">
-			<form>
-				<h5>담당자 Q&A</h5>
-				<div class="form-group">
-					<textarea class="form-control"></textarea>
-					<input class="btn btn-cam btn-block" type="button" value="등록" />
-				</div>
-			</form>
-		</div>
 	</div>
 
 	<div class="modal" tabindex="-1" id="rewardModal">
@@ -163,7 +163,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="act_reward" onchange="getValue(this)">
+					<form id="act_reward" onchange="getValue(this)" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-md-3">
 								<input type="checkbox" name="reward_num" value="78"> 입사시 가산점
@@ -188,11 +188,6 @@
 						</div>
 					</form>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-cam">저장</button>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -208,7 +203,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="act_field" onchange="getValue(this)">
+					<form id="act_field" onchange="getValue(this)" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-md-3">
 								<input type="radio" name="act_field" value="59" /> 기획/아이디어
@@ -264,11 +259,6 @@
 						</div>
 					</form>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-cam">저장</button>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -288,3 +278,6 @@
 	</script>
 	<%
 %>
+<script>
+	$.cookie("act_type", <%=activity.getAct_type()%>);
+</script>

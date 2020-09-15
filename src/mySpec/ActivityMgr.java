@@ -167,21 +167,20 @@ public class ActivityMgr {
 			con = pool.getConnection();
 			switch(activity.getAct_type()) {
 			case 1:
-				sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				sql = "insert into activity(act_num, act_type, act_thumb, act_title, act_org, act_target, act_start, act_end, act_pop, act_reg, act_field, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				ps = con.prepareStatement(sql);
 				ps.setInt(1, activity.getAct_type());
 				ps.setString(2, activity.getAct_thumb());
-				ps.setString(3, activity.getAct_post());
-				ps.setString(4, activity.getAct_title());
-				ps.setString(5, activity.getAct_org());
-				ps.setString(6, activity.getAct_target());
-				ps.setDate(7, activity.getAct_start());
-				ps.setDate(8, activity.getAct_end());
-				ps.setInt(9, activity.getAct_pop());
-				ps.setInt(10, activity.getAct_reg());
-				ps.setInt(11, activity.getAct_field());
-				ps.setString(12, activity.getAct_home());
-				ps.setString(13, activity.getAct_content());
+				ps.setString(3, activity.getAct_title());
+				ps.setString(4, activity.getAct_org());
+				ps.setString(5, activity.getAct_target());
+				ps.setDate(6, activity.getAct_start());
+				ps.setDate(7, activity.getAct_end());
+				ps.setInt(8, activity.getAct_pop());
+				ps.setInt(9, activity.getAct_reg());
+				ps.setInt(10, activity.getAct_field());
+				ps.setString(11, activity.getAct_home());
+				ps.setString(12, activity.getAct_content());
 				ps.executeUpdate();
 				
 				sql = "insert into act_interest values(act_seq.currval, ?)";
@@ -192,20 +191,19 @@ public class ActivityMgr {
 				}
 				break;
 			case 2:
-				sql = "insert into activity(act_num, act_type, act_thumb, act_post, act_title, act_org, act_target, act_start, act_end, act_field, act_award, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				sql = "insert into activity(act_num, act_type, act_thumb, act_title, act_org, act_target, act_start, act_end, act_field, act_award, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				ps = con.prepareStatement(sql);
 				ps.setInt(1, activity.getAct_type());
 				ps.setString(2, activity.getAct_thumb());
-				ps.setString(3, activity.getAct_post());
-				ps.setString(4, activity.getAct_title());
-				ps.setString(5, activity.getAct_org());
-				ps.setString(6, activity.getAct_target());
-				ps.setDate(7, activity.getAct_start());
-				ps.setDate(8, activity.getAct_end());
-				ps.setInt(9, activity.getAct_field());
-				ps.setInt(10, activity.getAct_award());
-				ps.setString(11, activity.getAct_home());
-				ps.setString(12, activity.getAct_content());
+				ps.setString(3, activity.getAct_title());
+				ps.setString(4, activity.getAct_org());
+				ps.setString(5, activity.getAct_target());
+				ps.setDate(6, activity.getAct_start());
+				ps.setDate(7, activity.getAct_end());
+				ps.setInt(8, activity.getAct_field());
+				ps.setInt(9, activity.getAct_award());
+				ps.setString(10, activity.getAct_home());
+				ps.setString(11, activity.getAct_content());
 				ps.executeUpdate();
 				break;
 			}
@@ -229,7 +227,7 @@ public class ActivityMgr {
 		ActivityBean activity = new ActivityBean();
 		upHit(act_num);
 		try {
-			sql = "select act_type, act_thumb, act_post, act_title, act_hits, act_target, act_start, act_end, trunc(act_end - sysdate) as act_dday, act_pop, act_reg, act_field, act_home, act_content, act_award, act_approve from activity where act_num = ? ";
+			sql = "select act_type, act_thumb, act_title, act_hits, act_target, act_start, act_end, trunc(act_end - sysdate) as act_dday, act_pop, act_reg, act_field, act_home, act_content, act_award, act_approve from activity where act_num = ? ";
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, act_num);
@@ -237,7 +235,6 @@ public class ActivityMgr {
 			rs.next();
 			activity.setAct_type(rs.getInt("act_type"));
 			activity.setAct_thumb(rs.getString("act_thumb"));
-			activity.setAct_post(rs.getString("act_post"));
 			activity.setAct_title(rs.getString("act_title"));
 			activity.setAct_hits(rs.getInt("act_hits"));
 			activity.setAct_target(rs.getString("act_target"));
@@ -360,56 +357,92 @@ public class ActivityMgr {
 			con = pool.getConnection();
 			switch(activity.getAct_type()) {
 			case 1:
-				sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_pop=?, act_reg=?, act_field=?, act_home=?, act_content=? where act_num=?";
+				if(activity.getAct_thumb() == null) {
+					sql = "update activity set act_title=?, act_target=?, act_start=?, act_end=?, act_pop=?, act_reg=?, act_field=?, act_home=?, act_content=? where act_num=?";
+					ps = con.prepareStatement(sql);
+					ps.setString(1, activity.getAct_title());
+					ps.setString(2, activity.getAct_target());
+					ps.setDate(3, activity.getAct_start());
+					ps.setDate(4, activity.getAct_end());
+					ps.setInt(5, activity.getAct_pop());
+					ps.setInt(6, activity.getAct_reg());
+					ps.setInt(7, activity.getAct_field());
+					ps.setString(8, activity.getAct_home());
+					ps.setString(9, activity.getAct_content());
+					ps.setInt(10, activity.getAct_num());
+				} else {
+					sql = "update activity set act_thumb=?, act_title=?, act_target=?, act_start=?, act_end=?, act_pop=?, act_reg=?, act_field=?, act_home=?, act_content=? where act_num=?";
+					ps = con.prepareStatement(sql);
+					ps.setString(1, activity.getAct_thumb());
+					ps.setString(2, activity.getAct_title());
+					ps.setString(3, activity.getAct_target());
+					ps.setDate(4, activity.getAct_start());
+					ps.setDate(5, activity.getAct_end());
+					ps.setInt(6, activity.getAct_pop());
+					ps.setInt(7, activity.getAct_reg());
+					ps.setInt(8, activity.getAct_field());
+					ps.setString(9, activity.getAct_home());
+					ps.setString(10, activity.getAct_content());
+					ps.setInt(11, activity.getAct_num());
+				}
+				ps.executeUpdate();
+				
+				sql = "delete from act_interest where interest_act=?";
 				ps = con.prepareStatement(sql);
-				ps.setString(1, activity.getAct_thumb());
-				ps.setString(2, activity.getAct_post());
-				ps.setString(3, activity.getAct_title());
-				ps.setString(4, activity.getAct_target());
-				ps.setDate(5, activity.getAct_start());
-				ps.setDate(6, activity.getAct_end());
-				ps.setInt(7, activity.getAct_pop());
-				ps.setInt(8, activity.getAct_reg());
-				ps.setInt(9, activity.getAct_field());
-				ps.setString(10, activity.getAct_home());
-				ps.setString(11, activity.getAct_content());
-				ps.setInt(12, activity.getAct_num());
+				ps.setInt(1, activity.getAct_num());
+				ps.executeUpdate();
+				
+				sql = "insert into act_interest values(?, ?)";
+				for(int act_interest : activity.getAct_interest()) {
+					ps = con.prepareStatement(sql);
+					ps.setInt(1, activity.getAct_num());
+					ps.setInt(2, act_interest);
+					ps.executeUpdate();
+				}
 				break;
 			case 2:
-				sql = "update activity set act_thumb=?, act_post=?, act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
-				ps = con.prepareStatement(sql);
-				ps.setString(1, activity.getAct_thumb());
-				ps.setString(2, activity.getAct_post());
-				ps.setString(3, activity.getAct_title());
-				ps.setString(4, activity.getAct_target());
-				ps.setDate(5, activity.getAct_start());
-				ps.setDate(6, activity.getAct_end());
-				ps.setInt(7, activity.getAct_field());
-				ps.setInt(8, activity.getAct_award());
-				ps.setString(9, activity.getAct_home());
-				ps.setString(10, activity.getAct_content());
-				ps.setInt(11, activity.getAct_num());
+				if(activity.getAct_thumb() == null) {
+					sql = "update activity set act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
+					ps = con.prepareStatement(sql);
+					ps.setString(1, activity.getAct_title());
+					ps.setString(2, activity.getAct_target());
+					ps.setDate(3, activity.getAct_start());
+					ps.setDate(4, activity.getAct_end());
+					ps.setInt(5, activity.getAct_field());
+					ps.setInt(6, activity.getAct_award());
+					ps.setString(7, activity.getAct_home());
+					ps.setString(8, activity.getAct_content());
+					ps.setInt(9, activity.getAct_num());
+				} else {
+					sql = "update activity set act_thumb=?, act_title=?, act_target=?, act_start=?, act_end=?, act_field=?, act_award=?, act_home=?, act_content=? where act_num=?";
+					ps = con.prepareStatement(sql);
+					ps.setString(1, activity.getAct_thumb());
+					ps.setString(2, activity.getAct_title());
+					ps.setString(3, activity.getAct_target());
+					ps.setDate(4, activity.getAct_start());
+					ps.setDate(5, activity.getAct_end());
+					ps.setInt(6, activity.getAct_field());
+					ps.setInt(7, activity.getAct_award());
+					ps.setString(8, activity.getAct_home());
+					ps.setString(9, activity.getAct_content());
+					ps.setInt(10, activity.getAct_num());
+				} 
+				ps.executeUpdate();
 				break;
 			}
-			ps.executeUpdate();
 			
 			sql = "delete from act_reward where reward_act=?";
-			sql = "delete from act_interest where reward_act=?";
-			
-			sql = "insert into act_reward values(act_seq.currval, ?)";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, activity.getAct_num());
+			ps.executeUpdate();
+
+			sql = "insert into act_reward values(?, ?)";
 			for(int act_reward : activity.getAct_reward()) {
 				ps = con.prepareStatement(sql);
-				ps.setInt(1, act_reward);
+				ps.setInt(1, activity.getAct_num());
+				ps.setInt(2, act_reward);
 				ps.executeUpdate();
 			}
-			
-			sql = "insert into act_interest values(act_seq.currval, ?)";
-			for(int act_interest : activity.getAct_interest()) {
-				ps = con.prepareStatement(sql);
-				ps.setInt(1, act_interest);
-				ps.executeUpdate();
-			}
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
