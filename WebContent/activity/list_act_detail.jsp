@@ -354,42 +354,7 @@
 	<%		} %>
 </section>
 <script src="../js/activity.js"></script>
-<script type="text/javascript">
-
-function rereply(i){
-	var con = document.getElementById("rereply" + i);
-	if(con.style.display =='none'){
-		con.style.display = 'block';
-	}else if(con.style.display =='block'){
-		con.style.display = 'none';
-	}
-}
-
-function update(i){
-	var update = document.getElementById("update" + i);
-	var basic = document.getElementById("basic" + i);
-	
-	if(update.style.display =='none'){
-		update.style.display = 'block';
-		basic.style.display = 'none';
-	}else if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
-	}
-}
-
-function updatecancel(i){
-	var update = document.getElementById("update" + i);
-	var basic = document.getElementById("basic" + i);
-	if(update.style.display =='block'){
-		update.style.display = 'none';
-		basic.style.display = 'block';
-	}
-}
-
-
-
+<script>
+	$.cookie("act_type", <%=activity.getAct_type()%>);
 </script>
-
-
 <%@ include file="../footer.jsp" %>

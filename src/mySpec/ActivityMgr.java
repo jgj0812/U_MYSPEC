@@ -1087,4 +1087,152 @@ public class ActivityMgr {
 		}
 		return popConArr;
 	}
+	
+	// 스크랩한 대외활동
+	public ArrayList<ActivityBean> actScrapList(int startRow, int endRow, String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<ActivityBean> actScrapArr = new ArrayList<ActivityBean>();
+
+		try {
+			con = pool.getConnection();
+			sql = "select * from "
+					+ "(select rownum rn, aa.* from "
+					+ "(select ab.*, o.org_name from "
+					+ "(select a.*, trunc(a.act_end - sysdate), s.scrap_person from "
+					+ "activity a left outer join scrap s "
+					+ "on a.act_num = s.scrap_num) ab "
+					+ "left outer join org_user o "
+					+ "on ab.act_org = o.org_id "
+					+ "where scrap_person=? and act_type=1) aa) "
+					+ "where rn between ? and ? "
+					+ "order by act_num desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_type(rs.getInt("act_type"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				bean.setAct_dday(rs.getInt("act_dday"));
+				bean.setOrg_name(rs.getString("org_name"));
+				actScrapArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return actScrapArr;
+	}
+	
+	// 스크랩한 대외활동 수
+	public int actScrapCount(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+
+		try {
+			con = pool.getConnection();
+			sql = "select count(*) from "
+					+ "(select a.*, s.scrap_person from "
+					+ "activity a left outer join scrap s "
+					+ "on a.act_num = s.scrap_num) "
+					+ "where scrap_person=? and act_type=1";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	
+	// 스크랩한 공모전
+	public ArrayList<ActivityBean> conScrapList(int startRow, int endRow, String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		ArrayList<ActivityBean> conScrapArr = new ArrayList<ActivityBean>();
+
+		try {
+			con = pool.getConnection();
+			sql = "select * from "
+					+ "(select rownum rn, aa.* from "
+					+ "(select ab.*, o.org_name from "
+					+ "(select a.*, trunc(a.act_end - sysdate) as act_dday, s.scrap_person from "
+					+ "activity a left outer join scrap s "
+					+ "on a.act_num = s.scrap_num) ab "
+					+ "left outer join org_user o "
+					+ "on ab.act_org = o.org_id "
+					+ "where scrap_person=? and act_type=2) aa) "
+					+ "where rn between ? and ? "
+					+ "order by act_num desc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ActivityBean bean = new ActivityBean();
+				bean.setAct_num(rs.getInt("act_num"));
+				bean.setAct_type(rs.getInt("act_type"));
+				bean.setAct_thumb(rs.getString("act_thumb"));
+				bean.setAct_title(rs.getString("act_title"));
+				bean.setAct_hits(rs.getInt("act_hits"));
+				bean.setAct_dday(rs.getInt("act_dday"));
+				bean.setOrg_name(rs.getString("org_name"));
+				conScrapArr.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return conScrapArr;
+	}
+	
+	// 스크랩 공모전 수
+	public int conScrapCount(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		int count = 0;
+		
+		try {
+			con = pool.getConnection();
+			sql = "select count(*) from "
+					+ "(select * from "
+					+ "activity a left outer join scrap s "
+					+ "on a.act_num = s.scrap_num) "
+					+ "where scrap_person=? and act_type=2";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
 }

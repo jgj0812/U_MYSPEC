@@ -73,7 +73,7 @@
         	<%
         		for(ActivityBean bean : popActArr) {
         	%>
-        	<a href="#" class="card mb-2 mr-2">
+        	<a href="activity/list_act_detail.jsp?act_num=<%=bean.getAct_num() %>" class="card mb-2 mr-2">
             	<img
               		class="card-img-top"
               		src="upload/<%=bean.getAct_thumb() %>"
@@ -110,7 +110,7 @@
         	<%
         		for(ActivityBean bean : popConArr) {
         	%>
-        	<a href="#" class="card mb-2 mr-2">
+        	<a href="contest/list_con_detail.jsp?act_num=<%=bean.getAct_num() %>" class="card mb-2 mr-2">
             	<img
               		class="card-img-top"
               		src="upload/<%=bean.getAct_thumb() %>"

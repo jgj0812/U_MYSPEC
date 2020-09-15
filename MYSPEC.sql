@@ -1,8 +1,11 @@
+-- 테이블
+-- 관리자
 CREATE TABLE admin (
-admin_id VARCHAR2(20 CHAR) PRIMARY KEY,	-- 관리자 ID
-admin_pwd VARCHAR2(20 CHAR)				-- 관리자 비밀번호
+admin_id VARCHAR2(20 CHAR) PRIMARY KEY,		-- 관리자 ID
+admin_pwd VARCHAR2(20 CHAR)					-- 관리자 비밀번호
 );
 
+-- 개인회원
 CREATE TABLE person_user (
 person_id VARCHAR2(20 CHAR) PRIMARY KEY,	-- 개인회원 ID
 person_pwd VARCHAR2(20 CHAR),				-- 개인회원 비밀번호
@@ -12,6 +15,7 @@ person_email VARCHAR2(200 CHAR),			-- 개인회원 이메일
 person_phone VARCHAR2(20 CHAR)				-- 개인회원 연락처
 );
 
+-- 단체회원
 CREATE TABLE org_user (
 org_id VARCHAR2(20 CHAR) PRIMARY KEY,		-- 단체회원 ID
 org_pwd VARCHAR2(20 CHAR),					-- 단체회원 비밀번호
@@ -22,6 +26,7 @@ org_email VARCHAR2(200 CHAR),				-- 담당자 이메일
 org_phone VARCHAR2(20 CHAR)					-- 담당자 연락처
 );
 
+-- 대외활동, 공모전
 CREATE TABLE activity (
 act_num NUMBER PRIMARY KEY,					-- 활동 글 번호
 act_type NUMBER,							-- 활동종류 대외활동, 공모전
@@ -43,18 +48,23 @@ act_approve NUMBER DEFAULT 0,				-- 승인여부
 CONSTRAINT activity_fk1 FOREIGN KEY (act_org) REFERENCES org_user (org_id) ON DELETE CASCADE
 );
 
+-- 대외활동 관심분야
 CREATE TABLE act_interest (
-interest_act NUMBER,
-interest_num NUMBER,
+interest_act NUMBER,						-- 관심분야
+interest_num NUMBER,						-- 값
+CONSTRAINT act_interest_pk PRIMARY KEY (interest_act, interest_num),
 CONSTRAINT act_interest_fk1 FOREIGN KEY (interest_act) REFERENCES activity (act_num) ON DELETE CASCADE
 );
 
+-- 대외활동, 공모전 활동혜택
 CREATE TABLE act_reward (
-reward_act NUMBER,
-reward_num NUMBER,
+reward_act NUMBER,							-- 활동혜택
+reward_num NUMBER,							-- 값
+CONSTRAINT reward_pk PRIMARY KEY (reward_act, reward_num),
 CONSTRAINT reward_fk1 FOREIGN KEY (reward_act) REFERENCES activity (act_num) ON DELETE CASCADE
 );
 
+-- 대외활동 문의
 CREATE TABLE act_reply (
 rep_num NUMBER PRIMARY KEY,					-- 댓글 번호
 rep_act NUMBER,								-- FK 활동 글번호
@@ -68,6 +78,7 @@ CONSTRAINT act_reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person
 CONSTRAINT act_reply_fk3 FOREIGN KEY (rep_org) REFERENCES org_user (org_id) ON DELETE CASCADE
 );
 
+-- 커뮤니티 게시판
 CREATE TABLE community (
 comm_num NUMBER PRIMARY KEY,				-- 글 번호
 comm_type NUMBER,							-- 글 종류 공지사항 : 0, 일반글 : 1
@@ -81,6 +92,7 @@ CONSTRAINT community_fk1 FOREIGN KEY (comm_person) REFERENCES person_user (perso
 CONSTRAINT community_fk2 FOREIGN KEY (comm_admin) REFERENCES admin (admin_id) ON DELETE CASCADE
 );
 
+-- 커뮤니티 게시판 댓글
 CREATE TABLE comm_reply (
 rep_num NUMBER PRIMARY KEY,					-- 댓글 번호
 rep_comm NUMBER,							-- FK 글 번호
@@ -94,24 +106,21 @@ CONSTRAINT reply_fk2 FOREIGN KEY (rep_person) REFERENCES person_user (person_id)
 CONSTRAINT reply_fk3 FOREIGN KEY (rep_admin) REFERENCES admin (admin_id) ON DELETE CASCADE
 );
 
-CREATE TABLE interest (
-inter_person VARCHAR2(20 CHAR),
-inter_num NUMBER,
-inter_count NUMBER,
-CONSTRAINT interest_fk1 FOREIGN KEY (inter_person) REFERENCES person_user (person_id)
-);
-
+-- 스크랩
 CREATE TABLE scrap (
-scrap_person VARCHAR2(20 CHAR),
-scrap_num NUMBER,
+scrap_person VARCHAR2(20 CHAR),				-- 스크랩한 ID
+scrap_num NUMBER,							-- 스크랩한 글번호
 CONSTRAINT scrap_pk PRIMARY KEY (scrap_person, scrap_num),
 CONSTRAINT scrap_fk1 FOREIGN KEY (scrap_person) REFERENCES person_user (person_id) ON DELETE CASCADE,
 CONSTRAINT scrap_fk2 FOREIGN KEY (scrap_num) REFERENCES activity (act_num) ON DELETE CASCADE
 );
 
-
----------- 시퀀스 -----------------------------
+-- 시퀀스
+-- 대외활동, 공모전 시퀀스
 CREATE SEQUENCE  "SCOTT"."ACT_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+-- 커뮤니티 시퀀스
 CREATE SEQUENCE  "SCOTT"."COMMUNITY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+-- 커뮤니티 댓글 시퀀스
 CREATE SEQUENCE  "SCOTT"."COMM_REPLY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+-- 대외활동 문의 시퀀스
 CREATE SEQUENCE  "SCOTT"."ACT_REPLY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER NOCYCLE;

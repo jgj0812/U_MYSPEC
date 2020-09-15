@@ -49,7 +49,7 @@
 		                    	<th class="col-md-1">이미지</th>
 		                    	<th class="col-5">제목</th>
 		                    	<th class="col-md-2">기관명</th>
-		                    	<th class="col-md-2">마감일</th>
+		                    	<th class="col-md-2">접수마감일</th>
 		                    	<th class="col-md-1">담당자</th>
 		                    	<th class="col-md-1">삭제</th>
 		                  	</tr>
