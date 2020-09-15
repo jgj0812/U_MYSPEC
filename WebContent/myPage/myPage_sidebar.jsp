@@ -23,8 +23,8 @@
                 스크랩
             </h3>
             <div class="list-group list-group-flush">
-				<a href="#" class="list-group-item list-group-item-action bg-light">대외활동</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">공모전</a>
+				<a href="myPage_actScrap.jsp" class="list-group-item list-group-item-action bg-light">대외활동</a>
+				<a href="myPage_conScrap.jsp" class="list-group-item list-group-item-action bg-light">공모전</a>
 			</div>
 			
 			<h3

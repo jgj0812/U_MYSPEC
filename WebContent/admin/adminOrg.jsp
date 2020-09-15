@@ -48,7 +48,7 @@
 		                	<tr class="text-center">
 		                    	<th>ID</th>
 		                    	<th>기관명칭</th>
-		                    	<th>기관타입</th>
+		                    	<th>기관형태</th>
 		                    	<th>담당자</th>
 		                    	<th>담당자 메일</th>
 		                    	<th>담당자 전화번호</th>
@@ -104,9 +104,6 @@
 		                </tbody>
 					</table>
 				</div>
-				<div class="d-flex justify-content-end">
-					<a href="adminOrg.jsp" class="btn btn-cam">전체회원보기</a> 
-				</div>
 			</div>	
 			<!-- /Org List -->
 			<!-- 페이징 -->
@@ -126,7 +123,7 @@
 							if(startPage > pageBlock) {
 					%>	
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage - pageBlock%>" aria-label="Previous">
+				      		<a class="page-link" href="adminOrg.jsp?pageNum=<%=startPage - pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 				        		<span class="sr-only">Previous</span>
 				      		</a>
@@ -147,7 +144,7 @@
 								} else {
 				    %>
 				    	<li class="page-item">
-				    		<a class="page-link text-dark" href="adminPerson.jsp?pageNum=<%= i %>">
+				    		<a class="page-link text-dark" href="adminOrg.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 				    			<%= i %>
 				    		</a>
 				    	</li>
@@ -159,7 +156,7 @@
 							if(endPage < pageCount) {
 				    %>
 				    	<li class="page-item">
-				      		<a class="page-link" href="adminPerson.jsp?pageNum=<%=startPage + pageBlock%>" aria-label="Next">
+				      		<a class="page-link" href="adminOrg.jsp?pageNum=<%=startPage + pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 				        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 				        		<span class="sr-only">Next</span>
 				      		</a>
@@ -173,7 +170,7 @@
 			</div>
 			<!-- /페이징 -->
 			<!-- 검색 -->
-			<form method="post" id="orgSearchFrm" class="form-inline justify-content-center">
+			<form method="get" id="orgSearchFrm" class="form-inline justify-content-center">
 				<input type="hidden" name="pageNum" value="1">
 				<select name="keyField" class="form-control" id="search_control">
 					<option value="org_id">ID</option>

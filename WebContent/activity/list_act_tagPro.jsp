@@ -1,3 +1,5 @@
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.simple.JSONArray"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="mySpec.ActivityMgr"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -22,25 +24,41 @@
 	if((params = request.getParameterValues("act_reg")) != null) {
 		act_reg = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 	}
-
+	
+	JSONArray arr = new JSONArray();
+	
 	if(act_field != null) {
 		for(int tag_num : act_field) {
-			out.println("<input type='button' class='choiceButton' onclick='tagRemove(" + tag_num + ")' value='" + manager.getTag(tag_num) + "'>");
+			JSONObject obj = new JSONObject();
+			obj.put("tag_num", tag_num);
+			obj.put("tag", manager.getTag(tag_num));
+			arr.add(obj);
 		}
 	}
 	if(interest_num != null) {
 		for(int tag_num : interest_num) {
-			out.println("<input type='button' class='choiceButton' onclick='tagRemove(" + tag_num + ")' value='" + manager.getTag(tag_num) + "'>");
+			JSONObject obj = new JSONObject();
+			obj.put("tag_num", tag_num);
+			obj.put("tag", manager.getTag(tag_num));
+			arr.add(obj);
 		}
 	}
 	if(reward_num != null) {
 		for(int tag_num : reward_num) {
-			out.println("<input type='button' class='choiceButton' onclick='tagRemove(" + tag_num + ")' value='" + manager.getTag(tag_num) + "'>");
+			JSONObject obj = new JSONObject();
+			obj.put("tag_num", tag_num);
+			obj.put("tag", manager.getTag(tag_num));
+			arr.add(obj);
 		}
 	}
 	if(act_reg != null) {
 		for(int tag_num : act_reg) {
-			out.println("<input type='button' class='choiceButton' onclick='tagRemove(" + tag_num + ")' value='" + manager.getTag(tag_num) + "'>");
+			JSONObject obj = new JSONObject();
+			obj.put("tag_num", tag_num);
+			obj.put("tag", manager.getTag(tag_num));
+			arr.add(obj);
 		}
 	}
+	
+	out.print(arr);
 %>

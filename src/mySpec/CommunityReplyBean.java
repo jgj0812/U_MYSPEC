@@ -2,16 +2,14 @@ package mySpec;
 
 public class CommunityReplyBean {
 
-	private int rep_num;			// 댓글 번호
-	private int rep_comm; 			// 댓글이 속한 글번호
-	private String rep_person;		// 개인회원 댓글 작성자
-	private String rep_content;		// 댓글 내용
-	private String rep_date;		// 댓글 작성일
-	private String rep_admin;		// 관리자 댓글 작성자
-	private String rep_nick;		// 개인회원 닉네임을 담을 변수
-	private int rep_ref; 			// 댓글그룹(댓글번호)
-	private int rep_step;			// 그룹내 순서
-	private int rep_level; 			// 들여쓰기정도(답글인지 구분)
+	private int rep_num;			// ��湲� 踰���
+	private int rep_comm; 			// ��湲��� ���� 湲�踰���
+	private String rep_person;		// 媛��명���� ��湲� ���깆��
+	private String rep_content;		// ��湲� �댁��
+	private String rep_date;		// ��湲� ���깆��
+	private String rep_admin;		// 愿�由ъ�� ��湲� ���깆��
+	private String rep_nick;		// 媛��명���� ���ㅼ���� �댁�� 蹂���
+	private int rep_parent;			// �ㅼ�ъ�곌린����(�듦��몄� 援щ�)
 
 	public int getRep_num() {
 		return rep_num;
@@ -43,24 +41,6 @@ public class CommunityReplyBean {
 	public void setRep_date(String rep_date) {
 		this.rep_date = rep_date;
 	}
-	public int getRep_ref() {
-		return rep_ref;
-	}
-	public void setRep_ref(int rep_ref) {
-		this.rep_ref = rep_ref;
-	}
-	public int getRep_level() {
-		return rep_level;
-	}
-	public void setRep_level(int rep_level) {
-		this.rep_level = rep_level;
-	}
-	public int getRep_step() {
-		return rep_step;
-	}
-	public void setRep_step(int rep_step) {
-		this.rep_step = rep_step;
-	}
 	public String getRep_admin() {
 		return rep_admin;
 	}
@@ -73,5 +53,12 @@ public class CommunityReplyBean {
 	public void setRep_nick(String rep_nick) {
 		this.rep_nick = rep_nick;
 	}
+	public int getRep_parent() {
+		return rep_parent;
+	}
+	public void setRep_parent(int rep_parent) {
+		this.rep_parent = rep_parent;
+	}
+	
 }
 	

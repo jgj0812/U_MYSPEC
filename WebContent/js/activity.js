@@ -38,29 +38,43 @@ function act_submit() {
 		alert("날짜를 정확하게 입력해주세요.");
 		return;
 	}
-	if($("#act_form input[name='act_pop']").val().length == 0) {
-		alert("모집인원을 입력해주세요.");
-		return;
-	}
-	if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
-		alert("모집인원을 정확하게 입력해주세요.");
-		return;
-	}
-	if($("#act_form input[name='act_reg']:checked").length == 0) {
-		alert("모임지역을 선택해주세요.");
-		return;
+	if($("#act_form input[name='act_type']:checked").val() == "1") {
+		if($("#act_form input[name='act_pop']").val().length == 0) {
+			alert("모집인원을 입력해주세요.");
+			return;
+		}
+		if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
+			alert("모집인원을 정확하게 입력해주세요.");
+			return;
+		}
+		if($("#act_form input[name='act_reg']:checked").length == 0) {
+			alert("모임지역을 선택해주세요.");
+			return;
+		}
 	}
 	if($("#act_form input[name='act_field']:checked").length == 0) {
 		alert("활동분야를 선택해주세요.");
 		return;
 	}
-	if($("#act_form input[name='act_interest']:checked").length == 0) {
-		alert("관심분야를 선택해주세요.");
-		return;
+	if($("#act_form input[name='act_type']:checked").val() == "1") {
+		if($("#act_form input[name='act_interest']:checked").length == 0) {
+			alert("관심분야를 선택해주세요.");
+			return;
+		}
 	}
 	if($("#act_form input[name='act_home']").val().length == 0) {
 		alert("홈페이지를 입력해주세요.");
 		return;
+	}
+	if($("#act_form input[name='act_type']:checked").val() == "2") {
+		if($("#act_form input[name='act_award']").val().length == 0) {
+			alert("시상규모을 입력해주세요.");
+			return;
+		}
+		if($("#act_form input[name='act_award']").val() < 0) {
+			alert("시상규모을 정확하게 입력해주세요.");
+			return;
+		}
 	}
 	if($("#act_form input[name='act_reward']:checked").length == 0) {
 		alert("활동혜택을 선택해주세요.");
@@ -74,32 +88,5 @@ function act_submit() {
 		alert("썸네일을 선택해주세요.");
 		return;
 	}
-	if($("#act_form input[name='act_post']").val().length == 0) {
-		alert("포스터를 선택해주세요.");
-		return;
-	}
 	$("#act_form").submit();
-}
-
-function act_scrap(person_id, act_num) {
-	$.ajax({
-		url: "list_act_scrapPro.jsp",
-		data: {
-			person_id: person_id,
-			act_num: act_num
-		},
-		success: function(data) {
-			switch(data) {
-				case '-1':
-					alert("스크랩에 오류가 발생했습니다.");
-					break;
-				case '0':
-					alert("이미 스크랩한 활동입니다.");
-					break;
-				case '1':
-					alert("스크랩 했습니다.");
-					break;
-			}
-		}
-	});
 }

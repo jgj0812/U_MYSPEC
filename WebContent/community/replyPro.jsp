@@ -16,19 +16,9 @@
 
 <%
 	int comm_num= Integer.parseInt(request.getParameter("comm_num"));
-
-	int rep_num=0, rep_ref=1, rep_step=1, rep_level=0;	
+	int rep_parent= Integer.parseInt(request.getParameter("rep_parent"));
+	int re = mgr.Community_reply_insert(bean, id, comm_num, rep_parent);
 	
-	if(request.getParameter("rep_num")!=null){
-		rep_num = Integer.parseInt(request.getParameter("rep_num"));
-		rep_ref = Integer.parseInt(request.getParameter("rep_ref"));
-		rep_step = Integer.parseInt(request.getParameter("rep_step"));
-		rep_level = Integer.parseInt(request.getParameter("rep_level"));
-	}
-
-	int re = mgr.Community_reply_insert(bean, id, comm_num);
-	
-
 	if(re == 1){
 		%>
 			<script>

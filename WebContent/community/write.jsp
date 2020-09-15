@@ -10,10 +10,8 @@
 		</div>
 	</div>
 	
-	<form action="writePro.jsp" name="comm_form" method="post">
+	<form action="writePro.jsp" id="comm_form" method="post">
 		<hr style="height: 2px; background-color: black;">
-		
-		
 			<div class="row">
 				<!--  comm_type 공지사항인지 일반글인지 -->
 				<div style="margin-left:20px; font-family:Noto Sans KR; font-weight:bolder;">게시판</div>
@@ -29,7 +27,7 @@
 			<!--  제목-->
 			<div class="row">
 				<div style="margin-left:20px; font-family:Noto Sans KR; font-weight:bolder;">제목</div>
-				<input type="text" name="comm_title" class="form-control col-8" placeholder="내용을 입력하세요" style="margin-left:32px;">
+				<input type="text" id="comm_title" name="comm_title" class="form-control col-8" placeholder="내용을 입력하세요" style="margin-left:32px;">
 			</div>
 			
 			<hr>
@@ -41,7 +39,7 @@
 			<!--  입력, 취소버튼-->
 			<div class="form-inline justify-content-end">
 				<button type="button" class="btn btn-danger text-white" onclick="location.href='community.jsp'">취소</button>&nbsp;
-				<input type="submit" class="btn btn-com" value="확인">
+				<input id="comm_write" type="button" class="btn btn-com" value="글쓰기">
 			</div>
 	</form>
 </section>

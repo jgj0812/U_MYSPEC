@@ -5,8 +5,8 @@
 <%@ include file="../header.jsp" %>
 <jsp:useBean id="mgr" class="mySpec.CommunityMgr" />
 <%
-	pageSize = 5;
-	pageNum = request.getParameter("pageNum");
+	int pageSize = 5;
+	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
 		pageNum = "1";
 	}
@@ -16,6 +16,10 @@
 		keyField = request.getParameter("keyField");
 		keyWord = request.getParameter("keyWord");
 	}
+	int currentPage = Integer.parseInt(pageNum);		// 현재 페이지
+	int startRow = (currentPage - 1) * pageSize + 1;	// 페이지 시작
+	int endRow = currentPage * pageSize;	// 페이지 끝
+	
 	ArrayList<CommunityBean> myListArr = mgr.myCommunityList(startRow, endRow, keyField, keyWord, id);
 	int count = mgr.myCommunityListCount(keyField, keyWord, id);
 %>

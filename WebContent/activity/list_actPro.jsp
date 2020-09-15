@@ -7,65 +7,80 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-//gdg
 	ActivityMgr manager = new ActivityMgr();
+	int act_type = Integer.parseInt(request.getParameter("act_type"));
 	String[] params = null;
 	int[] act_field = null;
 	int[] interest_num = null;
 	int[] reward_num = null;
 	int[] act_reg = null;
-	String query="";
-	int act_type = Integer.parseInt(request.getParameter("act_type"));
+	String where ="";
+	int order = Integer.parseInt(request.getParameter("order"));
+	
+	int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+	int pageSize = 16;
+	int startRow = (pageNum - 1) * pageSize + 1;
+	int endRow = pageNum * pageSize;
 	
 	if((params = request.getParameterValues("act_field")) != null) {
 		act_field = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
-		query += " (act_field=" + act_field[0];
+		where += " (act_field=" + act_field[0];
 		for(int i = 1; i < act_field.length; i++) {
-			query += " or act_field=" + act_field[i];
+			where += " or act_field=" + act_field[i];
 		}
-		query += ")";
+		where += ")";
 	}
 	if((params = request.getParameterValues("interest_num")) != null) {
 		interest_num = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
-		if(query == "") {
-			query += " (interest_num=" + interest_num[0];
+		if(where == "") {
+			where += " (interest_num=" + interest_num[0];
 		} else {
-			query += " and ( interest_num=" + interest_num[0];
+			where += " and ( interest_num=" + interest_num[0];
 		}
 		for(int i = 1; i < interest_num.length; i++) {
-			query += " or interest_num=" + interest_num[i];
+			where += " or interest_num=" + interest_num[i];
 		}
-		query += ")";
+		where += ")";
 	}
 	if((params = request.getParameterValues("reward_num")) != null) {
 		reward_num = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
-		if(query == "") {
-			query += " (reward_num=" + reward_num[0];
+		if(where == "") {
+			where += " (reward_num=" + reward_num[0];
 		} else {
-			query += " and ( reward_num=" + reward_num[0];
+			where += " and ( reward_num=" + reward_num[0];
 		}
 		for(int i = 1; i < reward_num.length; i++) {
-			query += " or reward_num=" + reward_num[i];
+			where += " or reward_num=" + reward_num[i];
 		}
-		query += ")";
+		where += ")";
 	}
 	if((params = request.getParameterValues("act_reg")) != null) {
 		act_reg = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
-		if(query == "") {
-			query += " (act_reg=" + act_reg[0];
+		if(where == "") {
+			where += " (act_reg=" + act_reg[0];
 		} else {
-			query += " and ( act_reg=" + act_reg[0];
+			where += " and ( act_reg=" + act_reg[0];
 		}
 		for(int i = 1; i < act_reg.length; i++) {
-			query += " or act_reg=" + act_reg[i];
+			where += " or act_reg=" + act_reg[i];
 		}
-		query += ")";
+		where += ")";
 	}
 	
-	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, query, null);
+	int count = manager.getActivityCount(act_type, where);
+	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+	int pageBlock = 4; // pagePerBlock
+	int startPage = (int) ((pageNum - 1) / pageBlock) * pageBlock + 1;
+	int endPage = startPage + pageBlock - 1;
+	if(endPage > pageCount) {
+		endPage = pageCount;
+	}
+	
+	ArrayList<ActivityBean> activityList = manager.getActivityList(act_type, where, order, startRow, endRow);
 	JSONArray arr = new JSONArray(); 
+	JSONObject obj = null;
 	for(ActivityBean activity : activityList) {
-		JSONObject obj = new JSONObject();
+		obj = new JSONObject();
 		obj.put("act_num", activity.getAct_num());
 		obj.put("act_thumb", activity.getAct_thumb());
 		obj.put("act_title", activity.getAct_title());
@@ -74,5 +89,13 @@
 		obj.put("act_hits", activity.getAct_hits());
 		arr.add(obj);
 	}
+	
+	obj = new JSONObject();
+	obj.put("act_count", count);
+	obj.put("act_pageCount", pageCount);
+	obj.put("act_startPage", startPage);
+	obj.put("act_endPage", endPage);
+	obj.put("act_page", pageNum);
+	arr.add(obj);
 	out.print(arr);
 %>

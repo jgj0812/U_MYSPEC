@@ -445,12 +445,15 @@
 	    </div>
 	
 		<br><br>
-	      <select class="form-control" name="type" style="float: right; width: 110px" >
-                 <option>최신순</option>
-                 <option>마감순</option>
-                 <option>스크랩순</option>
-                 <option>댓글순</option>
-            </select>
+		<div class="d-flex justify-content-between">
+		<div id="activityCount">검색결과 건</div>
+		<select class="form-control" id="activityListOrder" style="width: 110px" onchange="tagSearch()">
+			<option value="1">최신순</option>
+			<option value="2">마감순</option>
+			<option value="3">스크랩순</option>
+			<option value="4">댓글순</option>
+		</select>
+        </div>
 	    <br><br>
 	    
 		<!-- 리스트 -->
@@ -462,24 +465,17 @@
 	   <div class="form-inline justify-content-center">		
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
-		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Previous">
-		        <span aria-hidden="true" class="text-dark" style="font-weight:bolder;">처음</span>
-		        <span class="sr-only">Previous</span>
-		      </a>
-		    </li>
-		    <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
-		        <span aria-hidden="true" class="text-dark" style="font-weight:bolder;">끝</span>
-		        <span class="sr-only">Next</span>
-		      </a>
-		    </li>
 		  </ul>
 		</nav>
 	</div>
 <br>
 </div>
 <%@ include file="../footer.jsp" %>
+<script>
+	$.cookie("act_type", 1);
+	$.cookie("pageNum", 1);
+	
+	$(document).ready(function() {
+		getPage(1);
+	});
+</script>
