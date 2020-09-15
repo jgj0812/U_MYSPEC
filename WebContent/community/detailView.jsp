@@ -287,7 +287,8 @@
 		            <hr> 
 		        </form>  	
 		    </div>
-		
+			<!-- 댓글 수정 div끝 -->
+			
 		    <!-- 답글 입력폼  -->	
 		    <div id="rereply<%=i%>" style="display: none">
 		        <form action="replyPro.jsp" id="rereplyFrm<%=i %>" name="comm_rereply_form" method="post">
@@ -312,12 +313,11 @@
 		        </form>
 		        <hr style="margin-top: 0px">
 		    </div>
+			<!-- 답글 입력폼 끝 -->
 			
 			<!-- 답글 시작 -->
-			<div class="rereply_div">
 	
 		       <div id="rereplylist<%=i %>" style="display: none">
-		       
 		        <%
 		    
 		        ArrayList<CommunityReplyBean> commRere_arr  = Rmgr.Community_rereply_list(comm_num, commRB.getRep_num());
@@ -393,8 +393,6 @@
 		    </div>
         	<%} %>
 		    </div> <!-- rereplylist -->     
-
-			</div> <!-- rereply_div  -->
 					
 		</div> <!-- reply_div끝  -->
 		

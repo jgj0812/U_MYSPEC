@@ -154,10 +154,11 @@
 		<hr style="margin-top: 2px">
 <%
 		int i = 0;
-		for(int j = 0; j< commRe_arr.size() ; j++) {
-			
-      		String repPerson = commRe_arr.get(i).getRep_admin() != null ? "관리자" : commRe_arr.get(i).getRep_nick();
-      		int recount = Rmgr.Community_rereply_count(comm_num, commRe_arr.get(i).getRep_num());
+		for(int j = 0; j< commRe_arr.size() ; j++) {		
+      		String repPerson = commRe_arr.get(j).getRep_admin() != null ? "관리자" : commRe_arr.get(j).getRep_nick();
+      		int recount = Rmgr.Community_rereply_count(comm_num, commRe_arr.get(j).getRep_num());
+      		
+      		
       		i++;
 	
 %>	
@@ -169,13 +170,7 @@
 			
 			<!-- 닉네임 날짜 -->
 			<div class="row" style="font-size:0.85rem;" >
-			
-				<% if(repPerson.equals("관리자")) {%>
-	            <p style="margin-left:40px; font-weight: 800"><%=repPerson%></p>
-	            <% } else {%>
-	            <p style="margin-left:40px;"><%=repPerson%></p> <!-- 닉네임 -->
-	            <%} %>
-            
+	            <p style="margin-left:40px;"><%=repPerson%></p>        
 				<p style="margin-left:20px;"><%=commRe_arr.get(j).getRep_date()%></p> <!-- 날짜 -->
 			</div>
 			
@@ -283,13 +278,8 @@
       		<div id="rereply_repeat<%=commRere_arr.get(k).getRep_num() %>" >
 			<!-- 닉네임 날짜 -->
 			<div class="row" style="font-size:0.85rem;" >
-				<img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
-				 
-				 <% if(repPerson2.equals(commRere_arr.get(k).getRep_nick())) {%>
-	            <p style="margin-left:10px;"><%=repPerson2%></p> <!-- 닉네임 -->
-				<% } else{ %>
-				 <p style="margin-left:10px;  font-weight: 800"><%=repPerson2%></p> <!-- 닉네임 -->
-				<%} %>      				
+				<img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">			 
+	            <p style="margin-left:10px;"><%=repPerson2%></p> <!-- 닉네임 -->	    				
 				<p style="margin-left:20px;"><%=commRere_arr.get(k).getRep_date()%></p> <!-- 날짜 -->
 			</div>
 			
@@ -330,7 +320,7 @@
 			
 	      	<!-- 답글 수정 div -->
 			    <div id="rereupdate<%=commRere_arr.get(k).getRep_num() %>" style="display: none">
-			        <form action ="reply_updatePro.jsp" method="post"> 
+			        <form action ="adminReplyUpdatePro.jsp" method="post"> 
 			            <div style="margin-bottom: 5px">
 			                <input id="rere_upcontent" name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRere_arr.get(k).getRep_content()%>"> 
 			                <input type="hidden" name="rep_num" value="<%=commRere_arr.get(k).getRep_num() %>">
@@ -346,41 +336,41 @@
 			            <hr> 
 			        </form>  	
 			    </div>
-			</div>											
+			
+			</div>		<!-- rereplylist --> 									
 			
 		<%
 				}
 		%>		
-		  </div> <!-- rereplylist -->     
-
-			</div> <!-- rereply_div  -->
-					
-		</div> <!-- reply_div끝  -->
+		  </div> <!-- rereply_div  -->
+</div> <!-- reply_div -->	
 			
 		<%
 				}
 		%>	
 				
-				<!-- 댓글 입력폼  -->
-				<form action="adminReplyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
-				  	<!-- 글번호를 넘긴다 -->
-				  	<input type="hidden" name="comm_num" value="<%=comm_num%>">
-				  	 <!-- 부모댓글번호 -->
-        			<input type="hidden" name="rep_parent" value="0">
-					<div class="form-row">
-						 <div class="col-8">
-						   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
-						   type="text" class="form-control" placeholder="댓글을 입력해주세요." >
-						</div>
-						
-						<div class="col-2">
-							<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
-							type="button" onclick="reply_ok()" class="form-control" value="등록">
-						</div>
+			<!-- 댓글 입력폼  -->
+			<form action="adminReplyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
+			  	<!-- 글번호를 넘긴다 -->
+			  	<input type="hidden" name="comm_num" value="<%=comm_num%>">
+			  	 <!-- 부모댓글번호 -->
+       			<input type="hidden" name="rep_parent" value="0">
+				<div class="form-row">
+					 <div class="col-8">
+					   <input name="rep_content" style="margin-left:20px; height:60px; font-weight:bolder;" 
+					   type="text" class="form-control" placeholder="댓글을 입력해주세요." >
 					</div>
-				</form>
-				<!-- /댓글 입력 폼 -->
-		 	</div>
+					
+					<div class="col-2">
+						<input style="width:75px; margin-left:20px; margin-bottom:40px; height:60px; background-color:#aaaaaa; color:white;" 
+						type="button" onclick="reply_ok()" class="form-control" value="등록">
+					</div>
+				</div>
+			</form>
+			<!-- /댓글 입력 폼 -->
+				
+		 </div>
+		 	
 		</div>
 		<!-- /page Content -->
 	</div>
