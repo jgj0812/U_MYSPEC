@@ -88,9 +88,5 @@ function act_submit() {
 		alert("썸네일을 선택해주세요.");
 		return;
 	}
-	if($("#act_form input[name='act_post']").val().length == 0) {
-		alert("포스터를 선택해주세요.");
-		return;
-	}
 	$("#act_form").submit();
 }

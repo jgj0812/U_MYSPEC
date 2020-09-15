@@ -29,15 +29,18 @@
 .btn-cam:hover {
 	background-color: #1dbbd9;
 	border-color: #1db4cc;
+	color: #fff;
 }
 .btn-cam:focus, .btn-cam:focus {
 	background-color: #1dbbd9;
 	border-color: #1db4cc;
 	box-shadow: 0 0 0 0.2rem rgba(67, 225, 255, 0.5);
+	color: #fff;
 }
 .btn-cam.disabled, .btn-cam:disabled {
 	background-color: #1dcdff;
 	border-color: #1dcdff;
+	color: #fff;
 }
 /*커뮤니티 버튼*/
 .btn-com {

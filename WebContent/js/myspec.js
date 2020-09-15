@@ -597,24 +597,29 @@ function makePagination(data) {
 	var count = data.act_count;
 	var startPage = data.act_startPage;
 	var endPage = data.act_endPage;
+	var page = data.act_page;
+	var pageBlock = 4;
 	
-	htmlStr = "<li class='page-item'>";
+	htmlStr = "<li class='page-item' onclick='getPage(startPage - pageBlock)'>";
 	htmlStr += "<a class='page-link' href='#' aria-label='Previous'>";
 	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>이전</span>";
 	htmlStr += "<span class='sr-only'>이전</span>";
 	htmlStr += "</a></li>";
 	for(var i = startPage; i <= endPage; i++) {
+		if(i == page) {
+			htmlStr += "<li class='page-item active' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
+			continue;
+		}
 		htmlStr += "<li class='page-item' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
 	}
 	htmlStr += "<a class='page-link' href='#'' aria-label='Next'>";
-	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>다음</span>";
+	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;' onclick='getPage(startPage + pageBlock)'>다음</span>";
 	htmlStr += "<span class='sr-only'>다음</span>";
 	htmlStr += "</a></li>";
 	
 	$("#activityCount").html("검색결과 " + count + "건");
 	$(".pagination").html(htmlStr);
 }
-
 
 function getPage(pageNum) {
 	var url;
@@ -676,6 +681,100 @@ function scrap(person_id, act_num) {
 	});
 }
 
+// list_act_write.jsp
+function get_thumb_filename() {
+	var filename = $("#act_form input[name='act_thumb']")[0].files[0].name;
+	$("#thumb_filename").html(filename);
+}
+
+function get_post_filename() {
+	var filename = $("#act_form input[name='act_post']")[0].files[0].name;
+	$("#post_filename").html(filename);
+}
+
+function act_submit() {
+	var currDate = new Date(new Date().getYear() + 1900, new Date().getMonth(), new Date().getDate());
+	var startDate = Date.parse($("#act_form input[name='act_start']").val());
+	var endDate = Date.parse($("#act_form input[name='act_end']").val());
+
+	if($("#act_form input[name='act_title']").val().length == 0) {
+		alert("제목을 입력해주세요");
+		return;
+	}
+	if($("#act_form input[name='act_target']").val().length == 0) {
+		alert("참여대상을 입력해주세요");
+		return;
+	}
+	if($("#act_form input[name='act_type']:checked").length == 0) {
+		alert("종류를 선택해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_start']").val().length == 0) {
+		alert("시작기간을 입력해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_end']").val().length == 0) {
+		alert("마감기간을 입력해주세요.");
+		return;
+	}
+	if(startDate < currDate || startDate > endDate) {
+		alert("날짜를 정확하게 입력해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_type']:checked").val() == "1") {
+		if($("#act_form input[name='act_pop']").val().length == 0) {
+			alert("모집인원을 입력해주세요.");
+			return;
+		}
+		if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
+			alert("모집인원을 정확하게 입력해주세요.");
+			return;
+		}
+		if($("#act_form input[name='act_reg']:checked").length == 0) {
+			alert("모임지역을 선택해주세요.");
+			return;
+		}
+	}
+	if($("#act_form input[name='act_field']:checked").length == 0) {
+		alert("활동분야를 선택해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_type']:checked").val() == "1") {
+		if($("#act_form input[name='act_interest']:checked").length == 0) {
+			alert("관심분야를 선택해주세요.");
+			return;
+		}
+	}
+	if($("#act_form input[name='act_home']").val().length == 0) {
+		alert("홈페이지를 입력해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_type']:checked").val() == "2") {
+		if($("#act_form input[name='act_award']").val().length == 0) {
+			alert("시상규모을 입력해주세요.");
+			return;
+		}
+		if($("#act_form input[name='act_award']").val() < 0) {
+			alert("시상규모을 정확하게 입력해주세요.");
+			return;
+		}
+	}
+	if($("#act_form input[name='act_reward']:checked").length == 0) {
+		alert("활동혜택을 선택해주세요.");
+		return;
+	}
+	if($("#act_form textarea[name='act_content']").val().length == 0) {
+		alert("상세내용을 입력해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_thumb']").val().length == 0) {
+		alert("썸네일을 선택해주세요.");
+		return;
+	}
+	$("#act_form").submit();
+}
+
+// list_act_update.jsp
 function getValue(frm) {
 	var url;
 	switch($.cookie("act_type")) {
@@ -697,10 +796,231 @@ function getValue(frm) {
 			$.each(data, function(key, val) {
 				htmlStr += val.tag + " ";
 			});
-			$("#act_form input[name='" + frm.id + "']").val(htmlStr);
+			$("#" + frm.id + "_view").val(htmlStr);
 		}
 	});
 }
+
+function act_update(act_num) {
+	var currDate = new Date(new Date().getYear() + 1900, new Date().getMonth(), new Date().getDate());
+	var startDate = Date.parse($("#act_form input[name='act_start']").val());
+	var endDate = Date.parse($("#act_form input[name='act_end']").val());
+	var data = new FormData();
+	var formData;
+	
+	if($("#act_form input[name='act_title']").val().length == 0) {
+		alert("제목을 입력해주세요");
+		return;
+	}
+	if($("#act_form input[name='act_target']").val().length == 0) {
+		alert("참여대상을 입력해주세요");
+		return;
+	}
+	if($("#act_form input[name='act_start']").val().length == 0) {
+		alert("시작기간을 입력해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_end']").val().length == 0) {
+		alert("마감기간을 입력해주세요.");
+		return;
+	}
+	if(startDate < currDate || startDate > endDate) {
+		alert("날짜를 정확하게 입력해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_pop']").val().length == 0) {
+		alert("모집인원을 입력해주세요.");
+		return;
+	}
+	if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
+		alert("모집인원을 정확하게 입력해주세요.");
+		return;
+	}
+	if($("#act_reg input[name='act_reg']:checked").length == 0) {
+		alert("모임지역을 선택해주세요.");
+		return;
+	}
+	if($("#act_field input[name='act_field']:checked").length == 0) {
+		alert("활동분야를 선택해주세요.");
+		return;
+	}
+	if($("#act_interest input[name='interest_num']:checked").length == 0) {
+		alert("관심분야를 선택해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_home']").val().length == 0) {
+		alert("홈페이지를 입력해주세요.");
+		return;
+	}
+	if($("#act_reward input[name='reward_num']:checked").length == 0) {
+		alert("활동혜택을 선택해주세요.");
+		return;
+	}
+	if($("#act_form textarea[name='act_content']").val().length == 0) {
+		alert("상세내용을 입력해주세요.");
+		return;
+	}
+	
+	data.append("act_num", act_num);
+	formData= new FormData($("#act_form")[0]);
+	for(var key of formData.keys()) {
+		data.append(key, formData.get(key));
+	}
+
+	formData = new FormData($("#act_reg")[0]);
+	for(var key of formData.keys()) {
+		data.append(key, formData.get(key));
+	}
+
+	formData = new FormData($("#act_reward")[0]);
+	for(var key of formData.keys()) {
+		data.append(key, formData.get(key));
+	}
+	
+	formData = new FormData($("#act_field")[0]);
+	for(var key of formData.keys()) {
+		data.append(key, formData.get(key));
+	}
+	
+	formData = new FormData($("#act_interest")[0]);
+	for(var key of formData.keys()) {
+		data.append(key, formData.get(key));
+	}
+	
+	/*
+	for(var key of data.keys()) {
+		alert(key + ":" + data.get(key));
+	}
+	*/
+	$.ajax({
+		url: "list_act_updatePro.jsp",
+		type : "POST",
+		enctype: "multipart/form-data",
+		data: data,
+		cache: false,
+		processData: false,
+    	contentType: false,
+		success: function() {
+			alert("수정했습니다.");
+		},
+	});
+}
+
+function con_update(act_num) {
+	var currDate = new Date(new Date().getYear() + 1900, new Date().getMonth(), new Date().getDate());
+	var startDate = Date.parse($("#act_form input[name='act_start']").val());
+	var endDate = Date.parse($("#act_form input[name='act_end']").val());
+	var data = new FormData();
+	var formData;
+	
+	if($("#act_form input[name='act_title']").val().length == 0) {
+		alert("제목을 입력해주세요");
+		return;
+	}
+	if($("#act_form input[name='act_target']").val().length == 0) {
+		alert("참여대상을 입력해주세요");
+		return;
+	}
+	if($("#act_form input[name='act_start']").val().length == 0) {
+		alert("시작기간을 입력해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_end']").val().length == 0) {
+		alert("마감기간을 입력해주세요.");
+		return;
+	}
+	if(startDate < currDate || startDate > endDate) {
+		alert("날짜를 정확하게 입력해주세요.");
+		return;
+	}
+	if($("#act_field input[name='act_field']:checked").length == 0) {
+		alert("활동분야를 선택해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_home']").val().length == 0) {
+		alert("홈페이지를 입력해주세요.");
+		return;
+	}
+	if($("#act_form input[name='act_award']").val().length == 0) {
+			alert("시상규모을 입력해주세요.");
+			return;
+	}
+	if($("#act_form input[name='act_award']").val() < 0) {
+		alert("시상규모을 정확하게 입력해주세요.");
+		return;
+	}
+	if($("#act_reward input[name='reward_num']:checked").length == 0) {
+		alert("활동혜택을 선택해주세요.");
+		return;
+	}
+	if($("#act_form textarea[name='act_content']").val().length == 0) {
+		alert("상세내용을 입력해주세요.");
+		return;
+	}
+	
+	data.append("act_num", act_num);
+	formData= new FormData($("#act_form")[0]);
+	for(var key of formData.keys()) {
+		data.append(key, formData.get(key));
+	}
+
+	formData = new FormData($("#act_reward")[0]);
+	for(var key of formData.keys()) {
+		data.append(key, formData.get(key));
+	}
+	
+	formData = new FormData($("#act_field")[0]);
+	for(var key of formData.keys()) {
+		data.append(key, formData.get(key));
+	}
+	
+	/*
+	for(var key of data.keys()) {
+		alert(key + ":" + data.get(key));
+	}
+	*/
+	$.ajax({
+		url: "list_con_updatePro.jsp",
+		type : "POST",
+		enctype: "multipart/form-data",
+		data: data,
+		cache: false,
+		processData: false,
+    	contentType: false,
+		success: function() {
+			alert("수정했습니다.");
+			history.go(0);
+		}
+	});
+}
+
+function get_thumb() {
+	var filename = $("#act_form input[name='act_thumb']")[0].files[0].name;
+	var reader = new FileReader();
+	
+	$("#thumb_filename").html(filename);
+	reader.onload = function(e) {
+		$("#thumb_image").attr("src", e.target.result);
+	}
+	reader.readAsDataURL($("#act_form input[name='act_thumb']")[0].files[0]);
+}
+
+function get_post() {
+	var filename = $("#act_form input[name='act_post']")[0].files[0].name;
+	var reader = new FileReader();
+	
+	$("#post_filename").html(filename);
+	reader.onload = function(e) {
+		$("#post_image").attr("src", e.target.result);
+	}
+	reader.readAsDataURL($("#act_form input[name='act_post']")[0].files[0]);
+}
+
+function copy_to_clipboard() {
+	document.getElementById("copyURL").select();
+	document.execCommand("copy");
+}
+
 //-----------------------------admin js---------------------------------------
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){

@@ -20,7 +20,7 @@
 			<div class="d-flex">
 				<h3><%=activity.getAct_title() %></h3>
 				<h3 class="ml-auto">
-					<i class="fas fa-eye" data-toggle="tooltip" data-placement="bottom" title="<%="조회수 : " + activity.getAct_hits() %>"></i>&nbsp;<i class="fas fa-share-alt-square" onclick="$('#shareModal').modal();"></i>
+					<i class="fas fa-eye" data-toggle="tooltip" data-placement="bottom" title="<%="조회수 : " + activity.getAct_hits() %>"></i>&nbsp;<i class="fas fa-share-alt-square" onclick="$('#shareModal').modal();" data-toggle="tooltip" data-placement="bottom" title="공유하기"></i>
 				</h3>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 		<div class="section">
 			<div class="row">
 				<div class="col-md-4">
-					<img src="../upload/<%=activity.getAct_post() %>" width="100%">
+					<img src="../upload/<%=activity.getAct_thumb() %>" width="100%">
 				</div>
 				<div class="col-md-8 d-flex flex-column">
 					<div class="row">
@@ -153,7 +153,7 @@
 	<div class="modal" tabindex="-1" id="shareModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header bg-primary text-white">
+				<div class="modal-header bg-cam text-white">
 					<h5 class="modal-title">링크공유</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
@@ -162,15 +162,15 @@
 				</div>
 				<div class="modal-body">
 					<div class="d-flex flex-row justify-content-around">
-						<img src="img/share-facebook.png">
-						<img src="img/share-naver.png">
-						<img src="img/share-kakao.png">
+						<i class="fab fa-facebook-square" onclick="facebook(<%=act_num %>)" style="font-size: 50px; color: #3b5998;"></i>	
+						<i class="fab fa-twitter-square" onclick="twitter(<%=act_num %>)" style="font-size: 50px; color: #00acee;"></i>
+						<img src="<%=request.getContextPath() %>/img/line.png" onclick="line(<%=act_num %>)" style="width: 50px; height: 50px;">
 					</div>
 					<hr>
 					<div class="input-group">
-						<input type="text" class="form-control">
+						<input type="text" class="form-control" value="<%=request.getRequestURL() + "?" + request.getQueryString() %>" id="copyURL">
 						<div class="input-group-append">
-							<button class="btn btn-cam">복사</button>
+							<button class="btn btn-cam" onclick="copy_to_clipboard()">복사</button>
 						</div>
 					</div>
 				</div>
@@ -178,8 +178,7 @@
 		</div>
 	</div>
 </section>
-<script src="../js/activity.js"></script>
+<%@ include file="../footer.jsp" %>
 <script>
 	$.cookie("act_type", <%=activity.getAct_type()%>);
 </script>
-<%@ include file="../footer.jsp" %>

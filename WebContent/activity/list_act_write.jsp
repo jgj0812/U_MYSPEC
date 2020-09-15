@@ -362,16 +362,6 @@
 						class="custom-file-label" id="thumb_filename">썸네일</label>
 				</div>
 			</div>
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<div class="input-group-text">포스터</div>
-				</div>
-				<div class="custom-file">
-					<input type="file" class="custom-file-input form-control"
-						name="act_post" onchange="get_post_filename()" /> <label
-						class="custom-file-label" id="post_filename">포스터</label>
-				</div>
-			</div>
 			<br /> <br />
 		</div>
 		<input type="button" class="btn btn-cam btn-block"
@@ -379,7 +369,6 @@
 	</form>
 </div>
 <%@ include file="../footer.jsp"%>
-<script src="../js/activity.js"></script>
 <script>
 	$(document).ready(function() {
 		$(".all").hide();
