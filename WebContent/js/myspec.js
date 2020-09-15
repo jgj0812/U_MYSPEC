@@ -531,9 +531,15 @@ $(document).ready(function () {
 	
 	$("#act_form input[name='act_start']").datepicker();
 	$("#act_form input[name='act_end']").datepicker();
+	
 	$("#comm_content").summernote({
 			lang: "ko-KR",
 	      	height: "20em",
+			callbacks : {
+				onImageUpload : function(files) {
+					sendFile(files[0], this);
+					}
+			}
 	});
 });
 
@@ -543,7 +549,7 @@ function sendFile(file, editor) {
 	$.ajax({
 		data : data,
 		type : "POST",
-		url : "act_content_imageUpload.jsp",
+		url : "../activity/act_content_imageUpload.jsp",
 		cache : false,
 		contentType : false,
 		processData : false,
@@ -717,6 +723,7 @@ $("#orgSearchBtn").click(function(){
 });
 
 //-------------------------------커뮤니티 js--------------------------------------
+
 // 커뮤니티 공지글 검색(admin)
 $("#noticeSearchBtn").click(function(){
 	if($("#noticeSearch").val() == "") {
@@ -793,6 +800,16 @@ function rereply_ok(i) {
 	$("#rereplyFrm" + i).submit();
 }
 
+//대댓글 리스트
+function rereplylist(i){
+	var rereplylist = document.getElementById("rereplylist" + i);
+	if(rereplylist.style.display =='none'){
+		rereplylist.style.display = 'block';
+	}else if(rereplylist.style.display =='block'){
+		rereplylist.style.display = 'none';
+	}
+}
+
 // 답글 입력폼
 function rereply(i){
 	var rereply = document.getElementById("rereply" + i);
@@ -805,7 +822,13 @@ function rereply(i){
 
 // 댓글 수정 폼
 function update(i){
-	var update = document.getElementById("update" + i);
+	var content =document.getElementById("re_content"+i).innerHTML;
+	
+	$(function(){
+        $("#re_upcontent").val(content);
+    });
+	
+	var update = document.getElementById("update");
 	var basic = document.getElementById("basic" + i);
 	
 	if(update.style.display =='none'){
@@ -819,11 +842,43 @@ function update(i){
 
 // 댓글 수정 취소
 function updatecancel(i){
-	var update = document.getElementById("update" + i);
+	var update = document.getElementById("update");
 	var basic = document.getElementById("basic" + i);
 	if(update.style.display =='block'){
 		update.style.display = 'none';
 		basic.style.display = 'block';
+	}
+}
+
+
+// 답글 수정 폼
+function rereupdate(i){
+	var content =document.getElementById("rere_content"+i).innerHTML;
+	
+	$(function(){
+        $("#rere_upcontent").val(content);
+    });
+	
+	var rereupdate = document.getElementById("rereupdate");
+	var rereply_repeat = document.getElementById("rereply_repeat" + i);
+	
+	if(rereupdate.style.display =='none'){
+		rereupdate.style.display = 'block';
+		rereply_repeat.style.display = 'none';
+		
+	}else if(rereupdate.style.display =='block'){
+		rereupdate.style.display = 'none';
+		rereply_repeat.style.display = 'block';
+	}
+}
+
+//답글 수정 취소
+function rereupdatecancel(i){
+	var rereupdate = document.getElementById("rereupdate" );
+	var rereply_repeat = document.getElementById("rereply_repeat" + i);
+	if(rereupdate.style.display =='block'){
+		rereupdate.style.display = 'none';
+		rereply_repeat.style.display = 'block';
 	}
 }
 

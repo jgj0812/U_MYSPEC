@@ -330,7 +330,7 @@
 		              j++;
 		     	 %>
 		     	 
-		      	<div style="display: block;" id="rereply_repeat<%=i %><%=j %>" >
+		      	<div style="display: block;" id="rereply_repeat<%=j %>" >
 		       	 <!-- 닉네임 날짜 -->
 		            <div class="row" style="font-size:0.85rem;" >
 		                <img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
@@ -345,7 +345,7 @@
 		            </div>
 		         
 		         <!-- 댓글내용 -->
-	            <div style="margin-left:65px; font-size:1rem;" id="rere_content<%=i %><%=j%>"><%=commRB2.getRep_content()%></div> 
+	            <div style="margin-left:65px; font-size:1rem;" id="rere_content<%=j%>"><%=commRB2.getRep_content()%></div> 
 		       
 		        <!-- 답글보기 삭제 수정 답글 -->
             	<div>
@@ -365,7 +365,7 @@
 	                    <form> 
 	                        <input type="hidden" name="comm_num" value="<%= comm_num%>">
 	                        <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
-	                        <input type="button" style="border: 0px" value="수정"  onclick="rereupdate(<%=i %><%=j%>)"> 
+	                        <input type="button" style="border: 0px" value="수정"  onclick="rereupdate(<%=j%>)"> 
 	                    </form>	  
 	                    <%} %>	 
 	                </div>  
