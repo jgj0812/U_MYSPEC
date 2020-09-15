@@ -95,6 +95,7 @@
 	obj.put("act_pageCount", pageCount);
 	obj.put("act_startPage", startPage);
 	obj.put("act_endPage", endPage);
+	obj.put("act_page", pageNum);
 	arr.add(obj);
 	out.print(arr);
 %>
