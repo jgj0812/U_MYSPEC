@@ -9,7 +9,7 @@
 <%
 	int comm_num = Integer.parseInt(request.getParameter("comm_num"));
 	int rep_num = Integer.parseInt(request.getParameter("rep_num"));
-	
-	mgr.Community_reply_delete(rep_num);
+	int rep_parent = Integer.parseInt(request.getParameter("rep_parent"));
+	mgr.Community_reply_delete(rep_num, rep_parent);
 	response.sendRedirect("adminComDetail.jsp?comm_num=" + comm_num);
 %>
