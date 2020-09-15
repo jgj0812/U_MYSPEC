@@ -216,7 +216,7 @@
 		        	<% if(repPerson.equals(commRB.getRep_nick())) {%>
 		            <p style="margin-left:40px;"><%=repPerson%></p>
 		            <% } else {%>
-		            <p style="margin-left:40px; font-style:bold; color:#1dcdff"><%=repPerson%></p> <!-- 닉네임 -->
+		            <p style="margin-left:40px; font-weight: 800"><%=repPerson%></p> <!-- 닉네임 -->
 		            <%} %>
 		            
 		            <p style="margin-left:20px;"><%=commRB.getRep_date()%></p> <!-- 날짜 -->
@@ -271,7 +271,7 @@
 		
 		    <!-- 댓글 수정 div -->
 		    <div id="update<%=i %>" style="display: none">
-		        <form action ="reply_updatePro.jsp" method="post"> 
+		        <form action ="reply_updatePro.jsp" method="post" id="reply_update<%=i %>"> 
 		            <div style="margin-bottom: 5px">
 		                <input id="re_upcontent" name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB.getRep_content()%>"> 
 		                <input type="hidden" name="rep_num" value="<%=commRB.getRep_num()%>">
@@ -280,7 +280,7 @@
 		            
 		            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">			
 		                <input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem" value="취소" onclick="updatecancel(<%=i%>)"> 
-		                <input type="submit" class="btn btn-danger" style="font-size: 0.75rem" value="수정">  		
+		                <input type="button" class="btn btn-danger" style="font-size: 0.75rem" value="수정" onclick="replyupdate_ok(<%=i%>)">  		
 		            </div>
 		            
 		            <br>
@@ -335,14 +335,14 @@
 		            <% if(repPerson2.equals(commRB2.getRep_nick())) {%>
 		                <p style="margin-left:10px;"><%=repPerson2%></p> <!-- 닉네임 -->
 		                <% } else{ %>
-		                <p style="margin-left:10px; font-style:bold; color:#1dcdff""><%=repPerson2%></p> <!-- 닉네임 -->
+		                <p style="margin-left:10px; font-weight: 800"><%=repPerson2%></p> <!-- 닉네임 -->
 		                <%} %>
 		
 		                <p style="margin-left:20px;"><%=commRB2.getRep_date()%></p> <!-- 날짜 -->
 		            </div>
 		         
 		         <!-- 댓글내용 -->
-	            <div style="margin-left:65px; font-size:1rem;" id="rere_content<%=commRB2.getRep_num() %>"><%=commRB2.getRep_content()%></div> 
+	            <div style="margin-left:65px; font-size:1rem;"><%=commRB2.getRep_content()%></div> 
 		       
 		        <!-- 답글보기 삭제 수정 답글 -->
             	<div>
@@ -355,7 +355,7 @@
 	                        <!-- 원래글로 돌아가기위한 글번호  -->
 	                        <input type="hidden" name="comm_num" value="<%= comm_num%>">
 	                        <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
-	                         <input type="hidden" name="rep_parent" value="<%=commRB2.getRep_parent() %>">
+	                        <input type="hidden" name="rep_parent" value="<%=commRB2.getRep_parent() %>">
 	                        <input type="submit" style="border: 0px" value="삭제">  
 	                    </form>
 	                    
@@ -375,7 +375,7 @@
         	
         	<!-- 답글 수정 div -->
 		    <div id="rereupdate<%=commRB2.getRep_num() %>" style="display: none">
-		        <form action ="reply_updatePro.jsp" method="post"> 
+		        <form action ="reply_updatePro.jsp" method="post" id="rereply_update<%=commRB2.getRep_num() %>"> 
 		            <div style="margin-bottom: 5px">
 		                <input id="rere_upcontent" name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB2.getRep_content()%>"> 
 		                <input type="hidden" name="rep_num" value="<%=commRB2.getRep_num() %>">
@@ -384,7 +384,7 @@
 		            
 		            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">			
 		                <input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem"  value="취소" onclick="rereupdatecancel(<%=commRB2.getRep_num() %>)"> 
-		                <input type="submit" class="btn btn-danger" style="font-size: 0.75rem" value="수정">  		
+		                <input type="button" class="btn btn-danger" style="font-size: 0.75rem" value="수정"  onclick="rereplyupdate_ok(<%=commRB2.getRep_num() %>)">  		
 		            </div>
 		            
 		            <br>

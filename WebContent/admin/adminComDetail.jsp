@@ -144,17 +144,14 @@
 			</div>
 			
 			
-			<div style="background-color:#eeeeee;">
-				
-				<!-- 댓글수 -->
-				<div class="row" style="font-size:0.75rem; margin-top:23px;" >
-					<p style="font-weight:bold; margin-left:40px; margin-top:15px;">댓글</p>
-					<p style="font-weight:bold; margin-top:15px; margin-left:5px;"><%=count %></p>
-				</div>
-				
-				<hr style="margin-top: 2px">
-				
-<!-- --------댓글 보여주는 곳--------- -->		
+<!-- --------댓글 보여주는 곳--------- -->	
+	<div class="reply" style="background-color:#eeeeee;">
+		<div class="row" style="font-size:0.75rem; margin-top:23px;" >
+			<p style="font-weight:bold; margin-left:40px; margin-top:15px;">댓글</p>
+			<p style="font-weight:bold; margin-top:15px; margin-left:5px;"><%=count %></p>	<!-- 댓글수 -->
+		</div>
+		
+		<hr style="margin-top: 2px">
 <%
 		int i = 0;
 		for(int j = 0; j< commRe_arr.size() ; j++) {
@@ -174,7 +171,7 @@
 			<div class="row" style="font-size:0.85rem;" >
 			
 				<% if(repPerson.equals("관리자")) {%>
-	            <p style="margin-left:40px; font-style:bold; color:#1dcdff"><%=repPerson%></p>
+	            <p style="margin-left:40px; font-weight: 800"><%=repPerson%></p>
 	            <% } else {%>
 	            <p style="margin-left:40px;"><%=repPerson%></p> <!-- 닉네임 -->
 	            <%} %>
@@ -203,6 +200,7 @@
 						<!-- 원래글로 돌아가기위한 글번호  -->
 						<input type="hidden" name="comm_num" value="<%= comm_num%>">
 						<input type="hidden" name="rep_num" value="<%=commRe_arr.get(j).getRep_num() %>">
+						<input type="hidden" name="rep_parent" value="<%=commRe_arr.get(j).getRep_parent() %>">
 						<input type="submit" style="border: 0px" value="삭제">  
 					</form>
 					
@@ -268,25 +266,29 @@
 				</div>		
 			</form>
 			<hr style="margin-top: 0px">
-		</div>		
-		<!-- /답글 입력폼 -->
-		
-		<div id="rereplylist<%=i%>" style="display: none">
+		</div>	
+			
+		<!-- 답글 시작 -->	
+		<div class="rereply_div">
+	
+		  <div id="rereplylist<%=i %>" style="display: none">
 		<% 
 		
 			ArrayList<CommunityReplyBean> commRere_arr  = Rmgr.Community_rereply_list(comm_num, commRe_arr.get(j).getRep_num());
 		
 			for(int k =0; k< commRere_arr.size(); k++){
       			String repPerson2 = commRere_arr.get(k).getRep_admin() != null ? "관리자" : commRere_arr.get(k).getRep_nick();
-      	%>
+      		%>
       		
+      		<div id="rereply_repeat<%=commRere_arr.get(k).getRep_num() %>" >
 			<!-- 닉네임 날짜 -->
 			<div class="row" style="font-size:0.85rem;" >
 				<img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
+				 
 				 <% if(repPerson2.equals(commRere_arr.get(k).getRep_nick())) {%>
 	            <p style="margin-left:10px;"><%=repPerson2%></p> <!-- 닉네임 -->
 				<% } else{ %>
-				 <p style="margin-left:10px; font-style:bold; color:#1dcdff""><%=repPerson2%></p> <!-- 닉네임 -->
+				 <p style="margin-left:10px;  font-weight: 800"><%=repPerson2%></p> <!-- 닉네임 -->
 				<%} %>      				
 				<p style="margin-left:20px;"><%=commRere_arr.get(k).getRep_date()%></p> <!-- 날짜 -->
 			</div>
@@ -307,6 +309,7 @@
 						<!-- 원래글로 돌아가기위한 글번호  -->
 						<input type="hidden" name="comm_num" value="<%= comm_num%>">
 						<input type="hidden" name="rep_num" value="<%=commRere_arr.get(k).getRep_num() %>">
+						<input type="hidden" name="rep_parent" value="<%=commRere_arr.get(k).getRep_parent() %>">
 						<input type="submit" style="border: 0px" value="삭제">  
 					</form>
 					<% if(id != null && id.trim().equals(commRere_arr.get(k).getRep_admin())) { %>					
@@ -314,26 +317,54 @@
 					<form> 
 						<input type="hidden" name="comm_num" value="<%= comm_num%>">
 						<input type="hidden" name="rep_num" value="<%=commRere_arr.get(k).getRep_num() %>">
-						<input type="button" style="border: 0px" value="수정"  onclick="update(<%=i%>)"> 
+						<input type="button" style="border: 0px" value="수정"  onclick="rereupdate(<%=commRere_arr.get(k).getRep_num()%>)"> 
 					</form>	  
 					 <%} %>	 
 				</div>
 			
-			</div>	
-		<br>
-		<hr>
-		
-      	<% }%>
-      	
-		</div>											
+				</div>	
+			<br>
+			<hr>
+			
+			</div> <!-- rereply_repeat -->
+			
+	      	<!-- 답글 수정 div -->
+			    <div id="rereupdate<%=commRere_arr.get(k).getRep_num() %>" style="display: none">
+			        <form action ="reply_updatePro.jsp" method="post"> 
+			            <div style="margin-bottom: 5px">
+			                <input id="rere_upcontent" name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRere_arr.get(k).getRep_content()%>"> 
+			                <input type="hidden" name="rep_num" value="<%=commRere_arr.get(k).getRep_num() %>">
+			                <input type="hidden" name="comm_num" value="<%= comm_num%>">
+			            </div>
+			            
+			            <div style="font-size:0.75rem; float: right;  margin-right: 20px; display: flex">			
+			                <input type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.75rem"  value="취소" onclick="rereupdatecancel(<%=commRere_arr.get(k).getRep_num() %>)"> 
+			                <input type="submit" class="btn btn-danger" style="font-size: 0.75rem" value="수정">  		
+			            </div>
+			            
+			            <br>
+			            <hr> 
+			        </form>  	
+			    </div>
+			</div>											
 			
 		<%
 				}
-		%>				
+		%>		
+		  </div> <!-- rereplylist -->     
+
+			</div> <!-- rereply_div  -->
+					
+		</div> <!-- reply_div끝  -->
+			
+		<%
+				}
+		%>	
+				
 				<!-- 댓글 입력폼  -->
 				<form action="adminReplyPro.jsp" id="replyFrm" name="comm_reply_form" method="post">
 				  	<!-- 글번호를 넘긴다 -->
-				  	<input type="hidden" name="comm_num" value="<%= comm_num%>">
+				  	<input type="hidden" name="comm_num" value="<%=comm_num%>">
 				  	 <!-- 부모댓글번호 -->
         			<input type="hidden" name="rep_parent" value="0">
 					<div class="form-row">

@@ -798,7 +798,7 @@ function rereply_ok(i) {
 	}
 	$("#rereplyFrm" + i).submit();
 }
-//대댓글 리스트
+//대댓글 리스트 숨기고 보여주기
 function rereplylist(i){
 	var rereplylist = document.getElementById("rereplylist" + i);
 	if(rereplylist.style.display =='none'){
@@ -807,7 +807,7 @@ function rereplylist(i){
 		rereplylist.style.display = 'none';
 	}
 }
-// 답글 입력폼
+// 답글 입력폼 숨기고 보여주기
 function rereply(i){
 	var rereply = document.getElementById("rereply" + i);
 	if(rereply.style.display =='none'){
@@ -817,7 +817,7 @@ function rereply(i){
 	}
 }
 
-// 댓글 수정 폼
+// 댓글 수정 폼 숨기고 보여주기
 function update(i){
 	var update = document.getElementById("update" + i);
 	var basic = document.getElementById("basic" + i);
@@ -842,7 +842,7 @@ function updatecancel(i){
 }
 
 
-// 답글 수정 폼
+// 답글 수정 폼 숨기고 보여주기
 function rereupdate(i){
 	var rereupdate = document.getElementById("rereupdate" + i);
 	var rereply_repeat = document.getElementById("rereply_repeat" + i);
@@ -866,8 +866,25 @@ function rereupdatecancel(i){
 	}
 }
 
+//댓글 수정 입력폼 유효성
+function replyupdate_ok(i) {
+	if($("#reply_update" + i +" [name=rep_content]").val() == "") {
+		alert("수정할 댓글 내용을 입력해주세요.");
+		$("#reply_update" + i +"  [name=rep_content]").focus();
+		return false;
+	}
+	$("#reply_update" +i).submit();
+}
 
-
+//답글 수정 입력폼 유효성
+function rereplyupdate_ok(i) {
+	if($("#rereply_update" + i +" [name=rep_content]").val() == "") {
+		alert("수정할 답글 내용을 입력해주세요.");
+		$("#rereply_update" + i +" [name=rep_content]").focus();
+		return false;
+	}
+	$("#rereply_update"+i).submit();
+}
 
 // myPage 수정 양식, 비밀번호 변경
 $("#UpdateBtn").click(function(){
