@@ -69,4 +69,13 @@
 	
 	ActivityMgr manager = new ActivityMgr();
 	manager.insertActivity(activity);
+	
+	switch(act_type) {
+	case 1:
+		response.sendRedirect("/activity/list_act.jsp");
+		break;
+	case 2:
+		response.sendRedirect("/contest/list_con.jsp");
+		break;
+	}
 %>

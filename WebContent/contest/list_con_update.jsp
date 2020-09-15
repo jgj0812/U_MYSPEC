@@ -26,7 +26,18 @@
 					</h3>
 					&nbsp;
 					<h3>
-						<i class="fas fa-eye"></i> <i class="far fa-square"></i>
+						<i class="fas fa-eye" data-toggle="tooltip" data-placement="bottom" title="<%="조회수 : " + activity.getAct_hits() %>"></i>
+						&nbsp;
+						<%
+							switch(activity.getAct_approve()) {
+							case 0:
+								%><i class="far fa-square" data-toggle="tooltip" data-placement="bottom" title="승인대기"></i><%
+								break;
+							case 1:
+								%><i class="far fa-check-square" data-toggle="tooltip" data-placement="bottom" title="승인"></i><%
+								break;
+							}
+						 %>
 					</h3>
 				</div>
 			</div>
@@ -44,17 +55,6 @@
 								<input type="file" class="custom-file-input form-control"
 									name="act_thumb" onchange="get_thumb()" /> <label
 									class="custom-file-label" id="thumb_filename"><%=activity.getAct_thumb()%></label>
-							</div>
-						</div>
-						<img src="../upload/<%=activity.getAct_post()%>" width="100%" id="post_image"/>
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">포스터</div>
-							</div>
-							<div class="custom-file">
-								<input type="file" class="custom-file-input form-control"
-									name="act_post" onchange="get_post()" /> <label
-									class="custom-file-label" id="post_filename"><%=activity.getAct_post()%></label>
 							</div>
 						</div>
 					</div>
@@ -85,10 +85,20 @@
 								<p>접수기간</p>
 							</div>
 							<div class="col-md-4">
-								<input type="text" class="form-control"
-									value="<%=activity.getAct_start()%>" name="act_start" /> - <input
-									type="text" class="form-control"
-									value="<%=activity.getAct_end()%>" name="act_end" />
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">시작</span>
+									</div>
+									<input type="text" class="form-control"
+										value="<%=activity.getAct_start()%>" name="act_start" />
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">마감</span>
+									</div>
+									<input type="text" class="form-control"
+										value="<%=activity.getAct_end()%>" name="act_end" />
+								</div>
 							</div>
 							<div class="col-md-2">
 								<p>시상규모</p>
@@ -268,3 +278,6 @@
 	</script>
 	<%
 %>
+<script>
+	$.cookie("act_type", <%=activity.getAct_type()%>);
+</script>
