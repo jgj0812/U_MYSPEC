@@ -37,7 +37,7 @@ $.datepicker.setDefaults({
 	yearSuffix: '년'
 });
 
-// 개인회원 생년월일 datepicker
+// 개인회원 회원가입 생년월일 datepicker
 $("#person_birth").datepicker({
 	changeMonth: true,
 	changeYear: true,
@@ -296,12 +296,18 @@ $("#findIdMemtype").change(function(){
 		output += "</div>"
 		output += "<div class=\"form-group\">"
 		output += "<label for=\"birth\">생년월일 (ex: 19581030)</label>"
-		output += "<input type=\"text\" name=\"birth\" id=\"findPBirth\" class=\"form-control\" />"
+		output += "<input type=\"text\" name=\"birth\" id=\"findPBirth\" class=\"form-control\" autocomplete=\"off\" />"
 		output += "</div>"
 		output += "<div class=\"form-group\">"
 		output += "<label for=\"phone\">연락처</label>"
 		output += "<input type=\"text\" name=\"phone\" id=\"findPPhone\" class=\"form-control\" />"
 		output += "</div>"
+		output += "<script>"
+		output += "$(\"#findPBirth\").datepicker({"
+		output += "changeMonth: true,"
+		output += "changeYear: true,"
+		output += "});"
+		output += "</script>"
 	}
 	else if(selected.val() == 1) {
 		output += "<div class=\"form-group\">"
@@ -337,8 +343,18 @@ $("#idFindBtn").click(function(){
 			$("#findPEmail").focus();
 			return false;
 		}
+		if(!$("#findPEmail").val().match(emailExp)) {
+			alert("이메일 입력양식이 아닙니다.");
+			$("#findPEmail").focus();
+			return false;
+		}
 		if($("#findPBirth").val() == "") {
 			alert("생년월일을 입력해주세요");
+			$("#findPBirth").focus();
+			return false;
+		}
+		if(!$("#findPBirth").val().match(birthExp)) {
+			alert("생년월일 입력양식이 아닙니다.");
 			$("#findPBirth").focus();
 			return false;
 		}
@@ -347,10 +363,20 @@ $("#idFindBtn").click(function(){
 			$("#findPPhone").focus();
 			return false;
 		}
+		if(!$("#findPPhone").val().match(phoneExp)) {
+			alert("연락처 입력 양식이 아닙니다.");
+			$("#findPPhone").focus();
+		return false;
+		}
 	}
 	else if(selected.val() == 1) {
 		if($("#findOEmail").val() == "") {
 			alert("이메일을 입력해주세요");
+			$("#findOEmail").focus();
+			return false;
+		}
+		if(!$("#findOEmail").val().match(emailExp)) {
+			alert("이메일 입력양식이 아닙니다.");
 			$("#findOEmail").focus();
 			return false;
 		}
@@ -368,6 +394,11 @@ $("#idFindBtn").click(function(){
 			alert("담당자연락처를 입력해주세요");
 			$("#findOPhone").focus();
 			return false;
+		}
+		if(!$("#findOPhone").val().match(phoneExp)) {
+			alert("연락처 입력 양식이 아닙니다.");
+			$("#findOPhone").focus();
+		return false;
 		}
 	}
 	$("#findIdFrm").submit();
