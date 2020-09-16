@@ -29,7 +29,7 @@
 			where += " or act_field=" + act_field[i];
 		}
 		where += ")";
-	}
+	}	
 	if((params = request.getParameterValues("interest_num")) != null) {
 		interest_num = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 		if(where == "") {
