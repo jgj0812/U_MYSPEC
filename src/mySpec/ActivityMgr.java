@@ -131,64 +131,6 @@ public class ActivityMgr {
 		return activityList;
 	}
 	
-	public ArrayList<ActivityBean> getActivityList(int act_type, int length) {
-		ArrayList<ActivityBean> activityList = new ArrayList<ActivityBean>();
-		String sql = "select * from (select rownum as rn, act.* from (select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits, nvl(scraps, 0) as scraps, nvl(reps, 0) as reps from activity, org_user, (select scrap_num, count(scrap_person) as scraps from scrap group by scrap_num), (select rep_act, count(rep_num) as reps from act_reply group by rep_act) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = scrap_num(+) and act_num = rep_act(+) order by scraps desc, reps desc, act_hits desc, act_num desc)act) where rn between 1 and " + length;
-		try {
-			con = pool.getConnection();
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, act_type);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				ActivityBean activity = new ActivityBean();
-				activity.setAct_num(rs.getInt("act_num"));
-				activity.setAct_thumb(rs.getString("act_thumb"));
-				activity.setAct_title(rs.getString("act_title"));
-				activity.setOrg_name(rs.getString("org_name"));
-				activity.setAct_dday(rs.getInt("act_dday"));
-				activity.setAct_hits(rs.getInt("act_hits"));
-				activityList.add(activity);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		pool.closeConnection(con, ps, rs);
-		return activityList;
-	}
-	
-	public int activity_scrap_count(int act_num) {
-		String sql = "select count(scrap_person) as scrap_count from scrap where scrap_num=?";
-		try {
-			con = pool.getConnection();
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, act_num);
-			rs = ps.executeQuery();
-			rs.next();
-			return rs.getInt("scrap_count");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return -1;
-	}
-
-	public int activity_reply_count(int act_num) {
-		String sql = "select count(rep_num) as reply_count from act_reply where rep_act=?";
-		try {
-			con = pool.getConnection();
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, act_num);
-			rs = ps.executeQuery();
-			rs.next();
-			return rs.getInt("reply_count");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return -1;
-	}
-	
 	public int getActivityCount(int act_type, String where) {
 		String sql = null;
 		int count = 0;
@@ -1126,6 +1068,7 @@ public class ActivityMgr {
 					+ "where act_type=1 and act_approve=1) aa) "
 					+ "where rn between ? and ? "
 					+ "order by act_hits desc";
+			System.out.println(sql);
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, stratRow);
 			pstmt.setInt(2, endRow);

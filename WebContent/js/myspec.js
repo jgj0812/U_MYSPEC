@@ -599,7 +599,7 @@ function makePagination(data) {
 	var startPage = data.act_startPage;
 	var endPage = data.act_endPage;
 	var page = data.act_page;
-	var pageBlock = 4;
+	var pageBlock = 8;
 	var htmlStr = "";
 	
 	if(startPage - pageBlock > 0) {
@@ -612,7 +612,7 @@ function makePagination(data) {
 	
 	for(var i = startPage; i <= endPage; i++) {
 		if(i == page) {
-			htmlStr += "<li class='page-item active' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
+			htmlStr += "<li class='page-item active' onclick='getPage(" + i + ")'><a class='page-link' href='#'>" + i + "</a></li>";
 			continue;
 		}
 		htmlStr += "<li class='page-item' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";

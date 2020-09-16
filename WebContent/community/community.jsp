@@ -18,7 +18,7 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>(); //일반글 arraylist
 	
 	//페이징
-	int pageSize = 5;	// 한 화면에 보여지는 게시글 수
+	int pageSize = 10;	// 한 화면에 보여지는 게시글 수
 	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
 		pageNum = "1";
@@ -150,7 +150,7 @@
 			<%	if(count > 0) { 	
 					// 총 페이지 수 구하기, 전체 글개수 나누기 페이지사이즈(한 화면에 보여지는 수)
 					int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);	 					
-					int pageBlock = 4;	// 이전 다음 나오게 하는것			
+					int pageBlock = 8;	// 이전 다음 나오게 하는것			
 					int startPage = (int)((currentPage - 1) / pageBlock) * pageBlock + 1; 
 					int endPage = startPage + pageBlock - 1;				
 						if(endPage > pageCount) { 
@@ -171,7 +171,7 @@
 								if(i == currentPage) {
 				   	%>		   	
 				    	<li class="page-item active">
-				    		<a class="page-link text-dark" href="#">
+				    		<a class="page-link" href="#">
 				    			<%= i %>
 				    		</a>
 				    	</li>
