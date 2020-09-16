@@ -74,11 +74,13 @@
         		for(ActivityBean bean : popActArr) {
         	%>
         	<a href="activity/list_act_detail.jsp?act_num=<%=bean.getAct_num() %>" class="card mb-2 mr-2">
-            	<img
-              		class="card-img-top"
-              		src="upload/<%=bean.getAct_thumb() %>"
-              		alt="Card image cap"
-            	/>
+        		<div class="thumbnail">
+	            	<img
+	              		class="card-img-top"
+	              		src="upload/<%=bean.getAct_thumb() %>"
+	              		alt="Card image cap"
+	            	/>
+            	</div>
             	<div class="card-body">
               		<h4 class="card-title"><%=bean.getAct_title() %></h4>
               		<p class="card-text">

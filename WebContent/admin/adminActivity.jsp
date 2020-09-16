@@ -60,8 +60,10 @@
 		                		for(ActivityBean bean : adminActArr) {
 		                	%>
 			             	<tr class="text-center d-flex">
-			                  <td class="col-md-1 col-4 d-flex align-items-center">
-			                  	<img src="../upload/<%=bean.getAct_thumb()%>" width="100%">
+			                  <td class="col-md-1 col-4">
+			                  	<div class="thumbnail">
+			                  		<img src="../upload/<%=bean.getAct_thumb()%>" width="100%">
+			                  	</div>
 			                  </td>
 			                  <td class="col-md-5 text-truncate" >
 			                  	<%if(bean.getAct_approve() == 0) {%>

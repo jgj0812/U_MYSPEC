@@ -49,8 +49,10 @@
 			              		for(ActivityBean bean : actScrapArr) {
 			              	%>
 		                	<tr class="d-flex">
-		                  		<td class="col-md-1 col-4 d-flex align-items-center">
-		                    		<img class="" width="100%" src="../upload/<%=bean.getAct_thumb() %>"  alt="썸네일" />
+		                  		<td class="col-md-1 col-4">
+		                  			<div class="thumbnail">
+		                    			<img class="" width="100%" src="../upload/<%=bean.getAct_thumb() %>"  alt="썸네일" />
+		                    		</div>
 		                  		</td>
 		                  		<td class="col-md-6">
 		                    		<a href="../activity/list_act_detail.jsp?act_num=<%=bean.getAct_num() %>" class="h5  d-none d-lg-table-cell">

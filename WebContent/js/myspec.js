@@ -610,7 +610,7 @@ function getActivityList(data) {
 			htmlStr += "<div class='row'>";
 		}
 		htmlStr += "<div class='col-6 col-sm-6 col-lg-3' id='col'>";
-		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><img src='../upload/" + data[i].act_thumb + "'></a>";
+		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><div class='thumbnail'><img src='../upload/" + data[i].act_thumb + "'></div></a>";
 		htmlStr += "<br>";
 		htmlStr += "<div class='list_explain'>";
 		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><div class='list_explain_title'>" + data[i].act_title + "<br></div></a>";

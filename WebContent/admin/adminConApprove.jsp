@@ -49,7 +49,9 @@
 		      	<div class="section">
 		        	<div class="row">
 		          		<div class="col-md-4">
-		            		<img src="../upload/<%=bean.getAct_thumb() %>" width="100%" />
+		          			<div class="thumbnail">
+		            			<img src="../upload/<%=bean.getAct_thumb() %>" width="100%" />
+		            		</div>
 		          		</div>
 		          		<div class="col-md-8">
 		            		<div class="row">

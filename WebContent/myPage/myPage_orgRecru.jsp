@@ -50,8 +50,11 @@
               %>
                 <div class="col-6 col-sm-6 col-lg-3" id="col<%=i %>">
                   <a href="../activity/list_act_detail.jsp?act_num=<%=alist.get(i).getAct_num() %>"
-                    ><img src="../upload/<%=alist.get(i).getAct_thumb() %>"
-                  /></a>
+                    >
+                    <div class="thumbnail">
+                   		<img src="../upload/<%=alist.get(i).getAct_thumb() %>"/>
+                    </div>
+                  </a>
                   <br />
                   <div class="list_explain">
                     <a href="#"

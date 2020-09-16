@@ -5,6 +5,20 @@
 * {
   font-family: "Noto Sans KR", sans-serif;
 }
+.thumbnail {
+	position : relative;
+	padding-top : 100%;
+	overflow : hidden;
+}
+img {
+	position : absolute;
+	top : 0;
+	left : 0;
+	right : 0;
+	bottom : 0;
+	max-width : 100%;
+	height : auto;
+}
 /*배경*/
 .bg-cam {
   background-color: #1dcdff;
