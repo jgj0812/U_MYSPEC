@@ -32,7 +32,7 @@
 			<div class="card bg-light mt-3">
 				<div class="card-header bg-light">
 					<div class="row">
-						<div class="col-8 text-left" style="font-family:Noto Sans KR; font-weight:bolder;">글수정</div>	
+						<div class="col-8 text-left" style="font-family:Noto Sans KR; font-weight:bolder;">공지글 수정</div>	
 					</div>
 				</div>
 			</div>

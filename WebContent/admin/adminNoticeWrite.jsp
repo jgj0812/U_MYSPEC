@@ -18,7 +18,7 @@
 			<div class="card bg-light mt-3">
 				<div class="card-header bg-light">
 					<div class="row">
-						<div class="col-8 text-left" style="font-family:Noto Sans KR; font-weight:bolder;">글작성</div>	
+						<div class="col-8 text-left" style="font-family:Noto Sans KR; font-weight:bolder;">공지글 작성</div>	
 					</div>
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 				<div class="row">
 					<!--  comm_type 공지사항인지 일반글인지 -->
 					<input type="hidden" name="comm_type" value="0">
-					<div style="margin-left:20px; font-family:Noto Sans KR; font-weight:bolder;">게시판</div>
+					<div style="margin-left:20px; font-family:Noto Sans KR; font-weight:bolder;">공지 게시판</div>
 				</div>
 			
 				<hr>
