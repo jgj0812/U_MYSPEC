@@ -51,7 +51,7 @@
               %>
                 <div class="col-6 col-sm-6 col-lg-3" id="col<%=i %>">
                   <a href="../activity/list_act_detail.jsp?act_num=<%=alist.get(i).getAct_num() %>"
-                    ><img src="C:\Jsp\U_MYSPEC\WebContent\upload\<%=alist.get(i).getAct_thumb() %>"
+                    ><img src="../upload/<%=alist.get(i).getAct_thumb() %>"
                   /></a>
                   <br />
                   <div class="list_explain">
@@ -64,6 +64,7 @@
                   <a href="../activity/list_act_update.jsp?act_num=<%=alist.get(i).getAct_num() %>" class="btn btn-secondary btn-block mt-2" class="container">
                     수정하기
                   </a>
+                  <br>
                 </div>
                	<%	
 		          		}
