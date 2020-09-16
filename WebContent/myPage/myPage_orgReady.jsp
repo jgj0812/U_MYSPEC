@@ -22,7 +22,6 @@
 				<button id="menu-toggle" class="btn btn-link d-md-none rounded-circle">
             		<i class="fa fa-bars"></i>
           		</button>
-                <h2>MY 페이지</h2>
 			</nav>
 			
 			<!-- 내용 -->
