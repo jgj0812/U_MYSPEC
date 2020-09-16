@@ -584,7 +584,7 @@ function getActivityList(data) {
 		htmlStr += "<div class='list_explain'>";
 		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><div class='list_explain_title'>" + data[i].act_title + "<br></div></a>";
 		htmlStr += data[i].org_name + "<br>";
-		htmlStr += "D-" + data[i].act_dday + "&nbsp;조회수&nbsp;" + data[i].act_hits + "&nbsp;스크랩수&nbsp;" + data[i].act_scrap_count + "&nbsp;댓글 수&nbsp;" + data[i].act_reply_count;
+		htmlStr += "D-" + data[i].act_dday + "&nbsp;조회수&nbsp;" + data[i].act_hits;
 		htmlStr += "</div></div>";
 		if(i % 4 == 3) {
 			htmlStr += "</div>";
@@ -595,16 +595,21 @@ function getActivityList(data) {
 
 function makePagination(data) {
 	var count = data.act_count;
+	var pageCount = data.act_pageCount
 	var startPage = data.act_startPage;
 	var endPage = data.act_endPage;
 	var page = data.act_page;
 	var pageBlock = 4;
+	var htmlStr = "";
 	
-	htmlStr = "<li class='page-item' onclick='getPage(startPage - pageBlock)'>";
-	htmlStr += "<a class='page-link' href='#' aria-label='Previous'>";
-	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>이전</span>";
-	htmlStr += "<span class='sr-only'>이전</span>";
-	htmlStr += "</a></li>";
+	if(startPage - pageBlock > 0) {
+		htmlStr += "<li class='page-item' onclick='getPage(" + (startPage - pageBlock) + ")'>";
+		htmlStr += "<a class='page-link' href='#' aria-label='Previous'>";
+		htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>이전</span>";
+		htmlStr += "<span class='sr-only'>이전</span>";
+		htmlStr += "</a></li>";
+	}
+	
 	for(var i = startPage; i <= endPage; i++) {
 		if(i == page) {
 			htmlStr += "<li class='page-item active' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
@@ -612,10 +617,14 @@ function makePagination(data) {
 		}
 		htmlStr += "<li class='page-item' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
 	}
-	htmlStr += "<a class='page-link' href='#'' aria-label='Next'>";
-	htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;' onclick='getPage(startPage + pageBlock)'>다음</span>";
-	htmlStr += "<span class='sr-only'>다음</span>";
-	htmlStr += "</a></li>";
+	
+	if(startPage + pageBlock < pageCount) {
+		htmlStr += "<li class='page-item' onclick='getPage(" + (startPage + pageBlock) + ")'>"
+		htmlStr += "<a class='page-link' href='#'' aria-label='Next'>";
+		htmlStr += "<span aria-hidden='true' class='text-dark' style='font-weight:bolder;'>다음</span>";
+		htmlStr += "<span class='sr-only'>다음</span>";
+		htmlStr += "</a></li>";
+	}
 	
 	$("#activityCount").html("검색결과 " + count + "건");
 	$(".pagination").html(htmlStr);

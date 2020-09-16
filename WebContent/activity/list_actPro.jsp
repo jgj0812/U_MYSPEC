@@ -87,8 +87,6 @@
 		obj.put("org_name", activity.getOrg_name());
 		obj.put("act_dday", activity.getAct_dday());
 		obj.put("act_hits", activity.getAct_hits());
-		obj.put("act_scrap_count", manager.activity_scrap_count(activity.getAct_num()));
-		obj.put("act_reply_count", manager.activity_reply_count(activity.getAct_num()));
 		arr.add(obj);
 	}
 	
