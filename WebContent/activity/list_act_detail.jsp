@@ -76,7 +76,9 @@
 		<div class="section">
 			<div class="row">
 				<div class="col-md-4">
-					<img src="../upload/<%=activity.getAct_thumb() %>" width="100%">
+					<div class="thumbnail">
+						<img src="../upload/<%=activity.getAct_thumb() %>" width="100%">
+					</div>
 				</div>
 				<div class="col-md-8 d-flex flex-column">
 					<div class="row">
