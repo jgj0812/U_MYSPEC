@@ -1052,6 +1052,22 @@ function copy_to_clipboard() {
 }
 
 //-----------------------------admin js---------------------------------------
+// admin login
+$("#adminLoginBtn").click(function(){
+	if($("#admin_id").val() == "") {
+		alert("아이디를 입력해주세요.");
+		$("#admin_id").focus();
+		return false;
+	}
+	if($("#admin_pwd").val() == "") {
+		alert("비밀번호를 입력해주세요.");
+		$("#admin_pwd").focus();
+		return false;
+	}
+	$("#adminLoginFrm").submit();
+});
+
+
 // 개인 리스트 검색(admin)
 $("#personSearchBtn").click(function(){
 	if($("#personSearch").val() == "") {

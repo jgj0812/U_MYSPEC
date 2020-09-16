@@ -41,7 +41,7 @@ act_pop NUMBER,								-- 모집인원
 act_reg NUMBER,								-- 모임지역
 act_field NUMBER,							-- 활동분야
 act_home VARCHAR2(200 CHAR),				-- 홈페이지
-act_content VARCHAR2(2000 CHAR),			-- 상세내용
+act_content VARCHAR2(4000 CHAR),			-- 상세내용
 act_award NUMBER,							-- 시상규모
 act_approve NUMBER DEFAULT 0,				-- 승인여부
 CONSTRAINT activity_fk1 FOREIGN KEY (act_org) REFERENCES org_user (org_id) ON DELETE CASCADE
