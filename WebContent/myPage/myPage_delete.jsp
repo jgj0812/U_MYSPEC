@@ -15,7 +15,6 @@
 				<button id="menu-toggle" class="btn btn-link d-md-none rounded-circle">
             		<i class="fa fa-bars"></i>
           		</button>
-                <h2>MY 페이지</h2>
 			</nav>
 			
 			<div class="container">
@@ -29,7 +28,7 @@
 							<input
 		                        type="button"
 		                        id=""
-		                        value="네"
+		                        value="탈퇴하기"
 		                        class="btn btn-danger col-md-4"
 		                        onclick="javascript:window.location.href='myPage_deletePro.jsp'"
 		                      />

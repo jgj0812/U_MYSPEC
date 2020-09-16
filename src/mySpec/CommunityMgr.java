@@ -455,7 +455,7 @@ private DBConnection pool;
 						+ "(select c.*, p.person_nick from "
 						+ "community c left outer join person_user p "
 						+ "on c.comm_person = p.person_id "
-						+ "where comm_person=?) aa) "
+						+ "where comm_person=? order by comm_num desc) aa) "
 						+ "where rn between ? and ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id);
@@ -467,7 +467,8 @@ private DBConnection pool;
 						+ "(select c.*, p.person_nick from "
 						+ "community c left outer join person_user p "
 						+ "on c.comm_person = p.person_id "
-						+ "where comm_person=? and " + keyField + " like ?) aa) "
+						+ "where comm_person=? and " + keyField + " like ? "
+						+ "order by comm_num desc) aa) "
 						+ "where rn between ? and ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id);
@@ -561,11 +562,12 @@ private DBConnection pool;
 						+ "(select distinct c.* from "
 						+ "community c left outer join comm_reply r "
 						+ "on c.comm_num = r.rep_comm "
-						+ "where rep_person=? and " + keyField + "like ?) cc "
+						+ "where rep_person=? and " + keyField + " like ?) cc "
 						+ "left outer join person_user p "
 						+ "on cc.comm_person = p.person_id "
 						+ "order by comm_num desc) aa) "
 						+ "where rn between ? and ?";
+				System.out.println(sql);
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id);
 				pstmt.setString(2, "%" + keyWord + "%");

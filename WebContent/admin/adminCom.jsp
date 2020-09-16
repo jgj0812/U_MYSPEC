@@ -24,6 +24,17 @@
 	ArrayList<CommunityBean> arrComm = mgr.Community_list(startRow, endRow, keyField, keyWord);
 	int count = mgr.community_Count(keyField, keyWord);
 %>
+<style>
+@media (max-width:360px) {
+	.container-com{
+		padding-left: 15px;
+		padding-right: 15px;
+		margin-top: 16px;
+		margin-bottom: 16px;
+	} 
+}
+</style>
+
 <main>
 	<div class="d-flex" id="wrapper">
 		
@@ -36,8 +47,8 @@
             		<i class="fa fa-bars"></i>
           		</button>
 			</nav>
-			
-			<div class="col-lg-12 bg-light p-4">일반글</div>
+			<div class="container-com">
+			<div class="col-lg-12 bg-light p-4"><h4 style="margin-top: 8px;">일반글</h4></div>
 			<!-- comNotice List -->
 			<div class="table-responsive">
 				<table class="table table-sm table-hover">
@@ -162,6 +173,8 @@
 				</div>
 			</form>
 			<!-- /검색 -->
+			</div>
+			<!-- container -->
 		</div>
 		<!-- /page Content -->
 	</div>

@@ -31,14 +31,21 @@
  }
  
 @media (max-width:360px) {
+	.container-comdetail{
+		padding-left: 15px;
+		padding-right: 15px;
+		margin-top: 16px;
+		margin-bottom: 16px;
+	} 
 	.recontent{
 		width: 200px;
 		height:55px;
+		margin-left:15px;
 	 }
 	 .rebtn{
 	 	width:60px; 	
 	 	height:55px; 
-	
+		margin-left:7px; 
 	 }
  
 }
@@ -84,7 +91,8 @@
             		<i class="fa fa-bars"></i>
           		</button>
 			</nav>
-				
+			
+			<div class="container-comdetail">
 			<!-- detailView admin -->
 			<div class="card bg-light mt-3">
 				<div class="card-header bg-light">
@@ -240,7 +248,7 @@
 		
 		<!-- 답글 입력폼  -->	
 		<div id="rereply<%=i%>" style="display: none">
-			<form action="adminReplyPro.jsp" id="rereplyFrm<%=i %>" name="comm_rereply_form" method="post">
+			<form action="adminReplyPro.jsp" id="rereplyFrm<%=i %>" name="comm_rereply_form" method="post" style="margin-bottom: 0px">
 				<input type="hidden" name="comm_num" value="<%= comm_num%>">
 				<!-- 부모댓글의 댓글번호를 부모댓글번호로 들고온다 -->
 				<input type="hidden" name="rep_parent" value="<%=commRe_arr.get(j).getRep_num() %>">
@@ -370,7 +378,9 @@
 			<!-- /댓글 입력 폼 -->
 				
 		 </div>
-		 	
+		 
+		 </div> 	
+		 <!-- container-comdetail -->
 		</div>
 		<!-- /page Content -->
 	</div>

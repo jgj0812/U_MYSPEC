@@ -33,11 +33,12 @@
 	.recontent{
 		width: 200px;
 		height:55px;
+		margin-left:15px; 
 	 }
 	 .rebtn{
 	 	width:60px; 	
 	 	height:55px; 
-	
+		margin-left:7px; 
 	 }
  
 }
@@ -83,7 +84,7 @@
 	<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
-				<div class="col-8 text-left" style="font-family:Noto Sans KR; font-weight:bolder;">전체글 보기</div>	
+				<div class="col-8 text-left" style="font-family:Noto Sans KR; font-weight:bolder;">글 상세보기</div>	
 			</div>
 		</div>
 	</div>

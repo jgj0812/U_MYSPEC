@@ -24,6 +24,18 @@
 	ArrayList<CommunityBean> arrComm = mgr.noticeList(startRow, endRow, keyField, keyWord);
 	int count = mgr.noticeCount(keyField, keyWord);
 %>
+
+<style>
+@media (max-width:360px) {
+	.container-notice{
+		padding-left: 15px;
+		padding-right: 15px;
+		margin-top: 16px;
+		margin-bottom: 16px;
+	} 
+}
+</style>
+
 <main>
 	<div class="d-flex" id="wrapper">
 		
@@ -36,7 +48,8 @@
             		<i class="fa fa-bars"></i>
           		</button>
 			</nav>
-			<div class="col-lg-12 bg-light p-4">공지사항</div>
+			<div class="container-notice">
+			<div class="col-lg-12 bg-light p-4"><h4 style="margin-top: 8px;">공지사항</h4></div>
 			<!-- comNotice List -->
 			<div class="table-responsive">
 				<table class="table table-sm table-hover">
@@ -89,7 +102,7 @@
 		  			<%
 		  				if(count > 0) {
 		  					int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);	// 총 페이지 수 구하기
-		  					int pageBlock = 2;	// 이전 다음 나오게 하는것
+		  					int pageBlock = 4;	// 이전 다음 나오게 하는것
 		  					int startPage = (int)((currentPage - 1) / pageBlock) * pageBlock + 1;
 		  					int endPage = startPage + pageBlock - 1;	// 계산상 마지막 페이지
 		  					if(endPage > pageCount) {
@@ -158,6 +171,7 @@
 				</div>
 			</form>
 			<!-- /검색 -->
+			</div>
 		</div>
 		<!-- /page Content -->
 	</div>
