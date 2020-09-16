@@ -30,7 +30,7 @@
 			</nav>
 			
 			<div class="container">
-				<div class="col-lg-12 bg-light p-4">스크랩한 공모전</div>
+				<div class="col-lg-12 bg-light p-4"><h3>스크랩한 공모전</h3></div>
 		        <div class="col-lg-12 border border-light">
 		        	<div class="table-responsive">
 		            	<table class="table table-sm table-hover">

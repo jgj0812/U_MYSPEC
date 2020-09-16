@@ -1,13 +1,14 @@
+var href = window.location.port == "" ? window.location.href : window.location.protocol + "//" + window.location.host + ":" + window.location.port + window.location.pathname
 
-function twitter(comm_num) {
-	window.location.href = 'https://twitter.com/intent/tweet?text=MySpec 공유하기&url=http://192.168.0.42:8086/U_MYSPEC/community/detailView.jsp?comm_num=' + comm_num;
+function twitter() {
+	window.location.href = 'https://twitter.com/intent/tweet?text=MySpec 공유하기&url=' + href;
 }
 
 function facebook(comm_num){
 	window.location.href='https://www.facebook.com/sharer/sharer.php?u=http://192.168.0.42:8086/U_MYSPEC/community/detailView.jsp?comm_num=' + comm_num;
 }
-function line(comm_num){
-	window.location.href='https://social-plugins.line.me/lineit/share?url=http://192.168.0.42:8086/U_MYSPEC/community/detailView.jsp?comm_num=' + comm_num;
+function line(){
+	window.location.href='https://social-plugins.line.me/lineit/share?url=' + href;
 }
 
 // header 검색 버튼

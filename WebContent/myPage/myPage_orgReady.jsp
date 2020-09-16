@@ -30,10 +30,10 @@
 				<%
 					switch(act_type) {
 					case 1:
-						%><h4 class="title">대외활동</h4><%
+						%><h4 class="title">승인 대기 중인 대외활동</h4><%
 						break;
 					case 2:
-						%><h4 class="title">공모전</h4><%
+						%><h4 class="title">승인 대기 중인 공모전</h4><%
 						break;
 					}
 				%>
