@@ -41,51 +41,74 @@
 	}
 }
 </style>
+<%
+
+	request.setCharacterEncoding("utf-8");
+	int member = -1;
+	if(id != null) {
+		member = (int)session.getAttribute("member");
+	}
+
+%>
 <main>
 	<div class="d-flex" id="wrapper">
-		
-		<%-- <%@ include file="/myPage/myPage_sidebar.jsp" %>
-		
-		<!-- page Content -->
-		<div id="page-content-wrapper">
-			<nav class="navbar-my navbar-expand-lg navbar-light">
-				<button id="menu-toggle" class="btn btn-link d-md-none rounded-circle">
-            		<i class="fa fa-bars"></i>
-          		</button>
-			</nav>
-			 --%>
 			 <br>
 			<div class="container" style="text-align: center;">
 			
 			<div class="container py-3 bg-light" style="text-align: center;">
 				<h4 style="margin-top: 8px;">마이페이지</h4>
 			</div>
-			
-			<button class="mypage_button" onclick = "location.href = 'myPage_myList.jsp'">
-				<p class="button_title">내가 작성한 글<p>
-				<p class="button_Explanation">커뮤니티에 작성한 글 목록을<br> 볼 수 있습니다<p>
-			</button>
-			<button class="mypage_button" onclick = "location.href = 'myPage_myComment.jsp'">
-				<p class="button_title">댓글 작성한 글<p>
-				<p class="button_Explanation">커뮤니티에 작성한 댓글이 달린 글 목록을<br> 볼 수 있습니다<p>
-			</button>
-			<button class="mypage_button" onclick = "location.href = 'myPage_actScrap.jsp'">
-				<p class="button_title">스크랩한 대외활동<p>
-				<p class="button_Explanation">스크랩한 대외활동 목록을<br> 볼 수 있습니다<p>
-			</button>
-			<button class="mypage_button" onclick = "location.href = 'myPage_conScrap.jsp'">
-				<p class="button_title">스크랩한 공모전<p>
-				<p class="button_Explanation">스크랩한 공모전 목록을<br> 볼 수 있습니다<p>
-			</button>
-			<button class="mypage_button" onclick = "location.href = 'myPage_info.jsp'">
-				<p class="button_title">회원정보 변경<p>
-				<p class="button_Explanation">닉네임, 연락처, 이메일, 비밀번호를<br> 변경할 수 있습니다<p>
-			</button>
-			<button class="mypage_button" onclick = "location.href = 'myPage_delete.jsp'">
-				<p class="button_title">회원탈퇴<p>
-				<p class="button_Explanation">MySpec!을 회원탈퇴<br> 할 수 있습니다 <p>
-			</button>
-	
+			<% if(member == 0){ %>
+				<button class="mypage_button" onclick = "location.href = 'myPage_myList.jsp'">
+					<p class="button_title">내가 작성한 글<p>
+					<p class="button_Explanation">커뮤니티에 작성한 글 목록을<br> 볼 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_myComment.jsp'">
+					<p class="button_title">댓글 작성한 글<p>
+					<p class="button_Explanation">커뮤니티에 작성한 댓글이 달린 글 목록을<br> 볼 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_actScrap.jsp'">
+					<p class="button_title">스크랩한 대외활동<p>
+					<p class="button_Explanation">스크랩한 대외활동 목록을<br> 볼 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_conScrap.jsp'">
+					<p class="button_title">스크랩한 공모전<p>
+					<p class="button_Explanation">스크랩한 공모전 목록을<br> 볼 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_info.jsp'">
+					<p class="button_title">회원정보 변경<p>
+					<p class="button_Explanation">닉네임, 연락처, 이메일, 비밀번호를<br> 변경할 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_delete.jsp'">
+					<p class="button_title">회원탈퇴<p>
+					<p class="button_Explanation">MySpec!을 회원탈퇴<br> 할 수 있습니다 <p>
+				</button>
+			<%} else { %>
+				<button class="mypage_button" onclick = "location.href = 'myPage_orgRecru.jsp?act_type=1'">
+					<p class="button_title">모집중인 대외활동<p>
+					<p class="button_Explanation">모집중인 대외활동목록을<br> 볼 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_orgRecru.jsp?act_type=2'">
+					<p class="button_title">모집중인 공모전<p>
+					<p class="button_Explanation">모집중인 공모전 목록을<br> 볼 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_orgReady.jsp?act_type=1'">
+					<p class="button_title">승인 대기 중 대외활동<p>
+					<p class="button_Explanation">승인 대기 중인 대외활동 목록을<br> 볼 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_orgReady.jsp?act_type=2'">
+					<p class="button_title">승인 대기 중  공모전<p>
+					<p class="button_Explanation">승인 대기 중인 공모전 목록을<br> 볼 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_info.jsp'">
+					<p class="button_title">회원정보 변경<p>
+					<p class="button_Explanation">담당자명, 연락처, 이메일, 비밀번호를<br> 변경할 수 있습니다<p>
+				</button>
+				<button class="mypage_button" onclick = "location.href = 'myPage_delete.jsp'">
+					<p class="button_title">회원탈퇴<p>
+					<p class="button_Explanation">MySpec!을 <br>회원탈퇴 할 수 있습니다 <p>
+				</button>
+			<%} %>
 			</div>
 		</div>
 		<!-- /#page Content -->

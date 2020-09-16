@@ -17,49 +17,52 @@
 	int count = comMgr.community_Count(keyField, keyWord);
 %>
 	<div class="container">
-    	<h2>검색</h2>
+    	<div style="text-align: center; margin-top: 20px; margin-bottom: 20px">
+			<h2>'<%=keyWord %>' 검색결과</h2>
+		</div>
      
-      	<!-- navbar (card 방식) -->
-     	<nav class="navbar  bg-light card-header  ">
+      		<!-- navbar (card 방식) -->
+      	<nav class="navbar card-header" style="background-color: white; border: 0px">
         
-        	<a class="p-4 col-lg-4 text-center border border-white d-none d-lg-table-cell rounded-left"
-        	href="search.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
-            	전체
+        	<a href="search.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>"
+          	class="p-4 col-lg-4 text-center border border-lightgray d-none d-lg-table-cell rounded-left">
+          		전체
           	</a>
-          	<a class="p-4 col-lg-4 text-center border border-white d-none d-lg-table-cell"
-          	href="searchAct.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
+          	<a href="searchAct.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>"
+          	class="p-4 col-lg-4 text-center border border-lightgray d-none d-lg-table-cell">
           		모집중인 활동
-           	</a>
+          	</a>
 
-           	<a class="p-4 col-lg-4 text-center border border-white d-none d-lg-table-cell rounded-right"
-           	href="searchCom.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
+          	<a class="p-4 col-lg-4 text-center d-none d-lg-table-cell rounded-right" style="border: 1px solid #1dcdff; color:#1dcdff;"
+          	href="searchCom.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
             	커뮤니티
           	</a>
+          	
           	<!-- navbar mobile -->
-            <a class=" col-3 col-xs-4 text-center border border-white d-block d-sm-none rounded-left"
-            href="search.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
-            	<small>전체</small>
+          	<a href="search.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>"
+          	class=" col-3 col-xs-4 text-center border border-lightgray d-block d-sm-none rounded-left p-3">
+          		<small>전체</small>
           	</a>
-          	<a class=" col-5 col-sm-4 text-center border border-white d-block d-sm-none"
+          	<a class=" col-5 col-sm-4 text-center border border-lightgray d-block d-sm-none p-3"
           	href="searchAct.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
           		<small>모집중인 활동 </small>
           	</a>
 
-          	<a class=" col-4 col-xs-4 text-center border border-white d-block d-sm-none rounded-right"
+          	<a class=" col-4 col-xs-4 text-center d-block d-sm-none rounded-right p-3" style="border: 1px solid #1dcdff; color:#1dcdff;"
           	href="searchCom.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
           		<small>커뮤니티</small>
           	</a>
-           	<!-- /navbar mobile -->
+          	<!-- /navbar mobile -->
       	</nav>
       	<!-- /navbar -->
 
    	  	<!-- 활동 -->
 	</div>
-	
+	<br>
 	<!-- 커뮤니티 -->
-	<div class="container mt-5">
-		<div class="col-lg-12 bg-light p-4">커뮤니티<button class="d-flex ml-auto btn btn-secondary btn-sm">더보기</button></div>
-        	<div class="col-lg-12 border border-light">
+	<div class="container" style="padding:0px; border: 1px solid lightgray;">
+		<div class="col-lg-12 bg-light p-4" style="text-align: center; font-size: 22px">커뮤니티</div>
+        	<div class="col-lg-12 border border-light"  style="padding: 0px">
         		<div class="table-responsive">
             		<table class="table table-sm table-hover">
               			<thead>
@@ -108,6 +111,8 @@
 		</div>
 	</div>
     <!-- /커뮤니티 -->
+    
+    <br>
     
     <!-- 페이징 -->
 	<div class="form-inline justify-content-center">		

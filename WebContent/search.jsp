@@ -10,36 +10,39 @@
 	ArrayList<CommunityBean> searchComArr = mgr.Community_list(1, 5, keyField, keyWord);
 	ArrayList<ActivityBean> searchActArr = actMgr.searchActivity(1, 5, keyField1, keyWord);
 %>
-	<div class="container">
-		<h2>검색</h2>
+	<div class="container" >
+		<div style="text-align: center; margin-top: 20px; margin-bottom: 20px">
+			<h3>'<%=keyWord %>' 검색결과</h3>
+		</div>
      
       	<!-- navbar (card 방식) -->
-      	<nav class="navbar  bg-light card-header  ">
+      	<nav class="navbar card-header" style="background-color: white; border: 0px">
         
         	<a href="search.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>"
-          	class="p-4 col-lg-4 text-center border border-white d-none d-lg-table-cell rounded-left">
+          	class="p-4 col-lg-4 text-center d-none d-lg-table-cell rounded-left"  style="border: 1px solid #1dcdff; color:#1dcdff;">
           		전체
           	</a>
           	<a href="searchAct.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>"
-          	class="p-4 col-lg-4 text-center border border-white d-none d-lg-table-cell">
+          	class="p-4 col-lg-4 text-center border border-lightgray d-none d-lg-table-cell">
           		모집중인 활동
           	</a>
 
-          	<a class="p-4 col-lg-4 text-center border border-white d-none d-lg-table-cell rounded-right"
+          	<a class="p-4 col-lg-4 text-center border border-lightgray d-none d-lg-table-cell rounded-right"
           	href="searchCom.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
             	커뮤니티
           	</a>
+          	
           	<!-- navbar mobile -->
           	<a href="search.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>"
-          	class=" col-3 col-xs-4 text-center border border-white d-block d-sm-none rounded-left">
+          	class=" col-3 col-xs-4 text-center d-block d-sm-none rounded-left p-3" style="border: 1px solid #1dcdff; color:#1dcdff;">
           		<small>전체</small>
           	</a>
-          	<a class=" col-5 col-sm-4 text-center border border-white d-block d-sm-none"
+          	<a class=" col-5 col-sm-4 text-center border border-lightgray d-block d-sm-none  p-3"
           	href="searchAct.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
           		<small>모집중인 활동 </small>
           	</a>
 
-          	<a class=" col-4 col-xs-4 text-center border border-white d-block d-sm-none rounded-right"
+          	<a class=" col-4 col-xs-4 text-center border border-lightgray d-block d-sm-none rounded-right  p-3"
           	href="searchCom.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>">
           		<small>커뮤니티</small>
           	</a>
@@ -47,10 +50,13 @@
       	</nav>
       	<!-- /navbar -->
 	</div>
+	<br>
 	<!-- 활동 -->
-    <div class="container ">
-    	<div class="col-lg-12 bg-light p-4">모집중인 활동<button class="d-flex ml-auto btn btn-secondary btn-sm">더보기</button></div>
-        <div class="col-lg-12 border border-light">
+    <div class="container " style="padding:0px; border: 1px solid lightgray;">
+    	<div class="col-lg-12 bg-light p-3" style="text-align: center; font-size: 22px">모집중인 활동
+    		<button class="d-flex ml-auto btn btn-secondary btn-sm" onclick = "location.href = 'searchAct.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>'">더보기</button>
+    	</div>
+        <div class="col-lg-12 border border-light" style="padding: 0px">
         	<div class="table-responsive">
             	<table class="table table-sm table-hover">
               		<tbody>
@@ -84,9 +90,10 @@
     <!-- /활동 -->
 
     <!-- 커뮤니티 -->
-    <div class="container mt-5">
-    	<div class="col-lg-12 bg-light p-4">커뮤니티<button class="d-flex ml-auto btn btn-secondary btn-sm">더보기</button></div>
-        <div class="col-lg-12 border border-light">
+    <div class="container mt-5" style="padding:0px; border: 1px solid lightgray;">
+    	<div class="col-lg-12 bg-light p-3" style="text-align: center; font-size: 22px">커뮤니티
+    		<button class="d-flex ml-auto btn btn-secondary btn-sm" onClick="location.href = 'searchCom.jsp?keyField=<%=keyField %>&keyField1=<%=keyField1 %>&keyWord=<%=keyWord %>'">더보기</button></div>
+        <div class="col-lg-12 border border-light" style="padding: 0px">
         	<div class="table-responsive">
             	<table class="table table-sm table-hover">
               		<thead>
@@ -135,4 +142,6 @@
 		</div>
 	</div>
     <!-- /커뮤니티 -->
+    <br>
+    <br>
 <%@ include file="/footer.jsp" %>
