@@ -37,10 +37,11 @@
 		            		<thead>
 						 		<tr class="d-flex">
 						 			<th class="col-md-1 d-none d-lg-table-cell">썸네일</th>
-						 			<th class="col-md-6 d-none d-lg-table-cell">제목</th>
+						 			<th class="col-md-5 d-none d-lg-table-cell">제목</th>
 						 			<th class="col-md-2 d-none d-lg-table-cell">주최기관</th>
 						 			<th class="col-md-2 d-none d-lg-table-cell">디데이</th>
 						 			<th class="col-md-1 d-none d-lg-table-cell">조회수</th>
+						 			<th class="col-md-1 d-none d-lg-table-cell">삭제</th>
 						 		</tr>
 						 	</thead>
 		              		<tbody>
@@ -53,7 +54,7 @@
 		                    			<img class="" width="100%" src="../upload/<%=bean.getAct_thumb() %>"  alt="썸네일" />
 		                    		</div>
 		                  		</td>
-		                  		<td class="col-md-6">
+		                  		<td class="col-md-5">
 		                    		<a href="../contest/list_con_detail.jsp?act_num=<%=bean.getAct_num() %>" class="h5  d-none d-lg-table-cell">
 		                    			<%=bean.getAct_title() %>
 		                    		</a>
@@ -63,12 +64,22 @@
 		                    		<div class="d-block d-sm-none">
 		                      			<small> <%=bean.getOrg_name() %> <p class="badge badge-secondary">D-<%=bean.getAct_dday() %></p> 조회수 <%=bean.getAct_hits() %></small>
 		                    		</div>
+		                    		<div class="d-block d-sm-none d-flex justify-content-end">
+		                    			<a href="scrapDeletePro.jsp?act_num=<%=bean.getAct_num() %>&scrap_person=<%=bean.getScrap_person() %>" class="btn btn-danger mr-2">
+		                    				삭제
+		                    			</a>
+		                    		</div>
 		                  		</td>
 		                  		<td class="col-md-2 d-none d-lg-table-cell"><%=bean.getOrg_name() %></td>
 		                  		<td class="col-md-2 d-none d-lg-table-cell">
 		                  			<p class="badge badge-secondary">D-<%=bean.getAct_dday() %></p>
 		                  		</td>
 		                  		<td class="col-md-1 d-none d-lg-table-cell"><%=bean.getAct_hits() %></td>
+		                  		<td class="col-md-1 d-none d-lg-table-cell">
+		                  			<a href="scrapDeletePro.jsp?act_num=<%=bean.getAct_num() %>&scrap_person=<%=bean.getScrap_person() %>" class="btn btn-danger m-2">
+		                  				삭제
+		                  			</a>
+		                  		</td>
 		                	</tr>
 		                	<%} %>
 		              		</tbody>

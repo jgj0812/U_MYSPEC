@@ -131,7 +131,7 @@
 								if(i == currentPage) {
 				   	%>		   	
 				    	<li class="page-item active">
-				    		<a class="page-link text-dark" href="#">
+				    		<a class="page-link" href="#">
 				    			<%= i %>
 				    		</a>
 				    	</li>

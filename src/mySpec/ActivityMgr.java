@@ -1,6 +1,5 @@
 package mySpec;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -609,50 +608,6 @@ public class ActivityMgr {
 		return actreply_arr;
 	}
 	
-//	// ��湲� ��蹂� : ActivityReplyBean 留� �ㅺ��ㅺ린, ��蹂� 蹂닿린��
-//
-//	public ActivityReplyBean act_reply_target(int rep_num) {
-//		Connection con = null;
-//		Statement st = null;
-//		ResultSet rs = null;
-//		String sql = "select ar.*, o.org_name from "	
-//				+ "(select r.*, p.person_nick from "
-//				+ "act_reply r left outer join person_user p "
-//				+ "on r.rep_person = p.person_id "
-//				+ "where rep_num = "+ rep_num + ") ar "
-//				+ "left outer join org_user o "
-//				+ "on ar.rep_org = o.org_id "
-//				+ " order by rep_ref desc, rep_pos asc";
-//		
-//		ArrayList<ActivityReplyBean> actreply_target = new ArrayList<ActivityReplyBean>();
-//
-//		try {
-//			con = pool.getConnection();
-//			st = con.prepareStatement(sql);
-//			rs = st.executeQuery(sql);
-//			
-//			if(rs.next()) {
-//				ActivityReplyBean  actT = new ActivityReplyBean();
-//				actT.setRep_num(rs.getInt("rep_num"));
-//				actT.setRep_act(rs.getInt("rep_act"));
-//				actT.setRep_person(rs.getString("rep_person"));
-//				actT.setRep_org(rs.getString("rep_org"));
-//				actT.setRep_orgName(rs.getString("org_name"));
-//				
-//				actreply_target.add(actT);
-//			}
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			pool.closeConnection(con, st, rs);
-//		}
-//		
-//		return actreply_target;
-//		
-//	}
-	
-
 	// 媛��명���� ��湲� �깅�
 	public int act_reply_insertPerson (ActivityReplyBean actR, String id, int act_num, int rep_parent) {
 
@@ -774,7 +729,7 @@ public class ActivityMgr {
 	}
 	
 	
-	//��湲� ����
+	// 댓글 삭제
 	public int act_reply_delete (int actrep_num, int rep_parent) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -807,7 +762,7 @@ public class ActivityMgr {
 		return re;
 	}
 	
-	//��湲� ����
+	// 댓글 수정
 	public int act_reply_update (ActivityReplyBean actRB) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -830,7 +785,7 @@ public class ActivityMgr {
 		return re;
 	}
   
-  	// 愿�由ъ�� ���명���� 由ъ�ㅽ��
+  	// 관리자 대외활동 리스트
 	public ArrayList<ActivityBean> adminActivityList(int startRow, int endRow, String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -889,7 +844,7 @@ public class ActivityMgr {
 		return adminActArr;
 	}
 	
-	// 愿�由ъ�� ���명���� ��
+	// 관리자 대외활동 수
 	public int adminActivityCount(String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -919,7 +874,7 @@ public class ActivityMgr {
 		return count;
 	}
 	
-	// 愿�由ъ�� 怨듬え�� 由ъ�ㅽ��
+	// 관리자 공모전 리스트
 	public ArrayList<ActivityBean> adminContestList(int startRow, int endRow, String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -978,7 +933,7 @@ public class ActivityMgr {
 		return adminConArr;
 	}
 	
-	// 愿�由ъ�� 怨듬え�� ��
+	// 관리자 공모전 수
 	public int adminContestCount(String keyField, String keyWord) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1008,7 +963,7 @@ public class ActivityMgr {
 		return count;
 	}
 	
-	// ���명����, 怨듬え�� ����
+	// 대외활동 공모전 삭제
 	public int deleteActCon(int act_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1029,7 +984,7 @@ public class ActivityMgr {
     return re;
 	}
 	
-	// ���명����, 怨듬え�� �뱀��
+	// 대외활동, 공모전 승인
 	public int approveActCon(int act_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1050,7 +1005,7 @@ public class ActivityMgr {
 		return re;
 	}
 	
-	// �멸린 ���명���� 由ъ�ㅽ��
+	// 인기 대외활동 리스트
 	public ArrayList<ActivityBean> popActivityList(int stratRow, int endRow) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1090,7 +1045,7 @@ public class ActivityMgr {
 		return popActArr;
 	}
 	
-	// �멸린 怨듬え�� 由ъ�ㅽ��
+	// 인기 공모전 리스트
 	public ArrayList<ActivityBean> popContestList(int startRow, int endRow) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1130,7 +1085,7 @@ public class ActivityMgr {
 		return popConArr;
 	}
 	
-	// �ㅽ�щ�⑺�� ���명����
+	// 스크랩한 대외활동
 	public ArrayList<ActivityBean> actScrapList(int startRow, int endRow, String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1165,6 +1120,7 @@ public class ActivityMgr {
 				bean.setAct_hits(rs.getInt("act_hits"));
 				bean.setAct_dday(rs.getInt("act_dday"));
 				bean.setOrg_name(rs.getString("org_name"));
+				bean.setScrap_person(rs.getString("scrap_person"));
 				actScrapArr.add(bean);
 			}
 		} catch (Exception e) {
@@ -1175,7 +1131,7 @@ public class ActivityMgr {
 		return actScrapArr;
 	}
 	
-	// �ㅽ�щ�⑺�� ���명���� ��
+	// 스크랩한 대외활동 수
 	public int actScrapCount(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1204,7 +1160,7 @@ public class ActivityMgr {
 		return count;
 	}
 	
-	// �ㅽ�щ�⑺�� 怨듬え��
+	// 스크랩한 공모전
 	public ArrayList<ActivityBean> conScrapList(int startRow, int endRow, String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1239,6 +1195,7 @@ public class ActivityMgr {
 				bean.setAct_hits(rs.getInt("act_hits"));
 				bean.setAct_dday(rs.getInt("act_dday"));
 				bean.setOrg_name(rs.getString("org_name"));
+				bean.setScrap_person(rs.getString("scrap_person"));
 				conScrapArr.add(bean);
 			}
 		} catch (Exception e) {
@@ -1249,7 +1206,7 @@ public class ActivityMgr {
 		return conScrapArr;
 	}
 	
-	// �ㅽ�щ�� 怨듬え�� ��
+	// 스크랩 공모전 수
 	public int conScrapCount(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -1276,5 +1233,28 @@ public class ActivityMgr {
 			pool.closeConnection(con, pstmt, rs);
 		}
 		return count;
+	}
+	
+	// 스크랩 제거
+	public int scrapDelete(int act_num, String scrap_person) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int re = 0;
+
+		try {
+			con = pool.getConnection();
+			sql = "delete from scrap where scrap_num=? and scrap_person=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, act_num);
+			pstmt.setString(2, scrap_person);
+			pstmt.executeUpdate();
+			re = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.closeConnection(con, pstmt);
+		}
+		return re;
 	}
 }
