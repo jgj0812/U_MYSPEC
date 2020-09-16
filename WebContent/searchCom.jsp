@@ -92,10 +92,12 @@
 		 						<%} %>
                   				<td class="col-md-1 d-none d-lg-table-cell"><%=Type %></td>
                   				<td class="col-md-5">
-                    				<a class="h5 d-none d-lg-table-cell">
+                    				<a href="community/detailView.jsp?comm_num=<%=bean.getComm_num() %>" class="h5 d-none d-lg-table-cell">
                     					<%=bean.getComm_title() %>
                     				</a>
-                    				<a class="d-block d-sm-none text-truncate" style="max-width: 300px;"><%=bean.getComm_title() %></a>
+                    				<a href="community/detailView.jsp?comm_num=<%=bean.getComm_num() %>" class="d-block d-sm-none text-truncate" style="max-width: 300px;">
+                    					<%=bean.getComm_title() %>
+                    				</a>
                     				<p class="d-block d-sm-none">
                       					<small><%=person %> <%=date_1%> 조회 <%=bean.getComm_hits() %></small>
                     				</p>
