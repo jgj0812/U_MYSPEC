@@ -1152,13 +1152,8 @@ function rereply(i){
 
 // 댓글 수정 폼 숨기고 보여주기
 function update(i){
-	var content =document.getElementById("re_content"+i).innerHTML;
 	
-	$(function(){
-        $("#re_upcontent").val(content);
-    });
-	
-	var update = document.getElementById("update");
+	var update = document.getElementById("update"+i);
 	var basic = document.getElementById("basic" + i);
 	
 	if(update.style.display =='none'){
@@ -1172,7 +1167,7 @@ function update(i){
 
 // 댓글 수정 취소
 function updatecancel(i){
-	var update = document.getElementById("update");
+	var update = document.getElementById("update"+i);
 	var basic = document.getElementById("basic" + i);
 	if(update.style.display =='block'){
 		update.style.display = 'none';

@@ -557,8 +557,7 @@ private DBConnection pool;
 		}
 		return alistorg;
 	}
-	
-
+  
 //	MyPage 수정(개인)
 	public int updatePerson(PersonBean pup, String pwd) {
 		Connection con = null;

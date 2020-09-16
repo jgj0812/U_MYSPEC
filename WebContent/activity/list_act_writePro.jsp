@@ -72,10 +72,10 @@
 	
 	switch(act_type) {
 	case 1:
-		response.sendRedirect("/activity/list_act.jsp");
+		response.sendRedirect("../activity/list_act.jsp");
 		break;
 	case 2:
-		response.sendRedirect("/contest/list_con.jsp");
+		response.sendRedirect("../contest/list_con.jsp");
 		break;
 	}
 %>
