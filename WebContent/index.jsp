@@ -83,7 +83,7 @@
               		<h4 class="card-title"><%=bean.getAct_title() %></h4>
               		<p class="card-text">
                 		<%=bean.getOrg_name() %><br>
-                		D-<%=bean.getAct_dday() %> 조회수 <%=bean.getAct_hits() %> 댓글 스크랩
+                		D-<%=bean.getAct_dday() %> 조회수 <%=bean.getAct_hits() %>
               		</p>
             	</div>
           	</a>
@@ -120,7 +120,7 @@
               		<h4 class="card-title"><%=bean.getAct_title() %></h4>
               		<p class="card-text">
                 		<%=bean.getOrg_name() %><br>
-                		D-<%=bean.getAct_dday() %> 조회수 <%=bean.getAct_hits() %> 댓글 스크랩
+                		D-<%=bean.getAct_dday() %> 조회수 <%=bean.getAct_hits() %>
               		</p>
             	</div>
           	</a>
