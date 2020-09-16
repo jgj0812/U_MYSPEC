@@ -65,8 +65,10 @@
               					String actType = bean.getAct_type() == 1 ? "대외활동" : "공모전";
               			%>
                 		<tr class="d-flex">
-                  			<td class="col-md-1 col-4 d-flex align-items-center">
-                    			<img class="" width="100%" src="./upload/<%=bean.getAct_thumb() %>"  alt="썸네일" />
+                  			<td class="col-md-1 col-4">
+                  				<div class="thumbnail">
+                    				<img class="" width="100%" src="./upload/<%=bean.getAct_thumb() %>"  alt="썸네일" />
+                    			</div>
                   			</td>
                   			<td class="col-md-1 d-none d-lg-table-cell"><%=actType %></td>
                   			<td class="col-md-5">
