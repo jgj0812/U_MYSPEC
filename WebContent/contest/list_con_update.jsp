@@ -46,7 +46,9 @@
 			<div class="section">
 				<div class="row">
 					<div class="col-md-4">
+						<div class="thumbnail">
 						<img src="../upload/<%=activity.getAct_thumb()%>" width="100%" id="thumb_image"/>
+						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-prepend">
 								<div class="input-group-text">썸네일</div>
