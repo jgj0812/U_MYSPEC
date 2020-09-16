@@ -18,7 +18,7 @@
 	ArrayList<CommunityBean> comm_arr = new ArrayList<CommunityBean>(); //일반글 arraylist
 	
 	//페이징
-	int pageSize = 5;	// 한 화면에 보여지는 게시글 수
+	int pageSize = 10;	// 한 화면에 보여지는 게시글 수
 	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null) {
 		pageNum = "1";
@@ -41,6 +41,8 @@
 	int count = mgr.community_Count(keyField, keyWord); //게시글 갯수
 	
 	ArrayList<CommunityBean> noticeArr = mgr.noticeList(1, 5, "", "");
+	
+	int number = count - (currentPage-1)*pageSize;
 	
 	
 %>
@@ -98,7 +100,7 @@
 		}
 		if(comm_arr.isEmpty()) {	%>
 			<tr>
-				<td style="text-align: center;"> <h5> 결과가 없습니다.</h5></td>	 			
+				<td style="text-align: center;"> <h5> 게시글이 없습니다.</h5></td>	 			
 			</tr>			
 		
 	<% } else {
@@ -111,10 +113,11 @@
 			String date_1 = date[0];
 			int comm_num = commB.getComm_num();
 			int recount = Remgr.Community_reply_count(comm_num);
+			
 %>	
 			<!-- 일반글 -->
 		 		<tr class="d-flex">
-		 			<td class="col-md-1 d-none d-lg-table-cell"> <%=commB.getComm_num() %></td>
+		 			<td class="col-md-1 d-none d-lg-table-cell"> <%=number-- %></td>
 		 			<td class="col-md-1 d-none d-lg-table-cell">일반게시판</td>
 		 			<td class="col-md-5">
 		 				<a href="detailView.jsp?comm_num=<%=comm_num%>" class="h5 text-dark">
@@ -138,9 +141,10 @@
 	<!-- 글쓰기 -->
 	<div class="form-inline justify-content-end">
 		<a href="community.jsp" class="btn btn-com">전체글보기</a>&nbsp;
-		<button type="button" class="btn btn-com d-none d-md-block"  
+		<button type="button" class="btn btn-com d-none d-md-block"   
 		onclick="comm_write('<%=id%>',<%=member%>)">글쓰기</button>
 	</div>
+	<br>
 	
 	
 	<!-- 페이징 -->
@@ -150,7 +154,7 @@
 			<%	if(count > 0) { 	
 					// 총 페이지 수 구하기, 전체 글개수 나누기 페이지사이즈(한 화면에 보여지는 수)
 					int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);	 					
-					int pageBlock = 4;	// 이전 다음 나오게 하는것			
+					int pageBlock = 8;	// 이전 다음 나오게 하는것			
 					int startPage = (int)((currentPage - 1) / pageBlock) * pageBlock + 1; 
 					int endPage = startPage + pageBlock - 1;				
 						if(endPage > pageCount) { 

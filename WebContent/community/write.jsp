@@ -15,10 +15,6 @@
 			<div class="row">
 				<!--  comm_type 공지사항인지 일반글인지 -->
 				<div style="margin-left:20px; font-family:Noto Sans KR; font-weight:bolder;">게시판</div>
-				<!-- <select name="comm_type" class="form-control col-3" style="margin-left:20px;">
-					<option value="0">공지</option>
-					<option value="1">자유 게시판</option>
-				</select> -->
 				<input type="hidden" name="comm_type" value="1">
 			</div>
 			

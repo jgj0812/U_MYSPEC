@@ -34,13 +34,12 @@
 				<button id="menu-toggle" class="btn btn-link d-md-none rounded-circle">
             		<i class="fa fa-bars"></i>
           		</button>
-                <h2>MY 페이지</h2>
 			</nav>
 			
 			<!-- 내용 -->
 			<div class="container">
 				<div class="container py-3 d-flex justify-content-between bg-light">
-					<h3>댓글 쓴 글 리스트</h3>
+					<h3>댓글 작성한 글</h3>
 				</div>
 			
 				<!-- 테이블 -->
@@ -111,7 +110,7 @@
 										if(startPage > pageBlock) {
 								%>	
 							    	<li class="page-item">
-							      		<a class="page-link" href="myPage_myComment.jsp?pageNum=<%=startPage - pageBlock%>" aria-label="Previous">
+							      		<a class="page-link" href="myPage_myComment.jsp?pageNum=<%=startPage - pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Previous">
 							        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">이전</span>
 							        		<span class="sr-only">Previous</span>
 							      		</a>
@@ -133,7 +132,7 @@
 											} else {
 							    %>
 							    	<li class="page-item">
-							    		<a class="page-link text-dark" href="myPage_myComment.jsp?pageNum=<%= i %>">
+							    		<a class="page-link text-dark" href="myPage_myComment.jsp?pageNum=<%= i %>&keyWord=<%=keyWord%>&keyField=<%=keyField%>">
 							    			<%= i %>
 							    		</a>
 							    	</li>
@@ -145,7 +144,7 @@
 										if(endPage < pageCount) {
 							    %>
 							    	<li class="page-item">
-							      		<a class="page-link" href="myPage_myComment.jsp?pageNum=<%=startPage + pageBlock%>" aria-label="Next">
+							      		<a class="page-link" href="myPage_myComment.jsp?pageNum=<%=startPage + pageBlock%>&keyWord=<%=keyWord%>&keyField=<%=keyField%>" aria-label="Next">
 							        		<span aria-hidden="true" class="text-dark" style="font-weight:bolder;">다음</span>
 							        		<span class="sr-only">Next</span>
 							      		</a>
@@ -159,7 +158,7 @@
 				</div>
 				<!-- /페이징 -->
 				<!-- 검색 -->
-				<form method="post" id="commSearchFrm" class="form-inline justify-content-center">
+				<form method="get" id="commSearchFrm" class="form-inline justify-content-center">
 					<input type="hidden" name="pageNum" value="1">
 					
 					<select name="keyField" class="form-control" id="search_control">

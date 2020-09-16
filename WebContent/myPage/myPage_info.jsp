@@ -52,7 +52,6 @@
 				<button id="menu-toggle" class="btn btn-link d-md-none rounded-circle">
             		<i class="fa fa-bars"></i>
           		</button>
-                <h2>MY 페이지</h2>
 			</nav>
 			
 			
@@ -72,13 +71,13 @@
 				      <div class="col-md-6 col-sm-12">
 				        <div class="from-group">
 				          <label>ID</label>
-				          <input type="text" name="id" class="form-control" value="<%=id%>" readonly />
+				          <input type="text" name="id" class="form-control" value="<%=id%>" style="margin-bottom: 13px" readonly />
 				        </div>
 				      </div>
 				      <div class="col-md-6 col-sm-12">
 				        <div class="from-group">
 				          <label>닉네임</label>
-				          <input type="text" name="nick" id="nick_check" class="form-control" value="<%=ip.getNick()%>"  />
+				          <input type="text" name="nick" id="nick_check" class="form-control" value="<%=ip.getNick()%>" style="margin-bottom: 13px" />
 				        </div>
 				      </div>
 				    </div>
@@ -87,16 +86,17 @@
 				      <div class="col-md-6 col-sm-12">
 				        <div class="from-group">
 				          <label>생년월일</label>
-				          <input type="text" name="birth" class="form-control" value="<%=birth%>" readonly />
+				          <input type="text" name="birth" class="form-control" value="<%=birth%>" style="margin-bottom: 13px" readonly />
 				        </div>
 				      </div>
 				      <div class="col-md-6 col-sm-12">
 				        <div class="form-group">
 				          <label>연락처</label>
-				          <input type="text" name="phone" id="phone_check" class="form-control" value="<%=ip.getPhone()%>"/>
+				          <input type="text" name="phone" id="phone_check" class="form-control" value="<%=ip.getPhone()%>" style="margin-bottom: 13px"/>
 				        </div>
 				      </div>
 				    </div>
+				    
 					<div class="form-group">
 					    <label>Email</label>
 					    <input type="email" name="email" id="email_check" class="form-control" value="<%=ip.getEmail()%>" />
