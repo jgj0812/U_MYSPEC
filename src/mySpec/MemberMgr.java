@@ -518,17 +518,16 @@ private DBConnection pool;
 		return org;
 	}
 	
-//	MyPage (단체) 활동 보기
+//	MyPage (단체)-활동내역 보기
 	public ArrayList<ActivityBean> act_Org(int act_type, String org_id) {
  		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "select a.*, org_name, trunc(act_end - sysdate) as act_dday from " 
-				+ "activity a left outer join org_user o "
-				+ "on a.act_org = o.org_id "
-				+ "where a.act_type = ? and o.org_id = ?";
-				
+		String sql = "select a.*, org_name, trunc(act_end - sysdate) as act_dday from "	// 나타낼 칼럼 + d-day 계산 
+				+ "activity a left outer join org_user o "								// 이름 정하고 붙이기
+				+ "on a.act_org = o.org_id "											// 같은 값으로 Join
+				+ "where a.act_type = ? and o.org_id = ?";								// 해당하는 type, id 찾기
 		
 		ArrayList<ActivityBean> alistorg = new ArrayList<ActivityBean>();
 		
@@ -558,9 +557,7 @@ private DBConnection pool;
 		}
 		return alistorg;
 	}
-	
-	
-	
+  
 //	MyPage 수정(개인)
 	public int updatePerson(PersonBean pup, String pwd) {
 		Connection con = null;

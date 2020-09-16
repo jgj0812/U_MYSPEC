@@ -8,7 +8,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	int act_type = Integer.parseInt(request.getParameter("act_type"));
-	String org_id = (String) session.getAttribute("id");
+	String org_id = (String) session.getAttribute("orgId");
 	MemberMgr mgr = new MemberMgr();
 %>
 <main>

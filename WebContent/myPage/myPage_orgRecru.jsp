@@ -8,7 +8,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	int act_type = Integer.parseInt(request.getParameter("act_type"));
-	String org_id = (String) session.getAttribute("id");
+	String org_id = (String) session.getAttribute("orgId");
 	MemberMgr mgr = new MemberMgr();
 %>
 <main>
@@ -47,11 +47,11 @@
 		          	ArrayList<ActivityBean> alist = agr.act_Org(act_type, org_id);
 		          	
 		          	for(int i = 0; i < alist.size(); i++) {
-		          		if(alist.get(i).getAct_approve() == 1) { // 승인여부 approve 가 1인것만 
+		          		if(alist.get(i).getAct_approve() == 1 ) {  // 승인여부 approve 가 1이면
               %>
                 <div class="col-6 col-sm-6 col-lg-3" id="col<%=i %>">
                   <a href="../activity/list_act_detail.jsp?act_num=<%=alist.get(i).getAct_num() %>"
-                    ><img src="C:\\Jsp\\U_MYSPEC\\WebContent\\upload\\<%=alist.get(i).getAct_thumb() %>"
+                    ><img src="C:\Jsp\U_MYSPEC\WebContent\upload\<%=alist.get(i).getAct_thumb() %>"
                   /></a>
                   <br />
                   <div class="list_explain">
@@ -65,7 +65,7 @@
                     수정하기
                   </a>
                 </div>
-               	<%
+               	<%	
 		          		}
 					}
 				%>
