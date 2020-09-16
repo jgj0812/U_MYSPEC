@@ -131,9 +131,9 @@ public class ActivityMgr {
 		return activityList;
 	}
 	
-	public ArrayList<ActivityBean> getActivityList(int act_type) {
+	public ArrayList<ActivityBean> getActivityList(int act_type, int length) {
 		ArrayList<ActivityBean> activityList = new ArrayList<ActivityBean>();
-		String sql = "select * from (select rownum as rn, act.* from (select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits, nvl(scraps, 0) as scraps, nvl(reps, 0) as reps from activity, org_user, (select scrap_num, count(scrap_person) as scraps from scrap group by scrap_num), (select rep_act, count(rep_num) as reps from act_reply group by rep_act) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = scrap_num(+) and act_num = rep_act(+) order by scraps desc, reps desc, act_hits desc, act_num desc)act) where rn between 1 and 10";
+		String sql = "select * from (select rownum as rn, act.* from (select act_num, act_thumb, act_title, org_name, trunc(act_end - sysdate) as act_dday, act_hits, nvl(scraps, 0) as scraps, nvl(reps, 0) as reps from activity, org_user, (select scrap_num, count(scrap_person) as scraps from scrap group by scrap_num), (select rep_act, count(rep_num) as reps from act_reply group by rep_act) where act_org = org_id and act_type = ? and act_approve = 1 and act_num = scrap_num(+) and act_num = rep_act(+) order by scraps desc, reps desc, act_hits desc, act_num desc)act) where rn between 1 and " + length;
 		try {
 			con = pool.getConnection();
 			ps = con.prepareStatement(sql);
