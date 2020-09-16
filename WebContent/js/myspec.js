@@ -584,7 +584,7 @@ function getActivityList(data) {
 		htmlStr += "<div class='list_explain'>";
 		htmlStr += "<a href='" + detailUrl +"?act_num=" + data[i].act_num + "'><div class='list_explain_title'>" + data[i].act_title + "<br></div></a>";
 		htmlStr += data[i].org_name + "<br>";
-		htmlStr += "D-" + data[i].act_dday + "&nbsp;조회수&nbsp;" + data[i].act_hits;
+		htmlStr += "D-" + data[i].act_dday + "&nbsp;조회수&nbsp;" + data[i].act_hits + "&nbsp;스크랩수&nbsp;" + data[i].act_scrap_count + "&nbsp;댓글 수&nbsp;" + data[i].act_reply_count;
 		htmlStr += "</div></div>";
 		if(i % 4 == 3) {
 			htmlStr += "</div>";
