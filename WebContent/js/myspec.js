@@ -643,7 +643,7 @@ function makePagination(data) {
 	
 	for(var i = startPage; i <= endPage; i++) {
 		if(i == page) {
-			htmlStr += "<li class='page-item active' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
+			htmlStr += "<li class='page-item active' onclick='getPage(" + i + ")'><a class='page-link' href='#'>" + i + "</a></li>";
 			continue;
 		}
 		htmlStr += "<li class='page-item' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
