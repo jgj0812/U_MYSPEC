@@ -29,7 +29,7 @@
 			where += " or act_field=" + act_field[i];
 		}
 		where += ")";
-	}
+	}	
 	if((params = request.getParameterValues("interest_num")) != null) {
 		interest_num = Arrays.stream(params).mapToInt(Integer::parseInt).toArray();
 		if(where == "") {
@@ -69,7 +69,7 @@
 	
 	int count = manager.getActivityCount(act_type, where);
 	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-	int pageBlock = 4; // pagePerBlock
+	int pageBlock = 8; // pagePerBlock
 	int startPage = (int) ((pageNum - 1) / pageBlock) * pageBlock + 1;
 	int endPage = startPage + pageBlock - 1;
 	if(endPage > pageCount) {

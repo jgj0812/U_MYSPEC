@@ -84,7 +84,7 @@
 	
 	int count = manager.getActivityCount(act_type, where);
 	int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-	int pageBlock = 4; // pagePerBlock
+	int pageBlock = 8; // pagePerBlock
 	int startPage = (int) ((pageNum - 1) / pageBlock) * pageBlock + 1;
 	int endPage = startPage + pageBlock - 1;
 	if(endPage > pageCount) {

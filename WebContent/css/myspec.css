@@ -327,3 +327,9 @@ a, a:hover {
 .note-modal .modal-dialog .modal-content .modal-header .close {
   color: #ffffff;
 }
+.page-item.active .page-link {
+	z-index: 3;
+	background-color: #1dcdff;
+	color: #fff;
+	border-color: #1dcdff;
+}

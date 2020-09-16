@@ -191,7 +191,7 @@ public class ActivityMgr {
 				}
 				break;
 			case 2:
-				sql = "insert into activity(act_num, act_type, act_thumb, act_title, act_org, act_target, act_start, act_end, act_field, act_award, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				sql = "insert into activity(act_num, act_type, act_thumb, act_title, act_org, act_target, act_start, act_end, act_field, act_award, act_home, act_content) values(act_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				ps = con.prepareStatement(sql);
 				ps.setInt(1, activity.getAct_type());
 				ps.setString(2, activity.getAct_thumb());
@@ -1065,9 +1065,9 @@ public class ActivityMgr {
 					+ "(select a.act_num, a.act_thumb, a.act_title, trunc(a.act_end - sysdate) as act_dday, a.act_hits, o.org_name from "
 					+ "activity a left outer join org_user o "
 					+ "on a.act_org = o.org_id "
-					+ "where act_type=1 and act_approve=1) aa) "
-					+ "where rn between ? and ? "
-					+ "order by act_hits desc";
+					+ "where act_type=1 and act_approve=1 "
+					+ "order by act_hits desc) aa) "
+					+ "where rn between ? and ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, stratRow);
 			pstmt.setInt(2, endRow);
@@ -1105,9 +1105,9 @@ public class ActivityMgr {
 					+ "(select a.act_num, a.act_thumb, a.act_title, trunc(a.act_end - sysdate) as act_dday, a.act_hits, o.org_name from "
 					+ "activity a left outer join org_user o "
 					+ "on a.act_org = o.org_id "
-					+ "where act_type=2 and act_approve=1) aa) "
-					+ "where rn between ? and ? "
-					+ "order by act_hits desc";
+					+ "where act_type=2 and act_approve=1 "
+					+ "order by act_hits desc) aa) "
+					+ "where rn between ? and ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -1143,7 +1143,7 @@ public class ActivityMgr {
 			sql = "select * from "
 					+ "(select rownum rn, aa.* from "
 					+ "(select ab.*, o.org_name from "
-					+ "(select a.*, trunc(a.act_end - sysdate), s.scrap_person from "
+					+ "(select a.*, trunc(a.act_end - sysdate) as act_dday, s.scrap_person from "
 					+ "activity a left outer join scrap s "
 					+ "on a.act_num = s.scrap_num) ab "
 					+ "left outer join org_user o "

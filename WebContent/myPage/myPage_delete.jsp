@@ -25,20 +25,16 @@
 						</div>
 						<div class="card-body text-center">
 							<p>MYSPEC! 회원탈퇴 하시겠습니까?</p>
-							<input
-		                        type="button"
-		                        id=""
-		                        value="탈퇴하기"
-		                        class="btn btn-danger col-md-4"
-		                        onclick="javascript:window.location.href='myPage_deletePro.jsp'"
-		                      />
+							<a class="btn btn-danger col-md-4"
+		                       href="myPage_deletePro.jsp?id=<%=id%>">
+		                      네
+		                    </a>
 		                      &nbsp;
-		                      <input
-		                        type="button"
-		                        value="아니오"
+		                      <a
 		                        class="btn btn-cam col-md-4"
-		                        onclick="javascript:window.location.href='myPage.jsp'"
-		                      />
+		                        href="myPage.jsp">
+		                        아니오
+		                      </a>
 						</div>
 					</div>
 				</div>

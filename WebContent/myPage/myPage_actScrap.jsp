@@ -38,7 +38,7 @@
 		            		<thead>
 						 		<tr class="d-flex">
 						 			<th class="col-md-1 d-none d-lg-table-cell">썸네일</th>
-						 			<th class="col-md-5 d-none d-lg-table-cell">제목</th>
+						 			<th class="col-md-6 d-none d-lg-table-cell">제목</th>
 						 			<th class="col-md-2 d-none d-lg-table-cell">주최기관</th>
 						 			<th class="col-md-2 d-none d-lg-table-cell">디데이</th>
 						 			<th class="col-md-1 d-none d-lg-table-cell">조회수</th>
@@ -53,8 +53,12 @@
 		                    		<img class="" width="100%" src="../upload/<%=bean.getAct_thumb() %>"  alt="썸네일" />
 		                  		</td>
 		                  		<td class="col-md-6">
-		                    		<a class="h5  d-none d-lg-table-cell"><%=bean.getAct_title() %></a>
-		                    		<a href="detailView.jsp" class="d-block d-sm-none text-truncate" style="max-width: 200px;"><%=bean.getAct_title() %></a>
+		                    		<a href="../activity/list_act_detail.jsp?act_num=<%=bean.getAct_num() %>" class="h5  d-none d-lg-table-cell">
+		                    			<%=bean.getAct_title() %>
+		                    		</a>
+		                    		<a href="../activity/list_act_detail.jsp?act_num=<%=bean.getAct_num() %>" class="d-block d-sm-none text-truncate" style="max-width: 200px;">
+		                    			<%=bean.getAct_title() %>
+		                    		</a>
 		                    		<div class="d-block d-sm-none">
 		                      			<small> <%=bean.getOrg_name() %> <p class="badge badge-secondary">D-<%=bean.getAct_dday() %></p> 조회수 <%=bean.getAct_hits() %></small>
 		                    		</div>
