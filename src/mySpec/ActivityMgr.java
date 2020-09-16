@@ -1065,9 +1065,9 @@ public class ActivityMgr {
 					+ "(select a.act_num, a.act_thumb, a.act_title, trunc(a.act_end - sysdate) as act_dday, a.act_hits, o.org_name from "
 					+ "activity a left outer join org_user o "
 					+ "on a.act_org = o.org_id "
-					+ "where act_type=1 and act_approve=1) aa) "
-					+ "where rn between ? and ? "
-					+ "order by act_hits desc";
+					+ "where act_type=1 and act_approve=1 "
+					+ "order by act_hits desc) aa) "
+					+ "where rn between ? and ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, stratRow);
 			pstmt.setInt(2, endRow);
@@ -1105,9 +1105,9 @@ public class ActivityMgr {
 					+ "(select a.act_num, a.act_thumb, a.act_title, trunc(a.act_end - sysdate) as act_dday, a.act_hits, o.org_name from "
 					+ "activity a left outer join org_user o "
 					+ "on a.act_org = o.org_id "
-					+ "where act_type=2 and act_approve=1) aa) "
-					+ "where rn between ? and ? "
-					+ "order by act_hits desc";
+					+ "where act_type=2 and act_approve=1 "
+					+ "order by act_hits desc) aa) "
+					+ "where rn between ? and ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
