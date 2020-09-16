@@ -77,8 +77,13 @@
                   		</td>
                   		<td class="col-md-1 d-none d-lg-table-cell"><%=actType %></td>
                   		<td class="col-md-5">
-                    		<a class="h5  d-none d-lg-table-cell"><%=bean.getAct_title() %></a>
-                    		<a href="detailView.jsp" class="d-block d-sm-none text-truncate" style="max-width: 200px;"><%=bean.getAct_title() %></a>
+                  			<%if(bean.getAct_type() == 1) {%>
+                    			<a href="activity/list_act_detail.jsp?act_num=<%=bean.getAct_num() %>" class="h5  d-none d-lg-table-cell"><%=bean.getAct_title() %></a>
+                    			<a href="activity/list_act_detail.jsp?act_num=<%=bean.getAct_num() %>" class="d-block d-sm-none text-truncate" style="max-width: 200px;"><%=bean.getAct_title() %></a>
+                    			<%}else { %>
+                    			<a href="contest/list_con_detail.jsp?act_num=<%=bean.getAct_num() %>" class="h5  d-none d-lg-table-cell"><%=bean.getAct_title() %></a>
+                    			<a href="contest/list_con_detail.jsp?act_num=<%=bean.getAct_num() %>" class="d-block d-sm-none text-truncate" style="max-width: 200px;"><%=bean.getAct_title() %></a>
+                    			<%} %>
                     		<div class="badge"><span class=" d-block d-sm-none badge badge-secondary rounded-pill"><%=actType %></span></div>
                     		<p class="d-block d-sm-none">
                       			<small> <%=bean.getOrg_name() %> ~<%=bean.getAct_end() %> <%=bean.getAct_hits() %></small>
