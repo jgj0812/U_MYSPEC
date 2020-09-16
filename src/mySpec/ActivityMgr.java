@@ -1143,7 +1143,7 @@ public class ActivityMgr {
 			sql = "select * from "
 					+ "(select rownum rn, aa.* from "
 					+ "(select ab.*, o.org_name from "
-					+ "(select a.*, trunc(a.act_end - sysdate), s.scrap_person from "
+					+ "(select a.*, trunc(a.act_end - sysdate) as act_dday, s.scrap_person from "
 					+ "activity a left outer join scrap s "
 					+ "on a.act_num = s.scrap_num) ab "
 					+ "left outer join org_user o "
