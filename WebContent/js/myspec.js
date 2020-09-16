@@ -599,7 +599,7 @@ function makePagination(data) {
 	var startPage = data.act_startPage;
 	var endPage = data.act_endPage;
 	var page = data.act_page;
-	var pageBlock = 4;
+	var pageBlock = 8;
 	var htmlStr = "";
 	
 	if(startPage - pageBlock > 0) {
@@ -612,7 +612,7 @@ function makePagination(data) {
 	
 	for(var i = startPage; i <= endPage; i++) {
 		if(i == page) {
-			htmlStr += "<li class='page-item active' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
+			htmlStr += "<li class='page-item active' onclick='getPage(" + i + ")'><a class='page-link' href='#'>" + i + "</a></li>";
 			continue;
 		}
 		htmlStr += "<li class='page-item' onclick='getPage(" + i + ")'><a class='page-link text-dark' href='#'>" + i + "</a></li>";
@@ -763,7 +763,7 @@ function act_submit() {
 			alert("시상규모을 입력해주세요.");
 			return;
 		}
-		if($("#act_form input[name='act_award']").val() < 0) {
+		if(isNaN($("#act_form input[name='act_award']").val()) || $("#act_form input[name='act_award']").val() < 0) {
 			alert("시상규모을 정확하게 입력해주세요.");
 			return;
 		}
@@ -833,7 +833,7 @@ function act_update(act_num) {
 		alert("마감기간을 입력해주세요.");
 		return;
 	}
-	if(startDate < currDate || startDate > endDate) {
+	if(startDate > endDate) {
 		alert("날짜를 정확하게 입력해주세요.");
 		return;
 	}
@@ -877,30 +877,21 @@ function act_update(act_num) {
 	}
 
 	formData = new FormData($("#act_reg")[0]);
-	for(var key of formData.keys()) {
-		data.append(key, formData.get(key));
-	}
+	data.append("act_reg", formData.get("act_reg"));
 
 	formData = new FormData($("#act_reward")[0]);
-	for(var key of formData.keys()) {
-		data.append(key, formData.get(key));
+	for(var value of formData.getAll("reward_num")) {
+		data.append("reward_num", value);
 	}
 	
 	formData = new FormData($("#act_field")[0]);
-	for(var key of formData.keys()) {
-		data.append(key, formData.get(key));
-	}
+	data.append("act_field", formData.get("act_field"));
 	
 	formData = new FormData($("#act_interest")[0]);
-	for(var key of formData.keys()) {
-		data.append(key, formData.get(key));
+	for(var value of formData.getAll("interest_num")) {
+		data.append("interest_num", value);
 	}
 	
-	/*
-	for(var key of data.keys()) {
-		alert(key + ":" + data.get(key));
-	}
-	*/
 	$.ajax({
 		url: "list_act_updatePro.jsp",
 		type : "POST",
@@ -938,7 +929,7 @@ function con_update(act_num) {
 		alert("마감기간을 입력해주세요.");
 		return;
 	}
-	if(startDate < currDate || startDate > endDate) {
+	if(startDate > endDate) {
 		alert("날짜를 정확하게 입력해주세요.");
 		return;
 	}
@@ -954,7 +945,7 @@ function con_update(act_num) {
 			alert("시상규모을 입력해주세요.");
 			return;
 	}
-	if($("#act_form input[name='act_award']").val() < 0) {
+	if(isNaN($("#act_form input[name='act_award']").val()) || $("#act_form input[name='act_award']").val() < 0) {
 		alert("시상규모을 정확하게 입력해주세요.");
 		return;
 	}
@@ -974,14 +965,12 @@ function con_update(act_num) {
 	}
 
 	formData = new FormData($("#act_reward")[0]);
-	for(var key of formData.keys()) {
-		data.append(key, formData.get(key));
+	for(var value of formData.getAll("reward_num")) {
+		data.append("reward_num", value);
 	}
 	
 	formData = new FormData($("#act_field")[0]);
-	for(var key of formData.keys()) {
-		data.append(key, formData.get(key));
-	}
+	data.append("act_field", formData.get("act_field"));
 	
 	/*
 	for(var key of data.keys()) {

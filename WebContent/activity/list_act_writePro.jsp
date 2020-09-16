@@ -10,7 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String upload = "C:\\Jsp\\U_MYSPEC\\WebContent\\upload";
+	String upload = request.getRealPath("upload");
 	MultipartRequest multi = new MultipartRequest(request, upload, 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
 	int act_type = Integer.parseInt(multi.getParameter("act_type"));
 	String act_thumb = multi.getFilesystemName("act_thumb");
@@ -72,10 +72,10 @@
 	
 	switch(act_type) {
 	case 1:
-		response.sendRedirect("../activity/list_act.jsp");
+		response.sendRedirect("../myPage/myPage_orgReady.jsp?act_type=1");
 		break;
 	case 2:
-		response.sendRedirect("../contest/list_con.jsp");
+		response.sendRedirect("../myPage/myPage_orgReady.jsp?act_type=2");
 		break;
 	}
 %>

@@ -11,7 +11,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	String upload = "C:\\Jsp\\U_MYSPEC\\WebContent\\upload";
+	String upload = request.getRealPath("upload");
 	MultipartRequest multi = new MultipartRequest(request, upload, 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
 	int act_num = Integer.parseInt(multi.getParameter("act_num"));
 	String act_thumb = multi.getFilesystemName("act_thumb");
