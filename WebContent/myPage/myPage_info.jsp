@@ -9,42 +9,49 @@
 <%
 	PersonBean ip = igr.infoPerson(id);
 	OrgBean op = igr.infoOrg(id);
-	String orgType = "";
-	switch(op.getType()) {
-		case 88 :
-			orgType="대기업";
-			break;
-		case 89 :
-			orgType="중소기업/스타트업";
-			break;
-		case 90 :
-			orgType="공공기관/공기업";
-			break;
-		case 91 :
-			orgType="외국계기업";
-			break;
-		case 92 :
-			orgType="중견기업";
-			break;
-		case 93 :
-			orgType="비영리단체/협회/교육재단";
-			break;
-		case 94 :
-			orgType="병원";
-			break;
-		case 95 :
-			orgType="동아리/학생자치단체";
-			break;
-		case 96 :
-			orgType="기타";
-			break;
-	}
+	
 %>
 
 <main class="">
 	<div class="d-flex" id="wrapper">
 		
 		<%@ include file="/myPage/myPage_sidebar.jsp" %>
+		
+		<%
+			String orgType = "";
+			if(member == 1) {
+				
+				switch(op.getType()) {
+					case 88 :
+						orgType="대기업";
+						break;
+					case 89 :
+						orgType="중소기업/스타트업";
+						break;
+					case 90 :
+						orgType="공공기관/공기업";
+						break;
+					case 91 :
+						orgType="외국계기업";
+						break;
+					case 92 :
+						orgType="중견기업";
+						break;
+					case 93 :
+						orgType="비영리단체/협회/교육재단";
+						break;
+					case 94 :
+						orgType="병원";
+						break;
+					case 95 :
+						orgType="동아리/학생자치단체";
+						break;
+					case 96 :
+						orgType="기타";
+						break;
+				}
+			}
+		%>
 		
 		<!-- page Content -->
 		<div id="page-content-wrapper">

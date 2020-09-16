@@ -128,20 +128,25 @@
 		<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">공유하기</h5>
+		      <div class="modal-header bg-cam text-white">
+		        <h5 class="modal-title" id="exampleModalLabel">SNS 공유하기</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
+		          <span aria-hidden="true" class="text-white">&times;</span>
 		        </button>
 		      </div>
 		      <div class="modal-body">
 		        <div class="d-flex flex-row justify-content-around">
-						<i class="fab fa-facebook-square" onclick="facebook(<%=comm_num %>)" style="font-size: 50px; color: #3b5998;"></i>	
-						<i class="fab fa-twitter-square" onclick="twitter(<%=comm_num %>)" style="font-size: 50px; color: #00acee;"></i>
-						<img src="${pageContext.request.contextPath}/img/line.png" onclick="line(<%=comm_num %>)" style="width: 50px; height: 50px;">
-
-
-					</div>
+						<i class="fab fa-facebook-square" onclick="facebook(<%=comm_num%>)" style="font-size: 50px; color: #3b5998;"></i>	
+						<i class="fab fa-twitter-square" onclick="twitter()" style="font-size: 50px; color: #00acee;"></i>
+						<img src="${pageContext.request.contextPath}/img/line.png" onclick="line()" style="width: 50px; height: 50px;">
+				</div>
+				<hr>
+				<div class="input-group">
+						<input type="text" class="form-control" value="<%=request.getRequestURL() + "?" + request.getQueryString() %>" id="copyURL">
+						<div class="input-group-append">
+							<button class="btn btn-cam" onclick="copy_to_clipboard()">복사</button>
+						</div>
+				</div>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
