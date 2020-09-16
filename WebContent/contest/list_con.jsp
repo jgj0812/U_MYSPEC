@@ -356,6 +356,6 @@
 	$.cookie("pageNum", 1);
 	
 	$(document).ready(function() {
-		getPage(1);
+		getPage($.cookie("pageNum"));
 	});
 </script>
