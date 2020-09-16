@@ -49,12 +49,28 @@
 		          		if(alist.get(i).getAct_approve() != 1 ) {  // 승인여부 approve 가 1이 아니면
               %>
                 <div class="col-6 col-sm-6 col-lg-3" id="col<%=i %>">
-                  <a href="../activity/list_act_detail.jsp?act_num=<%=alist.get(i).getAct_num() %>"
-                    >
-                    <div class="thumbnail">
-                    	<img src="../upload/<%=alist.get(i).getAct_thumb() %>"/>
-                    </div>
-                  </a>
+                    <%
+					switch(act_type) {
+					case 1:
+						%>
+							<a href="../activity/list_act_detail.jsp?act_num=<%=alist.get(i).getAct_num() %>">
+			                    <div class="thumbnail">
+			                   		<img src="../upload/<%=alist.get(i).getAct_thumb() %>"/>
+			                    </div>
+                		  </a>	
+						<%
+						break;
+					case 2:
+						%>
+							<a href="../contest/list_con_detail.jsp?act_num=<%=alist.get(i).getAct_num() %>">
+			                    <div class="thumbnail">
+			                   		<img src="../upload/<%=alist.get(i).getAct_thumb() %>"/>
+			                    </div>
+                		  </a>	
+						<%
+						break;
+					}
+				%>
                   <br />
                   <div class="list_explain">
                     <a href="#"
@@ -63,9 +79,27 @@
                     <%=alist.get(i).getOrg_name() %><br />
                        D-<%=alist.get(i).getAct_dday() %>   조회수 <%=alist.get(i).getAct_hits() %>
                   </div>
-                  <a href="../activity/list_act_update.jsp?act_num=<%=alist.get(i).getAct_num() %>" class="btn btn-secondary btn-block mt-2" class="container">
-                    수정하기
-                  </a>
+                    <%
+					switch(act_type) {
+					case 1:
+						%>
+						<a href="../activity/list_act_update.jsp?act_num=<%=alist.get(i).getAct_num() %>" class="btn btn-secondary btn-block mt-2" class="container">
+		                    수정하기
+		                  </a>
+						
+						<%
+						break;
+						case 2:
+						%>
+						<a href="../contest/list_con_update.jsp?act_num=<%=alist.get(i).getAct_num() %>" class="btn btn-secondary btn-block mt-2" class="container">
+		                    수정하기
+		                 	 </a>
+						
+						<%
+						break;
+						}
+						%>
+                  
                 </div>
                	<%	
 		          		}
