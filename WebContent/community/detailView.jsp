@@ -221,7 +221,7 @@
 		        <div class="row" style="font-size:0.85rem;" >
 		        	<% if(repPerson.equals(commRB.getRep_nick())) {%>
 		            <p style="margin-left:40px; margin-right: 5px"><%=repPerson%></p>
-		           	<% if(id.trim().equals(commRB.getRep_person())){%>
+		           	<% if(id !=null && id.trim().equals(commRB.getRep_person())){%>
 		           	 [나]
 		            <% }} else {%>
 		            <p style="margin-left:40px; font-weight: 800"><%=repPerson%></p> <!-- 닉네임 -->
@@ -342,7 +342,7 @@
 		                
 		            	<% if(repPerson2.equals(commRB2.getRep_nick())) {%>
 		                <p style="margin-left:10px; margin-right: 3px"><%=repPerson2%> </p>
-				 		<% if(id.trim().equals(commRB2.getRep_person())){%>
+				 		<% if(id !=null && id.trim().equals(commRB2.getRep_person())){%>
 		           		 [나]
 		                <% }} else{ %>
 		                <p style="margin-left:10px; font-weight: 800"><%=repPerson2%></p> <!-- 닉네임 -->
