@@ -220,8 +220,10 @@
 		        <!-- 닉네임 날짜 -->
 		        <div class="row" style="font-size:0.85rem;" >
 		        	<% if(repPerson.equals(commRB.getRep_nick())) {%>
-		            <p style="margin-left:40px;"><%=repPerson%></p>
-		            <% } else {%>
+		            <p style="margin-left:40px; margin-right: 5px"><%=repPerson%></p>
+		           	<% if(id.trim().equals(commRB.getRep_person())){%>
+		           	 [나]
+		            <% }} else {%>
 		            <p style="margin-left:40px; font-weight: 800"><%=repPerson%></p> <!-- 닉네임 -->
 		            <%} %>
 		            
@@ -338,9 +340,11 @@
 		            <div class="row" style="font-size:0.85rem;" >
 		                <img style="margin-left:50px; width: 15px; height: 20px" src="${pageContext.request.contextPath}/img/rereply.png">
 		                
-		            <% if(repPerson2.equals(commRB2.getRep_nick())) {%>
-		                <p style="margin-left:10px;"><%=repPerson2%></p> <!-- 닉네임 -->
-		                <% } else{ %>
+		            	<% if(repPerson2.equals(commRB2.getRep_nick())) {%>
+		                <p style="margin-left:10px; margin-right: 3px"><%=repPerson2%> </p>
+				 		<% if(id.trim().equals(commRB2.getRep_person())){%>
+		           		 [나]
+		                <% }} else{ %>
 		                <p style="margin-left:10px; font-weight: 800"><%=repPerson2%></p> <!-- 닉네임 -->
 		                <%} %>
 		
