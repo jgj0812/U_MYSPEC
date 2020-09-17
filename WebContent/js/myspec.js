@@ -427,24 +427,6 @@ $("#pwdFindBtn").click(function(){
 	$("#findPwdFrm").submit();
 });
 
-// admin 개인회원 삭제
-function person_del(id) {
-	$.getJSON("adminDeletePro.jsp?memType=0&id=" + id, function(data){
-		var htmlStr = "";
-		$.each(data, function(key, val){
-			htmlStr += "<tr>";
-			htmlStr += "<td>" + val.id + "</td>";
-			htmlStr += "<td>" + val.nick + "</td>";
-			htmlStr += "<td>" + val.birth + "</td>";
-			htmlStr += "<td>" + val.email + "</td>";
-			htmlStr += "<td>" + val.phone + "</td>";
-			htmlStr += "<td><button onclick=\"person_del('<%=pb.getId() %>')\" class=\"btn btn-danger m-2\">삭제</button></td>";
-			htmlStr += "</tr>";
-		});
-		$("table tbody").html(htmlStr);
-	});
-}
-
 // 마이페이지 sidebar 동작
 $("#menu-toggle").click(function(e) {
   e.preventDefault();
@@ -767,7 +749,7 @@ function act_submit() {
 			alert("모집인원을 입력해주세요.");
 			return;
 		}
-		if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
+		if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 0) {
 			alert("모집인원을 정확하게 입력해주세요.");
 			return;
 		}
