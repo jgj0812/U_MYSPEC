@@ -554,6 +554,7 @@ function tagRemove(tag_num) {
 $(document).ready(function () {
 	$("#act_content").summernote({
 		lang: "ko-KR",
+		height: "30em",
       	callbacks : {
 			onImageUpload : function(files) {
 				sendFile(files[0], this);
@@ -566,7 +567,7 @@ $(document).ready(function () {
 	
 	$("#comm_content").summernote({
 			lang: "ko-KR",
-	      	height: "20em",
+	      	height: "30em",
 			callbacks : {
 				onImageUpload : function(files) {
 					sendFile(files[0], this);
@@ -767,7 +768,7 @@ function act_submit() {
 			alert("모집인원을 입력해주세요.");
 			return;
 		}
-		if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 1) {
+		if(isNaN($("#act_form input[name='act_pop']").val()) || $("#act_form input[name='act_pop']").val() < 0) {
 			alert("모집인원을 정확하게 입력해주세요.");
 			return;
 		}
