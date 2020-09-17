@@ -111,8 +111,8 @@
 		              			<div class="col-md-2">
 		                			<p>홈페이지</p>
 		              			</div>
-		              			<div class="col-md-4 text-truncate">
-		                			<a href="<%=bean.getAct_home()%>"><%=bean.getAct_home() %></a>
+		              			<div class="col-md-4">
+		                			<a href="<%=bean.getAct_home()%>" style="color: blue;">홈페이지 이동</a>
 		              			</div>
 		            		</div>
 		          		</div>
