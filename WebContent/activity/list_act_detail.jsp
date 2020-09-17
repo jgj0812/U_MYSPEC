@@ -155,7 +155,7 @@
 							<p>홈페이지</p>
 						</div>
 						<div class="col-md-4">
-							<p><%=activity.getAct_home() %></p>
+							<p><a href="<%=activity.getAct_home() %>" style="color: blue;">홈페이지 이동</a></p>
 						</div>
 					</div>
 					<div class="row h-100 align-content-end">
@@ -505,4 +505,5 @@
 <%@ include file="../footer.jsp" %>
 <script>
 	$.cookie("act_type", <%=activity.getAct_type()%>);
+	
 </script>
