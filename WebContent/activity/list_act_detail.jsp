@@ -487,8 +487,8 @@
 				<div class="modal-body">
 					<div class="d-flex flex-row justify-content-around">
 						<i class="fab fa-facebook-square" onclick="facebook(<%=act_num %>)" style="font-size: 50px; color: #3b5998;"></i>	
-						<i class="fab fa-twitter-square" onclick="twitter(<%=act_num %>)" style="font-size: 50px; color: #00acee;"></i>
-						<img src="<%=request.getContextPath() %>/img/line.png" onclick="line(<%=act_num %>)" style="width: 50px; height: 50px;">
+						<i class="fab fa-twitter-square" onclick="twitter()" style="font-size: 50px; color: #00acee;"></i>
+						<img src="<%=request.getContextPath() %>/img/line.png" onclick="line()" style="width: 50px; height: 50px;">
 					</div>
 					<hr>
 					<div class="input-group">
