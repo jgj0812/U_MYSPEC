@@ -1,3 +1,8 @@
 eclipse.preferences.version=1
 encoding//WebContent/js/myspec.js=UTF-8
+encoding//src/mySpec/ActivityMgr.java=UTF-8
+encoding//src/mySpec/ActivityReplyBean.java=UTF-8
+encoding//src/mySpec/CommunityMgr.java=UTF-8
+encoding//src/mySpec/CommunityReplyBean.java=UTF-8
+encoding//src/mySpec/CommunityReplyMgr.java=UTF-8
 encoding/<project>=UTF-8
