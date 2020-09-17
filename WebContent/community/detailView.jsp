@@ -281,7 +281,8 @@
 		    <div id="update<%=i %>" style="display: none">
 		        <form action ="reply_updatePro.jsp" method="post" id="reply_update<%=i %>"> 
 		            <div style="margin-bottom: 5px">
-		                <input id="re_upcontent" name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" value="<%=commRB.getRep_content()%>"> 
+		                <input id="re_upcontent" name="rep_content" style="margin-left:20px; height:70px; width:90%; font-weight:bolder;" type="text" class="form-control" 
+		                value="<%=commRB.getRep_content()%>"> 
 		                <input type="hidden" name="rep_num" value="<%=commRB.getRep_num()%>">
 		                <input type="hidden" name="comm_num" value="<%= comm_num%>">
 		            </div>
