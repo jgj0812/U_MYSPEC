@@ -536,6 +536,7 @@ function tagRemove(tag_num) {
 $(document).ready(function () {
 	$("#act_content").summernote({
 		lang: "ko-KR",
+		height: "20em",
       	callbacks : {
 			onImageUpload : function(files) {
 				sendFile(files[0], this);
