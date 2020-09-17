@@ -85,7 +85,7 @@ comm_title VARCHAR2(200 CHAR),				-- 글 제목
 comm_person VARCHAR2(20 CHAR),				-- FK 개인회원 ID
 comm_date DATE,								-- 글 작성일
 comm_hits NUMBER,							-- 조회수
-comm_content VARCHAR2(2000 CHAR),			-- 글 내용
+comm_content VARCHAR2(4000 CHAR),			-- 글 내용
 comm_admin VARCHAR2(20 CHAR),				-- FK 관리자 ID
 CONSTRAINT community_fk1 FOREIGN KEY (comm_person) REFERENCES person_user (person_id) ON DELETE CASCADE,
 CONSTRAINT community_fk2 FOREIGN KEY (comm_admin) REFERENCES admin (admin_id) ON DELETE CASCADE
