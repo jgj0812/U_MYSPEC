@@ -801,9 +801,8 @@ public class ActivityMgr {
 						+ "(select a.*, o.org_name, o.org_manager from "
 						+ "activity a left outer join org_user o "
 						+ "on a.act_org = o.org_id "
-						+ "where act_type=1) aa) "
-						+ "where rn between ? and ? "
-						+ "order by act_num desc";
+						+ "where act_type=1 order by act_num desc) aa) "
+						+ "where rn between ? and ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, startRow);
 				pstmt.setInt(2, endRow);
@@ -813,9 +812,9 @@ public class ActivityMgr {
 						+ "(select a.*, o.org_name, o.org_manager from "
 						+ "activity a left outer join org_user o "
 						+ "on a.act_org = o.org_id "
-						+ "where " + keyField + " like ? and act_type=1) aa) "
-						+ "where rn between ? and ? "
-						+ "order by act_num desc";
+						+ "where " + keyField + " like ? and act_type=1 "
+						+ "order by act_num desc) aa) "
+						+ "where rn between ? and ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%" + keyWord + "%");
 				pstmt.setInt(2, startRow);
